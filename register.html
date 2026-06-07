@@ -45,11 +45,13 @@ a{
 
 <h2>Create Account</h2>
 
-<input type="email" placeholder="Email">
+<input id="email" type="email" placeholder="Email">
+
 
 <br>
 
-<input type="password" placeholder="Password">
+<input id="password" type="password" placeholder="Password">
+
 
 <br><br>
 
@@ -68,8 +70,12 @@ const supabaseClient = window.supabase.createClient(
 );
 
 async function createAccount() {
-  alert("Create Account function started");
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+
+alert("Email: " + email);
 }
+
 </script>
 
 
