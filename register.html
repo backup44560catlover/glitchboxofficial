@@ -2,78 +2,63 @@
 
 <html>
 <head>
-<title>GlitchBoxOfficial Sign Up</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>GlitchBoxOfficial Register</title>
 
 <style>
 body{
-background:black;
-color:#9b59ff;
-font-family:Arial,sans-serif;
-text-align:center;
-padding-top:100px;
+  background:black;
+  color:#9b59ff;
+  font-family:Arial,sans-serif;
+  text-align:center;
+  padding-top:100px;
 }
+
 input{
-background:black;
-color:#9b59ff;
-border:2px solid #9b59ff;
-padding:10px;
-width:250px;
+  background:black;
+  color:#9b59ff;
+  border:2px solid #9b59ff;
+  padding:10px;
+  width:250px;
+  margin:5px;
 }
+
 button{
-background:black;
-color:#9b59ff;
-border:2px solid #9b59ff;
-padding:10px 20px;
-cursor:pointer;
+  background:black;
+  color:#9b59ff;
+  border:2px solid #9b59ff;
+  padding:10px 20px;
+  margin:5px;
+  cursor:pointer;
 }
+
 a{
-color:#9b59ff;
+  color:#9b59ff;
 }
 </style>
 
 </head>
+
 <body>
 
 <h1>GlitchBoxOfficial</h1>
+
 <h2>Create Account</h2>
 
-<input id="email" type="email" placeholder="Email">
-<br><br>
-
-<input id="password" type="password" placeholder="Password">
-<br><br>
-
-<button onclick="signUp()">Create Account</button>
-
-<br><br>
-
-<p id="message"></p>
+<input type="email" placeholder="Email">
 
 <br>
 
+<input type="password" placeholder="Password">
+
+<br><br>
+
+<button onclick="alert('Create Account button works!')">
+Create Account
+</button>
+
+<br><br>
+
 <a href="login.html">Back To Login</a>
-
-<script>
-const supabase = window.supabase.createClient(
-  "https://syjnlgxghgwvqrwtthmr.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI"
-);
-
-async function signUp() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  const { error } = await supabase.auth.signUp({
-    email,
-    password
-  });
-
-  document.getElementById("message").textContent =
-    error ? error.message : "Account created! Check your email.";
-}
-</script>
 
 </body>
 </html>
