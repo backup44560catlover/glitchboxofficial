@@ -58,10 +58,27 @@ Login
 </button>
 
 <br>
+async function signInWithGoogle() {
+alert("Function started");
 
-<button onclick="signInWithGoogle()">
-Sign In With Google
-</button>
+try {
+const { error } = await supabaseClient.auth.signInWithOAuth({
+provider: "google",
+options: {
+redirectTo: "https://glitchboxofficial.vercel.app"
+}
+});
+
+```
+if (error) {
+  alert("Supabase Error: " + error.message);
+}
+```
+
+} catch (err) {
+alert("JavaScript Error: " + err.message);
+}
+}
 
 
 
