@@ -4,6 +4,8 @@
 <head>
 <title>GlitchBoxOfficial Sign Up</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 body{
 background:black;
@@ -38,19 +40,40 @@ color:#9b59ff;
 <h2>Create Account</h2>
 
 <input id="email" type="email" placeholder="Email">
-
 <br><br>
 
 <input id="password" type="password" placeholder="Password">
+<br><br>
+
+<button onclick="signUp()">Create Account</button>
 
 <br><br>
 
-<button>Create Account</button>
+<p id="message"></p>
 
-<br><br>
+<br>
 
 <a href="login.html">Back To Login</a>
 
+<script>
+const supabase = window.supabase.createClient(
+  "https://syjnlgxghgwvqrwtthmr.supabase.co",
+  "PASTE_YOUR_ANON_KEY_HERE"
+);
+
+async function signUp() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { error } = await supabase.auth.signUp({
+    email,
+    password
+  });
+
+  document.getElementById("message").textContent =
+    error ? error.message : "Account created! Check your email.";
+}
+</script>
+
 </body>
 </html>
-
