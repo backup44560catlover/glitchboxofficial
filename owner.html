@@ -2,41 +2,79 @@
 <head>
 <title>GlitchBox Owner Dashboard</title><style>
 body{
+  margin:0;
   background:black;
   color:#9b59ff;
   font-family:Arial,sans-serif;
-  text-align:center;
-  padding-top:50px;
 }
 
-button{
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  width:220px;
+  height:100%;
+  border-right:2px solid #9b59ff;
+  padding-top:20px;
+}
+
+.sidebar button{
+  width:180px;
+  margin:10px;
+  padding:10px;
   background:black;
   color:#9b59ff;
   border:2px solid #9b59ff;
-  padding:10px 20px;
-  margin:10px;
   cursor:pointer;
 }
 
-.panel{
-  border:2px solid #9b59ff;
+.content{
+  margin-left:240px;
   padding:20px;
-  width:300px;
-  margin:auto;
 }
-</style></head><body><h1>GlitchBox Owner Dashboard</h1><div class="panel"><h3>Owner Controls</h3><button>Manage Users</button>
 
-<button>Manage Sponsors</button>
+.section{
+  display:none;
+}
 
-<button>Website Settings</button>
+.section.active{
+  display:block;
+}
+</style></head><body><div class="sidebar">
+<h2>Owner Panel</h2><button onclick="showSection('users')">Users</button>
+<button onclick="showSection('sponsors')">Sponsors</button>
+<button onclick="showSection('announcements')">Announcements</button>
+<button onclick="showSection('reports')">Reports</button>
+<button onclick="showSection('settings')">Settings</button>
+<button onclick="showSection('stats')">Statistics</button>
 
-<button>Announcements</button>
+</div><div class="content"><div id="users" class="section active">
+<h1>Users</h1>
+<p>Total Users: Coming Soon</p>
+</div><div id="sponsors" class="section">
+<h1>Sponsors</h1>
+<p>Sponsor Management Coming Soon</p>
+</div><div id="announcements" class="section">
+<h1>Announcements</h1>
+<p>Announcement System Coming Soon</p>
+</div><div id="reports" class="section">
+<h1>Reports</h1>
+<p>Reports Coming Soon</p>
+</div><div id="settings" class="section">
+<h1>Settings</h1>
+<p>Website Settings Coming Soon</p>
+</div><div id="stats" class="section">
+<h1>Statistics</h1>
+<p>Stats Coming Soon</p>
+</div></div><script>
+function showSection(id){
+  const sections = document.querySelectorAll(".section");
 
-<button>System Logs</button>
+  sections.forEach(section=>{
+    section.classList.remove("active");
+  });
 
-</div><br><br>
-
-<a href="index.html">Back Home</a>
-
-</body>
+  document.getElementById(id).classList.add("active");
+}
+</script></body>
 </html>
