@@ -1,0 +1,41 @@
+<!DOCTYPE html><html>
+<head>
+<title>Sponsor Access</title><style>
+body{
+  background:black;
+  color:#9b59ff;
+  font-family:Arial,sans-serif;
+  text-align:center;
+  padding-top:100px;
+}
+
+input{
+  background:black;
+  color:#9b59ff;
+  border:2px solid #9b59ff;
+  padding:10px;
+}
+
+button{
+  background:black;
+  color:#9b59ff;
+  border:2px solid #9b59ff;
+  padding:10px 20px;
+  cursor:pointer;
+}
+</style></head><body><h1>Sponsor Access</h1><input id="code" type="password" placeholder="Enter Sponsor Code"><br><br>
+
+<button onclick="checkCode()">Enter</button>
+
+<script>
+function checkCode() {
+  const code = document.getElementById("code").value;
+
+  if (code === "8913") {
+    alert("Access Granted");
+  } else {
+    alert("Wrong Code");
+  }
+}
+</script></body>
+</html>
