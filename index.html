@@ -2,21 +2,41 @@
 <head>
 <title>GlitchBoxOfficial</title><style>
 body{
-    background-color:black;
+    background:black;
     color:#9b59ff;
     font-family:Arial,sans-serif;
     text-align:center;
-    padding-top:50px;
+    margin:0;
+    padding:20px;
 }
 
 button{
-    background-color:black;
+    background:black;
     color:#9b59ff;
     border:2px solid #9b59ff;
-    padding:10px 20px;
-    font-size:18px;
+    padding:12px 20px;
+    margin:8px;
+    font-size:16px;
     cursor:pointer;
-    margin:10px;
+}
+
+button:hover{
+    background:#9b59ff;
+    color:black;
+}
+
+.section{
+    border:2px solid #9b59ff;
+    border-radius:10px;
+    padding:20px;
+    margin:20px auto;
+    max-width:600px;
+}
+
+.navbar{
+    margin-top:30px;
+    padding-top:15px;
+    border-top:2px solid #9b59ff;
 }
 
 a{
@@ -26,29 +46,35 @@ a{
 <button>▶ Play Now</button>
 </a><a href="create.html">
 <button>🎨 Create Game</button>
-</a><hr><h2>🔥 Main Features</h2><button>🎮 Browse Games</button>
+</a><div class="section">
+<h2>🔥 Main Features</h2><button>🎮 Browse Games</button>
 <button>🏆 Tournaments</button>
 <button>🎯 Daily Challenges</button>
 <button>🥇 Leaderboards</button>
 <button>👥 Friends</button>
 <button>🤖 AI Assistant</button>
 <button>🪙 Coin Store</button>
-<button>🎨 Create</button>
 
-<hr><h2>🌎 Community</h2><button>💬 Community Feed</button>
+</div><div class="section">
+<h2>🌎 Community</h2><button>💬 Community Feed</button>
 <button>👤 Profile</button>
 <button>👥 Groups</button>
 
-<hr><h2>👑 Management</h2><button>🤝 Sponsors</button>
-<button>👑 Owner Panel</button>
+</div><div class="section">
+<h2>👑 Management</h2><button>🤝 Sponsors</button>
 
-<hr><h2>📰 Latest News</h2><p>Welcome to GlitchBox!</p>
+<a href="owner.html">
+<button>👑 Owner Panel</button>
+</a>
+</div><div class="section">
+<h2>📰 Latest News</h2><p>Welcome to GlitchBox!</p>
 <p>Daily Challenges coming soon.</p>
-<p>Community System coming soon.</p><hr><a href="login.html">
+<p>Community System coming soon.</p>
+</div><a href="login.html">
 <button>🔐 Login</button>
-<a href="register.html">
+</a><a href="register.html">
 <button>📝 Sign Up</button>
-</a><hr><div><button>🏠 Home</button>
+</a><div class="navbar"><button>🏠 Home</button>
 
 <button>🎮 Games</button>
 
