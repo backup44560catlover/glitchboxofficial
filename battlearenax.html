@@ -1,0 +1,51 @@
+<!DOCTYPE html><html>
+<head>
+<title>Battle Arena X</title><style>
+body{
+    background:black;
+    color:#9b59ff;
+    font-family:Arial,sans-serif;
+    text-align:center;
+}
+
+button{
+    background:black;
+    color:#9b59ff;
+    border:2px solid #9b59ff;
+    padding:15px 25px;
+    font-size:18px;
+    cursor:pointer;
+}
+
+.enemy{
+    border:2px solid #9b59ff;
+    padding:20px;
+    margin:20px auto;
+    max-width:400px;
+}
+</style></head><body><h1>⚔️ Battle Arena X</h1><h2>Your HP: <span id="playerHp">100</span></h2><div class="enemy"><h2>Enemy HP</h2><h1 id="enemyHp">100</h1><button onclick="attackEnemy()">
+⚔️ Attack
+</button></div><p id="message">Defeat the enemy!</p><a href="games.html">
+<button>🏠 Back to Games</button>
+</a><script>
+let enemyHp = 100;
+
+function attackEnemy(){
+
+    let damage = Math.floor(Math.random()*15)+5;
+
+    enemyHp -= damage;
+
+    if(enemyHp < 0){
+        enemyHp = 0;
+    }
+
+    document.getElementById("enemyHp").innerText = enemyHp;
+
+    if(enemyHp === 0){
+        document.getElementById("message").innerText =
+        "🏆 Victory! Enemy Defeated!";
+    }
+}
+</script></body>
+</html>
