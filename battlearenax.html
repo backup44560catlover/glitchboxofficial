@@ -24,107 +24,171 @@ button{
     margin:5px;
     cursor:pointer;
 }
-</style></head><body><h1>⚔️ Battle Arena X</h1><div class="card"><h2>❤️ Your HP: <span id="playerHp">100</span></h2><h2>👹 Monster HP: <span id="monsterHp">100</span></h2><h3>🪙 Coins: <span id="coins">0</span></h3><p id="message">A wild monster appeared!</p><button onclick="attack()">⚔️ Attack</button>
+</style></head><body><h1>⚔️ Battle Arena X</h1><div class="card"><h2>❤️ HP: <span id="playerHp">100</span></h2><h2>⭐ Level: <span id="level">1</span></h2><h2>✨ XP: <span id="xp">0</span></h2><h2>🪙 Coins: <span id="coins">0</span></h2><h2 id="monsterName">👹 Slime</h2><h2>Monster HP: <span id="monsterHp">50</span></h2><p id="message">A wild monster appeared!</p><button onclick="attack()">⚔️ Attack</button>
 
-<button onclick="specialAttack()">✨ Special</button>
+<button onclick="specialAttack()">🔥 Special</button>
 
 <button onclick="heal()">❤️ Heal</button>
 
 </div><a href="games.html">
-<button>🏠 Back to Games</button>
+<button>🏠 Back To Games</button>
 </a><script>
 
 let playerHp = 100;
-let monsterHp = 100;
 let coins = 0;
+let xp = 0;
+let level = 1;
+
+let monsters = [
+  {name:"👹 Slime", hp:50},
+  {name:"👺 Goblin", hp:75},
+  {name:"🧟 Zombie", hp:100},
+  {name:"🐺 Wolf", hp:125},
+  {name:"🐉 Dragon", hp:200}
+];
+
+let currentMonster;
+let monsterHp;
+
+function newMonster(){
+
+  currentMonster =
+  monsters[Math.floor(Math.random()*monsters.length)];
+
+  monsterHp = currentMonster.hp;
+
+  document.getElementById("monsterName").innerText =
+  currentMonster.name;
+
+  update();
+}
 
 function update(){
-    document.getElementById("playerHp").innerText = playerHp;
-    document.getElementById("monsterHp").innerText = monsterHp;
-    document.getElementById("coins").innerText = coins;
+
+  document.getElementById("playerHp").innerText =
+  playerHp;
+
+  document.getElementById("monsterHp").innerText =
+  monsterHp;
+
+  document.getElementById("coins").innerText =
+  coins;
+
+  document.getElementById("xp").innerText =
+  xp;
+
+  document.getElementById("level").innerText =
+  level;
 }
 
 function monsterTurn(){
 
-    if(monsterHp <= 0) return;
+  if(monsterHp <= 0) return;
 
-    let damage = Math.floor(Math.random()*12)+4;
+  let damage =
+  Math.floor(Math.random()*12)+4;
 
-    playerHp -= damage;
+  playerHp -= damage;
 
-    if(playerHp < 0) playerHp = 0;
+  if(playerHp < 0) playerHp = 0;
 
-    update();
+  update();
 
-    if(playerHp === 0){
-        document.getElementById("message").innerText =
-        "💀 You Lost!";
-    }
+  if(playerHp === 0){
+
+    document.getElementById("message").innerText =
+    "💀 Game Over";
+
+  }
+}
+
+function victory(){
+
+  coins += 25;
+  xp += 20;
+
+  if(xp >= level * 50){
+
+    xp = 0;
+    level++;
+    playerHp = 100;
+
+    document.getElementById("message").innerText =
+    "⭐ LEVEL UP! You are now Level " + level;
+
+  } else {
+
+    document.getElementById("message").innerText =
+    "🏆 Victory! +25 Coins +20 XP";
+
+  }
+
+  update();
+
+  setTimeout(newMonster,1500);
 }
 
 function attack(){
 
-    if(playerHp <= 0 || monsterHp <= 0) return;
+  if(playerHp <= 0) return;
 
-    let damage = Math.floor(Math.random()*15)+8;
+  let damage =
+  Math.floor(Math.random()*15)+8;
 
-    monsterHp -= damage;
+  monsterHp -= damage;
 
-    if(monsterHp < 0) monsterHp = 0;
+  if(monsterHp < 0) monsterHp = 0;
 
-    update();
+  update();
 
-    if(monsterHp === 0){
-        coins += 25;
-        update();
+  if(monsterHp === 0){
 
-        document.getElementById("message").innerText =
-        "🏆 Victory! +25 Coins";
-        return;
-    }
+    victory();
+    return;
 
-    monsterTurn();
+  }
+
+  monsterTurn();
 }
 
 function specialAttack(){
 
-    if(playerHp <= 0 || monsterHp <= 0) return;
+  if(playerHp <= 0) return;
 
-    let damage = Math.floor(Math.random()*30)+10;
+  let damage =
+  Math.floor(Math.random()*30)+10;
 
-    monsterHp -= damage;
+  monsterHp -= damage;
 
-    if(monsterHp < 0) monsterHp = 0;
+  if(monsterHp < 0) monsterHp = 0;
 
-    update();
+  update();
 
-    if(monsterHp === 0){
-        coins += 50;
+  if(monsterHp === 0){
 
-        update();
+    victory();
+    return;
 
-        document.getElementById("message").innerText =
-        "🔥 Critical Victory! +50 Coins";
-        return;
-    }
+  }
 
-    monsterTurn();
+  monsterTurn();
 }
 
 function heal(){
 
-    if(playerHp <= 0 || monsterHp <= 0) return;
+  if(playerHp <= 0) return;
 
-    playerHp += 15;
+  playerHp += 15;
 
-    if(playerHp > 100) playerHp = 100;
+  if(playerHp > 100)
+    playerHp = 100;
 
-    update();
+  update();
 
-    monsterTurn();
+  monsterTurn();
 }
 
-update();
+newMonster();
 
 </script></body>
 </html>
