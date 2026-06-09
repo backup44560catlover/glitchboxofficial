@@ -8,44 +8,123 @@ body{
     text-align:center;
 }
 
+.card{
+    border:2px solid #9b59ff;
+    border-radius:10px;
+    padding:20px;
+    margin:20px auto;
+    max-width:500px;
+}
+
 button{
     background:black;
     color:#9b59ff;
     border:2px solid #9b59ff;
-    padding:15px 25px;
-    font-size:18px;
+    padding:12px 20px;
+    margin:5px;
     cursor:pointer;
 }
+</style></head><body><h1>⚔️ Battle Arena X</h1><div class="card"><h2>❤️ Your HP: <span id="playerHp">100</span></h2><h2>👹 Monster HP: <span id="monsterHp">100</span></h2><h3>🪙 Coins: <span id="coins">0</span></h3><p id="message">A wild monster appeared!</p><button onclick="attack()">⚔️ Attack</button>
 
-.enemy{
-    border:2px solid #9b59ff;
-    padding:20px;
-    margin:20px auto;
-    max-width:400px;
-}
-</style></head><body><h1>⚔️ Battle Arena X</h1><h2>Your HP: <span id="playerHp">100</span></h2><div class="enemy"><h2>Enemy HP</h2><h1 id="enemyHp">100</h1><button onclick="attackEnemy()">
-⚔️ Attack
-</button></div><p id="message">Defeat the enemy!</p><a href="games.html">
+<button onclick="specialAttack()">✨ Special</button>
+
+<button onclick="heal()">❤️ Heal</button>
+
+</div><a href="games.html">
 <button>🏠 Back to Games</button>
 </a><script>
-let enemyHp = 100;
 
-function attackEnemy(){
+let playerHp = 100;
+let monsterHp = 100;
+let coins = 0;
 
-    let damage = Math.floor(Math.random()*15)+5;
+function update(){
+    document.getElementById("playerHp").innerText = playerHp;
+    document.getElementById("monsterHp").innerText = monsterHp;
+    document.getElementById("coins").innerText = coins;
+}
 
-    enemyHp -= damage;
+function monsterTurn(){
 
-    if(enemyHp < 0){
-        enemyHp = 0;
-    }
+    if(monsterHp <= 0) return;
 
-    document.getElementById("enemyHp").innerText = enemyHp;
+    let damage = Math.floor(Math.random()*12)+4;
 
-    if(enemyHp === 0){
+    playerHp -= damage;
+
+    if(playerHp < 0) playerHp = 0;
+
+    update();
+
+    if(playerHp === 0){
         document.getElementById("message").innerText =
-        "🏆 Victory! Enemy Defeated!";
+        "💀 You Lost!";
     }
 }
+
+function attack(){
+
+    if(playerHp <= 0 || monsterHp <= 0) return;
+
+    let damage = Math.floor(Math.random()*15)+8;
+
+    monsterHp -= damage;
+
+    if(monsterHp < 0) monsterHp = 0;
+
+    update();
+
+    if(monsterHp === 0){
+        coins += 25;
+        update();
+
+        document.getElementById("message").innerText =
+        "🏆 Victory! +25 Coins";
+        return;
+    }
+
+    monsterTurn();
+}
+
+function specialAttack(){
+
+    if(playerHp <= 0 || monsterHp <= 0) return;
+
+    let damage = Math.floor(Math.random()*30)+10;
+
+    monsterHp -= damage;
+
+    if(monsterHp < 0) monsterHp = 0;
+
+    update();
+
+    if(monsterHp === 0){
+        coins += 50;
+
+        update();
+
+        document.getElementById("message").innerText =
+        "🔥 Critical Victory! +50 Coins";
+        return;
+    }
+
+    monsterTurn();
+}
+
+function heal(){
+
+    if(playerHp <= 0 || monsterHp <= 0) return;
+
+    playerHp += 15;
+
+    if(playerHp > 100) playerHp = 100;
+
+    update();
+
+    monsterTurn();
+}
+
+update();
+
 </script></body>
 </html>
