@@ -1,6 +1,6 @@
 <!DOCTYPE html><html>
 <head>
-<title>Battle Arena X</title><style>
+<title>Battle Arena X RPG</title><style>
 body{
     background:black;
     color:#9b59ff;
@@ -13,22 +13,37 @@ body{
     border-radius:10px;
     padding:20px;
     margin:20px auto;
-    max-width:500px;
+    max-width:600px;
 }
 
 button{
     background:black;
     color:#9b59ff;
     border:2px solid #9b59ff;
-    padding:12px 20px;
+    padding:10px 20px;
     margin:5px;
     cursor:pointer;
 }
-</style></head><body><h1>⚔️ Battle Arena X</h1><div class="card"><h2>❤️ HP: <span id="playerHp">100</span></h2><h2>⭐ Level: <span id="level">1</span></h2><h2>✨ XP: <span id="xp">0</span></h2><h2>🪙 Coins: <span id="coins">0</span></h2><h2 id="monsterName">👹 Slime</h2><h2>Monster HP: <span id="monsterHp">50</span></h2><p id="message">A wild monster appeared!</p><button onclick="attack()">⚔️ Attack</button>
+
+button:hover{
+    background:#9b59ff;
+    color:black;
+}
+</style></head><body><h1>⚔️ Battle Arena X RPG</h1><div class="card"><h2>❤️ HP: <span id="playerHp">100</span></h2><h2>⭐ Level: <span id="level">1</span></h2><h2>✨ XP: <span id="xp">0</span></h2><h2>🪙 Coins: <span id="coins">0</span></h2><hr><h2>🎒 Inventory</h2><p>🧪 Potions: <span id="potions">3</span></p><p>⚔️ Weapon: <span id="weapon">Wood Sword</span></p><p>🛡️ Armor: <span id="armor">Cloth Armor</span></p><hr><h2 id="monsterName">👹 Slime</h2><h2>Monster HP: <span id="monsterHp">50</span></h2><p id="message">A wild monster appeared!</p><button onclick="attack()">⚔️ Attack</button>
 
 <button onclick="specialAttack()">🔥 Special</button>
 
 <button onclick="heal()">❤️ Heal</button>
+
+<button onclick="usePotion()">🧪 Potion</button>
+
+<hr><h2>🪙 Shop</h2><button onclick="buyPotion()">Potion (25)</button>
+
+<button onclick="buySword()">Iron Sword (100)</button>
+
+<button onclick="buyArmor()">Iron Armor (100)</button>
+
+<hr><button onclick="spawnBoss()">🐉 Boss Battle</button>
 
 </div><a href="games.html">
 <button>🏠 Back To Games</button>
@@ -39,153 +54,320 @@ let coins = 0;
 let xp = 0;
 let level = 1;
 
+let potions = 3;
+
+let weapon = "Wood Sword";
+let weaponBonus = 0;
+
+let armor = "Cloth Armor";
+let armorBonus = 0;
+
+let bossUnlocked = false;
+
 let monsters = [
-  {name:"👹 Slime", hp:50},
-  {name:"👺 Goblin", hp:75},
-  {name:"🧟 Zombie", hp:100},
-  {name:"🐺 Wolf", hp:125},
-  {name:"🐉 Dragon", hp:200}
+ {name:"👹 Slime", hp:50},
+ {name:"👺 Goblin", hp:75},
+ {name:"🧟 Zombie", hp:100},
+ {name:"🐺 Wolf", hp:125}
 ];
+
+if(localStorage.getItem("battleArenaSave")){
+
+ let save =
+ JSON.parse(localStorage.getItem("battleArenaSave"));
+
+ coins = save.coins || 0;
+ xp = save.xp || 0;
+ level = save.level || 1;
+ potions = save.potions || 3;
+ weapon = save.weapon || "Wood Sword";
+ armor = save.armor || "Cloth Armor";
+
+ if(weapon === "Iron Sword"){
+   weaponBonus = 10;
+ }
+
+ if(armor === "Iron Armor"){
+   armorBonus = 5;
+ }
+
+}
 
 let currentMonster;
 let monsterHp;
 
-function newMonster(){
+function saveGame(){
 
-  currentMonster =
-  monsters[Math.floor(Math.random()*monsters.length)];
+ localStorage.setItem(
+ "battleArenaSave",
 
-  monsterHp = currentMonster.hp;
+ JSON.stringify({
+   coins,
+   xp,
+   level,
+   potions,
+   weapon,
+   armor
+ }));
 
-  document.getElementById("monsterName").innerText =
-  currentMonster.name;
-
-  update();
 }
 
 function update(){
 
-  document.getElementById("playerHp").innerText =
-  playerHp;
+ document.getElementById("playerHp").innerText =
+ playerHp;
 
-  document.getElementById("monsterHp").innerText =
-  monsterHp;
+ document.getElementById("monsterHp").innerText =
+ monsterHp;
 
-  document.getElementById("coins").innerText =
-  coins;
+ document.getElementById("coins").innerText =
+ coins;
 
-  document.getElementById("xp").innerText =
-  xp;
+ document.getElementById("xp").innerText =
+ xp;
 
-  document.getElementById("level").innerText =
-  level;
+ document.getElementById("level").innerText =
+ level;
+
+ document.getElementById("potions").innerText =
+ potions;
+
+ document.getElementById("weapon").innerText =
+ weapon;
+
+ document.getElementById("armor").innerText =
+ armor;
+
+}
+
+function newMonster(){
+
+ currentMonster =
+ monsters[Math.floor(Math.random()*monsters.length)];
+
+ monsterHp = currentMonster.hp;
+
+ document.getElementById("monsterName").innerText =
+ currentMonster.name;
+
+ update();
+
 }
 
 function monsterTurn(){
 
-  if(monsterHp <= 0) return;
+ if(monsterHp <= 0) return;
 
-  let damage =
-  Math.floor(Math.random()*12)+4;
+ let damage =
+ Math.floor(Math.random()*12)+4-armorBonus;
 
-  playerHp -= damage;
+ if(damage < 1){
+   damage = 1;
+ }
 
-  if(playerHp < 0) playerHp = 0;
+ playerHp -= damage;
 
-  update();
+ if(playerHp < 0){
+   playerHp = 0;
+ }
 
-  if(playerHp === 0){
+ update();
 
-    document.getElementById("message").innerText =
-    "💀 Game Over";
+ if(playerHp === 0){
 
-  }
+   document.getElementById("message").innerText =
+   "💀 Game Over";
+
+ }
+
 }
 
 function victory(){
 
-  coins += 25;
-  xp += 20;
+ coins += 25;
+ xp += 20;
 
-  if(xp >= level * 50){
+ if(xp >= level * 50){
 
-    xp = 0;
-    level++;
-    playerHp = 100;
+   xp = 0;
+   level++;
 
-    document.getElementById("message").innerText =
-    "⭐ LEVEL UP! You are now Level " + level;
+   playerHp = 100;
 
-  } else {
+   document.getElementById("message").innerText =
+   "⭐ LEVEL UP! Level " + level;
 
-    document.getElementById("message").innerText =
-    "🏆 Victory! +25 Coins +20 XP";
+ }else{
 
-  }
+   document.getElementById("message").innerText =
+   "🏆 Victory!";
 
-  update();
+ }
 
-  setTimeout(newMonster,1500);
+ if(level >= 5){
+   bossUnlocked = true;
+ }
+
+ saveGame();
+
+ update();
+
+ setTimeout(newMonster,1500);
+
 }
 
 function attack(){
 
-  if(playerHp <= 0) return;
+ if(playerHp <= 0) return;
 
-  let damage =
-  Math.floor(Math.random()*15)+8;
+ let damage =
+ Math.floor(Math.random()*15)+8+weaponBonus;
 
-  monsterHp -= damage;
+ monsterHp -= damage;
 
-  if(monsterHp < 0) monsterHp = 0;
+ if(monsterHp < 0){
+   monsterHp = 0;
+ }
 
-  update();
+ update();
 
-  if(monsterHp === 0){
+ if(monsterHp === 0){
+   victory();
+   return;
+ }
 
-    victory();
-    return;
+ monsterTurn();
 
-  }
-
-  monsterTurn();
 }
 
 function specialAttack(){
 
-  if(playerHp <= 0) return;
+ if(playerHp <= 0) return;
 
-  let damage =
-  Math.floor(Math.random()*30)+10;
+ let damage =
+ Math.floor(Math.random()*30)+10+weaponBonus;
 
-  monsterHp -= damage;
+ monsterHp -= damage;
 
-  if(monsterHp < 0) monsterHp = 0;
+ if(monsterHp < 0){
+   monsterHp = 0;
+ }
 
-  update();
+ update();
 
-  if(monsterHp === 0){
+ if(monsterHp === 0){
+   victory();
+   return;
+ }
 
-    victory();
-    return;
+ monsterTurn();
 
-  }
-
-  monsterTurn();
 }
 
 function heal(){
 
-  if(playerHp <= 0) return;
+ if(playerHp <= 0) return;
 
-  playerHp += 15;
+ playerHp += 15;
 
-  if(playerHp > 100)
-    playerHp = 100;
+ if(playerHp > 100){
+   playerHp = 100;
+ }
 
-  update();
+ update();
 
-  monsterTurn();
+ monsterTurn();
+
+}
+
+function usePotion(){
+
+ if(potions <= 0){
+
+   document.getElementById("message").innerText =
+   "❌ No Potions";
+
+   return;
+
+ }
+
+ potions--;
+
+ playerHp += 40;
+
+ if(playerHp > 100){
+   playerHp = 100;
+ }
+
+ saveGame();
+
+ update();
+
+}
+
+function buyPotion(){
+
+ if(coins < 25) return;
+
+ coins -= 25;
+ potions++;
+
+ saveGame();
+ update();
+
+}
+
+function buySword(){
+
+ if(coins < 100) return;
+
+ coins -= 100;
+
+ weapon = "Iron Sword";
+ weaponBonus = 10;
+
+ saveGame();
+ update();
+
+}
+
+function buyArmor(){
+
+ if(coins < 100) return;
+
+ coins -= 100;
+
+ armor = "Iron Armor";
+ armorBonus = 5;
+
+ saveGame();
+ update();
+
+}
+
+function spawnBoss(){
+
+ if(!bossUnlocked){
+
+   document.getElementById("message").innerText =
+   "Reach Level 5 First!";
+
+   return;
+
+ }
+
+ currentMonster = {
+   name:"🐉 Dragon King",
+   hp:500
+ };
+
+ monsterHp = 500;
+
+ document.getElementById("monsterName").innerText =
+ currentMonster.name;
+
+ update();
+
 }
 
 newMonster();
