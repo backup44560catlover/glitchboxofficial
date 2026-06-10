@@ -18,6 +18,7 @@ border-radius:12px;
 padding:20px;
 margin:20px auto;
 max-width:800px;
+background:#111;
 }
 
 button{
@@ -66,9 +67,7 @@ color:cyan;
 
 <h2>👑 Owner</h2>
 
-<p class="owner">
-👑 GlitchBoxOfficial
-</p>
+<p class="owner">👑 GlitchBoxOfficial</p>
 
 </div>
 
@@ -76,9 +75,7 @@ color:cyan;
 
 <h2>🛠️ Admin Team</h2>
 
-<p class="admin">
-🛠️ GlitchBoxOfficial
-</p>
+<p class="admin">🛠️ GlitchBoxOfficial</p>
 
 </div>
 
@@ -86,9 +83,7 @@ color:cyan;
 
 <h2>⚔️ Moderators</h2>
 
-<p class="mod">
-⚔️ GlitchBoxOfficial
-</p>
+<p class="mod">⚔️ GlitchBoxOfficial</p>
 
 </div>
 
@@ -96,9 +91,7 @@ color:cyan;
 
 <h2>🎨 Creators</h2>
 
-<p class="creator">
-🎨 GlitchBoxOfficial
-</p>
+<p class="creator">🎨 GlitchBoxOfficial</p>
 
 </div>
 
@@ -106,10 +99,35 @@ color:cyan;
 
 <h2>⚙️ Staff Controls</h2>
 
-<button>Add Admin</button>
-<button>Remove Admin</button>
-<button>Add Moderator</button>
-<button>Remove Moderator</button>
+<p id="staffMessage">
+Select a staff action.
+</p>
+
+<button onclick="staffAction('✅ Admin Added')">
+Add Admin
+</button>
+
+<button onclick="staffAction('❌ Admin Removed')">
+Remove Admin
+</button>
+
+<button onclick="staffAction('✅ Moderator Added')">
+Add Moderator
+</button>
+
+<button onclick="staffAction('❌ Moderator Removed')">
+Remove Moderator
+</button>
+
+</div>
+
+<div class="panel">
+
+<h2>📋 Staff Log</h2>
+
+<p id="staffLog">
+No actions yet.
+</p>
 
 </div>
 
@@ -138,6 +156,19 @@ Unauthorized copying, distribution, or reproduction is prohibited.
 </p>
 
 </footer>
+
+<script>
+
+function staffAction(action){
+
+document.getElementById("staffMessage").innerText = action;
+
+document.getElementById("staffLog").innerText =
+"Last Action: " + action;
+
+}
+
+</script>
 
 </body>
 </html>
