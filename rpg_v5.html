@@ -1,0 +1,295 @@
+<!DOCTYPE html><html>
+<head>
+<title>Battle Arena X RPG V5</title><style>
+
+body{
+background:#050505;
+color:#00ffff;
+font-family:Arial,sans-serif;
+text-align:center;
+margin:0;
+padding:20px;
+}
+
+.panel{
+border:2px solid #00ffff;
+border-radius:12px;
+padding:15px;
+margin:15px auto;
+max-width:800px;
+background:#111;
+}
+
+button{
+background:#111;
+color:#00ffff;
+border:2px solid #00ffff;
+padding:10px 15px;
+margin:5px;
+cursor:pointer;
+border-radius:8px;
+}
+
+button:hover{
+background:#00ffff;
+color:black;
+}
+
+</style></head><body><h1>⚡ BATTLE ARENA X RPG V5 ⚡</h1><div class="panel"><h2>👤 Player</h2><p>❤️ HP: <span id="hp">100</span></p><p>⭐ Level: <span id="level">1</span></p><p>✨ XP: <span id="xp">0</span></p><p>🪙 Coins: <span id="coins">0</span></p><p>📍 Location: <span id="location">Village</span></p></div><div class="panel"><h2>🗺️ World Map</h2><button onclick="travel('Village')">🏘️ Village</button>
+
+<button onclick="travel('Forest')">🌲 Forest</button>
+
+<button onclick="travel('Cave')">🕷️ Cave</button>
+
+<button onclick="travel('Mountain')">🏔️ Mountain</button>
+
+<button onclick="travel('Volcano')">🔥 Volcano</button>
+
+<button onclick="travel('Castle')">🐉 Dragon Castle</button>
+
+</div><div class="panel"><h2>🎒 Inventory</h2><p>🧪 Potions: <span id="potions">3</span></p><p>⚔️ Weapon: <span id="weapon">Wood Sword</span></p><p>🛡️ Armor: <span id="armor">Cloth Armor</span></p><p>💎 Loot: <span id="loot">None</span></p></div><div class="panel"><h2>📜 Quest Board</h2><p id="quest">
+Defeat 3 Monsters
+</p><p>
+Progress:
+<span id="questProgress">0</span>/3
+</p></div><div class="panel"><h2 id="monsterName">👹 Slime</h2><p>
+Monster HP:
+<span id="monsterHp">50</span>
+</p><p id="message">
+Welcome to Battle Arena X RPG!
+</p><button onclick="attack()">⚔️ Attack</button>
+
+<button onclick="specialAttack()">🔥 Special</button>
+
+<button onclick="heal()">❤️ Heal</button>
+
+<button onclick="usePotion()">🧪 Potion</button>
+
+</div><div class="panel"><h2>🪙 Shop</h2><button onclick="buyPotion()">
+Potion (25 Coins)
+</button><button onclick="buySword()">
+Iron Sword (100 Coins)
+</button><button onclick="buyArmor()">
+Iron Armor (100 Coins)
+</button></div><script>
+
+let hp = 100;
+let level = 1;
+let xp = 0;
+let coins = 0;
+
+let potions = 3;
+
+let weapon = "Wood Sword";
+let weaponBonus = 0;
+
+let armor = "Cloth Armor";
+let armorBonus = 0;
+
+let loot = "None";
+
+let questProgress = 0;
+
+let currentLocation = "Village";
+
+let monsterName = "👹 Slime";
+let monsterHp = 50;
+
+function update(){
+
+document.getElementById("hp").innerText = hp;
+document.getElementById("level").innerText = level;
+document.getElementById("xp").innerText = xp;
+document.getElementById("coins").innerText = coins;
+
+document.getElementById("potions").innerText = potions;
+document.getElementById("weapon").innerText = weapon;
+document.getElementById("armor").innerText = armor;
+document.getElementById("loot").innerText = loot;
+
+document.getElementById("location").innerText =
+currentLocation;
+
+document.getElementById("monsterName").innerText =
+monsterName;
+
+document.getElementById("monsterHp").innerText =
+monsterHp;
+
+document.getElementById("questProgress").innerText =
+questProgress;
+
+}
+
+function travel(place){
+
+currentLocation = place;
+
+if(place==="Village"){
+monsterName="👹 Slime";
+monsterHp=50;
+}
+
+if(place==="Forest"){
+monsterName="🐺 Wolf";
+monsterHp=100;
+}
+
+if(place==="Cave"){
+monsterName="🕷️ Giant Spider";
+monsterHp=150;
+}
+
+if(place==="Mountain"){
+monsterName="🧊 Ice Golem";
+monsterHp=250;
+}
+
+if(place==="Volcano"){
+monsterName="🔥 Lava Beast";
+monsterHp=350;
+}
+
+if(place==="Castle"){
+monsterName="🐉 Dragon King";
+monsterHp=500;
+}
+
+document.getElementById("message").innerText =
+"Travelled to " + place;
+
+update();
+
+}
+
+function attack(){
+
+let damage = 10 + weaponBonus;
+
+monsterHp -= damage;
+
+if(monsterHp <= 0){
+
+monsterHp = 0;
+
+coins += 25;
+xp += 20;
+questProgress++;
+
+let drops = [
+"⚪ Common Gem",
+"🔵 Rare Gem",
+"🟣 Epic Gem",
+"🟠 Legendary Gem"
+];
+
+loot =
+drops[Math.floor(Math.random()*drops.length)];
+
+document.getElementById("message").innerText =
+"🏆 Monster Defeated!";
+
+if(xp >= 100){
+
+xp = 0;
+level++;
+
+}
+
+setTimeout(function(){
+
+travel(currentLocation);
+
+},1000);
+
+}else{
+
+hp -= Math.max(1,5-armorBonus);
+
+}
+
+update();
+
+}
+
+function specialAttack(){
+
+monsterHp -= 25 + weaponBonus;
+
+if(monsterHp < 0){
+monsterHp = 0;
+}
+
+update();
+
+}
+
+function heal(){
+
+hp += 15;
+
+if(hp > 100){
+hp = 100;
+}
+
+update();
+
+}
+
+function usePotion(){
+
+if(potions <= 0) return;
+
+potions--;
+
+hp += 40;
+
+if(hp > 100){
+hp = 100;
+}
+
+update();
+
+}
+
+function buyPotion(){
+
+if(coins < 25) return;
+
+coins -= 25;
+potions++;
+
+update();
+
+}
+
+function buySword(){
+
+if(coins < 100) return;
+
+coins -= 100;
+
+weapon = "Iron Sword";
+weaponBonus = 10;
+
+update();
+
+}
+
+function buyArmor(){
+
+if(coins < 100) return;
+
+coins -= 100;
+
+armor = "Iron Armor";
+armorBonus = 3;
+
+update();
+
+}
+
+update();
+
+</script></body>
+</html>
