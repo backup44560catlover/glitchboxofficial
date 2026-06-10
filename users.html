@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>GlitchBoxOfficial Users</title>
+<title>GlitchBoxOfficial User Manager</title>
 
 <style>
+
 body{
 background:black;
 color:#9b59ff;
@@ -18,6 +19,7 @@ border-radius:12px;
 padding:20px;
 margin:20px auto;
 max-width:800px;
+background:#111;
 }
 
 button{
@@ -43,17 +45,6 @@ text-decoration:none;
 color:gold;
 }
 
-.admin{
-color:red;
-}
-
-.mod{
-color:orange;
-}
-
-.creator{
-color:cyan;
-}
 </style>
 
 </head>
@@ -66,11 +57,9 @@ color:cyan;
 
 <h2>📊 User Statistics</h2>
 
-<p>👥 Total Users: 1</p>
-<p>⭐ Verified Users: 1</p>
-<p>🛠️ Admins: 1</p>
-<p>⚔️ Moderators: 1</p>
-<p>🎨 Creators: 1</p>
+<p>👥 Total Users: <span id="userCount">1</span></p>
+<p>⭐ Verified Users: <span id="verifiedCount">1</span></p>
+<p>🚫 Banned Users: <span id="bannedCount">0</span></p>
 
 </div>
 
@@ -80,24 +69,41 @@ color:cyan;
 
 <p class="owner">👑 GlitchBoxOfficial (Owner)</p>
 
-<p class="admin">🛠️ Admin Access Enabled</p>
+</div>
 
-<p class="mod">⚔️ Moderator Access Enabled</p>
+<div class="panel">
 
-<p class="creator">🎨 Creator Access Enabled</p>
+<h2>🛠️ User Controls</h2>
 
-<p>⭐ Verified User</p>
+<p id="userMessage">
+Select an action.
+</p>
+
+<button onclick="addUser()">
+➕ Add User
+</button>
+
+<button onclick="verifyUser()">
+⭐ Verify User
+</button>
+
+<button onclick="banUser()">
+🚫 Ban User
+</button>
+
+<button onclick="removeUser()">
+❌ Remove User
+</button>
 
 </div>
 
 <div class="panel">
 
-<h2>🛠️ Owner Controls</h2>
+<h2>📋 User Log</h2>
 
-<button>Add User</button>
-<button>Verify User</button>
-<button>Ban User</button>
-<button>Remove User</button>
+<p id="userLog">
+No actions yet.
+</p>
 
 </div>
 
@@ -105,8 +111,8 @@ color:cyan;
 <button>👑 Owner Panel</button>
 </a>
 
-<a href="profile.html">
-<button>👤 Profile</button>
+<a href="staff.html">
+<button>🛠️ Staff Manager</button>
 </a>
 
 <a href="index.html">
@@ -126,6 +132,77 @@ Unauthorized copying, distribution, or reproduction is prohibited.
 </p>
 
 </footer>
+
+<script>
+
+let users = 1;
+let verified = 1;
+let banned = 0;
+
+function addUser(){
+
+users++;
+
+document.getElementById("userCount").innerText = users;
+
+document.getElementById("userMessage").innerText =
+"✅ User Added";
+
+document.getElementById("userLog").innerText =
+"Last Action: User Added";
+
+}
+
+function verifyUser(){
+
+verified++;
+
+document.getElementById("verifiedCount").innerText =
+verified;
+
+document.getElementById("userMessage").innerText =
+"⭐ User Verified";
+
+document.getElementById("userLog").innerText =
+"Last Action: User Verified";
+
+}
+
+function banUser(){
+
+banned++;
+
+document.getElementById("bannedCount").innerText =
+banned;
+
+document.getElementById("userMessage").innerText =
+"🚫 User Banned";
+
+document.getElementById("userLog").innerText =
+"Last Action: User Banned";
+
+}
+
+function removeUser(){
+
+if(users > 1){
+
+users--;
+
+document.getElementById("userCount").innerText =
+users;
+
+}
+
+document.getElementById("userMessage").innerText =
+"❌ User Removed";
+
+document.getElementById("userLog").innerText =
+"Last Action: User Removed";
+
+}
+
+</script>
 
 </body>
 </html>
