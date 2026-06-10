@@ -37,12 +37,22 @@ background:#9b59ff;
 color:black;
 }
 
+input{
+background:black;
+color:#9b59ff;
+border:2px solid #9b59ff;
+padding:10px;
+border-radius:8px;
+width:250px;
+}
+
 a{
 text-decoration:none;
 }
 
 .owner{
 color:gold;
+font-weight:bold;
 }
 
 </style>
@@ -58,16 +68,10 @@ color:gold;
 <h2>📊 User Statistics</h2>
 
 <p>👥 Total Users: <span id="userCount">1</span></p>
+
 <p>⭐ Verified Users: <span id="verifiedCount">1</span></p>
+
 <p>🚫 Banned Users: <span id="bannedCount">0</span></p>
-
-</div>
-
-<div class="panel">
-
-<h2>👤 Registered Users</h2>
-
-<p class="owner">👑 GlitchBoxOfficial (Owner)</p>
 
 </div>
 
@@ -75,12 +79,19 @@ color:gold;
 
 <h2>🛠️ User Controls</h2>
 
-<p id="userMessage">
-Select an action.
-</p>
+<input
+type="text"
+id="usernameInput"
+placeholder="Enter username">
+
+<br><br>
 
 <button onclick="addUser()">
 ➕ Add User
+</button>
+
+<button onclick="addOwner()">
+👑 Add Owner
 </button>
 
 <button onclick="verifyUser()">
@@ -94,6 +105,24 @@ Select an action.
 <button onclick="removeUser()">
 ❌ Remove User
 </button>
+
+<p id="userMessage">
+Select an action.
+</p>
+
+</div>
+
+<div class="panel">
+
+<h2>👥 User List</h2>
+
+<div id="userList">
+
+<p class="owner">
+👑 GlitchBoxOfficial (Owner)
+</p>
+
+</div>
 
 </div>
 
@@ -121,7 +150,9 @@ No actions yet.
 
 <footer style="margin-top:40px;font-size:14px;">
 
-<p>© 2026 GlitchBoxOfficial. All Rights Reserved.</p>
+<p>
+© 2026 GlitchBoxOfficial. All Rights Reserved.
+</p>
 
 <p>
 GlitchBox, Battle Arena X, logos, artwork, code, and content are the property of GlitchBoxOfficial.
@@ -139,21 +170,75 @@ let users = 1;
 let verified = 1;
 let banned = 0;
 
+function getName(){
+return document.getElementById("usernameInput").value.trim();
+}
+
 function addUser(){
+
+let name = getName();
+
+if(name === ""){
+alert("Enter a username first.");
+return;
+}
+
+let p = document.createElement("p");
+
+p.innerText = "👤 " + name;
+
+document.getElementById("userList").appendChild(p);
 
 users++;
 
 document.getElementById("userCount").innerText = users;
 
 document.getElementById("userMessage").innerText =
-"✅ User Added";
+"✅ Added User: " + name;
 
 document.getElementById("userLog").innerText =
-"Last Action: User Added";
+"Last Action: Added User " + name;
+
+}
+
+function addOwner(){
+
+let name = getName();
+
+if(name === ""){
+alert("Enter a username first.");
+return;
+}
+
+let p = document.createElement("p");
+
+p.className = "owner";
+
+p.innerText =
+"👑 " + name + " (Owner)";
+
+document.getElementById("userList").appendChild(p);
+
+users++;
+
+document.getElementById("userCount").innerText = users;
+
+document.getElementById("userMessage").innerText =
+"👑 Added Owner: " + name;
+
+document.getElementById("userLog").innerText =
+"Last Action: Added Owner " + name;
 
 }
 
 function verifyUser(){
+
+let name = getName();
+
+if(name === ""){
+alert("Enter a username first.");
+return;
+}
 
 verified++;
 
@@ -161,14 +246,21 @@ document.getElementById("verifiedCount").innerText =
 verified;
 
 document.getElementById("userMessage").innerText =
-"⭐ User Verified";
+"⭐ Verified User: " + name;
 
 document.getElementById("userLog").innerText =
-"Last Action: User Verified";
+"Last Action: Verified User " + name;
 
 }
 
 function banUser(){
+
+let name = getName();
+
+if(name === ""){
+alert("Enter a username first.");
+return;
+}
 
 banned++;
 
@@ -176,29 +268,27 @@ document.getElementById("bannedCount").innerText =
 banned;
 
 document.getElementById("userMessage").innerText =
-"🚫 User Banned";
+"🚫 Banned User: " + name;
 
 document.getElementById("userLog").innerText =
-"Last Action: User Banned";
+"Last Action: Banned User " + name;
 
 }
 
 function removeUser(){
 
-if(users > 1){
+let name = getName();
 
-users--;
-
-document.getElementById("userCount").innerText =
-users;
-
+if(name === ""){
+alert("Enter a username first.");
+return;
 }
 
 document.getElementById("userMessage").innerText =
-"❌ User Removed";
+"❌ Removed User: " + name;
 
 document.getElementById("userLog").innerText =
-"Last Action: User Removed";
+"Last Action: Removed User " + name;
 
 }
 
