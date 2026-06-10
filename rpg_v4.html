@@ -47,7 +47,7 @@ color:black;
 
 <button>🐉 Dragon Castle</button>
 
-</div><div class="panel"><h2>🎒 Inventory</h2><p>🧪 Potions: 3</p><p>⚔️ Weapon: Wood Sword</p><p>🛡️ Armor: Cloth Armor</p><p>💎 Loot: None</p></div><div class="panel"><h2>📜 Quests</h2><p>Defeat 3 Monsters</p></div><div class="panel"><h2>👹 Monster Area</h2><p>A wild monster appears...</p><button>⚔️ Attack</button>
+</div><div class="panel"><h2>🎒 Inventory</h2><p>🧪 Potions: 3</p><p>⚔️ Weapon: Wood Sword</p><p>🛡️ Armor: Cloth Armor</p><p>💎 Loot: None</p></div><div class="panel"><h2>📜 Quests</h2><p>Defeat 3 Monsters</p></div><div class="panel"><h2>👹 Monster Area</h2><p id="monster">👹 Slime (50 HP)</p><p id="message">A wild monster appears...</p><button onclick="attack()">⚔️ Attack</button>
 
 <button>🔥 Special</button>
 
@@ -61,5 +61,65 @@ color:black;
 
 <button>Iron Armor (100)</button>
 
-</div></body>
+</div><script>
+
+let hp = 100;
+let level = 1;
+let xp = 0;
+let coins = 0;
+
+let monsterHp = 50;
+
+function update(){
+
+document.getElementById("hp").innerText = hp;
+document.getElementById("level").innerText = level;
+document.getElementById("xp").innerText = xp;
+document.getElementById("coins").innerText = coins;
+
+document.getElementById("monster").innerText =
+"👹 Slime (" + monsterHp + " HP)";
+
+}
+
+function attack(){
+
+monsterHp -= 10;
+
+if(monsterHp <= 0){
+
+monsterHp = 50;
+
+xp += 20;
+coins += 25;
+
+document.getElementById("message").innerText =
+"🏆 Monster Defeated! +25 Coins +20 XP";
+
+if(xp >= 100){
+
+xp = 0;
+level++;
+
+document.getElementById("message").innerText =
+"⭐ LEVEL UP!";
+
+}
+
+}else{
+
+hp -= 5;
+
+document.getElementById("message").innerText =
+"⚔️ You attacked the monster!";
+
+}
+
+update();
+
+}
+
+update();
+
+</script></body>
 </html>
