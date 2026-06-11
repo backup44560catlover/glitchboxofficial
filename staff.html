@@ -4,6 +4,7 @@
 <title>GlitchBoxOfficial Staff Manager</title>
 
 <style>
+
 body{
 background:black;
 color:#9b59ff;
@@ -36,25 +37,39 @@ background:#9b59ff;
 color:black;
 }
 
+input{
+background:black;
+color:#9b59ff;
+border:2px solid #9b59ff;
+padding:10px;
+border-radius:8px;
+width:250px;
+}
+
 a{
 text-decoration:none;
 }
 
 .owner{
 color:gold;
+font-weight:bold;
 }
 
 .admin{
 color:red;
+font-weight:bold;
 }
 
 .mod{
 color:orange;
+font-weight:bold;
 }
 
 .creator{
 color:cyan;
+font-weight:bold;
 }
+
 </style>
 
 </head>
@@ -67,31 +82,9 @@ color:cyan;
 
 <h2>👑 Owner</h2>
 
-<p class="owner">👑 GlitchBoxOfficial</p>
-
-</div>
-
-<div class="panel">
-
-<h2>🛠️ Admin Team</h2>
-
-<p class="admin">🛠️ GlitchBoxOfficial</p>
-
-</div>
-
-<div class="panel">
-
-<h2>⚔️ Moderators</h2>
-
-<p class="mod">⚔️ GlitchBoxOfficial</p>
-
-</div>
-
-<div class="panel">
-
-<h2>🎨 Creators</h2>
-
-<p class="creator">🎨 GlitchBoxOfficial</p>
+<p class="owner">
+👑 GlitchBoxOfficial
+</p>
 
 </div>
 
@@ -99,25 +92,58 @@ color:cyan;
 
 <h2>⚙️ Staff Controls</h2>
 
+<input
+type="text"
+id="staffName"
+placeholder="Enter username">
+
+<br><br>
+
+<button onclick="addAdmin()">
+🛠️ Add Admin
+</button>
+
+<button onclick="removeAdmin()">
+❌ Remove Admin
+</button>
+
+<button onclick="addMod()">
+⚔️ Add Moderator
+</button>
+
+<button onclick="removeMod()">
+❌ Remove Moderator
+</button>
+
 <p id="staffMessage">
-Select a staff action.
+Enter a username to manage staff.
 </p>
 
-<button onclick="staffAction('✅ Admin Added')">
-Add Admin
-</button>
+</div>
 
-<button onclick="staffAction('❌ Admin Removed')">
-Remove Admin
-</button>
+<div class="panel">
 
-<button onclick="staffAction('✅ Moderator Added')">
-Add Moderator
-</button>
+<h2>🛠️ Admin Team</h2>
 
-<button onclick="staffAction('❌ Moderator Removed')">
-Remove Moderator
-</button>
+<div id="adminList">
+
+<p class="admin">
+🛠️ GlitchBoxOfficial
+</p>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>⚔️ Moderator Team</h2>
+
+<div id="modList">
+
+<p>No moderators yet.</p>
+
+</div>
 
 </div>
 
@@ -145,7 +171,9 @@ No actions yet.
 
 <footer style="margin-top:40px;font-size:14px;">
 
-<p>© 2026 GlitchBoxOfficial. All Rights Reserved.</p>
+<p>
+© 2026 GlitchBoxOfficial. All Rights Reserved.
+</p>
 
 <p>
 GlitchBox, Battle Arena X, logos, artwork, code, and content are the property of GlitchBoxOfficial.
@@ -159,12 +187,91 @@ Unauthorized copying, distribution, or reproduction is prohibited.
 
 <script>
 
-function staffAction(action){
+function getStaffName(){
+return document.getElementById("staffName").value.trim();
+}
 
-document.getElementById("staffMessage").innerText = action;
+function addAdmin(){
+
+let name = getStaffName();
+
+if(name === ""){
+alert("Enter a username first.");
+return;
+}
+
+let p = document.createElement("p");
+
+p.className = "admin";
+
+p.innerText = "🛠️ " + name;
+
+document.getElementById("adminList").appendChild(p);
+
+document.getElementById("staffMessage").innerText =
+"✅ Added Admin: " + name;
 
 document.getElementById("staffLog").innerText =
-"Last Action: " + action;
+"Last Action: Added Admin " + name;
+
+}
+
+function removeAdmin(){
+
+let name = getStaffName();
+
+if(name === ""){
+alert("Enter a username first.");
+return;
+}
+
+document.getElementById("staffMessage").innerText =
+"❌ Removed Admin: " + name;
+
+document.getElementById("staffLog").innerText =
+"Last Action: Removed Admin " + name;
+
+}
+
+function addMod(){
+
+let name = getStaffName();
+
+if(name === ""){
+alert("Enter a username first.");
+return;
+}
+
+let p = document.createElement("p");
+
+p.className = "mod";
+
+p.innerText = "⚔️ " + name;
+
+document.getElementById("modList").appendChild(p);
+
+document.getElementById("staffMessage").innerText =
+"✅ Added Moderator: " + name;
+
+document.getElementById("staffLog").innerText =
+"Last Action: Added Moderator " + name;
+
+}
+
+function removeMod(){
+
+let name = getStaffName();
+
+if(name === ""){
+alert("Enter a username first.");
+return;
+}
+
+document.getElementById("staffMessage").innerText =
+"❌ Removed Moderator: " + name;
+
+document.getElementById("staffLog").innerText =
+"Last Action: Removed Moderator " + name;
 
 }
 
