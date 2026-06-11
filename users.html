@@ -18,7 +18,7 @@ border:2px solid #9b59ff;
 border-radius:12px;
 padding:20px;
 margin:20px auto;
-max-width:800px;
+max-width:900px;
 background:#111;
 }
 
@@ -26,7 +26,7 @@ button{
 background:black;
 color:#9b59ff;
 border:2px solid #9b59ff;
-padding:10px 20px;
+padding:10px 15px;
 margin:5px;
 cursor:pointer;
 border-radius:8px;
@@ -55,6 +55,25 @@ color:gold;
 font-weight:bold;
 }
 
+.admin{
+color:red;
+font-weight:bold;
+}
+
+.mod{
+color:orange;
+font-weight:bold;
+}
+
+.user{
+color:white;
+}
+
+.banned{
+color:#888;
+text-decoration:line-through;
+}
+
 </style>
 
 </head>
@@ -65,83 +84,117 @@ font-weight:bold;
 
 <div class="panel">
 
-<h2>📊 User Statistics</h2>
+<h2>📊 Statistics</h2>
 
-<p>👥 Total Users: <span id="userCount">1</span></p>
-
-<p>⭐ Verified Users: <span id="verifiedCount">1</span></p>
-
-<p>🚫 Banned Users: <span id="bannedCount">0</span></p>
+<p>👥 Users: <span id="userCount">1</span></p>
+<p>👑 Owners: <span id="ownerCount">1</span></p>
+<p>🛠️ Admins: <span id="adminCount">1</span></p>
+<p>⚔️ Moderators: <span id="modCount">1</span></p>
+<p>🚫 Banned: <span id="bannedCount">0</span></p>
 
 </div>
 
 <div class="panel">
 
-<h2>🛠️ User Controls</h2>
+<h2>⚙️ User Controls</h2>
 
-<input
-type="text"
-id="usernameInput"
-placeholder="Enter username">
+<input type="text" id="nameInput" placeholder="Enter username">
 
 <br><br>
 
-<button onclick="addUser()">
-➕ Add User
-</button>
+<button onclick="addOwner()">👑 Add Owner</button>
+<button onclick="removeOwner()">❌ Remove Owner</button>
 
-<button onclick="addOwner()">
-👑 Add Owner
-</button>
+<br>
 
-<button onclick="verifyUser()">
-⭐ Verify User
-</button>
+<button onclick="addAdmin()">🛠️ Add Admin</button>
+<button onclick="removeAdmin()">❌ Remove Admin</button>
 
-<button onclick="banUser()">
-🚫 Ban User
-</button>
+<br>
 
-<button onclick="removeUser()">
-❌ Remove User
-</button>
+<button onclick="addMod()">⚔️ Add Moderator</button>
+<button onclick="removeMod()">❌ Remove Moderator</button>
 
-<p id="userMessage">
-Select an action.
+<br>
+
+<button onclick="addUser()">👤 Add User</button>
+<button onclick="removeUser()">❌ Remove User</button>
+
+<br>
+
+<button onclick="banUser()">🚫 Ban User</button>
+<button onclick="unbanUser()">✅ Unban User</button>
+
+<p id="message">
+Enter a username.
 </p>
 
 </div>
 
 <div class="panel">
 
-<h2>👥 User List</h2>
+<h2>👑 Owners</h2>
 
-<div id="userList">
-
-<p class="owner">
-👑 GlitchBoxOfficial (Owner)
-</p>
-
+<div id="owners">
+<p class="owner">👑 GlitchBoxOfficial</p>
 </div>
 
 </div>
 
 <div class="panel">
 
-<h2>📋 User Log</h2>
+<h2>🛠️ Admins</h2>
 
-<p id="userLog">
+<div id="admins">
+<p class="admin">🛠️ GlitchBoxOfficial</p>
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>⚔️ Moderators</h2>
+
+<div id="mods">
+<p class="mod">⚔️ GlitchBoxOfficial</p>
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>👤 Users</h2>
+
+<div id="users">
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>🚫 Banned Users</h2>
+
+<div id="bannedUsers">
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>📋 Action Log</h2>
+
+<p id="log">
 No actions yet.
 </p>
 
 </div>
 
-<a href="ownerpanel.html">
-<button>👑 Owner Panel</button>
-</a>
-
 <a href="staff.html">
 <button>🛠️ Staff Manager</button>
+</a>
+
+<a href="ownerpanel.html">
+<button>👑 Owner Panel</button>
 </a>
 
 <a href="index.html">
@@ -150,9 +203,7 @@ No actions yet.
 
 <footer style="margin-top:40px;font-size:14px;">
 
-<p>
-© 2026 GlitchBoxOfficial. All Rights Reserved.
-</p>
+<p>© 2026 GlitchBoxOfficial. All Rights Reserved.</p>
 
 <p>
 GlitchBox, Battle Arena X, logos, artwork, code, and content are the property of GlitchBoxOfficial.
@@ -166,44 +217,32 @@ Unauthorized copying, distribution, or reproduction is prohibited.
 
 <script>
 
-let users = 1;
-let verified = 1;
-let banned = 0;
+let userCount = 1;
+let ownerCount = 1;
+let adminCount = 1;
+let modCount = 1;
+let bannedCount = 0;
 
-function getName(){
-return document.getElementById("usernameInput").value.trim();
+function username(){
+return document.getElementById("nameInput").value.trim();
 }
 
-function addUser(){
-
-let name = getName();
-
-if(name === ""){
-alert("Enter a username first.");
-return;
+function updateStats(){
+document.getElementById("userCount").innerText = userCount;
+document.getElementById("ownerCount").innerText = ownerCount;
+document.getElementById("adminCount").innerText = adminCount;
+document.getElementById("modCount").innerText = modCount;
+document.getElementById("bannedCount").innerText = bannedCount;
 }
 
-let p = document.createElement("p");
-
-p.innerText = "👤 " + name;
-
-document.getElementById("userList").appendChild(p);
-
-users++;
-
-document.getElementById("userCount").innerText = users;
-
-document.getElementById("userMessage").innerText =
-"✅ Added User: " + name;
-
-document.getElementById("userLog").innerText =
-"Last Action: Added User " + name;
-
+function logAction(text){
+document.getElementById("message").innerText = text;
+document.getElementById("log").innerText = "Last Action: " + text;
 }
 
 function addOwner(){
 
-let name = getName();
+let name = username();
 
 if(name === ""){
 alert("Enter a username first.");
@@ -211,86 +250,186 @@ return;
 }
 
 let p = document.createElement("p");
-
 p.className = "owner";
+p.innerText = "👑 " + name;
 
-p.innerText =
-"👑 " + name + " (Owner)";
+document.getElementById("owners").appendChild(p);
 
-document.getElementById("userList").appendChild(p);
+ownerCount++;
+userCount++;
 
-users++;
+updateStats();
 
-document.getElementById("userCount").innerText = users;
-
-document.getElementById("userMessage").innerText =
-"👑 Added Owner: " + name;
-
-document.getElementById("userLog").innerText =
-"Last Action: Added Owner " + name;
+logAction("👑 Added Owner: " + name);
 
 }
 
-function verifyUser(){
+function removeOwner(){
 
-let name = getName();
+let name = username();
 
 if(name === ""){
 alert("Enter a username first.");
 return;
 }
 
-verified++;
-
-document.getElementById("verifiedCount").innerText =
-verified;
-
-document.getElementById("userMessage").innerText =
-"⭐ Verified User: " + name;
-
-document.getElementById("userLog").innerText =
-"Last Action: Verified User " + name;
+logAction("❌ Removed Owner: " + name);
 
 }
 
-function banUser(){
+function addAdmin(){
 
-let name = getName();
+let name = username();
 
 if(name === ""){
 alert("Enter a username first.");
 return;
 }
 
-banned++;
+let p = document.createElement("p");
+p.className = "admin";
+p.innerText = "🛠️ " + name;
 
-document.getElementById("bannedCount").innerText =
-banned;
+document.getElementById("admins").appendChild(p);
 
-document.getElementById("userMessage").innerText =
-"🚫 Banned User: " + name;
+adminCount++;
+userCount++;
 
-document.getElementById("userLog").innerText =
-"Last Action: Banned User " + name;
+updateStats();
+
+logAction("🛠️ Added Admin: " + name);
+
+}
+
+function removeAdmin(){
+
+let name = username();
+
+if(name === ""){
+alert("Enter a username first.");
+return;
+}
+
+logAction("❌ Removed Admin: " + name);
+
+}
+
+function addMod(){
+
+let name = username();
+
+if(name === ""){
+alert("Enter a username first.");
+return;
+}
+
+let p = document.createElement("p");
+p.className = "mod";
+p.innerText = "⚔️ " + name;
+
+document.getElementById("mods").appendChild(p);
+
+modCount++;
+userCount++;
+
+updateStats();
+
+logAction("⚔️ Added Moderator: " + name);
+
+}
+
+function removeMod(){
+
+let name = username();
+
+if(name === ""){
+alert("Enter a username first.");
+return;
+}
+
+logAction("❌ Removed Moderator: " + name);
+
+}
+
+function addUser(){
+
+let name = username();
+
+if(name === ""){
+alert("Enter a username first.");
+return;
+}
+
+let p = document.createElement("p");
+p.className = "user";
+p.innerText = "👤 " + name;
+
+document.getElementById("users").appendChild(p);
+
+userCount++;
+
+updateStats();
+
+logAction("👤 Added User: " + name);
 
 }
 
 function removeUser(){
 
-let name = getName();
+let name = username();
 
 if(name === ""){
 alert("Enter a username first.");
 return;
 }
 
-document.getElementById("userMessage").innerText =
-"❌ Removed User: " + name;
-
-document.getElementById("userLog").innerText =
-"Last Action: Removed User " + name;
+logAction("❌ Removed User: " + name);
 
 }
+
+function banUser(){
+
+let name = username();
+
+if(name === ""){
+alert("Enter a username first.");
+return;
+}
+
+let p = document.createElement("p");
+p.className = "banned";
+p.innerText = "🚫 " + name;
+
+document.getElementById("bannedUsers").appendChild(p);
+
+bannedCount++;
+
+updateStats();
+
+logAction("🚫 Banned User: " + name);
+
+}
+
+function unbanUser(){
+
+let name = username();
+
+if(name === ""){
+alert("Enter a username first.");
+return;
+}
+
+if(bannedCount > 0){
+bannedCount--;
+}
+
+updateStats();
+
+logAction("✅ Unbanned User: " + name);
+
+}
+
+updateStats();
 
 </script>
 
