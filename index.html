@@ -1,68 +1,262 @@
-<!DOCTYPE html><html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>GlitchBoxOfficial</title><style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlitchBox</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
 
 body{
-background:black;
-color:#9b59ff;
-font-family:Arial,sans-serif;
+    background:#050510;
+    color:white;
+}
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:240px;
+    height:100vh;
+    background:#0d0d1a;
+    border-right:1px solid #222;
+    padding:20px;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#9d4dff;
+    margin-bottom:30px;
+}
+
+.sidebar a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:12px;
+    margin-bottom:8px;
+    border-radius:10px;
+}
+
+.sidebar a:hover{
+    background:#7a2cff;
+}
+
+.main{
+    margin-left:260px;
+    padding:25px;
+}
+
+.hero{
+    background:linear-gradient(135deg,#130027,#22003d,#32005a);
+    border-radius:20px;
+    padding:30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.hero-left h1{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.gold{
+    color:#FFD700;
+}
+
+.rank{
+    color:#bb86fc;
+    font-size:22px;
+}
+
+.team{
+    margin-top:10px;
+    color:#d6b8ff;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:#111122;
+    padding:20px;
+    border-radius:15px;
+    border:1px solid #222;
+}
+
+.card h2{
+    color:#9d4dff;
+    margin-bottom:10px;
+}
+
+.quick{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.quick .card{
+    text-align:center;
+    cursor:pointer;
+}
+
+.news{
+    background:#111122;
+    border-radius:15px;
+    padding:20px;
+}
+
+.news h2{
+    color:#9d4dff;
+    margin-bottom:15px;
+}
+
+@media(max-width:900px){
+
+.stats{
+grid-template-columns:repeat(2,1fr);
+}
+
+.quick{
+grid-template-columns:repeat(2,1fr);
+}
+
+.hero{
+flex-direction:column;
 text-align:center;
-padding-top:40px;
 }
 
-button{
-background:black;
-color:#9b59ff;
-border:2px solid #9b59ff;
-padding:12px 20px;
-font-size:18px;
-margin:8px;
-cursor:pointer;
-border-radius:8px;
+.sidebar{
+display:none;
 }
 
-button:hover{
-background:#9b59ff;
-color:black;
+.main{
+margin-left:0;
 }
-
-.panel{
-border:2px solid #9b59ff;
-border-radius:12px;
-padding:15px;
-margin:20px auto;
-max-width:800px;
 }
+</style>
+</head>
 
-a{
-text-decoration:none;
-}
+<body>
 
-</style></head><body><h1>🎮 GlitchBoxOfficial</h1><p>Enter The Glitch. Own The Game.</p><div class="panel"><h2>🔥 Main Features</h2><a href="games.html">
-<button>🎮 Games</button>
-</a><a href="profile.html">
-<button>👤 Profile</button>
-</a><a href="community.html">
-<button>💬 Community</button>
-</a><a href="create.html">
-<button>🎨 Create</button>
-</a></div><div class="panel"><h2>🏆 Competitive</h2><a href="leaderboards.html">
-<button>🥇 Leaderboards</button>
-</a><a href="dailychallenges.html">
-<button>🎯 Daily Challenges</button>
-</a></div><div class="panel"><h2>🔐 Account</h2><a href="login.html">
-<button>🔐 Login</button>
-</a><a href="register.html">
-<button>📝 Sign Up</button>
-</a></div><div class="panel"><h2>🤝 Management</h2><a href="sponsors.html">
-<button>🤝 Sponsors</button>
-</a><a href="ownerpanel.html">
-<button>👑 Owner Panel</button>
-</a></div><footer style="margin-top:40px;font-size:14px;"><p>
-© 2026 GlitchBoxOfficial. All Rights Reserved.
-</p><p>
-GlitchBox, Battle Arena X, logos, artwork, code, and content are the property of GlitchBoxOfficial.
-</p><p>
-Unauthorized copying, distribution, or reproduction is prohibited.
-</p></footer></body>
+<div class="sidebar">
+
+<div class="logo">GLITCHBOX</div>
+
+<a href="index.html">🏠 Home</a>
+<a href="games.html">🎮 Games</a>
+<a href="shop.html">🛒 Shop</a>
+<a href="profile.html">👤 Profile</a>
+<a href="friends.html">👥 Friends</a>
+<a href="clans.html">🏰 Clans</a>
+<a href="settings.html">⚙ Settings</a>
+
+</div>
+
+<div class="main">
+
+<div class="hero">
+
+<div class="hero-left">
+
+<h1>
+Jordan Clarke
+<span class="gold">✔</span>
+<span class="gold">🔨</span>
+</h1>
+
+<div class="rank">🌌 Glitch God</div>
+
+<div class="team">
+💜 Part of the Official GlitchBox Team
+</div>
+
+</div>
+
+<div>
+<h2>🪙 12,450 Coins</h2>
+<h2>💎 3,250 Gems</h2>
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="card">
+<h2>🏆 Trophies</h2>
+<p>24,850</p>
+</div>
+
+<div class="card">
+<h2>⭐ Level</h2>
+<p>100</p>
+</div>
+
+<div class="card">
+<h2>👥 Friends</h2>
+<p>128</p>
+</div>
+
+<div class="card">
+<h2>🏰 Clans</h2>
+<p>2</p>
+</div>
+
+</div>
+
+<div class="quick">
+
+<div class="card">
+<h2>🎮 Games</h2>
+<p>Browse Games</p>
+</div>
+
+<div class="card">
+<h2>🛒 Shop</h2>
+<p>Marketplace</p>
+</div>
+
+<div class="card">
+<h2>🏆 Tournaments</h2>
+<p>Join Events</p>
+</div>
+
+<div class="card">
+<h2>🤖 AI Assistant</h2>
+<p>Need Help?</p>
+</div>
+
+</div>
+
+<div class="news">
+
+<h2>📰 Latest News</h2>
+
+<p>🚀 Welcome to GlitchBox!</p>
+<br>
+
+<p>💜 Development has officially begun.</p>
+<br>
+
+<p>🏆 Tournaments and Clans coming soon.</p>
+
+</div>
+
+</div>
+
+</body>
 </html>
