@@ -1,54 +1,268 @@
-<!DOCTYPE html><html>
+```html
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>GlitchBoxOfficial Profile</title><style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlitchBox Profile</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
 
 body{
-background:black;
-color:#9b59ff;
-font-family:Arial,sans-serif;
-text-align:center;
+background:#070714;
+color:white;
+}
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+width:250px;
+height:100vh;
+background:#101020;
 padding:20px;
+border-right:1px solid #222;
 }
 
-.panel{
-border:2px solid #9b59ff;
-border-radius:12px;
-padding:20px;
-margin:20px auto;
-max-width:700px;
+.logo{
+font-size:34px;
+font-weight:bold;
+color:#a855ff;
+margin-bottom:30px;
 }
 
-button{
-background:black;
-color:#9b59ff;
-border:2px solid #9b59ff;
-padding:10px 20px;
-margin:5px;
-cursor:pointer;
-border-radius:8px;
-}
-
-button:hover{
-background:#9b59ff;
-color:black;
-}
-
-a{
+.sidebar a{
+display:block;
+color:white;
 text-decoration:none;
+padding:12px;
+margin-bottom:8px;
+border-radius:12px;
+transition:.3s;
 }
 
-</style></head><body><h1>👤 GlitchBox Profile</h1><div class="panel"><h2>🖼️ Avatar</h2><p>Default Avatar</p></div><div class="panel"><h2>📛 Username</h2><p>GlitchBoxOfficial</p></div><div class="panel"><h2>🏅 Roles & Badges</h2><p style="color:gold;">👑 Owner</p><p style="color:red;">🛠️ Admin</p><p style="color:orange;">⚔️ Moderator</p><p style="color:cyan;">🎨 Creator</p><p style="color:lime;">⭐ Verified</p></div><div class="panel"><h2>📝 Bio</h2><p>
-Founder of GlitchBoxOfficial.
-Building games, community features, and Battle Arena X.
-</p></div><div class="panel"><h2>🏆 Stats</h2><p>⭐ Level: 100</p><p>🎮 Games Played: 0</p><p>🏅 Achievements: 0</p></div><div class="panel"><h2>👥 Friends</h2><p>No friends added yet.</p></div><div class="panel"><h2>🎮 Favorite Games</h2><p>⚔️ Battle Arena X</p></div><a href="index.html">
-<button>🏠 Home</button>
-</a><a href="ownerpanel.html">
-<button>👑 Owner Panel</button>
-</a><footer style="margin-top:40px;font-size:14px;"><p>
-© 2026 GlitchBoxOfficial. All Rights Reserved.
-</p><p>
-GlitchBox, Battle Arena X, logos, artwork, code, and content are the property of GlitchBoxOfficial.
-</p><p>
-Unauthorized copying, distribution, or reproduction is prohibited.
-</p></footer></body>
+.sidebar a:hover{
+background:#7c3aed;
+}
+
+.main{
+margin-left:270px;
+padding:25px;
+}
+
+.hero{
+background:linear-gradient(135deg,#120022,#2b0052,#4b0082);
+padding:30px;
+border-radius:25px;
+display:flex;
+align-items:center;
+gap:25px;
+margin-bottom:25px;
+box-shadow:0 0 20px rgba(124,58,237,.4);
+}
+
+.avatar{
+width:140px;
+height:140px;
+border-radius:50%;
+background:linear-gradient(135deg,#7c3aed,#c084fc);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:60px;
+font-weight:bold;
+box-shadow:0 0 25px #7c3aed;
+}
+
+.username{
+font-size:42px;
+font-weight:bold;
+}
+
+.gold{
+background:linear-gradient(
+135deg,
+#fff6b0,
+#ffe066,
+#ffd700,
+#ffbf00,
+#ffd700,
+#fff6b0
+);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+filter:
+drop-shadow(0 0 6px #ffd700)
+drop-shadow(0 0 12px #ffbf00);
+}
+
+.rank{
+margin-top:10px;
+font-size:22px;
+color:#d8b4fe;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+}
+
+.card{
+background:#131325;
+padding:20px;
+border-radius:18px;
+border:1px solid #222;
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-4px);
+box-shadow:0 0 15px rgba(124,58,237,.4);
+}
+
+.card h2{
+color:#c084fc;
+margin-bottom:15px;
+}
+
+.footer{
+text-align:center;
+margin-top:30px;
+color:#777;
+}
+
+@media(max-width:900px){
+
+.sidebar{
+display:none;
+}
+
+.main{
+margin-left:0;
+}
+
+.hero{
+flex-direction:column;
+text-align:center;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">GLITCHBOX</div>
+
+<a href="index.html">🏠 Home</a>
+<a href="profile.html">👤 Profile</a>
+<a href="games.html">🎮 Games</a>
+<a href="shop.html">🛒 Shop</a>
+<a href="friends.html">👥 Friends</a>
+<a href="clans.html">🏰 Clans</a>
+<a href="leaderboards.html">🏆 Leaderboards</a>
+
+</div>
+
+<div class="main">
+
+<div class="hero">
+
+<div class="avatar">
+G
+</div>
+
+<div>
+
+<div class="username">
+Jordan Clarke
+</div>
+
+<div style="font-size:36px;">
+<span class="gold">✔</span>
+<span class="gold">🔨</span>
+</div>
+
+<div class="rank">
+👑 Founder • 🌌 Glitch God
+</div>
+
+<p style="margin-top:10px;">
+💜 Official GlitchBox Team
+</p>
+
+</div>
+
+</div>
+
+<div class="grid">
+
+<div class="card">
+
+<h2>🏅 Badges</h2>
+
+<p>👑 Founder</p>
+<p>🔨 Owner</p>
+<p>🌌 Glitch God</p>
+<p>💜 Official Team</p>
+
+</div>
+
+<div class="card">
+
+<h2>📊 Stats</h2>
+
+<p>⭐ Level: 100</p>
+<p>🪙 Coins: Unlimited</p>
+<p>💎 Gems: Unlimited</p>
+<p>💜 Premium: Active</p>
+
+</div>
+
+<div class="card">
+
+<h2>🎒 Inventory</h2>
+
+<p>⚔ Founder Sword</p>
+<p>👑 Founder Crown</p>
+<p>🌌 Glitch Aura</p>
+<p>💜 Purple Trail</p>
+
+</div>
+
+<div class="card">
+
+<h2>🏰 Clan</h2>
+
+<p>No Clan</p>
+<br>
+<p>Create or join a clan.</p>
+
+</div>
+
+</div>
+
+<div class="footer">
+© 2026 GlitchBox
+</div>
+
+</div>
+
+</body>
 </html>
+```
