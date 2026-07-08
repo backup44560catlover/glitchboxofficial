@@ -1,1 +1,213 @@
- 
+/* ===========================
+   GLITCHBOX V1 THEME
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+:root{
+
+    --bg:#070714;
+    --card:#131325;
+    --sidebar:#101020;
+
+    --purple:#7c3aed;
+    --purple-light:#c084fc;
+
+    --gold:#ffd700;
+
+    --text:#ffffff;
+    --text2:#d8b4fe;
+
+}
+
+body{
+
+    background:var(--bg);
+    color:var(--text);
+
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:var(--purple);
+    border-radius:10px;
+}
+
+/* Sidebar */
+
+.sidebar{
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:260px;
+    height:100vh;
+
+    background:var(--sidebar);
+
+    border-right:1px solid #222;
+
+    padding:25px;
+
+}
+
+.logo{
+
+    font-size:34px;
+    font-weight:bold;
+
+    color:var(--purple-light);
+
+    margin-bottom:35px;
+
+}
+
+.sidebar a{
+
+    display:block;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:14px;
+
+    margin-bottom:10px;
+
+    border-radius:12px;
+
+    transition:.25s;
+
+}
+
+.sidebar a:hover{
+
+    background:var(--purple);
+
+    transform:translateX(5px);
+
+}
+
+/* Main */
+
+.main{
+
+    margin-left:280px;
+
+    padding:30px;
+
+}
+
+/* Cards */
+
+.card{
+
+    background:var(--card);
+
+    border:1px solid #222;
+
+    border-radius:20px;
+
+    padding:20px;
+
+    transition:.25s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 0 20px rgba(124,58,237,.45);
+
+}
+
+/* Buttons */
+
+.button{
+
+    display:inline-block;
+
+    background:var(--purple);
+
+    color:white;
+
+    padding:14px 24px;
+
+    border-radius:12px;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    transition:.25s;
+
+}
+
+.button:hover{
+
+    background:#8b5cf6;
+
+    transform:translateY(-3px);
+
+}
+
+/* Grid */
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+    gap:20px;
+
+}
+
+/* Founder Badges */
+
+.founder{
+
+    color:var(--gold);
+
+    font-weight:bold;
+
+    text-shadow:
+
+    0 0 8px gold,
+
+    0 0 20px gold;
+
+}
+
+/* Mobile */
+
+@media(max-width:900px){
+
+.sidebar{
+
+display:none;
+
+}
+
+.main{
+
+margin-left:0;
+
+padding:20px;
+
+}
+
+} 
