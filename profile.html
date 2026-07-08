@@ -1,268 +1,189 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>GlitchBox Profile</title>
+
+<link rel="stylesheet" href="css/styles.css">
+<script src="js/app.js" defer></script>
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
+.profile-banner{
 
-body{
-background:#070714;
-color:white;
-}
+background:linear-gradient(135deg,#2b0052,#4b0082);
 
-.sidebar{
-position:fixed;
-left:0;
-top:0;
-width:250px;
-height:100vh;
-background:#101020;
-padding:20px;
-border-right:1px solid #222;
-}
+padding:50px;
 
-.logo{
-font-size:34px;
-font-weight:bold;
-color:#a855ff;
-margin-bottom:30px;
-}
-
-.sidebar a{
-display:block;
-color:white;
-text-decoration:none;
-padding:12px;
-margin-bottom:8px;
-border-radius:12px;
-transition:.3s;
-}
-
-.sidebar a:hover{
-background:#7c3aed;
-}
-
-.main{
-margin-left:270px;
-padding:25px;
-}
-
-.hero{
-background:linear-gradient(135deg,#120022,#2b0052,#4b0082);
-padding:30px;
 border-radius:25px;
-display:flex;
-align-items:center;
-gap:25px;
-margin-bottom:25px;
-box-shadow:0 0 20px rgba(124,58,237,.4);
+
+text-align:center;
+
+margin-bottom:30px;
+
 }
 
 .avatar{
-width:140px;
-height:140px;
+
+width:150px;
+height:150px;
+
+margin:auto;
+
 border-radius:50%;
-background:linear-gradient(135deg,#7c3aed,#c084fc);
+
+background:#222;
+
 display:flex;
-align-items:center;
+
 justify-content:center;
-font-size:60px;
-font-weight:bold;
-box-shadow:0 0 25px #7c3aed;
+
+align-items:center;
+
+font-size:70px;
+
+border:5px solid #7c3aed;
+
 }
 
 .username{
-font-size:42px;
-font-weight:bold;
-}
 
-.gold{
-background:linear-gradient(
-135deg,
-#fff6b0,
-#ffe066,
-#ffd700,
-#ffbf00,
-#ffd700,
-#fff6b0
-);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-filter:
-drop-shadow(0 0 6px #ffd700)
-drop-shadow(0 0 12px #ffbf00);
+font-size:42px;
+
+margin-top:20px;
+
+font-weight:bold;
+
 }
 
 .rank{
-margin-top:10px;
+
 font-size:22px;
+
+margin-top:10px;
+
 color:#d8b4fe;
+
 }
 
-.grid{
+.stats{
+
 display:grid;
-grid-template-columns:repeat(2,1fr);
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
 gap:20px;
-}
 
-.card{
-background:#131325;
-padding:20px;
-border-radius:18px;
-border:1px solid #222;
-transition:.3s;
-}
-
-.card:hover{
-transform:translateY(-4px);
-box-shadow:0 0 15px rgba(124,58,237,.4);
-}
-
-.card h2{
-color:#c084fc;
-margin-bottom:15px;
-}
-
-.footer{
-text-align:center;
 margin-top:30px;
-color:#777;
+
 }
 
-@media(max-width:900px){
+.stat{
 
-.sidebar{
-display:none;
-}
+background:#131325;
 
-.main{
-margin-left:0;
-}
+padding:25px;
 
-.hero{
-flex-direction:column;
+border-radius:20px;
+
 text-align:center;
+
 }
 
-.grid{
-grid-template-columns:1fr;
-}
+.stat h2{
+
+color:#c084fc;
+
+margin-bottom:10px;
 
 }
 
 </style>
+
 </head>
 
 <body>
 
 <div class="sidebar">
 
-<div class="logo">GLITCHBOX</div>
+<div class="logo">
+GLITCHBOX
+</div>
 
 <a href="index.html">🏠 Home</a>
-<a href="profile.html">👤 Profile</a>
 <a href="games.html">🎮 Games</a>
 <a href="shop.html">🛒 Shop</a>
 <a href="friends.html">👥 Friends</a>
 <a href="clans.html">🏰 Clans</a>
 <a href="leaderboards.html">🏆 Leaderboards</a>
+<a href="profile.html">👤 Profile</a>
+<a href="settings.html">⚙ Settings</a>
 
 </div>
 
 <div class="main">
 
-<div class="hero">
+<div class="profile-banner">
 
 <div class="avatar">
-G
+👤
 </div>
-
-<div>
 
 <div class="username">
 Jordan Clarke
 </div>
 
-<div style="font-size:36px;">
-<span class="gold">✔</span>
-<span class="gold">🔨</span>
-</div>
-
-<div class="rank">
+<div class="rank founder">
 👑 Founder • 🌌 Glitch God
 </div>
 
-<p style="margin-top:10px;">
-💜 Official GlitchBox Team
-</p>
-
+<div style="font-size:40px;margin-top:15px;">
+<span class="founder">✔</span>
+<span class="founder">🔨</span>
 </div>
 
 </div>
 
-<div class="grid">
+<div class="stats">
 
-<div class="card">
-
-<h2>🏅 Badges</h2>
-
-<p>👑 Founder</p>
-<p>🔨 Owner</p>
-<p>🌌 Glitch God</p>
-<p>💜 Official Team</p>
-
+<div class="stat">
+<h2>🪙 Coins</h2>
+Unlimited
 </div>
 
-<div class="card">
-
-<h2>📊 Stats</h2>
-
-<p>⭐ Level: 100</p>
-<p>🪙 Coins: Unlimited</p>
-<p>💎 Gems: Unlimited</p>
-<p>💜 Premium: Active</p>
-
+<div class="stat">
+<h2>💎 Gems</h2>
+Unlimited
 </div>
 
-<div class="card">
-
-<h2>🎒 Inventory</h2>
-
-<p>⚔ Founder Sword</p>
-<p>👑 Founder Crown</p>
-<p>🌌 Glitch Aura</p>
-<p>💜 Purple Trail</p>
-
+<div class="stat">
+<h2>🏆 Level</h2>
+999
 </div>
 
-<div class="card">
+<div class="stat">
+<h2>👥 Friends</h2>
+0
+</div>
 
+<div class="stat">
 <h2>🏰 Clan</h2>
-
-<p>No Clan</p>
-<br>
-<p>Create or join a clan.</p>
-
+Founder
 </div>
 
+<div class="stat">
+<h2>🎖 Achievements</h2>
+All Unlocked
 </div>
 
-<div class="footer">
-© 2026 GlitchBox
 </div>
 
 </div>
 
 </body>
+
 </html>
-```
