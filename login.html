@@ -179,11 +179,41 @@ document.getElementById("loginForm").addEventListener("submit",function(e){
 
 e.preventDefault();
 
-const username=document.getElementById("username").value;
+const username=document.getElementById("username").va
+lue;
 
 login(username,"Player");
 
 window.location.href="index.html";
+
+});
+
+<script>
+
+document.getElementById("loginForm").addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    const username = document.getElementById("username").value;
+
+    const password = document.getElementById("password").value;
+
+    // Temporary login (real login comes later)
+    login(username,"Player");
+
+    // Remember username
+    localStorage.setItem("gb_username", username);
+
+    // First time on this device?
+    if(localStorage.getItem("gb_device")==null){
+
+        window.location.href="device-setup.html";
+
+    }else{
+
+        window.location.href="index.html";
+
+    }
 
 });
 
