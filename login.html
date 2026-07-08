@@ -1,102 +1,193 @@
-<!DOCTYPE html><html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>GlitchBoxOfficial Login</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
-body{
-  background:black;
-  color:#9b59ff;
-  font-family:Arial,sans-serif;
-  text-align:center;
-  padding-top:100px;
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GlitchBox Login</title>
+
+<link rel="stylesheet" href="css/styles.css">
+
+<script src="js/app.js" defer></script>
+
+<style>
+
+.login-box{
+
+width:420px;
+
+max-width:95%;
+
+margin:80px auto;
+
+background:var(--card);
+
+padding:35px;
+
+border-radius:20px;
+
+text-align:center;
+
+box-shadow:0 0 25px rgba(124,58,237,.35);
+
+}
+
+.logo{
+
+font-size:42px;
+
+font-weight:bold;
+
+color:var(--purple-light);
+
+margin-bottom:15px;
+
+}
+
+.subtitle{
+
+color:var(--text2);
+
+margin-bottom:30px;
+
 }
 
 input{
-  background:black;
-  color:#9b59ff;
-  border:2px solid #9b59ff;
-  padding:10px;
-  width:250px;
-  margin:5px;
+
+width:100%;
+
+padding:15px;
+
+margin-bottom:18px;
+
+border:none;
+
+border-radius:12px;
+
+background:#1b1b30;
+
+color:white;
+
+font-size:16px;
+
+}
+
+input:focus{
+
+outline:2px solid var(--purple);
+
 }
 
 button{
-  background:black;
-  color:#9b59ff;
-  border:2px solid #9b59ff;
-  padding:10px 20px;
-  margin:5px;
-  cursor:pointer;
+
+width:100%;
+
+padding:15px;
+
+background:var(--purple);
+
+color:white;
+
+border:none;
+
+border-radius:12px;
+
+font-size:18px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.25s;
+
 }
 
-a{
-  color:#9b59ff;
-}
-</style></head><body><h1>GlitchBoxOfficial</h1><h2>Login</h2><input id="email" type="email" placeholder="Email"><br><input id="password" type="password" placeholder="Password"><br><br>
+button:hover{
 
-<button onclick="loginUser()">
+background:#8b5cf6;
+
+transform:translateY(-2px);
+
+}
+
+.links{
+
+margin-top:20px;
+
+}
+
+.links a{
+
+color:var(--purple-light);
+
+text-decoration:none;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+<div class="logo">
+🎮 GLITCHBOX
+</div>
+
+<div class="subtitle">
+Enter the Glitch. Own the Game.
+</div>
+
+<form id="loginForm">
+
+<input
+type="text"
+id="username"
+placeholder="Username"
+required>
+
+<input
+type="password"
+id="password"
+placeholder="Password"
+required>
+
+<button type="submit">
 Login
-</button><br><br>
+</button>
 
-<a href="register.html">Create Account</a>
+</form>
 
-<br><br>
+<div class="links">
 
-<a href="index.html">Back Home</a>
+<br>
+
+<a href="signup.html">
+Create Account
+</a>
+
+</div>
+
+</div>
 
 <script>
-const supabaseClient = window.supabase.createClient(
-  "https://syjnlgxghgwvqrwtthmr.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI"
-);
 
-async function loginUser() {
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+document.getElementById("loginForm").addEventListener("submit",function(e){
 
-const { error } = await supabaseClient.auth.signInWithPassword({
-email: email,
-password: password
+e.preventDefault();
+
+const username=document.getElementById("username").value;
+
+login(username,"Player");
+
+window.location.href="index.html";
+
 });
 
-if (error) {
-alert(error.message);
-} else {
-alert("Login successful!");
-}
-}
-<footer style="margin-top:40px;color:#00ffff;font-size:14px;">
-
-<p>
-© 2026 GlitchBoxOfficial. All Rights Reserved.
-</p>
-
-<p>
-GlitchBox, Battle Arena X, logos, artwork, code, and content are the property of GlitchBoxOfficial.
-</p>
-
-<p>
-Unauthorized copying, distribution, or reproduction is prohibited.
-</p>
-
-</footer>
-<footer style="margin-top:40px;color:#00ffff;font-size:14px;">
-
-<p>
-© 2026 GlitchBoxOfficial. All Rights Reserved.
-</p>
-
-<p>
-GlitchBox, Battle Arena X, logos, artwork, code, and content are the property of GlitchBoxOfficial.
-</p>
-
-<p>
-Unauthorized copying, distribution, or reproduction is prohibited.
-</p>
-
-</footer>
+</script>
 
 </body>
-</html>
-</body>
-</html>
-</script></body>
 </html>
