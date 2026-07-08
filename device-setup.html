@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GlitchBox Device Setup</title>
+
+<link rel="stylesheet" href="css/styles.css">
+
+<style>
+
+body{
+background:#070714;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+}
+
+.setup{
+background:#131325;
+padding:40px;
+border-radius:20px;
+width:700px;
+max-width:100%;
+box-shadow:0 0 25px rgba(124,58,237,.4);
+}
+
+h1{
+text-align:center;
+color:#c084fc;
+margin-bottom:10px;
+}
+
+p{
+text-align:center;
+color:#d8b4fe;
+margin-bottom:30px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+}
+
+.device{
+background:#1b1b30;
+border:2px solid transparent;
+padding:20px;
+border-radius:15px;
+text-align:center;
+cursor:pointer;
+transition:.25s;
+font-size:18px;
+}
+
+.device:hover{
+border-color:#7c3aed;
+transform:translateY(-4px);
+}
+
+.selected{
+border-color:#7c3aed;
+box-shadow:0 0 15px rgba(124,58,237,.6);
+}
+
+button{
+margin-top:30px;
+width:100%;
+padding:16px;
+font-size:18px;
+font-weight:bold;
+background:#7c3aed;
+color:white;
+border:none;
+border-radius:12px;
+cursor:pointer;
+}
+
+button:hover{
+background:#8b5cf6;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="setup">
+
+<h1>📱 Device Setup</h1>
+
+<p>Select the device you're using.</p>
+
+<div class="grid">
+
+<div class="device" onclick="choose(this,'Windows PC')">🖥️<br>Windows PC</div>
+
+<div class="device" onclick="choose(this,'Mac')">🍎<br>Mac</div>
+
+<div class="device" onclick="choose(this,'Android')">🤖<br>Android</div>
+
+<div class="device" onclick="choose(this,'iPhone')">📱<br>iPhone</div>
+
+<div class="device" onclick="choose(this,'Chromebook')">💻<br>Chromebook</div>
+
+<div class="device" onclick="choose(this,'Steam Deck')">🎮<br>Steam Deck</div>
+
+<div class="device" onclick="choose(this,'Xbox')">🟢<br>Xbox</div>
+
+<div class="device" onclick="choose(this,'PlayStation')">🔵<br>PlayStation</div>
+
+<div class="device" onclick="choose(this,'Nintendo Switch')">🔴<br>Nintendo Switch</div>
+
+<div class="device" onclick="choose(this,'Other')">❓<br>Other</div>
+
+</div>
+
+<button onclick="finish()">Continue</button>
+
+</div>
+
+<script>
+
+let selectedDevice="";
+
+function choose(card,name){
+
+document.querySelectorAll(".device").forEach(d=>d.classList.remove("selected"));
+
+card.classList.add("selected");
+
+selectedDevice=name;
+
+}
+
+function finish(){
+
+if(selectedDevice===""){
+
+alert("Please choose a device.");
+
+return;
+
+}
+
+localStorage.setItem("gb_device",selectedDevice);
+
+window.location.href="index.html";
+
+}
+
+</script>
+
+</body>
+</html>
