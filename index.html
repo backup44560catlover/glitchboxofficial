@@ -1,204 +1,59 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GlitchBox</title>
+
+<title>GlitchBox Home</title>
+
+<link rel="stylesheet" href="css/styles.css">
+<script src="js/app.js" defer></script>
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-background:#070714;
-color:white;
-overflow-x:hidden;
-}
-
-.sidebar{
-position:fixed;
-left:0;
-top:0;
-width:250px;
-height:100vh;
-background:#101020;
-border-right:1px solid #222;
-padding:20px;
-z-index:100;
-}
-
-.logo{
-font-size:34px;
-font-weight:bold;
-color:#a855ff;
-margin-bottom:30px;
-}
-
-.sidebar a{
-display:block;
-text-decoration:none;
-color:white;
-padding:12px;
-margin-bottom:8px;
-border-radius:12px;
-transition:.3s;
-}
-
-.sidebar a:hover{
-background:#7c3aed;
-transform:translateX(4px);
-}
-
-.main{
-margin-left:270px;
-padding:25px;
-}
-
-.hero{
-background:linear-gradient(
-135deg,
-#120022,
-#2b0052,
-#4b0082
-);
-padding:30px;
-border-radius:25px;
+.header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:25px;
-box-shadow:0 0 25px rgba(124,58,237,.4);
-}
-
-.profile{
-display:flex;
-align-items:center;
-gap:25px;
-}
-
-.avatar{
-width:130px;
-height:130px;
-border-radius:50%;
-background:linear-gradient(
-135deg,
-#7c3aed,
-#c084fc
-);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:54px;
-font-weight:bold;
-box-shadow:
-0 0 20px #7c3aed,
-0 0 40px #7c3aed;
-}
-
-.username{
-font-size:42px;
-font-weight:bold;
-}
-
-.badges{
-font-size:36px;
-margin-top:8px;
-}
-
-.gold{
-background:linear-gradient(
-135deg,
-#fff6b0,
-#ffe066,
-#ffd700,
-#ffbf00,
-#ffd700,
-#fff6b0
-);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-filter:
-drop-shadow(0 0 8px #ffd700)
-drop-shadow(0 0 16px #ffbf00);
-}
-
-.rank{
-margin-top:10px;
-font-size:22px;
-color:#d8b4fe;
-}
-
-.team{
-margin-top:10px;
-color:#f3e8ff;
-}
-
-.founder-stats{
-text-align:right;
-}
-
-.founder-stats h2{
-margin-bottom:12px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:15px;
-margin-bottom:25px;
-}
-
-.card{
-background:#131325;
-padding:20px;
-border-radius:18px;
-border:1px solid #222;
-transition:.3s;
-}
-
-.card:hover{
-transform:translateY(-4px);
-box-shadow:0 0 15px rgba(124,58,237,.4);
-}
-
-.footer{
-text-align:center;
-margin-top:30px;
-color:#777;
-}
-
-@media(max-width:900px){
-
-.sidebar{
-display:none;
-}
-
-.main{
-margin-left:0;
+padding:25px;
+background:#101020;
+border-bottom:1px solid #222;
 }
 
 .hero{
-flex-direction:column;
+margin:30px;
+padding:40px;
+border-radius:25px;
+background:linear-gradient(135deg,#2b0052,#4b0082);
 text-align:center;
-gap:20px;
 }
 
-.profile{
-flex-direction:column;
+.hero h1{
+font-size:48px;
+margin-bottom:10px;
 }
 
-.grid{
-grid-template-columns:repeat(2,1fr);
+.hero p{
+font-size:20px;
+color:#e9d5ff;
 }
 
+.dashboard{
+padding:30px;
 }
+
+.card h2{
+margin-bottom:10px;
+color:#c084fc;
+}
+
+.logout{
+cursor:pointer;
+}
+
 </style>
+
 </head>
 
 <body>
@@ -210,374 +65,87 @@ grid-template-columns:repeat(2,1fr);
 <a href="index.html">🏠 Home</a>
 <a href="games.html">🎮 Games</a>
 <a href="shop.html">🛒 Shop</a>
-<a href="profile.html">👤 Profile</a>
-<a href="inventory.html">🎒 Inventory</a>
 <a href="friends.html">👥 Friends</a>
 <a href="clans.html">🏰 Clans</a>
 <a href="leaderboards.html">🏆 Leaderboards</a>
-<a href="trading.html">💱 Trading</a>
+<a href="profile.html">👤 Profile</a>
 <a href="settings.html">⚙ Settings</a>
-<a href="support.html">📧 Support</a>
+
+<!-- Hidden by default. We'll enable this later for staff accounts. -->
+<a href="owner.html" id="staffLink" style="display:none;">⚡ Control Center</a>
 
 </div>
 
 <div class="main">
 
+<div class="header">
+
+<h2>Welcome to GlitchBox</h2>
+
+<a class="button logout" onclick="logout()">
+Logout
+</a>
+
+</div>
+
 <div class="hero">
 
-<div class="profile">
+<h1>🎮 Enter the Glitch</h1>
 
-<div class="avatar">
-G
-</div>
-
-<div>
-
-<div class="username">
-Jordan Clarke
-</div>
-
-<div class="badges">
-<span class="gold">✔</span>
-<span class="gold">🔨</span>
-</div>
-
-<div class="rank">
-👑 Founder • 🌌 Glitch God
-</div>
-
-<div class="team">
-💜 Part of the Official GlitchBox Team
-</div>
+<p>Own the Game.</p>
 
 </div>
 
-</div>
-
-<div class="founder-stats">
-
-<h2>🪙 Unlimited Coins</h2>
-<h2>💎 Unlimited Gems</h2>
-<h2>⭐ Founder Access</h2>
-
-</div>
-
-</div>
-```html
-<div class="grid">
-
-<div class="card">
-<h3>🏆 Trophies</h3>
-Founder Account
-</div>
-
-<div class="card">
-<h3>⭐ Level</h3>
-100
-</div>
-
-<div class="card">
-<h3>👥 Friends</h3>
-0
-</div>
-
-<div class="card">
-<h3>🏰 Clans</h3>
-0
-</div>
-
-</div>
-
-<div class="card" style="margin-bottom:20px;">
-
-<h3>🎮 Featured Games</h3>
+<div class="dashboard">
 
 <div class="grid">
 
 <div class="card">
-<h3>⚔ Battle Arena</h3>
-Fight players and climb the leaderboard.
+<h2>🪙 Coins</h2>
+<p>0</p>
 </div>
 
 <div class="card">
-<h3>🚀 Space Tycoon</h3>
-Build your own galaxy empire.
+<h2>💎 Gems</h2>
+<p>0</p>
 </div>
 
 <div class="card">
-<h3>🏰 Kingdom Wars</h3>
-Lead your clan to victory.
+<h2>🏆 Level</h2>
+<p>1</p>
 </div>
 
 <div class="card">
-<h3>🛠 Coming Soon</h3>
-More games are being developed.
-</div>
-
-</div>
-
-</div>
-
-<div class="card" style="margin-bottom:20px;">
-
-<h3>🏅 Badge Showcase</h3>
-
-<p>👑 Founder</p>
-<p>🔨 Owner</p>
-<p>🌌 Glitch God</p>
-<p>💜 Official Team</p>
-
-</div>
-
-<div class="card" style="margin-bottom:20px;">
-
-<h3>👥 Friends Online</h3>
-
-<p>No friends online.</p>
-
-</div>
-
-<div class="card" style="margin-bottom:20px;">
-
-<h3>🏰 Clan Activity</h3>
-
-<p>Create or join a clan to begin your journey.</p>
-
-</div>
-
-<div class="card" style="margin-bottom:20px;">
-
-<h3>📊 Founder Stats</h3>
-
-<p>Coins: Unlimited</p>
-<p>Gems: Unlimited</p>
-<p>Premium: Active</p>
-<p>Rank: Glitch God</p>
-
-</div>
-```
-```html
-<div class="card" style="margin-bottom:20px;">
-
-<h3>🎁 Daily Rewards</h3>
-
-<div class="grid">
-
-<div class="card">Day 1<br>100 Coins ✅</div>
-<div class="card">Day 2<br>200 Coins</div>
-<div class="card">Day 3<br>300 Coins</div>
-<div class="card">Day 4<br>400 Coins</div>
-
-</div>
-
-</div>
-
-<div class="card" style="margin-bottom:20px;">
-
-<h3>📰 GlitchBox News</h3>
-
-<p>🚀 GlitchBox development is progressing.</p>
-<br>
-
-<p>🏰 Clan system planned.</p>
-<br>
-
-<p>💱 Trading system planned.</p>
-<br>
-
-<p>🏆 Tournaments coming soon.</p>
-
-</div>
-
-<div class="card" style="margin-bottom:20px;">
-
-<h3>🛒 Featured Shop</h3>
-
-<div class="grid">
-
-<div class="card">
-⚔ Founder Sword
-<br><br>
-FREE
+<h2>👥 Friends</h2>
+<p>0</p>
 </div>
 
 <div class="card">
-👑 Founder Crown
-<br><br>
-FREE
+<h2>🏰 Clan</h2>
+<p>None</p>
 </div>
 
 <div class="card">
-🌌 Glitch Aura
-<br><br>
-FREE
-</div>
-
-<div class="card">
-💜 Purple Trail
-<br><br>
-FREE
+<h2>🎁 Daily Reward</h2>
+<p>Ready to Claim</p>
 </div>
 
 </div>
 
 </div>
 
-<div class="card" style="margin-bottom:20px;">
-
-<h3>🤖 Glitch AI Assistant</h3>
-
-<p>
-Need help?
-<br><br>
-Ask Glitch AI about:
-</p>
-
-<br>
-
-<p>🎮 Games</p>
-<p>👥 Friends</p>
-<p>🏰 Clans</p>
-<p>🛒 Shop</p>
-<p>⚙ Account Settings</p>
-
 </div>
 
-<div class="card" style="margin-bottom:20px;">
+<script>
 
-<h3>⚡ Quick Access</h3>
+/* This is temporary.
+Later the backend will decide who can see this. */
 
-<div class="grid">
+if(hasRole("Moderator")){
+    document.getElementById("staffLink").style.display="block";
+}
 
-<div class="card">
-👤 Profile
-</div>
-
-<div class="card">
-🎒 Inventory
-</div>
-
-<div class="card">
-🏆 Leaderboards
-</div>
-
-<div class="card">
-📧 Support
-</div>
-
-</div>
-
-</div>
-```
-```html
-<div class="card" style="margin-bottom:20px;">
-
-<h3>🔔 Notifications</h3>
-
-<p>🎉 Welcome back Founder!</p>
-<br>
-<p>🏰 Clan System is under development.</p>
-<br>
-<p>🎮 New games arriving soon.</p>
-
-</div>
-
-<div class="card" style="margin-bottom:20px;">
-
-<h3>🏆 Season Pass</h3>
-
-<p>Season 1 Progress</p>
-
-<br>
-
-<div style="
-width:100%;
-height:20px;
-background:#222;
-border-radius:10px;
-overflow:hidden;">
-
-<div style="
-width:100%;
-height:100%;
-background:linear-gradient(90deg,#7c3aed,#c084fc);">
-</div>
-
-</div>
-
-<br>
-
-<p>Level 100 / 100</p>
-<p>👑 Founder Bonus Active</p>
-
-</div>
-
-<div class="card" style="margin-bottom:20px;">
-
-<h3>📈 Platform Statistics</h3>
-
-<p>👥 Users: 0</p>
-<p>🎮 Games: 4</p>
-<p>🏰 Clans: 0</p>
-<p>💱 Trades: 0</p>
-<p>🏆 Tournaments: 0</p>
-
-</div>
-
-<div class="card" style="margin-bottom:20px;">
-
-<h3>🔥 Trending Games</h3>
-
-<div class="grid">
-
-<div class="card">
-⚔ Battle Arena
-<br><br>
-Trending #1
-</div>
-
-<div class="card">
-🚀 Space Tycoon
-<br><br>
-Trending #2
-</div>
-
-<div class="card">
-🏰 Kingdom Wars
-<br><br>
-Trending #3
-</div>
-
-<div class="card">
-🎮 Coming Soon
-<br><br>
-Future Release
-</div>
-
-</div>
-
-</div>
-
-<div class="card" style="margin-bottom:20px;">
-
-<h3>👑 Founder Panel</h3>
-
-<p>✔ Founder Verification</p>
-<p>🔨 Owner Access</p>
-<p>💎 Premium Active</p>
-<p>🪙 Unlimited Coins</p>
-<p>💎 Unlimited Gems</p>
-<p>🌌 Glitch God Rank</p>
-
-</div>
-```
-
-<div class="footer">
-© 2026 GlitchBox
-</div>
-
-</div>
+</script>
 
 </body>
 </html>
-```
