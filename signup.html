@@ -1,128 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Create Account - GlitchBox</title>
+
+<title>Create Account | GlitchBox</title>
+
+<link rel="stylesheet" href="css/styles.css">
+<script src="js/app.js" defer></script>
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
+.signup-box{
 
-body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(135deg,#070714,#120022,#2b0052,#4b0082);
-color:white;
-}
+width:450px;
+max-width:95%;
 
-.container{
-width:420px;
+margin:60px auto;
+
 background:#131325;
+
 padding:35px;
-border-radius:25px;
-border:1px solid #222;
-box-shadow:0 0 25px rgba(124,58,237,.45);
+
+border-radius:20px;
+
+box-shadow:0 0 25px rgba(124,58,237,.35);
+
 }
 
 .logo{
-font-size:40px;
-font-weight:bold;
+
 text-align:center;
-color:#a855ff;
+
+font-size:40px;
+
+font-weight:bold;
+
+color:#c084fc;
+
 margin-bottom:10px;
+
 }
 
 .subtitle{
+
 text-align:center;
+
 color:#d8b4fe;
-margin-bottom:25px;
+
+margin-bottom:30px;
+
 }
 
 input{
-width:100%;
-padding:14px;
-margin-bottom:15px;
-border-radius:12px;
-border:1px solid #333;
-background:#0d0d18;
-color:white;
-font-size:16px;
-}
 
-input:focus{
-outline:none;
-border-color:#7c3aed;
+width:100%;
+
+padding:15px;
+
+margin-bottom:15px;
+
+border:none;
+
+border-radius:12px;
+
+background:#1b1b30;
+
+color:white;
+
+font-size:16px;
+
 }
 
 button{
+
 width:100%;
-padding:14px;
-border:none;
-border-radius:12px;
+
+padding:15px;
+
 background:#7c3aed;
+
 color:white;
-font-size:17px;
+
+border:none;
+
+border-radius:12px;
+
+font-size:18px;
+
 font-weight:bold;
+
 cursor:pointer;
-transition:.3s;
+
+transition:.25s;
+
 }
 
 button:hover{
+
 background:#8b5cf6;
+
 }
 
 .links{
+
 margin-top:20px;
+
 text-align:center;
+
 }
 
 .links a{
-color:#c084fc;
-text-decoration:none;
-}
 
-.footer{
-margin-top:20px;
-text-align:center;
-color:#777;
-font-size:14px;
+color:#c084fc;
+
+text-decoration:none;
+
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
+<div class="signup-box">
 
 <div class="logo">
-GLITCHBOX
+
+🎮 GLITCHBOX
+
 </div>
 
 <div class="subtitle">
+
 Create Your Account
+
 </div>
 
-<form onsubmit="signup(event)">
+<form id="signupForm">
 
-<input type="text" placeholder="Username" required>
+<input
+type="text"
+id="username"
+placeholder="Username"
+required>
 
-<input type="email" placeholder="Email Address" required>
+<input
+type="email"
+id="email"
+placeholder="Email"
+required>
 
-<input type="password" placeholder="Password" required>
+<input
+type="password"
+id="password"
+placeholder="Password"
+required>
 
-<input type="password" placeholder="Confirm Password" required>
+<input
+type="password"
+id="confirm"
+placeholder="Confirm Password"
+required>
 
 <button type="submit">
+
 Create Account
+
 </button>
 
 </form>
@@ -133,13 +179,11 @@ Already have an account?
 
 <br><br>
 
-<a href="login.html">Login Here</a>
+<a href="login.html">
 
-</div>
+Login
 
-<div class="footer">
-
-© 2026 GlitchBox
+</a>
 
 </div>
 
@@ -147,17 +191,29 @@ Already have an account?
 
 <script>
 
-function signup(event){
+document.getElementById("signupForm").addEventListener("submit",function(e){
 
-event.preventDefault();
+e.preventDefault();
 
-alert("Account created successfully!");
+const password=document.getElementById("password").value;
+const confirm=document.getElementById("confirm").value;
+
+if(password!==confirm){
+
+alert("Passwords do not match.");
+
+return;
+
+}
+
+alert("Account created! (Temporary demo)");
 
 window.location.href="login.html";
 
-}
+});
 
 </script>
 
 </body>
+
 </html>
