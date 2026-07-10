@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -9,120 +10,83 @@
 
 <link rel="stylesheet" href="css/styles.css">
 
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- GlitchBox Scripts -->
+<script src="js/config.js"></script>
+<script src="js/supabase.js"></script>
 <script src="js/app.js" defer></script>
 
 <style>
 
+body{
+background:#070714;
+}
+
 .login-box{
-
 width:420px;
-
 max-width:95%;
-
 margin:80px auto;
-
-background:var(--card);
-
+background:#131325;
 padding:35px;
-
 border-radius:20px;
-
 text-align:center;
-
 box-shadow:0 0 25px rgba(124,58,237,.35);
-
 }
 
 .logo{
-
 font-size:42px;
-
 font-weight:bold;
-
-color:var(--purple-light);
-
+color:#c084fc;
 margin-bottom:15px;
-
 }
 
 .subtitle{
-
-color:var(--text2);
-
+color:#d8b4fe;
 margin-bottom:30px;
-
 }
 
 input{
-
 width:100%;
-
 padding:15px;
-
 margin-bottom:18px;
-
 border:none;
-
 border-radius:12px;
-
 background:#1b1b30;
-
 color:white;
-
 font-size:16px;
-
 }
 
 input:focus{
-
-outline:2px solid var(--purple);
-
+outline:2px solid #7c3aed;
 }
 
 button{
-
 width:100%;
-
 padding:15px;
-
-background:var(--purple);
-
+background:#7c3aed;
 color:white;
-
 border:none;
-
 border-radius:12px;
-
 font-size:18px;
-
 font-weight:bold;
-
 cursor:pointer;
-
 transition:.25s;
-
 }
 
 button:hover{
-
 background:#8b5cf6;
-
 transform:translateY(-2px);
-
 }
 
 .links{
-
 margin-top:20px;
-
 }
 
 .links a{
-
-color:var(--purple-light);
-
+color:#c084fc;
 text-decoration:none;
-
 }
 
 </style>
@@ -175,49 +139,28 @@ Create Account
 
 <script>
 
-document.getElementById("loginForm").addEventListener("submit",function(e){
+document.getElementById("loginForm").addEventListener("submit", async function(e){
 
 e.preventDefault();
 
-const username=document.getElementById("username").va
-lue;
+const username=document.getElementById("username").value;
 
-login(username,"Player");
+localStorage.setItem("gb_username",username);
+
+if(localStorage.getItem("gb_device")==null){
+
+window.location.href="device-setup.html";
+
+}else{
 
 window.location.href="index.html";
 
-});
-
-<script>
-
-document.getElementById("loginForm").addEventListener("submit", function(e){
-
-    e.preventDefault();
-
-    const username = document.getElementById("username").value;
-
-    const password = document.getElementById("password").value;
-
-    // Temporary login (real login comes later)
-    login(username,"Player");
-
-    // Remember username
-    localStorage.setItem("gb_username", username);
-
-    // First time on this device?
-    if(localStorage.getItem("gb_device")==null){
-
-        window.location.href="device-setup.html";
-
-    }else{
-
-        window.location.href="index.html";
-
-    }
+}
 
 });
 
 </script>
 
 </body>
+
 </html>
