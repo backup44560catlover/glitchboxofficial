@@ -1,0 +1,241 @@
+```html
+<!-- GLITCHBOX HERO -->
+
+<section class="glitchbox-hero">
+
+    <div class="glitchbox-hero-text">
+
+        <div class="gb-small-logo">GB</div>
+
+        <h1>GLITCHBOX</h1>
+
+        <p>Enter the Glitch. Own the Game.</p>
+
+        <div class="hero-buttons">
+            <a href="games.html" class="gb-button">🎮 Play Games</a>
+            <a href="worlds.html" class="gb-button secondary">🌎 Explore Worlds</a>
+        </div>
+
+    </div>
+
+    <div class="glitchbox-hero-image">
+        <img
+            src="images/glitchbox-console.png"
+            alt="GlitchBox gaming console and controller"
+        >
+    </div>
+
+</section>
+
+<style>
+
+.glitchbox-hero{
+    min-height:520px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:40px;
+    padding:40px;
+    margin-bottom:30px;
+
+    background:
+        radial-gradient(
+            circle at 75% 50%,
+            rgba(168,85,247,.25),
+            transparent 45%
+        ),
+        linear-gradient(
+            135deg,
+            #09000f,
+            #16002b,
+            #08000f
+        );
+
+    border:1px solid rgba(168,85,247,.35);
+    border-radius:25px;
+
+    box-shadow:
+        0 0 30px rgba(124,58,237,.25),
+        inset 0 0 40px rgba(124,58,237,.08);
+
+    overflow:hidden;
+}
+
+.glitchbox-hero-text{
+    flex:1;
+    max-width:500px;
+}
+
+.gb-small-logo{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    width:75px;
+    height:75px;
+
+    margin-bottom:20px;
+
+    font-size:34px;
+    font-weight:900;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #a855f7,
+            #22c55e
+        );
+
+    border-radius:18px;
+
+    box-shadow:
+        0 0 15px #8b5cf6,
+        0 0 35px rgba(168,85,247,.45);
+}
+
+.glitchbox-hero h1{
+    margin:0;
+
+    font-size:64px;
+    font-weight:900;
+    letter-spacing:4px;
+
+    color:white;
+
+    text-shadow:
+        0 0 10px #a855f7,
+        0 0 25px #7c3aed,
+        0 0 45px rgba(168,85,247,.6);
+}
+
+.glitchbox-hero p{
+    margin:15px 0 30px;
+
+    font-size:24px;
+    color:#d8b4fe;
+}
+
+.hero-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:15px;
+}
+
+.gb-button{
+    display:inline-block;
+
+    padding:15px 25px;
+
+    color:white;
+    text-decoration:none;
+
+    background:#7c3aed;
+
+    border:1px solid #a855f7;
+    border-radius:12px;
+
+    font-weight:bold;
+
+    box-shadow:0 0 15px rgba(124,58,237,.45);
+
+    transition:.25s;
+}
+
+.gb-button:hover{
+    transform:translateY(-3px);
+    background:#8b5cf6;
+
+    box-shadow:
+        0 0 15px #a855f7,
+        0 0 30px rgba(168,85,247,.5);
+}
+
+.gb-button.secondary{
+    background:transparent;
+}
+
+.glitchbox-hero-image{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.glitchbox-hero-image img{
+    width:100%;
+    max-width:650px;
+    height:auto;
+
+    border-radius:20px;
+
+    filter:
+        drop-shadow(0 0 15px rgba(168,85,247,.45))
+        drop-shadow(0 0 35px rgba(124,58,237,.25));
+
+    animation:gbFloat 5s ease-in-out infinite;
+}
+
+@keyframes gbFloat{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+
+}
+
+/* PHONE / TABLET */
+
+@media(max-width:900px){
+
+    .glitchbox-hero{
+        flex-direction:column;
+        text-align:center;
+        padding:25px;
+    }
+
+    .glitchbox-hero h1{
+        font-size:44px;
+    }
+
+    .glitchbox-hero p{
+        font-size:20px;
+    }
+
+    .hero-buttons{
+        justify-content:center;
+    }
+
+    .glitchbox-hero-image img{
+        max-width:500px;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .glitchbox-hero h1{
+        font-size:34px;
+        letter-spacing:2px;
+    }
+
+    .glitchbox-hero{
+        min-height:auto;
+    }
+
+    .gb-small-logo{
+        width:60px;
+        height:60px;
+        font-size:27px;
+    }
+
+}
+
+</style>
+```
