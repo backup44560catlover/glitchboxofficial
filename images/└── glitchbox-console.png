@@ -1,41 +1,91 @@
 ```html
-<!-- GLITCHBOX HERO -->
+<!DOCTYPE html>
+<html lang="en">
 
-<section class="glitchbox-hero">
+<head>
 
-    <div class="glitchbox-hero-text">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <div class="gb-small-logo">GB</div>
-
-        <h1>GLITCHBOX</h1>
-
-        <p>Enter the Glitch. Own the Game.</p>
-
-        <div class="hero-buttons">
-            <a href="games.html" class="gb-button">🎮 Play Games</a>
-            <a href="worlds.html" class="gb-button secondary">🌎 Explore Worlds</a>
-        </div>
-
-    </div>
-
-    <div class="glitchbox-hero-image">
-        <img
-            src="images/glitchbox-console.png"
-            alt="GlitchBox gaming console and controller"
-        >
-    </div>
-
-</section>
+<title>GlitchBox</title>
 
 <style>
 
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#060612;
+    color:white;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:240px;
+    height:100vh;
+
+    background:#0d0d1f;
+    border-right:1px solid #292940;
+
+    padding:20px;
+
+    z-index:10;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#a855ff;
+    margin-bottom:30px;
+}
+
+.sidebar a{
+    display:block;
+
+    color:white;
+    text-decoration:none;
+
+    padding:12px;
+    margin-bottom:8px;
+
+    border-radius:10px;
+
+    transition:.25s;
+}
+
+.sidebar a:hover{
+    background:#7c3aed;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:240px;
+    padding:25px;
+}
+
+/* HERO */
+
 .glitchbox-hero{
-    min-height:520px;
+
+    min-height:600px;
+
     display:flex;
     align-items:center;
     justify-content:space-between;
+
     gap:40px;
+
     padding:40px;
+
     margin-bottom:30px;
 
     background:
@@ -47,36 +97,39 @@
         linear-gradient(
             135deg,
             #09000f,
-            #16002b,
-            #08000f
+            #18002d,
+            #060612
         );
 
-    border:1px solid rgba(168,85,247,.35);
+    border:1px solid #7c3aed;
+
     border-radius:25px;
 
     box-shadow:
-        0 0 30px rgba(124,58,237,.25),
+        0 0 25px rgba(124,58,237,.35),
         inset 0 0 40px rgba(124,58,237,.08);
 
     overflow:hidden;
 }
 
-.glitchbox-hero-text{
+/* HERO TEXT */
+
+.hero-text{
     flex:1;
     max-width:500px;
 }
 
-.gb-small-logo{
-    display:inline-flex;
+.gb-logo{
+    width:80px;
+    height:80px;
+
+    display:flex;
     align-items:center;
     justify-content:center;
 
-    width:75px;
-    height:75px;
-
     margin-bottom:20px;
 
-    font-size:34px;
+    font-size:36px;
     font-weight:900;
 
     color:white;
@@ -89,96 +142,124 @@
             #22c55e
         );
 
-    border-radius:18px;
+    border-radius:20px;
 
     box-shadow:
-        0 0 15px #8b5cf6,
-        0 0 35px rgba(168,85,247,.45);
+        0 0 15px #a855f7,
+        0 0 35px rgba(168,85,247,.5);
 }
 
-.glitchbox-hero h1{
-    margin:0;
+.hero-text h1{
 
     font-size:64px;
-    font-weight:900;
+
     letter-spacing:4px;
 
-    color:white;
+    margin-bottom:10px;
 
     text-shadow:
         0 0 10px #a855f7,
         0 0 25px #7c3aed,
-        0 0 45px rgba(168,85,247,.6);
+        0 0 45px #7c3aed;
 }
 
-.glitchbox-hero p{
-    margin:15px 0 30px;
+.tagline{
+
+    color:#d8b4fe;
 
     font-size:24px;
-    color:#d8b4fe;
+
+    margin-bottom:30px;
 }
 
+/* BUTTONS */
+
 .hero-buttons{
+
     display:flex;
+
     flex-wrap:wrap;
+
     gap:15px;
 }
 
 .gb-button{
+
     display:inline-block;
 
     padding:15px 25px;
 
-    color:white;
-    text-decoration:none;
-
     background:#7c3aed;
 
+    color:white;
+
+    text-decoration:none;
+
     border:1px solid #a855f7;
+
     border-radius:12px;
+
+    font-size:16px;
 
     font-weight:bold;
 
-    box-shadow:0 0 15px rgba(124,58,237,.45);
+    box-shadow:
+        0 0 15px rgba(124,58,237,.45);
 
     transition:.25s;
 }
 
 .gb-button:hover{
+
     transform:translateY(-3px);
+
     background:#8b5cf6;
 
     box-shadow:
-        0 0 15px #a855f7,
-        0 0 30px rgba(168,85,247,.5);
+        0 0 20px #a855f7,
+        0 0 40px rgba(168,85,247,.4);
 }
 
 .gb-button.secondary{
+
     background:transparent;
 }
 
-.glitchbox-hero-image{
+/* CONSOLE IMAGE */
+
+.hero-image{
+
     flex:1;
+
     display:flex;
-    justify-content:center;
+
     align-items:center;
+
+    justify-content:center;
+
 }
 
-.glitchbox-hero-image img{
+.hero-image img{
+
+    display:block;
+
     width:100%;
+
     max-width:650px;
+
     height:auto;
 
     border-radius:20px;
 
     filter:
-        drop-shadow(0 0 15px rgba(168,85,247,.45))
-        drop-shadow(0 0 35px rgba(124,58,237,.25));
+        drop-shadow(0 0 15px rgba(168,85,247,.5))
+        drop-shadow(0 0 35px rgba(124,58,237,.3));
 
-    animation:gbFloat 5s ease-in-out infinite;
+    animation:floatConsole 5s ease-in-out infinite;
+
 }
 
-@keyframes gbFloat{
+@keyframes floatConsole{
 
     0%,100%{
         transform:translateY(0);
@@ -190,52 +271,383 @@
 
 }
 
-/* PHONE / TABLET */
+/* DASHBOARD CARDS */
 
-@media(max-width:900px){
+.dashboard{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:15px;
+
+    margin-bottom:25px;
+}
+
+.card{
+
+    background:#121225;
+
+    border:1px solid #292940;
+
+    border-radius:15px;
+
+    padding:20px;
+
+    transition:.25s;
+}
+
+.card:hover{
+
+    transform:translateY(-3px);
+
+    border-color:#8b5cf6;
+
+    box-shadow:
+        0 0 20px rgba(124,58,237,.25);
+}
+
+.card h2{
+
+    color:#b266ff;
+
+    margin-bottom:10px;
+}
+
+/* NEWS */
+
+.section{
+
+    background:#121225;
+
+    border:1px solid #292940;
+
+    border-radius:15px;
+
+    padding:20px;
+
+    margin-bottom:20px;
+}
+
+.section h2{
+
+    color:#b266ff;
+
+    margin-bottom:15px;
+}
+
+/* FOOTER */
+
+.footer{
+
+    text-align:center;
+
+    color:#777;
+
+    margin-top:30px;
+
+    padding:20px;
+}
+
+/* TABLET */
+
+@media(max-width:1000px){
+
+    .dashboard{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
 
     .glitchbox-hero{
+
         flex-direction:column;
+
         text-align:center;
-        padding:25px;
+
     }
 
-    .glitchbox-hero h1{
-        font-size:44px;
-    }
+    .hero-text{
 
-    .glitchbox-hero p{
-        font-size:20px;
+        max-width:700px;
+
     }
 
     .hero-buttons{
-        justify-content:center;
-    }
 
-    .glitchbox-hero-image img{
-        max-width:500px;
+        justify-content:center;
+
     }
 
 }
 
-@media(max-width:500px){
+/* MOBILE */
 
-    .glitchbox-hero h1{
-        font-size:34px;
-        letter-spacing:2px;
+@media(max-width:700px){
+
+    .sidebar{
+
+        display:none;
+
+    }
+
+    .main{
+
+        margin-left:0;
+
+        padding:15px;
+
     }
 
     .glitchbox-hero{
-        min-height:auto;
+
+        padding:25px;
+
     }
 
-    .gb-small-logo{
-        width:60px;
-        height:60px;
-        font-size:27px;
+    .hero-text h1{
+
+        font-size:42px;
+
+    }
+
+    .tagline{
+
+        font-size:19px;
+
+    }
+
+    .dashboard{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .hero-image img{
+
+        max-width:100%;
+
     }
 
 }
 
 </style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+    <div class="logo">
+        GLITCHBOX
+    </div>
+
+    <a href="index.html">🏠 Home</a>
+
+    <a href="games.html">🎮 Games</a>
+
+    <a href="worlds.html">🌎 Worlds</a>
+
+    <a href="shop.html">🛒 Shop</a>
+
+    <a href="profile.html">👤 Profile</a>
+
+    <a href="inventory.html">🎒 Inventory</a>
+
+    <a href="friends.html">👥 Friends</a>
+
+    <a href="clans.html">🏰 Clans</a>
+
+    <a href="communities.html">📢 Communities</a>
+
+    <a href="creator.html">🎥 Creator Hub</a>
+
+    <a href="tournaments.html">🏆 Tournaments</a>
+
+    <a href="settings.html">⚙️ Settings</a>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="main">
+
+
+<!-- GLITCHBOX HERO -->
+
+<section class="glitchbox-hero">
+
+    <div class="hero-text">
+
+        <div class="gb-logo">
+            GB
+        </div>
+
+        <h1>
+            GLITCHBOX
+        </h1>
+
+        <div class="tagline">
+            Enter the Glitch. Own the Game.
+        </div>
+
+        <div class="hero-buttons">
+
+            <a
+                href="games.html"
+                class="gb-button">
+                🎮 Play Games
+            </a>
+
+            <a
+                href="worlds.html"
+                class="gb-button secondary">
+                🌎 Explore Worlds
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- YOUR GLITCHBOX IMAGE -->
+
+    <div class="hero-image">
+
+        <img
+            src="images/glitchbox-console.png"
+            alt="GlitchBox gaming console and controller"
+        >
+
+    </div>
+
+</section>
+
+
+<!-- DASHBOARD -->
+
+<div class="dashboard">
+
+    <div class="card">
+
+        <h2>🎮 Games</h2>
+
+        <p>
+            Play GlitchBox games.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🌎 Worlds</h2>
+
+        <p>
+            Explore and build worlds.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🏰 Clans</h2>
+
+        <p>
+            Join your gaming community.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🎁 Daily Challenge</h2>
+
+        <p>
+            Complete today's challenge.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- NEWS -->
+
+<div class="section">
+
+    <h2>
+        📰 Latest News
+    </h2>
+
+    <p>
+        🚀 Welcome to GlitchBox!
+    </p>
+
+    <br>
+
+    <p>
+        💜 Enter the Glitch. Own the Game.
+    </p>
+
+    <br>
+
+    <p>
+        🌎 GlitchBox Worlds are coming.
+    </p>
+
+</div>
+
+
+<!-- REWARDS -->
+
+<div class="section">
+
+    <h2>
+        🎁 Daily Rewards
+    </h2>
+
+    <p>
+        Day 1 — 100 GlitchCoins
+    </p>
+
+    <p>
+        Day 2 — 200 GlitchCoins
+    </p>
+
+    <p>
+        Day 3 — 300 GlitchCoins
+    </p>
+
+    <p>
+        Day 4 — 400 GlitchCoins
+    </p>
+
+    <p>
+        Day 5 — 500 GlitchCoins
+    </p>
+
+</div>
+
+
+<div class="footer">
+
+    © 2026 GlitchBox
+
+</div>
+
+
+</div>
+
+</body>
+
+</html>
 ```
