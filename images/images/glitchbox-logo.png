@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>GlitchBox</title>
+
+    <!-- GlitchBox Browser Tab Logo -->
+    <link
+        rel="icon"
+        type="image/png"
+        href="images/glitchbox-logo.png"
+    >
+
+    <!-- Apple / Mobile Icon -->
+    <link
+        rel="apple-touch-icon"
+        href="images/glitchbox-logo.png"
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #060612;
+            color: white;
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .logo-area {
+            padding: 40px;
+        }
+
+        .logo-area img {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            border-radius: 25px;
+
+            filter:
+                drop-shadow(0 0 15px #a855f7)
+                drop-shadow(0 0 35px rgba(168, 85, 247, .5));
+
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .logo-area h1 {
+            margin-top: 25px;
+            font-size: 55px;
+            color: #a855f7;
+
+            text-shadow:
+                0 0 10px #a855f7,
+                0 0 25px #7c3aed,
+                0 0 45px rgba(168, 85, 247, .6);
+        }
+
+        .logo-area p {
+            margin-top: 10px;
+            font-size: 20px;
+            color: #d8b4fe;
+        }
+
+        @keyframes glow {
+
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.04);
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="page">
+
+        <div class="logo-area">
+
+            <!-- Main GlitchBox Logo -->
+            <img
+                src="images/glitchbox-logo.png"
+                alt="GlitchBox Logo"
+            >
+
+            <h1>
+                GLITCHBOX
+            </h1>
+
+            <p>
+                Enter the Glitch. Own the Game.
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
