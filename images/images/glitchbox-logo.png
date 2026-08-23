@@ -1,126 +1,725 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>GlitchBox</title>
+<title>GlitchBox</title>
 
-    <!-- GlitchBox Browser Tab Logo -->
-    <link
-        rel="icon"
-        type="image/png"
-        href="images/glitchbox-logo.png"
-    >
+<!-- BROWSER TAB LOGO -->
+<link rel="icon" type="image/png" href="images/glitchbox-logo.png">
 
-    <!-- Apple / Mobile Icon -->
-    <link
-        rel="apple-touch-icon"
-        href="images/glitchbox-logo.png"
-    >
+<style>
 
-    <style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+body{
+    background:#070714;
+    color:white;
+}
 
-        body {
-            background: #060612;
-            color: white;
-        }
+/* =========================
+   SIDEBAR
+========================= */
 
-        .page {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
 
-        .logo-area {
-            padding: 40px;
-        }
+    width:245px;
+    height:100vh;
 
-        .logo-area img {
-            width: 180px;
-            height: 180px;
-            object-fit: contain;
-            border-radius: 25px;
+    padding:20px;
 
-            filter:
-                drop-shadow(0 0 15px #a855f7)
-                drop-shadow(0 0 35px rgba(168, 85, 247, .5));
+    background:#0d0d1f;
 
-            animation: glow 3s ease-in-out infinite;
-        }
+    border-right:1px solid #292940;
 
-        .logo-area h1 {
-            margin-top: 25px;
-            font-size: 55px;
-            color: #a855f7;
+    overflow-y:auto;
+}
 
-            text-shadow:
-                0 0 10px #a855f7,
-                0 0 25px #7c3aed,
-                0 0 45px rgba(168, 85, 247, .6);
-        }
+.logo-image{
+    width:75px;
+    height:75px;
 
-        .logo-area p {
-            margin-top: 10px;
-            font-size: 20px;
-            color: #d8b4fe;
-        }
+    object-fit:cover;
 
-        @keyframes glow {
+    display:block;
 
-            0%, 100% {
-                transform: scale(1);
-            }
+    border-radius:16px;
 
-            50% {
-                transform: scale(1.04);
-            }
+    margin-bottom:12px;
 
-        }
+    box-shadow:
+        0 0 15px #8b5cf6,
+        0 0 30px rgba(139,92,246,.45);
+}
 
-    </style>
+.logo-text{
+    font-size:28px;
+    font-weight:bold;
+
+    color:#a855f7;
+
+    letter-spacing:2px;
+
+    margin-bottom:25px;
+}
+
+.sidebar a{
+    display:block;
+
+    padding:12px;
+
+    margin-bottom:7px;
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:10px;
+
+    transition:.25s;
+}
+
+.sidebar a:hover{
+    background:#7c3aed;
+
+    transform:translateX(3px);
+
+    box-shadow:0 0 15px rgba(124,58,237,.4);
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    margin-left:245px;
+
+    padding:25px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+
+    min-height:620px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:40px;
+
+    padding:40px;
+
+    margin-bottom:25px;
+
+    border-radius:25px;
+
+    border:1px solid #7c3aed;
+
+    background:
+        radial-gradient(
+            circle at 75% 50%,
+            rgba(168,85,247,.25),
+            transparent 45%
+        ),
+        linear-gradient(
+            135deg,
+            #10001f,
+            #22003d,
+            #070714
+        );
+
+    box-shadow:
+        0 0 30px rgba(124,58,237,.3);
+
+    overflow:hidden;
+}
+
+.hero-content{
+    flex:1;
+
+    max-width:500px;
+}
+
+.hero-content h1{
+
+    font-size:64px;
+
+    font-weight:900;
+
+    letter-spacing:4px;
+
+    margin-bottom:15px;
+
+    text-shadow:
+        0 0 10px #a855f7,
+        0 0 25px #7c3aed,
+        0 0 50px rgba(168,85,247,.6);
+}
+
+.tagline{
+
+    font-size:24px;
+
+    color:#d8b4fe;
+
+    margin-bottom:30px;
+}
+
+/* =========================
+   HERO LOGO
+========================= */
+
+.hero-logo{
+
+    width:120px;
+    height:120px;
+
+    object-fit:cover;
+
+    border-radius:22px;
+
+    margin-bottom:20px;
+
+    box-shadow:
+        0 0 20px #a855f7,
+        0 0 45px rgba(168,85,247,.5);
+
+    animation:floatLogo 4s ease-in-out infinite;
+}
+
+@keyframes floatLogo{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-8px);
+    }
+
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.buttons{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+}
+
+.button{
+
+    display:inline-block;
+
+    padding:15px 25px;
+
+    border-radius:12px;
+
+    background:#7c3aed;
+
+    border:1px solid #a855f7;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    transition:.25s;
+
+    box-shadow:
+        0 0 15px rgba(124,58,237,.4);
+}
+
+.button:hover{
+
+    background:#8b5cf6;
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 0 20px #a855f7,
+        0 0 40px rgba(168,85,247,.4);
+}
+
+.button.secondary{
+    background:transparent;
+}
+
+/* =========================
+   LARGE LOGO ART
+========================= */
+
+.hero-art{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+}
+
+.hero-art img{
+
+    width:100%;
+
+    max-width:560px;
+
+    height:auto;
+
+    border-radius:22px;
+
+    display:block;
+
+    box-shadow:
+        0 0 25px rgba(168,85,247,.4);
+
+    animation:floatArt 5s ease-in-out infinite;
+}
+
+@keyframes floatArt{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:15px;
+
+    margin-bottom:25px;
+}
+
+.card{
+
+    background:#121225;
+
+    border:1px solid #292940;
+
+    border-radius:15px;
+
+    padding:22px;
+
+    transition:.25s;
+}
+
+.card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:#8b5cf6;
+
+    box-shadow:
+        0 0 20px rgba(124,58,237,.25);
+}
+
+.card h2{
+
+    color:#c084fc;
+
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#d0d0df;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section{
+
+    background:#121225;
+
+    border:1px solid #292940;
+
+    border-radius:15px;
+
+    padding:22px;
+
+    margin-bottom:20px;
+}
+
+.section h2{
+
+    color:#c084fc;
+
+    margin-bottom:15px;
+}
+
+.section p{
+
+    color:#d0d0df;
+
+    margin-bottom:8px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+
+    text-align:center;
+
+    color:#777;
+
+    padding:30px;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media(max-width:1000px){
+
+    .grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .hero{
+
+        flex-direction:column;
+
+        text-align:center;
+    }
+
+    .hero-content{
+
+        max-width:700px;
+    }
+
+    .buttons{
+
+        justify-content:center;
+    }
+
+}
+
+/* =========================
+   PHONE
+========================= */
+
+@media(max-width:700px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .main{
+        margin-left:0;
+        padding:15px;
+    }
+
+    .hero{
+        padding:25px;
+        min-height:auto;
+    }
+
+    .hero-content h1{
+        font-size:40px;
+    }
+
+    .tagline{
+        font-size:19px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero-logo{
+        width:90px;
+        height:90px;
+    }
+
+}
+
+</style>
 
 </head>
 
+
 <body>
 
-    <div class="page">
 
-        <div class="logo-area">
+<!-- =========================
+     SIDEBAR
+========================= -->
 
-            <!-- Main GlitchBox Logo -->
-            <img
-                src="images/glitchbox-logo.png"
-                alt="GlitchBox Logo"
+<aside class="sidebar">
+
+    <img
+        class="logo-image"
+        src="images/glitchbox-logo.png"
+        alt="GlitchBox Logo"
+    >
+
+    <div class="logo-text">
+        GLITCHBOX
+    </div>
+
+    <a href="index.html">🏠 Home</a>
+
+    <a href="games.html">🎮 Games</a>
+
+    <a href="worlds.html">🌎 Worlds</a>
+
+    <a href="shop.html">🛒 Shop</a>
+
+    <a href="profile.html">👤 Profile</a>
+
+    <a href="inventory.html">🎒 Inventory</a>
+
+    <a href="friends.html">👥 Friends</a>
+
+    <a href="clans.html">🏰 Clans</a>
+
+    <a href="communities.html">📢 Communities</a>
+
+    <a href="creator.html">🎥 Creator Hub</a>
+
+    <a href="tournaments.html">🏆 Tournaments</a>
+
+    <a href="settings.html">⚙️ Settings</a>
+
+</aside>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main">
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <img
+            class="hero-logo"
+            src="images/glitchbox-logo.png"
+            alt="GlitchBox"
+        >
+
+        <h1>
+            GLITCHBOX
+        </h1>
+
+        <p class="tagline">
+            Enter the Glitch. Own the Game.
+        </p>
+
+        <div class="buttons">
+
+            <a
+                class="button"
+                href="games.html"
             >
+                🎮 Play Games
+            </a>
 
-            <h1>
-                GLITCHBOX
-            </h1>
-
-            <p>
-                Enter the Glitch. Own the Game.
-            </p>
+            <a
+                class="button secondary"
+                href="worlds.html"
+            >
+                🌎 Explore Worlds
+            </a>
 
         </div>
 
     </div>
 
+
+    <div class="hero-art">
+
+        <img
+            src="images/glitchbox-logo.png"
+            alt="Official GlitchBox Console and Controller"
+        >
+
+    </div>
+
+</section>
+
+
+<!-- DASHBOARD -->
+
+<section class="grid">
+
+
+    <div class="card">
+
+        <h2>🎮 Games</h2>
+
+        <p>
+            Play GlitchBox games and discover new experiences.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🌎 Worlds</h2>
+
+        <p>
+            Explore, build, and create GlitchBox worlds.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🏰 Clans</h2>
+
+        <p>
+            Create clans and play with your friends.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🎯 Daily Challenge</h2>
+
+        <p>
+            Complete today's challenge and earn rewards.
+        </p>
+
+    </div>
+
+
+</section>
+
+
+<!-- NEWS -->
+
+<section class="section">
+
+    <h2>
+        📰 Latest News
+    </h2>
+
+    <p>
+        🚀 Welcome to GlitchBox!
+    </p>
+
+    <p>
+        💜 Enter the Glitch. Own the Game.
+    </p>
+
+    <p>
+        🌎 GlitchBox Worlds are coming.
+    </p>
+
+    <p>
+        🎮 New games and experiences are being developed.
+    </p>
+
+</section>
+
+
+<!-- DAILY REWARDS -->
+
+<section class="section">
+
+    <h2>
+        🎁 Daily Rewards
+    </h2>
+
+    <p>Day 1 — 100 GlitchCoins</p>
+    <p>Day 2 — 200 GlitchCoins</p>
+    <p>Day 3 — 300 GlitchCoins</p>
+    <p>Day 4 — 400 GlitchCoins</p>
+    <p>Day 5 — 500 GlitchCoins</p>
+
+</section>
+
+
+<!-- DAILY CHALLENGES -->
+
+<section class="section">
+
+    <h2>
+        🎯 Daily Challenges
+    </h2>
+
+    <p>🎮 Play 3 games</p>
+
+    <p>🌎 Visit 2 worlds</p>
+
+    <p>👥 Play with a friend</p>
+
+    <p>🏆 Earn 100 XP</p>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+    © 2026 GlitchBox
+
+    <br><br>
+
+    Enter the Glitch. Own the Game. 💜
+
+</footer>
+
+
+</main>
+
 </body>
 
 </html>
+```
