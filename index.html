@@ -5,21 +5,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GlitchBox — Enter the Glitch</title>
+<title>GlitchBox</title>
 
-<!-- GlitchBox browser-tab logo -->
+<!-- Browser tab logo -->
 <link rel="icon" type="image/png" href="images/glitchbox-logo.png">
 
 <style>
+
+/* =========================================
+   GLITCHBOX
+   MAIN STYLES
+========================================= */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
-}
-
-html {
-    scroll-behavior: smooth;
 }
 
 body {
@@ -28,9 +30,9 @@ body {
     min-height: 100vh;
 }
 
-/* =========================
+/* =========================================
    SIDEBAR
-========================= */
+========================================= */
 
 .sidebar {
     position: fixed;
@@ -43,34 +45,37 @@ body {
     padding: 20px;
 
     background: #0d0d1f;
+
     border-right: 1px solid #292940;
 
     overflow-y: auto;
+
     z-index: 1000;
 }
 
 .sidebar-logo {
-    width: 75px;
-    height: 75px;
+    width: 70px;
+    height: 70px;
 
     object-fit: cover;
 
-    display: block;
-
     border-radius: 16px;
+
+    display: block;
 
     margin-bottom: 12px;
 
     box-shadow:
         0 0 15px #8b5cf6,
-        0 0 30px rgba(139,92,246,.45);
+        0 0 30px rgba(139, 92, 246, 0.4);
 }
 
-.logo-text {
-    font-size: 28px;
-    font-weight: 900;
-
+.logo {
     color: #a855f7;
+
+    font-size: 28px;
+
+    font-weight: bold;
 
     letter-spacing: 2px;
 
@@ -80,48 +85,46 @@ body {
 .sidebar a {
     display: block;
 
-    padding: 12px;
-
-    margin-bottom: 7px;
-
     color: white;
 
     text-decoration: none;
 
+    padding: 12px;
+
+    margin-bottom: 7px;
+
     border-radius: 10px;
 
-    transition: .25s;
+    transition: 0.25s;
 }
 
 .sidebar a:hover {
     background: #7c3aed;
 
     transform: translateX(3px);
-
-    box-shadow: 0 0 15px rgba(124,58,237,.4);
 }
 
-/* =========================
+/* =========================================
    MAIN
-========================= */
+========================================= */
 
 .main {
     margin-left: 245px;
-    padding: 25px;
 
-    min-height: 100vh;
+    padding: 25px;
 }
 
-/* =========================
+/* =========================================
    HERO
-========================= */
+========================================= */
 
 .hero {
-    min-height: 600px;
+    min-height: 560px;
 
     display: flex;
 
     align-items: center;
+
     justify-content: space-between;
 
     gap: 40px;
@@ -137,7 +140,7 @@ body {
     background:
         radial-gradient(
             circle at 75% 45%,
-            rgba(168,85,247,.25),
+            rgba(168, 85, 247, 0.25),
             transparent 45%
         ),
         linear-gradient(
@@ -148,19 +151,16 @@ body {
         );
 
     box-shadow:
-        0 0 30px rgba(124,58,237,.3);
-
-    overflow: hidden;
+        0 0 30px rgba(124, 58, 237, 0.3);
 }
 
 .hero-content {
-    flex: 1;
-    max-width: 500px;
+    max-width: 520px;
 }
 
 .hero-logo {
-    width: 120px;
-    height: 120px;
+    width: 115px;
+    height: 115px;
 
     object-fit: cover;
 
@@ -170,13 +170,11 @@ body {
 
     box-shadow:
         0 0 20px #a855f7,
-        0 0 45px rgba(168,85,247,.5);
-
-    animation: floatLogo 4s ease-in-out infinite;
+        0 0 45px rgba(168, 85, 247, 0.5);
 }
 
-.hero-content h1 {
-    font-size: 64px;
+.hero h1 {
+    font-size: 60px;
 
     font-weight: 900;
 
@@ -186,63 +184,33 @@ body {
 
     text-shadow:
         0 0 10px #a855f7,
-        0 0 25px #7c3aed,
-        0 0 50px rgba(168,85,247,.6);
+        0 0 25px #7c3aed;
 }
 
 .tagline {
-    font-size: 24px;
+    font-size: 23px;
 
     color: #d8b4fe;
 
     margin-bottom: 30px;
 }
 
-/* =========================
-   HERO ART
-========================= */
-
-.hero-art {
-    flex: 1;
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-}
-
-.hero-art img {
-    width: 100%;
-    max-width: 560px;
-
-    height: auto;
-
-    border-radius: 22px;
-
-    display: block;
-
-    box-shadow:
-        0 0 25px rgba(168,85,247,.4);
-
-    animation: floatArt 5s ease-in-out infinite;
-}
-
-/* =========================
+/* =========================================
    BUTTONS
-========================= */
+========================================= */
 
 .buttons {
     display: flex;
 
-    flex-wrap: wrap;
+    gap: 12px;
 
-    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .button {
     display: inline-block;
 
-    padding: 15px 25px;
+    padding: 14px 22px;
 
     border-radius: 12px;
 
@@ -256,10 +224,7 @@ body {
 
     font-weight: bold;
 
-    transition: .25s;
-
-    box-shadow:
-        0 0 15px rgba(124,58,237,.4);
+    transition: 0.25s;
 }
 
 .button:hover {
@@ -268,17 +233,41 @@ body {
     transform: translateY(-3px);
 
     box-shadow:
-        0 0 20px #a855f7,
-        0 0 40px rgba(168,85,247,.4);
+        0 0 20px rgba(168, 85, 247, 0.5);
 }
 
 .button.secondary {
     background: transparent;
 }
 
-/* =========================
-   DASHBOARD CARDS
-========================= */
+/* =========================================
+   HERO IMAGE
+========================================= */
+
+.hero-image {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex: 1;
+}
+
+.hero-image img {
+    width: 100%;
+
+    max-width: 500px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 0 30px rgba(168, 85, 247, 0.4);
+}
+
+/* =========================================
+   CARDS
+========================================= */
 
 .grid {
     display: grid;
@@ -300,7 +289,7 @@ body {
 
     padding: 22px;
 
-    transition: .25s;
+    transition: 0.25s;
 }
 
 .card:hover {
@@ -309,7 +298,7 @@ body {
     border-color: #8b5cf6;
 
     box-shadow:
-        0 0 20px rgba(124,58,237,.25);
+        0 0 20px rgba(124, 58, 237, 0.25);
 }
 
 .card h2 {
@@ -322,9 +311,9 @@ body {
     color: #d0d0df;
 }
 
-/* =========================
+/* =========================================
    SECTIONS
-========================= */
+========================================= */
 
 .section {
     background: #121225;
@@ -341,7 +330,7 @@ body {
 .section h2 {
     color: #c084fc;
 
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .section p {
@@ -350,11 +339,11 @@ body {
     margin-bottom: 8px;
 }
 
-/* =========================
+/* =========================================
    DAILY REWARDS
-========================= */
+========================================= */
 
-.rewards-help {
+.rewards-description {
     color: #aaa;
 
     margin-bottom: 20px;
@@ -369,10 +358,8 @@ body {
     gap: 12px;
 }
 
-.reward-card {
+.reward {
     min-height: 155px;
-
-    padding: 18px 12px;
 
     border: 1px solid #3b2463;
 
@@ -381,7 +368,7 @@ body {
     background:
         linear-gradient(
             145deg,
-            #17102a,
+            #19132d,
             #0f0f20
         );
 
@@ -399,32 +386,29 @@ body {
 
     gap: 8px;
 
-    transition: .25s;
-
-    box-shadow:
-        0 0 12px rgba(124,58,237,.12);
+    transition: 0.25s;
 }
 
-.reward-card:hover {
+.reward:hover {
     transform: translateY(-4px);
 
     border-color: #a855f7;
 
     box-shadow:
-        0 0 22px rgba(168,85,247,.35);
+        0 0 20px rgba(168, 85, 247, 0.35);
 }
 
-.reward-card.unlocked {
-    border-color: #a855f7;
+.reward.locked {
+    opacity: 0.65;
 }
 
-.reward-card.claimed {
+.reward.claimed {
     border-color: #22c55e;
 
     cursor: default;
 }
 
-.gift-icon {
+.reward-icon {
     font-size: 45px;
 }
 
@@ -434,23 +418,19 @@ body {
     font-weight: bold;
 }
 
-.reward-hidden {
-    font-size: 18px;
-
-    font-weight: 900;
-
-    letter-spacing: 2px;
-
+.reward-content {
     color: #a855f7;
+
+    font-weight: bold;
 }
 
-.reward-card.claimed .reward-hidden {
+.reward.claimed .reward-content {
     color: #86efac;
 }
 
-.reward-card.locked {
-    opacity: .65;
-}
+/* =========================================
+   REWARD MESSAGE
+========================================= */
 
 .reward-message {
     display: none;
@@ -461,20 +441,22 @@ body {
 
     border-radius: 12px;
 
-    background: #19132b;
+    background: #1c1430;
 
-    border: 1px solid #4c2a7a;
+    border: 1px solid #8b5cf6;
 
     color: #e9d5ff;
+
+    font-weight: bold;
 }
 
 .reward-message.show {
     display: block;
 }
 
-/* =========================
+/* =========================================
    FOOTER
-========================= */
+========================================= */
 
 .footer {
     text-align: center;
@@ -484,35 +466,9 @@ body {
     padding: 30px;
 }
 
-/* =========================
-   ANIMATIONS
-========================= */
-
-@keyframes floatLogo {
-
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
-}
-
-@keyframes floatArt {
-
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-10px);
-    }
-}
-
-/* =========================
+/* =========================================
    TABLET
-========================= */
+========================================= */
 
 @media (max-width: 1000px) {
 
@@ -532,18 +488,15 @@ body {
         text-align: center;
     }
 
-    .hero-content {
-        max-width: 700px;
-    }
-
     .buttons {
         justify-content: center;
     }
+
 }
 
-/* =========================
+/* =========================================
    PHONE
-========================= */
+========================================= */
 
 @media (max-width: 700px) {
 
@@ -559,11 +512,9 @@ body {
 
     .hero {
         padding: 25px;
-
-        min-height: auto;
     }
 
-    .hero-content h1 {
+    .hero h1 {
         font-size: 40px;
     }
 
@@ -580,20 +531,17 @@ body {
             repeat(2, 1fr);
     }
 
-    .hero-logo {
-        width: 90px;
-        height: 90px;
-    }
 }
 
 </style>
 </head>
 
+
 <body>
 
-<!-- =========================
+<!-- =========================================
      SIDEBAR
-========================= -->
+========================================= -->
 
 <aside class="sidebar">
 
@@ -603,7 +551,7 @@ body {
         alt="GlitchBox Logo"
     >
 
-    <div class="logo-text">
+    <div class="logo">
         GLITCHBOX
     </div>
 
@@ -634,14 +582,16 @@ body {
 </aside>
 
 
-<!-- =========================
+<!-- =========================================
      MAIN
-========================= -->
+========================================= -->
 
 <main class="main">
 
 
-<!-- HERO -->
+<!-- =========================================
+     HERO
+========================================= -->
 
 <section class="hero">
 
@@ -682,11 +632,11 @@ body {
     </div>
 
 
-    <div class="hero-art">
+    <div class="hero-image">
 
         <img
             src="images/glitchbox-logo.png"
-            alt="Official GlitchBox Console and Controller"
+            alt="GlitchBox"
         >
 
     </div>
@@ -694,18 +644,20 @@ body {
 </section>
 
 
-<!-- =========================
-     QUICK FEATURES
-========================= -->
+<!-- =========================================
+     FEATURE CARDS
+========================================= -->
 
 <section class="grid">
 
     <div class="card">
 
-        <h2>🎮 Games</h2>
+        <h2>
+            🎮 Games
+        </h2>
 
         <p>
-            Play GlitchBox games and discover new experiences.
+            Play games and discover new experiences.
         </p>
 
     </div>
@@ -713,10 +665,12 @@ body {
 
     <div class="card">
 
-        <h2>🌎 Worlds</h2>
+        <h2>
+            🌎 Worlds
+        </h2>
 
         <p>
-            Explore, build, and create GlitchBox worlds.
+            Explore and build GlitchBox Worlds.
         </p>
 
     </div>
@@ -724,10 +678,12 @@ body {
 
     <div class="card">
 
-        <h2>🏰 Clans</h2>
+        <h2>
+            🏰 Clans
+        </h2>
 
         <p>
-            Create clans and play with your friends.
+            Create clans and play with friends.
         </p>
 
     </div>
@@ -735,10 +691,12 @@ body {
 
     <div class="card">
 
-        <h2>🎯 Daily Challenge</h2>
+        <h2>
+            🎯 Daily Challenge
+        </h2>
 
         <p>
-            Complete today's challenge and earn rewards.
+            Complete today's challenge.
         </p>
 
     </div>
@@ -746,9 +704,9 @@ body {
 </section>
 
 
-<!-- =========================
+<!-- =========================================
      NEWS
-========================= -->
+========================================= -->
 
 <section class="section">
 
@@ -775,18 +733,18 @@ body {
 </section>
 
 
-<!-- =========================
+<!-- =========================================
      DAILY REWARDS
-========================= -->
+========================================= -->
 
-<section class="section rewards-section">
+<section class="section">
 
     <h2>
         🎁 Daily Rewards
     </h2>
 
-    <p class="rewards-help">
-        Click a gift to open it. New rewards unlock each day!
+    <p class="rewards-description">
+        Open one gift each day. Future gifts stay locked until their day.
     </p>
 
 
@@ -794,12 +752,12 @@ body {
 
 
         <button
-            class="reward-card"
+            class="reward"
             data-day="1"
             data-reward="100 GlitchCoins"
         >
 
-            <span class="gift-icon">
+            <span class="reward-icon">
                 🎁
             </span>
 
@@ -807,7 +765,7 @@ body {
                 Day 1
             </span>
 
-            <span class="reward-hidden">
+            <span class="reward-content">
                 ???
             </span>
 
@@ -815,12 +773,12 @@ body {
 
 
         <button
-            class="reward-card"
+            class="reward"
             data-day="2"
             data-reward="200 GlitchCoins"
         >
 
-            <span class="gift-icon">
+            <span class="reward-icon">
                 🎁
             </span>
 
@@ -828,20 +786,20 @@ body {
                 Day 2
             </span>
 
-            <span class="reward-hidden">
-                ???
+            <span class="reward-content">
+                🔒
             </span>
 
         </button>
 
 
         <button
-            class="reward-card"
+            class="reward"
             data-day="3"
             data-reward="300 GlitchCoins"
         >
 
-            <span class="gift-icon">
+            <span class="reward-icon">
                 🎁
             </span>
 
@@ -849,20 +807,20 @@ body {
                 Day 3
             </span>
 
-            <span class="reward-hidden">
-                ???
+            <span class="reward-content">
+                🔒
             </span>
 
         </button>
 
 
         <button
-            class="reward-card"
+            class="reward"
             data-day="4"
             data-reward="400 GlitchCoins"
         >
 
-            <span class="gift-icon">
+            <span class="reward-icon">
                 🎁
             </span>
 
@@ -870,20 +828,20 @@ body {
                 Day 4
             </span>
 
-            <span class="reward-hidden">
-                ???
+            <span class="reward-content">
+                🔒
             </span>
 
         </button>
 
 
         <button
-            class="reward-card"
+            class="reward"
             data-day="5"
             data-reward="500 GlitchCoins"
         >
 
-            <span class="gift-icon">
+            <span class="reward-icon">
                 🎁
             </span>
 
@@ -891,8 +849,8 @@ body {
                 Day 5
             </span>
 
-            <span class="reward-hidden">
-                ???
+            <span class="reward-content">
+                🔒
             </span>
 
         </button>
@@ -903,15 +861,14 @@ body {
     <div
         id="rewardMessage"
         class="reward-message"
-        aria-live="polite"
     ></div>
 
 </section>
 
 
-<!-- =========================
+<!-- =========================================
      DAILY CHALLENGES
-========================= -->
+========================================= -->
 
 <section class="section">
 
@@ -938,9 +895,9 @@ body {
 </section>
 
 
-<!-- =========================
+<!-- =========================================
      FOOTER
-========================= -->
+========================================= -->
 
 <footer class="footer">
 
@@ -952,249 +909,273 @@ body {
 
 </footer>
 
-
 </main>
 
 
-<!-- =========================
-     DAILY REWARD JAVASCRIPT
-========================= -->
+<!-- =========================================
+     DAILY REWARD SYSTEM
+========================================= -->
 
 <script>
 
-(function () {
+const rewards =
+    document.querySelectorAll(".reward");
 
-    const rewardCards =
-        document.querySelectorAll(".reward-card");
-
-    const message =
-        document.getElementById("rewardMessage");
-
-    const START_KEY =
-        "glitchbox_reward_start";
-
-    const CLAIMED_KEY =
-        "glitchbox_claimed_rewards";
+const rewardMessage =
+    document.getElementById("rewardMessage");
 
 
-    /*
-        Get today's date without the time.
-    */
+/*
+    Get today's date as YYYY-MM-DD.
+*/
 
-    function todayOnly() {
+function getToday() {
 
-        const now = new Date();
+    const now = new Date();
 
-        return new Date(
-            now.getFullYear(),
-            now.getMonth(),
+    return now.getFullYear()
+        + "-"
+        + String(
+            now.getMonth() + 1
+        ).padStart(2, "0")
+        + "-"
+        + String(
             now.getDate()
+        ).padStart(2, "0");
+
+}
+
+
+/*
+    Find the first day the player
+    started the reward cycle.
+*/
+
+function getStartDate() {
+
+    let start =
+        localStorage.getItem(
+            "gb_reward_start"
         );
 
-    }
+    if (!start) {
 
-
-    /*
-        Start the 5-day reward cycle
-        the first time the player visits.
-    */
-
-    function createStartDate() {
-
-        if (!localStorage.getItem(START_KEY)) {
-
-            localStorage.setItem(
-                START_KEY,
-                todayOnly().toISOString()
-            );
-
-        }
-
-    }
-
-
-    /*
-        Determine which reward day
-        is currently available.
-    */
-
-    function getCurrentDay() {
-
-        createStartDate();
-
-        const start =
-            new Date(
-                localStorage.getItem(START_KEY)
-            );
-
-        const today =
-            todayOnly();
-
-        const difference =
-            Math.floor(
-                (
-                    today -
-                    new Date(
-                        start.getFullYear(),
-                        start.getMonth(),
-                        start.getDate()
-                    )
-                )
-                /
-                (1000 * 60 * 60 * 24)
-            );
-
-        return Math.min(
-            Math.max(difference + 1, 1),
-            5
-        );
-
-    }
-
-
-    /*
-        Get rewards the player
-        has already claimed.
-    */
-
-    function getClaimedRewards() {
-
-        try {
-
-            return JSON.parse(
-                localStorage.getItem(
-                    CLAIMED_KEY
-                ) || "[]"
-            );
-
-        } catch {
-
-            return [];
-
-        }
-
-    }
-
-
-    /*
-        Save claimed rewards.
-    */
-
-    function saveClaimedRewards(
-        rewards
-    ) {
+        start = getToday();
 
         localStorage.setItem(
-            CLAIMED_KEY,
-            JSON.stringify(rewards)
+            "gb_reward_start",
+            start
         );
 
     }
 
+    return start;
 
-    /*
-        Show a message underneath
-        the reward boxes.
-    */
-
-    function showMessage(text) {
-
-        message.textContent = text;
-
-        message.classList.add("show");
-
-    }
+}
 
 
-    /*
-        Update the appearance of
-        every gift.
-    */
+/*
+    Calculate today's reward day.
+*/
 
-    function updateRewards() {
+function getRewardDay() {
 
-        const currentDay =
-            getCurrentDay();
+    const start =
+        new Date(
+            getStartDate()
+        );
 
-        const claimed =
-            getClaimedRewards();
+    const today =
+        new Date(
+            getToday()
+        );
+
+    const milliseconds =
+        today.getTime()
+        -
+        start.getTime();
+
+    const days =
+        Math.floor(
+            milliseconds
+            /
+            (1000 * 60 * 60 * 24)
+        );
+
+    return Math.min(
+        days + 1,
+        5
+    );
+
+}
 
 
-        rewardCards.forEach(
-            function (card) {
+/*
+    Check whether today's
+    reward was already claimed.
+*/
 
-                const day =
-                    Number(
-                        card.dataset.day
-                    );
+function alreadyClaimedToday() {
 
-                const hidden =
-                    card.querySelector(
-                        ".reward-hidden"
-                    );
+    return (
+        localStorage.getItem(
+            "gb_reward_claimed"
+        )
+        ===
+        getToday()
+    );
+
+}
 
 
-                card.classList.remove(
-                    "locked",
-                    "unlocked",
-                    "claimed"
+/*
+    Update all gift boxes.
+*/
+
+function updateRewards() {
+
+    const currentDay =
+        getRewardDay();
+
+
+    rewards.forEach(
+        function(reward) {
+
+            const day =
+                Number(
+                    reward.dataset.day
+                );
+
+            const content =
+                reward.querySelector(
+                    ".reward-content"
                 );
 
 
-                /*
-                    Already claimed.
-                */
+            reward.classList.remove(
+                "locked",
+                "claimed"
+            );
+
+
+            /*
+                Today's reward.
+            */
+
+            if (
+                day === currentDay
+            ) {
 
                 if (
-                    claimed.includes(day)
+                    alreadyClaimedToday()
                 ) {
 
-                    card.classList.add(
+                    reward.classList.add(
                         "claimed"
                     );
 
-                    hidden.textContent =
+                    content.textContent =
                         "✓ Claimed";
 
-                    return;
+                } else {
 
-                }
-
-
-                /*
-                    Today's reward.
-                */
-
-                if (
-                    day === currentDay
-                ) {
-
-                    card.classList.add(
-                        "unlocked"
-                    );
-
-                    hidden.textContent =
+                    content.textContent =
                         "???";
 
-                    return;
-
                 }
+
+                return;
+
+            }
+
+
+            /*
+                Future reward.
+            */
+
+            if (
+                day > currentDay
+            ) {
+
+                reward.classList.add(
+                    "locked"
+                );
+
+                content.textContent =
+                    "🔒";
+
+                return;
+
+            }
+
+
+            /*
+                Previous rewards.
+            */
+
+            content.textContent =
+                "✓";
+
+        }
+    );
+
+}
+
+
+/*
+    Display a message.
+*/
+
+function showRewardMessage(
+    text
+) {
+
+    rewardMessage.textContent =
+        text;
+
+    rewardMessage.classList.add(
+        "show"
+    );
+
+}
+
+
+/*
+    Clicking a gift.
+*/
+
+rewards.forEach(
+    function(reward) {
+
+        reward.addEventListener(
+            "click",
+            function() {
+
+                const day =
+                    Number(
+                        reward.dataset.day
+                    );
+
+                const prize =
+                    reward.dataset.reward;
+
+                const currentDay =
+                    getRewardDay();
 
 
                 /*
-                    Future reward.
+                    Future gift.
                 */
 
                 if (
                     day > currentDay
                 ) {
 
-                    card.classList.add(
-                        "locked"
+                    showRewardMessage(
+                        "⏰ Wait until tomorrow! Day "
+                        + day
+                        + " isn't available yet."
                     );
-
-                    hidden.textContent =
-                        "🔒 Locked";
 
                     return;
 
@@ -1202,155 +1183,70 @@ body {
 
 
                 /*
-                    Previous unclaimed reward.
+                    Already claimed today.
                 */
 
-                card.classList.add(
-                    "locked"
-                );
+                if (
+                    alreadyClaimedToday()
+                ) {
 
-                hidden.textContent =
-                    "🔒 Missed";
-
-            }
-        );
-
-    }
-
-
-    /*
-        When a player clicks a gift.
-    */
-
-    rewardCards.forEach(
-        function (card) {
-
-            card.addEventListener(
-                "click",
-                function () {
-
-                    const day =
-                        Number(
-                            card.dataset.day
-                        );
-
-                    const reward =
-                        card.dataset.reward;
-
-                    const currentDay =
-                        getCurrentDay();
-
-                    const claimed =
-                        getClaimedRewards();
-
-
-                    /*
-                        Already claimed.
-                    */
-
-                    if (
-                        claimed.includes(day)
-                    ) {
-
-                        showMessage(
-                            "✅ You already claimed Day "
-                            + day
-                            + "!"
-                        );
-
-                        return;
-
-                    }
-
-
-                    /*
-                        Future reward.
-                    */
-
-                    if (
-                        day > currentDay
-                    ) {
-
-                        showMessage(
-                            "🎁 Day "
-                            + day
-                            + " is not available yet. "
-                            + "Wait for Day "
-                            + day
-                            + "!"
-                        );
-
-                        return;
-
-                    }
-
-
-                    /*
-                        Reveal today's reward.
-                    */
-
-                    const hidden =
-                        card.querySelector(
-                            ".reward-hidden"
-                        );
-
-                    hidden.textContent =
-                        reward;
-
-
-                    /*
-                        Mark it as claimed.
-                    */
-
-                    claimed.push(day);
-
-                    saveClaimedRewards(
-                        claimed
+                    showRewardMessage(
+                        "🎁 You already claimed today's reward. Come back tomorrow!"
                     );
 
+                    return;
 
-                    card.classList.remove(
-                        "unlocked"
-                    );
+                }
 
-                    card.classList.add(
+
+                /*
+                    Open today's gift.
+                */
+
+                if (
+                    day === currentDay
+                ) {
+
+                    const content =
+                        reward.querySelector(
+                            ".reward-content"
+                        );
+
+                    content.textContent =
+                        prize;
+
+                    reward.classList.add(
                         "claimed"
                     );
 
 
-                    showMessage(
+                    localStorage.setItem(
+                        "gb_reward_claimed",
+                        getToday()
+                    );
+
+
+                    showRewardMessage(
                         "🎉 You opened Day "
                         + day
                         + " and received "
-                        + reward
+                        + prize
                         + "!"
                     );
 
-
-                    setTimeout(
-                        function () {
-
-                            hidden.textContent =
-                                "✓ Claimed";
-
-                        },
-                        800
-                    );
-
                 }
-            );
 
-        }
-    );
+            }
+        );
+
+    });
 
 
-    /*
-        Start everything.
-    */
+/*
+    Start the reward system.
+*/
 
-    updateRewards();
-
-})();
+updateRewards();
 
 </script>
 
