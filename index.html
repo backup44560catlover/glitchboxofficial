@@ -1,560 +1,599 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
+<title>GlitchBox — Enter the Glitch</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- GlitchBox browser-tab logo -->
+<link rel="icon" type="image/png" href="images/glitchbox-logo.png">
 
-    <title>GlitchBox — Enter the Glitch. Own the Game.</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
 
-    <!-- ============================= -->
-    <!-- GLITCHBOX BROWSER TAB LOGO -->
-    <!-- ============================= -->
+html {
+    scroll-behavior: smooth;
+}
 
-    <link
-        rel="icon"
-        type="image/png"
-        href="images/glitchbox-logo.png"
-    >
+body {
+    background: #070714;
+    color: white;
+    min-height: 100vh;
+}
 
-    <link
-        rel="apple-touch-icon"
-        href="images/glitchbox-logo.png"
-    >
+/* =========================
+   SIDEBAR
+========================= */
 
-    <meta
-        name="theme-color"
-        content="#070714"
-    >
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
 
-    <style>
+    width: 245px;
+    height: 100vh;
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+    padding: 20px;
 
-        html {
-            scroll-behavior: smooth;
-        }
+    background: #0d0d1f;
+    border-right: 1px solid #292940;
 
-        body {
-            background: #070714;
-            color: white;
-            min-height: 100vh;
-        }
+    overflow-y: auto;
+    z-index: 1000;
+}
 
-        /* ============================= */
-        /* SIDEBAR */
-        /* ============================= */
+.sidebar-logo {
+    width: 75px;
+    height: 75px;
 
-        .sidebar {
+    object-fit: cover;
 
-            position: fixed;
+    display: block;
 
-            left: 0;
-            top: 0;
+    border-radius: 16px;
 
-            width: 245px;
-            height: 100vh;
+    margin-bottom: 12px;
 
-            padding: 20px;
+    box-shadow:
+        0 0 15px #8b5cf6,
+        0 0 30px rgba(139,92,246,.45);
+}
 
-            background: #0d0d1f;
+.logo-text {
+    font-size: 28px;
+    font-weight: 900;
 
-            border-right: 1px solid #292940;
+    color: #a855f7;
 
-            overflow-y: auto;
+    letter-spacing: 2px;
 
-            z-index: 1000;
-        }
+    margin-bottom: 25px;
+}
 
-        .sidebar-logo {
+.sidebar a {
+    display: block;
 
-            width: 75px;
-            height: 75px;
+    padding: 12px;
 
-            object-fit: cover;
+    margin-bottom: 7px;
 
-            border-radius: 16px;
+    color: white;
 
-            margin-bottom: 12px;
+    text-decoration: none;
 
-            box-shadow:
-                0 0 12px #7c3aed,
-                0 0 30px rgba(168, 85, 247, .35);
-        }
+    border-radius: 10px;
 
-        .logo-text {
+    transition: .25s;
+}
 
-            font-size: 27px;
+.sidebar a:hover {
+    background: #7c3aed;
 
-            font-weight: 900;
+    transform: translateX(3px);
 
-            color: #a855f7;
+    box-shadow: 0 0 15px rgba(124,58,237,.4);
+}
 
-            letter-spacing: 2px;
+/* =========================
+   MAIN
+========================= */
 
-            margin-bottom: 25px;
-        }
+.main {
+    margin-left: 245px;
+    padding: 25px;
 
-        .sidebar a {
+    min-height: 100vh;
+}
 
-            display: block;
+/* =========================
+   HERO
+========================= */
 
-            color: white;
+.hero {
+    min-height: 600px;
 
-            text-decoration: none;
+    display: flex;
 
-            padding: 12px;
+    align-items: center;
+    justify-content: space-between;
 
-            margin-bottom: 7px;
+    gap: 40px;
 
-            border-radius: 10px;
+    padding: 40px;
 
-            transition: .25s;
-        }
+    margin-bottom: 25px;
 
-        .sidebar a:hover {
+    border-radius: 25px;
 
-            background: #7c3aed;
+    border: 1px solid #7c3aed;
 
-            transform: translateX(3px);
+    background:
+        radial-gradient(
+            circle at 75% 45%,
+            rgba(168,85,247,.25),
+            transparent 45%
+        ),
+        linear-gradient(
+            135deg,
+            #10001f,
+            #22003d,
+            #070714
+        );
 
-            box-shadow:
-                0 0 15px rgba(124, 58, 237, .4);
-        }
+    box-shadow:
+        0 0 30px rgba(124,58,237,.3);
 
-        /* ============================= */
-        /* MAIN */
-        /* ============================= */
+    overflow: hidden;
+}
 
-        .main {
+.hero-content {
+    flex: 1;
+    max-width: 500px;
+}
 
-            margin-left: 245px;
+.hero-logo {
+    width: 120px;
+    height: 120px;
 
-            padding: 25px;
+    object-fit: cover;
 
-            min-height: 100vh;
-        }
+    border-radius: 22px;
 
-        /* ============================= */
-        /* HERO */
-        /* ============================= */
+    margin-bottom: 20px;
 
-        .hero {
+    box-shadow:
+        0 0 20px #a855f7,
+        0 0 45px rgba(168,85,247,.5);
 
-            min-height: 600px;
+    animation: floatLogo 4s ease-in-out infinite;
+}
 
-            display: flex;
+.hero-content h1 {
+    font-size: 64px;
 
-            align-items: center;
+    font-weight: 900;
 
-            justify-content: space-between;
+    letter-spacing: 4px;
 
-            gap: 40px;
+    margin-bottom: 15px;
 
-            padding: 35px;
+    text-shadow:
+        0 0 10px #a855f7,
+        0 0 25px #7c3aed,
+        0 0 50px rgba(168,85,247,.6);
+}
 
-            margin-bottom: 25px;
+.tagline {
+    font-size: 24px;
 
-            border-radius: 25px;
+    color: #d8b4fe;
 
-            border: 1px solid #6d28d9;
+    margin-bottom: 30px;
+}
 
-            background:
-                radial-gradient(
-                    circle at 75% 45%,
-                    rgba(168, 85, 247, .22),
-                    transparent 45%
-                ),
-                linear-gradient(
-                    135deg,
-                    #10001f,
-                    #21003d,
-                    #080812
-                );
+/* =========================
+   HERO ART
+========================= */
 
-            box-shadow:
-                0 0 30px rgba(124, 58, 237, .25),
-                inset 0 0 40px rgba(124, 58, 237, .08);
+.hero-art {
+    flex: 1;
 
-            overflow: hidden;
-        }
+    display: flex;
 
-        .hero-content {
+    justify-content: center;
+    align-items: center;
+}
 
-            flex: 1;
+.hero-art img {
+    width: 100%;
+    max-width: 560px;
 
-            max-width: 500px;
-        }
+    height: auto;
 
-        .hero-logo {
+    border-radius: 22px;
 
-            width: 100px;
-            height: 100px;
+    display: block;
 
-            object-fit: cover;
+    box-shadow:
+        0 0 25px rgba(168,85,247,.4);
 
-            border-radius: 20px;
+    animation: floatArt 5s ease-in-out infinite;
+}
 
-            margin-bottom: 20px;
+/* =========================
+   BUTTONS
+========================= */
 
-            box-shadow:
-                0 0 15px #a855f7,
-                0 0 40px rgba(168, 85, 247, .45);
+.buttons {
+    display: flex;
 
-            animation: logoGlow 3s ease-in-out infinite;
-        }
+    flex-wrap: wrap;
 
-        .hero h1 {
+    gap: 15px;
+}
 
-            font-size: 64px;
+.button {
+    display: inline-block;
 
-            font-weight: 900;
+    padding: 15px 25px;
 
-            letter-spacing: 4px;
+    border-radius: 12px;
 
-            margin-bottom: 12px;
+    background: #7c3aed;
 
-            color: white;
+    border: 1px solid #a855f7;
 
-            text-shadow:
-                0 0 10px #a855f7,
-                0 0 25px #7c3aed,
-                0 0 50px rgba(168, 85, 247, .65);
-        }
+    color: white;
 
-        .tagline {
+    text-decoration: none;
 
-            font-size: 24px;
+    font-weight: bold;
 
-            color: #d8b4fe;
+    transition: .25s;
 
-            margin-bottom: 30px;
-        }
+    box-shadow:
+        0 0 15px rgba(124,58,237,.4);
+}
 
-        /* ============================= */
-        /* BUTTONS */
-        /* ============================= */
+.button:hover {
+    background: #8b5cf6;
 
-        .buttons {
+    transform: translateY(-3px);
 
-            display: flex;
+    box-shadow:
+        0 0 20px #a855f7,
+        0 0 40px rgba(168,85,247,.4);
+}
 
-            flex-wrap: wrap;
+.button.secondary {
+    background: transparent;
+}
 
-            gap: 14px;
-        }
+/* =========================
+   DASHBOARD CARDS
+========================= */
 
-        .button {
+.grid {
+    display: grid;
 
-            display: inline-block;
+    grid-template-columns:
+        repeat(4, 1fr);
 
-            padding: 15px 24px;
+    gap: 15px;
 
-            border-radius: 12px;
+    margin-bottom: 25px;
+}
 
-            border: 1px solid #a855f7;
+.card {
+    background: #121225;
 
-            background: #7c3aed;
+    border: 1px solid #292940;
 
-            color: white;
+    border-radius: 15px;
 
-            text-decoration: none;
+    padding: 22px;
 
-            font-weight: bold;
+    transition: .25s;
+}
 
-            transition: .25s;
+.card:hover {
+    transform: translateY(-4px);
 
-            box-shadow:
-                0 0 15px rgba(124, 58, 237, .4);
-        }
+    border-color: #8b5cf6;
 
-        .button:hover {
+    box-shadow:
+        0 0 20px rgba(124,58,237,.25);
+}
 
-            transform: translateY(-3px);
+.card h2 {
+    color: #c084fc;
 
-            background: #8b5cf6;
+    margin-bottom: 10px;
+}
 
-            box-shadow:
-                0 0 20px #a855f7,
-                0 0 35px rgba(168, 85, 247, .4);
-        }
+.card p {
+    color: #d0d0df;
+}
 
-        .button.secondary {
+/* =========================
+   SECTIONS
+========================= */
 
-            background: transparent;
-        }
+.section {
+    background: #121225;
 
-        /* ============================= */
-        /* HERO LOGO PREVIEW */
-        /* ============================= */
+    border: 1px solid #292940;
 
-        .hero-image {
+    border-radius: 15px;
 
-            flex: 1;
+    padding: 22px;
 
-            display: flex;
+    margin-bottom: 20px;
+}
 
-            align-items: center;
+.section h2 {
+    color: #c084fc;
 
-            justify-content: center;
-        }
+    margin-bottom: 15px;
+}
 
-        .hero-image img {
+.section p {
+    color: #d0d0df;
 
-            width: 100%;
+    margin-bottom: 8px;
+}
 
-            max-width: 520px;
+/* =========================
+   DAILY REWARDS
+========================= */
 
-            height: auto;
+.rewards-help {
+    color: #aaa;
 
-            border-radius: 22px;
+    margin-bottom: 20px;
+}
 
-            box-shadow:
-                0 0 20px rgba(168, 85, 247, .4);
+.rewards-grid {
+    display: grid;
 
-            animation: consoleFloat 5s ease-in-out infinite;
-        }
+    grid-template-columns:
+        repeat(5, 1fr);
 
-        /* ============================= */
-        /* DASHBOARD CARDS */
-        /* ============================= */
+    gap: 12px;
+}
 
-        .grid {
+.reward-card {
+    min-height: 155px;
 
-            display: grid;
+    padding: 18px 12px;
 
-            grid-template-columns:
-                repeat(4, 1fr);
+    border: 1px solid #3b2463;
 
-            gap: 15px;
+    border-radius: 16px;
 
-            margin-bottom: 25px;
-        }
+    background:
+        linear-gradient(
+            145deg,
+            #17102a,
+            #0f0f20
+        );
 
-        .card {
+    color: white;
 
-            padding: 22px;
+    cursor: pointer;
 
-            background: #121225;
+    display: flex;
 
-            border: 1px solid #292940;
+    flex-direction: column;
 
-            border-radius: 15px;
+    align-items: center;
 
-            transition: .25s;
-        }
+    justify-content: center;
 
-        .card:hover {
+    gap: 8px;
 
-            transform: translateY(-4px);
+    transition: .25s;
 
-            border-color: #8b5cf6;
+    box-shadow:
+        0 0 12px rgba(124,58,237,.12);
+}
 
-            box-shadow:
-                0 0 20px rgba(124, 58, 237, .25);
-        }
+.reward-card:hover {
+    transform: translateY(-4px);
 
-        .card h2 {
+    border-color: #a855f7;
 
-            color: #c084fc;
+    box-shadow:
+        0 0 22px rgba(168,85,247,.35);
+}
 
-            margin-bottom: 10px;
+.reward-card.unlocked {
+    border-color: #a855f7;
+}
 
-            font-size: 20px;
-        }
+.reward-card.claimed {
+    border-color: #22c55e;
 
-        .card p {
+    cursor: default;
+}
 
-            color: #c7c7d9;
+.gift-icon {
+    font-size: 45px;
+}
 
-        }
+.reward-day {
+    color: #d8b4fe;
 
-        /* ============================= */
-        /* SECTIONS */
-        /* ============================= */
+    font-weight: bold;
+}
 
-        .section {
+.reward-hidden {
+    font-size: 18px;
 
-            background: #121225;
+    font-weight: 900;
 
-            border: 1px solid #292940;
+    letter-spacing: 2px;
 
-            border-radius: 15px;
+    color: #a855f7;
+}
 
-            padding: 22px;
+.reward-card.claimed .reward-hidden {
+    color: #86efac;
+}
 
-            margin-bottom: 20px;
-        }
+.reward-card.locked {
+    opacity: .65;
+}
 
-        .section h2 {
+.reward-message {
+    display: none;
 
-            color: #c084fc;
+    margin-top: 18px;
 
-            margin-bottom: 15px;
-        }
+    padding: 15px;
 
-        .section p {
+    border-radius: 12px;
 
-            margin-bottom: 8px;
+    background: #19132b;
 
-            color: #d0d0df;
-        }
+    border: 1px solid #4c2a7a;
 
-        /* ============================= */
-        /* FOOTER */
-        /* ============================= */
+    color: #e9d5ff;
+}
 
-        .footer {
+.reward-message.show {
+    display: block;
+}
 
-            text-align: center;
+/* =========================
+   FOOTER
+========================= */
 
-            padding: 30px;
+.footer {
+    text-align: center;
 
-            color: #777;
+    color: #777;
 
-        }
+    padding: 30px;
+}
 
-        /* ============================= */
-        /* ANIMATIONS */
-        /* ============================= */
+/* =========================
+   ANIMATIONS
+========================= */
 
-        @keyframes logoGlow {
+@keyframes floatLogo {
 
-            0%, 100% {
+    0%, 100% {
+        transform: translateY(0);
+    }
 
-                transform: scale(1);
+    50% {
+        transform: translateY(-8px);
+    }
+}
 
-                box-shadow:
-                    0 0 15px #a855f7,
-                    0 0 35px rgba(168, 85, 247, .4);
-            }
+@keyframes floatArt {
 
-            50% {
+    0%, 100% {
+        transform: translateY(0);
+    }
 
-                transform: scale(1.04);
+    50% {
+        transform: translateY(-10px);
+    }
+}
 
-                box-shadow:
-                    0 0 25px #a855f7,
-                    0 0 55px rgba(168, 85, 247, .6);
-            }
-        }
+/* =========================
+   TABLET
+========================= */
 
-        @keyframes consoleFloat {
+@media (max-width: 1000px) {
 
-            0%, 100% {
+    .grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
 
-                transform: translateY(0);
-            }
+    .rewards-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
 
-            50% {
+    .hero {
+        flex-direction: column;
 
-                transform: translateY(-10px);
-            }
-        }
+        text-align: center;
+    }
 
-        /* ============================= */
-        /* TABLET */
-        /* ============================= */
+    .hero-content {
+        max-width: 700px;
+    }
 
-        @media (max-width: 1000px) {
+    .buttons {
+        justify-content: center;
+    }
+}
 
-            .grid {
+/* =========================
+   PHONE
+========================= */
 
-                grid-template-columns:
-                    repeat(2, 1fr);
-            }
+@media (max-width: 700px) {
 
-            .hero {
+    .sidebar {
+        display: none;
+    }
 
-                flex-direction: column;
+    .main {
+        margin-left: 0;
 
-                text-align: center;
-            }
+        padding: 15px;
+    }
 
-            .hero-content {
+    .hero {
+        padding: 25px;
 
-                max-width: 700px;
-            }
+        min-height: auto;
+    }
 
-            .buttons {
+    .hero-content h1 {
+        font-size: 40px;
+    }
 
-                justify-content: center;
-            }
+    .tagline {
+        font-size: 19px;
+    }
 
-            .hero-image img {
+    .grid {
+        grid-template-columns: 1fr;
+    }
 
-                max-width: 600px;
-            }
-        }
+    .rewards-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
 
-        /* ============================= */
-        /* PHONE */
-        /* ============================= */
+    .hero-logo {
+        width: 90px;
+        height: 90px;
+    }
+}
 
-        @media (max-width: 700px) {
-
-            .sidebar {
-
-                display: none;
-            }
-
-            .main {
-
-                margin-left: 0;
-
-                padding: 15px;
-            }
-
-            .hero {
-
-                padding: 25px;
-
-                min-height: auto;
-            }
-
-            .hero h1 {
-
-                font-size: 40px;
-
-                letter-spacing: 2px;
-            }
-
-            .tagline {
-
-                font-size: 19px;
-            }
-
-            .grid {
-
-                grid-template-columns: 1fr;
-            }
-
-            .hero-logo {
-
-                width: 80px;
-                height: 80px;
-            }
-        }
-
-    </style>
-
+</style>
 </head>
-
 
 <body>
 
-
-<!-- ============================= -->
-<!-- SIDEBAR -->
-<!-- ============================= -->
+<!-- =========================
+     SIDEBAR
+========================= -->
 
 <aside class="sidebar">
 
@@ -595,232 +634,726 @@
 </aside>
 
 
-<!-- ============================= -->
-<!-- MAIN CONTENT -->
-<!-- ============================= -->
+<!-- =========================
+     MAIN
+========================= -->
 
 <main class="main">
 
 
-    <!-- HERO -->
+<!-- HERO -->
 
-    <section class="hero">
+<section class="hero">
 
+    <div class="hero-content">
 
-        <div class="hero-content">
+        <img
+            class="hero-logo"
+            src="images/glitchbox-logo.png"
+            alt="GlitchBox"
+        >
 
-            <img
-                class="hero-logo"
-                src="images/glitchbox-logo.png"
-                alt="GlitchBox Logo"
+        <h1>
+            GLITCHBOX
+        </h1>
+
+        <p class="tagline">
+            Enter the Glitch. Own the Game.
+        </p>
+
+        <div class="buttons">
+
+            <a
+                class="button"
+                href="games.html"
             >
+                🎮 Play Games
+            </a>
 
-            <h1>
-                GLITCHBOX
-            </h1>
-
-            <p class="tagline">
-                Enter the Glitch. Own the Game.
-            </p>
-
-
-            <div class="buttons">
-
-                <a
-                    class="button"
-                    href="games.html"
-                >
-                    🎮 Play Games
-                </a>
-
-                <a
-                    class="button secondary"
-                    href="worlds.html"
-                >
-                    🌎 Explore Worlds
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- OFFICIAL GLITCHBOX ART -->
-
-        <div class="hero-image">
-
-            <img
-                src="images/glitchbox-logo.png"
-                alt="Official GlitchBox Console and Controller"
+            <a
+                class="button secondary"
+                href="worlds.html"
             >
+                🌎 Explore Worlds
+            </a>
 
         </div>
 
-    </section>
+    </div>
 
 
-    <!-- DASHBOARD -->
+    <div class="hero-art">
 
-    <section class="grid">
+        <img
+            src="images/glitchbox-logo.png"
+            alt="Official GlitchBox Console and Controller"
+        >
 
+    </div>
 
-        <div class="card">
-
-            <h2>
-                🎮 Games
-            </h2>
-
-            <p>
-                Play GlitchBox games and discover new experiences.
-            </p>
-
-        </div>
+</section>
 
 
-        <div class="card">
+<!-- =========================
+     QUICK FEATURES
+========================= -->
 
-            <h2>
-                🌎 Worlds
-            </h2>
+<section class="grid">
 
-            <p>
-                Explore, build, and create your own GlitchBox worlds.
-            </p>
+    <div class="card">
 
-        </div>
-
-
-        <div class="card">
-
-            <h2>
-                🏰 Clans
-            </h2>
-
-            <p>
-                Create a clan, invite friends, and compete together.
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h2>
-                🎯 Daily Challenge
-            </h2>
-
-            <p>
-                Complete today's challenge and earn rewards.
-            </p>
-
-        </div>
-
-
-    </section>
-
-
-    <!-- NEWS -->
-
-    <section class="section">
-
-        <h2>
-            📰 Latest News
-        </h2>
+        <h2>🎮 Games</h2>
 
         <p>
-            🚀 Welcome to GlitchBox!
+            Play GlitchBox games and discover new experiences.
         </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🌎 Worlds</h2>
 
         <p>
-            💜 Enter the Glitch. Own the Game.
+            Explore, build, and create GlitchBox worlds.
         </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🏰 Clans</h2>
 
         <p>
-            🌎 GlitchBox Worlds are coming.
+            Create clans and play with your friends.
         </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🎯 Daily Challenge</h2>
 
         <p>
-            🎮 New games and experiences are being developed.
+            Complete today's challenge and earn rewards.
         </p>
 
-    </section>
+    </div>
+
+</section>
 
 
-    <!-- DAILY REWARDS -->
+<!-- =========================
+     NEWS
+========================= -->
 
-    <section class="section">
+<section class="section">
 
-        <h2>
-            🎁 Daily Rewards
-        </h2>
+    <h2>
+        📰 Latest News
+    </h2>
 
-        <p>
-            Day 1 — 100 GlitchCoins
-        </p>
+    <p>
+        🚀 Welcome to GlitchBox!
+    </p>
 
-        <p>
-            Day 2 — 200 GlitchCoins
-        </p>
+    <p>
+        💜 Enter the Glitch. Own the Game.
+    </p>
 
-        <p>
-            Day 3 — 300 GlitchCoins
-        </p>
+    <p>
+        🌎 GlitchBox Worlds are coming.
+    </p>
 
-        <p>
-            Day 4 — 400 GlitchCoins
-        </p>
+    <p>
+        🎮 New games and experiences are being developed.
+    </p>
 
-        <p>
-            Day 5 — 500 GlitchCoins
-        </p>
-
-    </section>
+</section>
 
 
-    <!-- DAILY CHALLENGES -->
+<!-- =========================
+     DAILY REWARDS
+========================= -->
 
-    <section class="section">
+<section class="section rewards-section">
 
-        <h2>
-            🎯 Daily Challenges
-        </h2>
+    <h2>
+        🎁 Daily Rewards
+    </h2>
 
-        <p>
-            🎮 Play 3 games
-        </p>
-
-        <p>
-            🌎 Visit 2 worlds
-        </p>
-
-        <p>
-            👥 Play with a friend
-        </p>
-
-        <p>
-            🏆 Earn 100 XP
-        </p>
-
-    </section>
+    <p class="rewards-help">
+        Click a gift to open it. New rewards unlock each day!
+    </p>
 
 
-    <!-- FOOTER -->
+    <div class="rewards-grid">
 
-    <footer class="footer">
 
-        © 2026 GlitchBox
+        <button
+            class="reward-card"
+            data-day="1"
+            data-reward="100 GlitchCoins"
+        >
 
-        <br><br>
+            <span class="gift-icon">
+                🎁
+            </span>
 
-        Enter the Glitch. Own the Game. 💜
+            <span class="reward-day">
+                Day 1
+            </span>
 
-    </footer>
+            <span class="reward-hidden">
+                ???
+            </span>
+
+        </button>
+
+
+        <button
+            class="reward-card"
+            data-day="2"
+            data-reward="200 GlitchCoins"
+        >
+
+            <span class="gift-icon">
+                🎁
+            </span>
+
+            <span class="reward-day">
+                Day 2
+            </span>
+
+            <span class="reward-hidden">
+                ???
+            </span>
+
+        </button>
+
+
+        <button
+            class="reward-card"
+            data-day="3"
+            data-reward="300 GlitchCoins"
+        >
+
+            <span class="gift-icon">
+                🎁
+            </span>
+
+            <span class="reward-day">
+                Day 3
+            </span>
+
+            <span class="reward-hidden">
+                ???
+            </span>
+
+        </button>
+
+
+        <button
+            class="reward-card"
+            data-day="4"
+            data-reward="400 GlitchCoins"
+        >
+
+            <span class="gift-icon">
+                🎁
+            </span>
+
+            <span class="reward-day">
+                Day 4
+            </span>
+
+            <span class="reward-hidden">
+                ???
+            </span>
+
+        </button>
+
+
+        <button
+            class="reward-card"
+            data-day="5"
+            data-reward="500 GlitchCoins"
+        >
+
+            <span class="gift-icon">
+                🎁
+            </span>
+
+            <span class="reward-day">
+                Day 5
+            </span>
+
+            <span class="reward-hidden">
+                ???
+            </span>
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="rewardMessage"
+        class="reward-message"
+        aria-live="polite"
+    ></div>
+
+</section>
+
+
+<!-- =========================
+     DAILY CHALLENGES
+========================= -->
+
+<section class="section">
+
+    <h2>
+        🎯 Daily Challenges
+    </h2>
+
+    <p>
+        🎮 Play 3 games
+    </p>
+
+    <p>
+        🌎 Visit 2 worlds
+    </p>
+
+    <p>
+        👥 Play with a friend
+    </p>
+
+    <p>
+        🏆 Earn 100 XP
+    </p>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+    © 2026 GlitchBox
+
+    <br><br>
+
+    Enter the Glitch. Own the Game. 💜
+
+</footer>
 
 
 </main>
 
 
-</body>
+<!-- =========================
+     DAILY REWARD JAVASCRIPT
+========================= -->
 
+<script>
+
+(function () {
+
+    const rewardCards =
+        document.querySelectorAll(".reward-card");
+
+    const message =
+        document.getElementById("rewardMessage");
+
+    const START_KEY =
+        "glitchbox_reward_start";
+
+    const CLAIMED_KEY =
+        "glitchbox_claimed_rewards";
+
+
+    /*
+        Get today's date without the time.
+    */
+
+    function todayOnly() {
+
+        const now = new Date();
+
+        return new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate()
+        );
+
+    }
+
+
+    /*
+        Start the 5-day reward cycle
+        the first time the player visits.
+    */
+
+    function createStartDate() {
+
+        if (!localStorage.getItem(START_KEY)) {
+
+            localStorage.setItem(
+                START_KEY,
+                todayOnly().toISOString()
+            );
+
+        }
+
+    }
+
+
+    /*
+        Determine which reward day
+        is currently available.
+    */
+
+    function getCurrentDay() {
+
+        createStartDate();
+
+        const start =
+            new Date(
+                localStorage.getItem(START_KEY)
+            );
+
+        const today =
+            todayOnly();
+
+        const difference =
+            Math.floor(
+                (
+                    today -
+                    new Date(
+                        start.getFullYear(),
+                        start.getMonth(),
+                        start.getDate()
+                    )
+                )
+                /
+                (1000 * 60 * 60 * 24)
+            );
+
+        return Math.min(
+            Math.max(difference + 1, 1),
+            5
+        );
+
+    }
+
+
+    /*
+        Get rewards the player
+        has already claimed.
+    */
+
+    function getClaimedRewards() {
+
+        try {
+
+            return JSON.parse(
+                localStorage.getItem(
+                    CLAIMED_KEY
+                ) || "[]"
+            );
+
+        } catch {
+
+            return [];
+
+        }
+
+    }
+
+
+    /*
+        Save claimed rewards.
+    */
+
+    function saveClaimedRewards(
+        rewards
+    ) {
+
+        localStorage.setItem(
+            CLAIMED_KEY,
+            JSON.stringify(rewards)
+        );
+
+    }
+
+
+    /*
+        Show a message underneath
+        the reward boxes.
+    */
+
+    function showMessage(text) {
+
+        message.textContent = text;
+
+        message.classList.add("show");
+
+    }
+
+
+    /*
+        Update the appearance of
+        every gift.
+    */
+
+    function updateRewards() {
+
+        const currentDay =
+            getCurrentDay();
+
+        const claimed =
+            getClaimedRewards();
+
+
+        rewardCards.forEach(
+            function (card) {
+
+                const day =
+                    Number(
+                        card.dataset.day
+                    );
+
+                const hidden =
+                    card.querySelector(
+                        ".reward-hidden"
+                    );
+
+
+                card.classList.remove(
+                    "locked",
+                    "unlocked",
+                    "claimed"
+                );
+
+
+                /*
+                    Already claimed.
+                */
+
+                if (
+                    claimed.includes(day)
+                ) {
+
+                    card.classList.add(
+                        "claimed"
+                    );
+
+                    hidden.textContent =
+                        "✓ Claimed";
+
+                    return;
+
+                }
+
+
+                /*
+                    Today's reward.
+                */
+
+                if (
+                    day === currentDay
+                ) {
+
+                    card.classList.add(
+                        "unlocked"
+                    );
+
+                    hidden.textContent =
+                        "???";
+
+                    return;
+
+                }
+
+
+                /*
+                    Future reward.
+                */
+
+                if (
+                    day > currentDay
+                ) {
+
+                    card.classList.add(
+                        "locked"
+                    );
+
+                    hidden.textContent =
+                        "🔒 Locked";
+
+                    return;
+
+                }
+
+
+                /*
+                    Previous unclaimed reward.
+                */
+
+                card.classList.add(
+                    "locked"
+                );
+
+                hidden.textContent =
+                    "🔒 Missed";
+
+            }
+        );
+
+    }
+
+
+    /*
+        When a player clicks a gift.
+    */
+
+    rewardCards.forEach(
+        function (card) {
+
+            card.addEventListener(
+                "click",
+                function () {
+
+                    const day =
+                        Number(
+                            card.dataset.day
+                        );
+
+                    const reward =
+                        card.dataset.reward;
+
+                    const currentDay =
+                        getCurrentDay();
+
+                    const claimed =
+                        getClaimedRewards();
+
+
+                    /*
+                        Already claimed.
+                    */
+
+                    if (
+                        claimed.includes(day)
+                    ) {
+
+                        showMessage(
+                            "✅ You already claimed Day "
+                            + day
+                            + "!"
+                        );
+
+                        return;
+
+                    }
+
+
+                    /*
+                        Future reward.
+                    */
+
+                    if (
+                        day > currentDay
+                    ) {
+
+                        showMessage(
+                            "🎁 Day "
+                            + day
+                            + " is not available yet. "
+                            + "Wait for Day "
+                            + day
+                            + "!"
+                        );
+
+                        return;
+
+                    }
+
+
+                    /*
+                        Reveal today's reward.
+                    */
+
+                    const hidden =
+                        card.querySelector(
+                            ".reward-hidden"
+                        );
+
+                    hidden.textContent =
+                        reward;
+
+
+                    /*
+                        Mark it as claimed.
+                    */
+
+                    claimed.push(day);
+
+                    saveClaimedRewards(
+                        claimed
+                    );
+
+
+                    card.classList.remove(
+                        "unlocked"
+                    );
+
+                    card.classList.add(
+                        "claimed"
+                    );
+
+
+                    showMessage(
+                        "🎉 You opened Day "
+                        + day
+                        + " and received "
+                        + reward
+                        + "!"
+                    );
+
+
+                    setTimeout(
+                        function () {
+
+                            hidden.textContent =
+                                "✓ Claimed";
+
+                        },
+                        800
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    /*
+        Start everything.
+    */
+
+    updateRewards();
+
+})();
+
+</script>
+
+</body>
 </html>
 ```
