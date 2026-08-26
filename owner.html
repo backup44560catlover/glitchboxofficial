@@ -1,98 +1,1675 @@
-<!DOCTYPE html><html>
+```html
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>GlitchBox Owner Dashboard</title><style>
-body{
-  margin:0;
-  background:black;
-  color:#9b59ff;
-  font-family:Arial,sans-serif;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GlitchBox Founder Control Center</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-.sidebar{
-  position:fixed;
-  left:0;
-  top:0;
-  width:220px;
-  height:100%;
-  border-right:2px solid #9b59ff;
-  padding-top:20px;
+body {
+    background: #070714;
+    color: white;
+    min-height: 100vh;
 }
 
-.sidebar button{
-  width:180px;
-  margin:10px;
-  padding:10px;
-  background:black;
-  color:#9b59ff;
-  border:2px solid #9b59ff;
-  cursor:pointer;
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    width: 250px;
+    height: 100vh;
+
+    background: #0d0d1f;
+
+    border-right: 1px solid #292940;
+
+    padding: 20px;
+
+    overflow-y: auto;
 }
 
-.content{
-  margin-left:240px;
-  padding:20px;
+.logo {
+    color: #a855f7;
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    margin-bottom: 8px;
+
+    letter-spacing: 2px;
 }
 
-.section{
-  display:none;
+.owner-label {
+    color: #ffd700;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    margin-bottom: 25px;
 }
 
-.section.active{
-  display:block;
+.sidebar a {
+    display: block;
+
+    padding: 12px;
+
+    margin-bottom: 7px;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 10px;
+
+    transition: .25s;
 }
-</style></head><body><div class="sidebar">
-<h2>Owner Panel</h2><button onclick="showSection('users')">Users</button>
-<button onclick="showSection('sponsors')">Sponsors</button>
-<button onclick="showSection('announcements')">Announcements</button>
-<button onclick="showSection('reports')">Reports</button>
-<button onclick="showSection('settings')">Settings</button>
-<button onclick="showSection('stats')">Statistics</button>
 
-</div><div class="content"><div id="users" class="section active">
-<h1>Users</h1>
-<p>Total Users: Coming Soon</p>
-</div><div id="sponsors" class="section">
-<h1>Sponsors</h1>
-<p>Sponsor Management Coming Soon</p>
-</div><div id="announcements" class="section">
-<h1>Announcements</h1>
-<p>Announcement System Coming Soon</p>
-</div><div id="reports" class="section">
-<h1>Reports</h1>
-<p>Reports Coming Soon</p>
-</div><div id="settings" class="section">
-<h1>Settings</h1>
-<p>Website Settings Coming Soon</p>
-</div><div id="stats" class="section">
-<h1>Statistics</h1>
-<p>Stats Coming Soon</p>
-</div></div><script>
-function showSection(id){
-  const sections = document.querySelectorAll(".section");
+.sidebar a:hover {
+    background: #7c3aed;
 
-  sections.forEach(section=>{
-    section.classList.remove("active");
-  });
-
-  document.getElementById(id).classList.add("active");
+    transform: translateX(3px);
 }
-<footer style="margin-top:40px;color:#00ffff;font-size:14px;">
 
-<p>
-© 2026 GlitchBoxOfficial. All Rights Reserved.
-</p>
+.sidebar a.active {
+    background: #5b21b6;
 
-<p>
-GlitchBox, Battle Arena X, logos, artwork, code, and content are the property of GlitchBoxOfficial.
-</p>
+    border: 1px solid #a855f7;
+}
 
-<p>
-Unauthorized copying, distribution, or reproduction is prohibited.
-</p>
+/* =========================
+   MAIN
+========================= */
+
+.main {
+    margin-left: 250px;
+
+    padding: 30px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    background:
+        linear-gradient(
+            135deg,
+            #19002f,
+            #3b0764,
+            #160025
+        );
+
+    border: 1px solid #8b5cf6;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 0 30px rgba(139,92,246,.25);
+}
+
+.header h1 {
+    font-size: 36px;
+
+    color: #ffffff;
+
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: #d8b4fe;
+}
+
+/* =========================
+   FOUNDER BADGES
+========================= */
+
+.badges {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 18px;
+}
+
+.badge {
+    font-size: 30px;
+
+    font-weight: bold;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff6b0,
+            #ffd700,
+            #ffbf00,
+            #fff6b0
+        );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    filter:
+        drop-shadow(0 0 6px #ffd700)
+        drop-shadow(0 0 12px #ffbf00);
+}
+
+/* =========================
+   STAT CARDS
+========================= */
+
+.stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+.stat {
+    background: #121225;
+
+    border: 1px solid #292940;
+
+    border-radius: 15px;
+
+    padding: 22px;
+}
+
+.stat h2 {
+    color: #c084fc;
+
+    margin-bottom: 10px;
+}
+
+.stat-number {
+    font-size: 28px;
+
+    font-weight: bold;
+}
+
+/* =========================
+   CONTROL GRID
+========================= */
+
+.control-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+/* =========================
+   CONTROL CARDS
+========================= */
+
+.control-card {
+    background: #121225;
+
+    border: 1px solid #292940;
+
+    border-radius: 16px;
+
+    padding: 22px;
+
+    transition: .25s;
+}
+
+.control-card:hover {
+    border-color: #8b5cf6;
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 0 20px rgba(139,92,246,.25);
+}
+
+.control-card h2 {
+    color: #c084fc;
+
+    margin-bottom: 8px;
+}
+
+.control-card p {
+    color: #aaa;
+
+    line-height: 1.5;
+
+    margin-bottom: 18px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.control-button {
+    width: 100%;
+
+    padding: 12px;
+
+    margin-top: 7px;
+
+    border: 1px solid #7c3aed;
+
+    border-radius: 10px;
+
+    background: #1b1230;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    transition: .2s;
+}
+
+.control-button:hover {
+    background: #7c3aed;
+
+    border-color: #a855f7;
+}
+
+.danger {
+    border-color: #ef4444;
+
+    background: #241014;
+}
+
+.danger:hover {
+    background: #dc2626;
+}
+
+.gold {
+    border-color: #d4af37;
+
+    color: #ffe680;
+}
+
+/* =========================
+   ACTIVITY
+========================= */
+
+.activity {
+    margin-top: 25px;
+
+    background: #121225;
+
+    border: 1px solid #292940;
+
+    border-radius: 16px;
+
+    padding: 22px;
+}
+
+.activity h2 {
+    color: #c084fc;
+
+    margin-bottom: 15px;
+}
+
+.activity-item {
+    padding: 13px;
+
+    margin-bottom: 8px;
+
+    border-radius: 10px;
+
+    background: #19192e;
+
+    color: #ccc;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    text-align: center;
+
+    color: #666;
+
+    margin-top: 30px;
+
+    padding: 20px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:1000px) {
+
+    .stats {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .control-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+@media(max-width:700px) {
+
+    .sidebar {
+        position: relative;
+
+        width: 100%;
+
+        height: auto;
+
+        border-right: none;
+
+        border-bottom: 1px solid #292940;
+    }
+
+    .main {
+        margin-left: 0;
+
+        padding: 15px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .control-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+        GLITCHBOX
+    </div>
+
+    <div class="owner-label">
+        👑 FOUNDER CONTROL CENTER
+    </div>
+
+    <a href="index.html">
+        🏠 Home
+    </a>
+
+    <a href="games.html">
+        🎮 Games
+    </a>
+
+    <a href="worlds.html">
+        🌎 Worlds
+    </a>
+
+    <a href="profile.html">
+        👤 Profile
+    </a>
+
+    <a href="friends.html">
+        👥 Friends
+    </a>
+
+    <a href="clans.html">
+        🏰 Clans
+    </a>
+
+    <a href="communities.html">
+        📢 Communities
+    </a>
+
+    <a href="settings.html">
+        ⚙️ Settings
+    </a>
+
+    <a
+        href="owner.html"
+        class="active"
+    >
+        👑 Owner Panel
+    </a>
+
+</aside>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main">
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<section class="header">
+
+    <h1>
+        👑 Founder Control Center
+    </h1>
+
+    <p>
+        Welcome to the GlitchBox platform management system.
+    </p>
+
+    <div class="badges">
+
+        <span class="badge">
+            ✔
+        </span>
+
+        <span class="badge">
+            🔨
+        </span>
+
+    </div>
+
+    <p>
+        Founder • Glitch God • Platform Owner
+    </p>
+
+</section>
+
+
+<!-- =========================
+     STATISTICS
+========================= -->
+
+<section class="stats">
+
+    <div class="stat">
+
+        <h2>
+            👥 Players
+        </h2>
+
+        <div
+            class="stat-number"
+            id="playerCount"
+        >
+            0
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <h2>
+            🎮 Games
+        </h2>
+
+        <div
+            class="stat-number"
+            id="gameCount"
+        >
+            0
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <h2>
+            🌎 Worlds
+        </h2>
+
+        <div
+            class="stat-number"
+            id="worldCount"
+        >
+            0
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <h2>
+            🚨 Reports
+        </h2>
+
+        <div
+            class="stat-number"
+            id="reportCount"
+        >
+            0
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CONTROL CENTER
+========================= -->
+
+<section class="control-grid">
+
+
+<!-- PLATFORM -->
+
+<div class="control-card">
+
+    <h2>
+        📢 Platform
+    </h2>
+
+    <p>
+        Manage announcements, featured content, events, and platform-wide settings.
+    </p>
+
+    <button
+        class="control-button"
+        onclick="platformAnnouncement()"
+    >
+        📢 New Announcement
+    </button>
+
+    <button
+        class="control-button"
+        onclick="featurePost()"
+    >
+        ⭐ Feature Post
+    </button>
+
+    <button
+        class="control-button"
+        onclick="manageTrending()"
+    >
+        🔥 Manage Trending
+    </button>
+
+</div>
+
+
+<!-- PLAYERS -->
+
+<div class="control-card">
+
+    <h2>
+        👥 Players
+    </h2>
+
+    <p>
+        Manage players, reports, warnings, bans, and appeals.
+    </p>
+
+    <button
+        class="control-button"
+        onclick="playerSearch()"
+    >
+        🔎 Search Players
+    </button>
+
+    <button
+        class="control-button"
+        onclick="viewReports()"
+    >
+        🚨 View Reports
+    </button>
+
+    <button
+        class="control-button danger"
+        onclick="banPlayer()"
+    >
+        🚫 Ban / Unban
+    </button>
+
+</div>
+
+
+<!-- GAMES -->
+
+<div class="control-card">
+
+    <h2>
+        🎮 Games
+    </h2>
+
+    <p>
+        Manage games, featured games, reported games, and game moderation.
+    </p>
+
+    <button
+        class="control-button"
+        onclick="gameManagement()"
+    >
+        🎮 Manage Games
+    </button>
+
+    <button
+        class="control-button"
+        onclick="featuredGames()"
+    >
+        ⭐ Featured Games
+    </button>
+
+    <button
+        class="control-button"
+        onclick="gameReports()"
+    >
+        🚨 Game Reports
+    </button>
+
+</div>
+
+
+<!-- WORLDS -->
+
+<div class="control-card">
+
+    <h2>
+        🌎 Worlds
+    </h2>
+
+    <p>
+        Control published worlds, featured worlds, reports, and moderation.
+    </p>
+
+    <button
+        class="control-button"
+        onclick="worldManagement()"
+    >
+        🌎 Manage Worlds
+    </button>
+
+    <button
+        class="control-button"
+        onclick="featuredWorlds()"
+    >
+        ⭐ Featured Worlds
+    </button>
+
+    <button
+        class="control-button"
+        onclick="worldReports()"
+    >
+        🚨 World Reports
+    </button>
+
+</div>
+
+
+<!-- COMMUNITIES -->
+
+<div class="control-card">
+
+    <h2>
+        📢 Communities
+    </h2>
+
+    <p>
+        Manage communities, moderation, pinned posts, and reports.
+    </p>
+
+    <button
+        class="control-button"
+        onclick="communityManagement()"
+    >
+        📢 Manage Communities
+    </button>
+
+    <button
+        class="control-button"
+        onclick="communityReports()"
+    >
+        🚨 Community Reports
+    </button>
+
+    <button
+        class="control-button"
+        onclick="pinNews()"
+    >
+        📌 Pin News
+    </button>
+
+</div>
+
+
+<!-- CREATORS -->
+
+<div class="control-card">
+
+    <h2>
+        🎥 Creators
+    </h2>
+
+    <p>
+        Manage creators, verification, featured creators, and analytics.
+    </p>
+
+    <button
+        class="control-button"
+        onclick="creatorManagement()"
+    >
+        🎥 Manage Creators
+    </button>
+
+    <button
+        class="control-button gold"
+        onclick="verifyCreator()"
+    >
+        ✔ Verify Creator
+    </button>
+
+    <button
+        class="control-button"
+        onclick="creatorAnalytics()"
+    >
+        📊 Creator Analytics
+    </button>
+
+</div>
+
+
+<!-- ECONOMY -->
+
+<div class="control-card">
+
+    <h2>
+        💰 Economy
+    </h2>
+
+    <p>
+        Manage GlitchCoins, GlitchGems, promo codes, rewards, and marketplace settings.
+    </p>
+
+    <button
+        class="control-button"
+        onclick="economyControls()"
+    >
+        🪙 Economy Controls
+    </button>
+
+    <button
+        class="control-button"
+        onclick="promoCodes()"
+    >
+        🎟 Promo Codes
+    </button>
+
+    <button
+        class="control-button"
+        onclick="rewardControls()"
+    >
+        🎁 Rewards
+    </button>
+
+</div>
+
+
+<!-- PREMIUM -->
+
+<div class="control-card">
+
+    <h2>
+        💎 Premium
+    </h2>
+
+    <p>
+        Manage Premium memberships and platform benefits.
+    </p>
+
+    <button
+        class="control-button"
+        onclick="premiumManagement()"
+    >
+        💎 Premium Management
+    </button>
+
+    <button
+        class="control-button"
+        onclick="premiumSettings()"
+    >
+        ⚙️ Premium Settings
+    </button>
+
+</div>
+
+
+<!-- TOURNAMENTS -->
+
+<div class="control-card">
+
+    <h2>
+        🏆 Tournaments
+    </h2>
+
+    <p>
+        Manage tournaments, clan battles, events, brackets, and rewards.
+    </p>
+
+    <button
+        class="control-button"
+        onclick="tournamentManagement()"
+    >
+        🏆 Manage Tournaments
+    </button>
+
+    <button
+        class="control-button"
+        onclick="tournamentRewards()"
+    >
+        🎁 Tournament Rewards
+    </button>
+
+</div>
+
+
+<!-- SPONSORS -->
+
+<div class="control-card">
+
+    <h2>
+        🤝 Sponsors
+    </h2>
+
+    <p>
+        Manage sponsor campaigns, sponsor content, and sponsor relationships.
+    </p>
+
+    <button
+        class="control-button"
+        onclick="sponsorManagement()"
+    >
+        🤝 Manage Sponsors
+    </button>
+
+    <button
+        class="control-button"
+        onclick="sponsorCampaigns()"
+    >
+        📢 Sponsor Campaigns
+    </button>
+
+</div>
+
+
+<!-- STAFF -->
+
+<div class="control-card">
+
+    <h2>
+        👑 Staff Management
+    </h2>
+
+    <p>
+        Manage admins, moderators, staff permissions, and roles.
+    </p>
+
+    <button
+        class="control-button"
+        onclick="staffManagement()"
+    >
+        👥 Manage Staff
+    </button>
+
+    <button
+        class="control-button"
+        onclick="permissionManagement()"
+    >
+        🔑 Permissions
+    </button>
+
+</div>
+
+
+<!-- SECURITY -->
+
+<div class="control-card">
+
+    <h2>
+        🛡 Security
+    </h2>
+
+    <p>
+        Review security activity, sessions, alerts, and audit logs.
+    </p>
+
+    <button
+        class="control-button"
+        onclick="securityCenter()"
+    >
+        🛡 Security Center
+    </button>
+
+    <button
+        class="control-button"
+        onclick="auditLogs()"
+    >
+        📜 Audit Logs
+    </button>
+
+    <button
+        class="control-button"
+        onclick="securityAlerts()"
+    >
+        🚨 Security Alerts
+    </button>
+
+</div>
+
+
+<!-- PLATFORM SETTINGS -->
+
+<div class="control-card">
+
+    <h2>
+        ⚙️ Platform Settings
+    </h2>
+
+    <p>
+        Manage platform-wide settings and maintenance.
+    </p>
+
+    <button
+        class="control-button"
+        onclick="platformSettings()"
+    >
+        ⚙️ Platform Settings
+    </button>
+
+    <button
+        class="control-button danger"
+        onclick="maintenanceMode()"
+    >
+        🔧 Maintenance Mode
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     ACTIVITY LOG
+========================= -->
+
+<section class="activity">
+
+    <h2>
+        📜 Recent Founder Activity
+    </h2>
+
+    <div
+        class="activity-item"
+        id="activityLog"
+    >
+        👑 Founder Control Center opened.
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+    GlitchBox Founder Control Center
+
+    <br><br>
+
+    👑 Founder • 🔨 Owner
+
+    <br><br>
+
+    © 2026 GlitchBox
 
 </footer>
 
+
+</main>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+/*
+    Temporary demo statistics.
+
+    These will eventually come from
+    Supabase.
+*/
+
+document.getElementById(
+    "playerCount"
+).textContent = "0";
+
+document.getElementById(
+    "gameCount"
+).textContent = "4";
+
+document.getElementById(
+    "worldCount"
+).textContent = "0";
+
+document.getElementById(
+    "reportCount"
+).textContent = "0";
+
+
+/*
+    Founder activity helper.
+*/
+
+function activity(text) {
+
+    document.getElementById(
+        "activityLog"
+    ).textContent =
+        "👑 " + text;
+
+}
+
+
+/*
+    Platform.
+*/
+
+function platformAnnouncement() {
+
+    const text =
+        prompt(
+            "Enter your platform announcement:"
+        );
+
+    if(text) {
+
+        activity(
+            "Platform announcement created: "
+            + text
+        );
+
+        alert(
+            "📢 Announcement saved in demo mode."
+        );
+
+    }
+
+}
+
+
+function featurePost() {
+
+    activity(
+        "Opened Feature Posts."
+    );
+
+    alert(
+        "⭐ Feature Posts management is ready for the next stage."
+    );
+
+}
+
+
+function manageTrending() {
+
+    activity(
+        "Opened Trending Content."
+    );
+
+    alert(
+        "🔥 Trending Content management opened."
+    );
+
+}
+
+
+/*
+    Players.
+*/
+
+function playerSearch() {
+
+    const player =
+        prompt(
+            "Enter a player username:"
+        );
+
+    if(player) {
+
+        activity(
+            "Searched for player: "
+            + player
+        );
+
+        alert(
+            "🔎 Searching for "
+            + player
+            + "..."
+        );
+
+    }
+
+}
+
+
+function viewReports() {
+
+    activity(
+        "Opened Player Reports."
+    );
+
+    alert(
+        "🚨 Player reports opened."
+    );
+
+}
+
+
+function banPlayer() {
+
+    const player =
+        prompt(
+            "Enter username to manage:"
+        );
+
+    if(player) {
+
+        activity(
+            "Opened moderation controls for "
+            + player
+        );
+
+        alert(
+            "🚫 Moderation controls for "
+            + player
+            + " opened."
+        );
+
+    }
+
+}
+
+
+/*
+    Games.
+*/
+
+function gameManagement() {
+
+    activity(
+        "Opened Game Management."
+    );
+
+    alert(
+        "🎮 Game Management opened."
+    );
+
+}
+
+
+function featuredGames() {
+
+    activity(
+        "Opened Featured Games."
+    );
+
+    alert(
+        "⭐ Featured Games opened."
+    );
+
+}
+
+
+function gameReports() {
+
+    activity(
+        "Opened Game Reports."
+    );
+
+    alert(
+        "🚨 Game Reports opened."
+    );
+
+}
+
+
+/*
+    Worlds.
+*/
+
+function worldManagement() {
+
+    activity(
+        "Opened World Management."
+    );
+
+    alert(
+        "🌎 World Management opened."
+    );
+
+}
+
+
+function featuredWorlds() {
+
+    activity(
+        "Opened Featured Worlds."
+    );
+
+    alert(
+        "⭐ Featured Worlds opened."
+    );
+
+}
+
+
+function worldReports() {
+
+    activity(
+        "Opened World Reports."
+    );
+
+    alert(
+        "🚨 World Reports opened."
+    );
+
+}
+
+
+/*
+    Communities.
+*/
+
+function communityManagement() {
+
+    activity(
+        "Opened Community Management."
+    );
+
+    alert(
+        "📢 Community Management opened."
+    );
+
+}
+
+
+function communityReports() {
+
+    activity(
+        "Opened Community Reports."
+    );
+
+    alert(
+        "🚨 Community Reports opened."
+    );
+
+}
+
+
+function pinNews() {
+
+    activity(
+        "Opened News Management."
+    );
+
+    alert(
+        "📌 News Management opened."
+    );
+
+}
+
+
+/*
+    Creators.
+*/
+
+function creatorManagement() {
+
+    activity(
+        "Opened Creator Management."
+    );
+
+    alert(
+        "🎥 Creator Management opened."
+    );
+
+}
+
+
+function verifyCreator() {
+
+    const creator =
+        prompt(
+            "Enter creator username:"
+        );
+
+    if(creator) {
+
+        activity(
+            "Opened verification for "
+            + creator
+        );
+
+        alert(
+            "✔ Verification review opened for "
+            + creator
+        );
+
+    }
+
+}
+
+
+function creatorAnalytics() {
+
+    activity(
+        "Opened Creator Analytics."
+    );
+
+    alert(
+        "📊 Creator Analytics opened."
+    );
+
+}
+
+
+/*
+    Economy.
+*/
+
+function economyControls() {
+
+    activity(
+        "Opened Economy Controls."
+    );
+
+    alert(
+        "🪙 Economy Controls opened."
+    );
+
+}
+
+
+function promoCodes() {
+
+    const code =
+        prompt(
+            "Enter a promo code to create:"
+        );
+
+    if(code) {
+
+        activity(
+            "Created promo code: "
+            + code
+        );
+
+        alert(
+            "🎟 Promo code created in demo mode."
+        );
+
+    }
+
+}
+
+
+function rewardControls() {
+
+    activity(
+        "Opened Reward Controls."
+    );
+
+    alert(
+        "🎁 Reward Controls opened."
+    );
+
+}
+
+
+/*
+    Premium.
+*/
+
+function premiumManagement() {
+
+    activity(
+        "Opened Premium Management."
+    );
+
+    alert(
+        "💎 Premium Management opened."
+    );
+
+}
+
+
+function premiumSettings() {
+
+    activity(
+        "Opened Premium Settings."
+    );
+
+    alert(
+        "⚙️ Premium Settings opened."
+    );
+
+}
+
+
+/*
+    Tournaments.
+*/
+
+function tournamentManagement() {
+
+    activity(
+        "Opened Tournament Management."
+    );
+
+    alert(
+        "🏆 Tournament Management opened."
+    );
+
+}
+
+
+function tournamentRewards() {
+
+    activity(
+        "Opened Tournament Rewards."
+    );
+
+    alert(
+        "🎁 Tournament Rewards opened."
+    );
+
+}
+
+
+/*
+    Sponsors.
+*/
+
+function sponsorManagement() {
+
+    activity(
+        "Opened Sponsor Management."
+    );
+
+    alert(
+        "🤝 Sponsor Management opened."
+    );
+
+}
+
+
+function sponsorCampaigns() {
+
+    activity(
+        "Opened Sponsor Campaigns."
+    );
+
+    alert(
+        "📢 Sponsor Campaigns opened."
+    );
+
+}
+
+
+/*
+    Staff.
+*/
+
+function staffManagement() {
+
+    activity(
+        "Opened Staff Management."
+    );
+
+    alert(
+        "👥 Staff Management opened."
+    );
+
+}
+
+
+function permissionManagement() {
+
+    activity(
+        "Opened Permission Management."
+    );
+
+    alert(
+        "🔑 Permission Management opened."
+    );
+
+}
+
+
+/*
+    Security.
+*/
+
+function securityCenter() {
+
+    activity(
+        "Opened Security Center."
+    );
+
+    alert(
+        "🛡 Security Center opened."
+    );
+
+}
+
+
+function auditLogs() {
+
+    activity(
+        "Opened Audit Logs."
+    );
+
+    alert(
+        "📜 Audit Logs opened."
+    );
+
+}
+
+
+function securityAlerts() {
+
+    activity(
+        "Opened Security Alerts."
+    );
+
+    alert(
+        "🚨 Security Alerts opened."
+    );
+
+}
+
+
+/*
+    Platform settings.
+*/
+
+function platformSettings() {
+
+    activity(
+        "Opened Platform Settings."
+    );
+
+    alert(
+        "⚙️ Platform Settings opened."
+    );
+
+}
+
+
+function maintenanceMode() {
+
+    const confirmMode =
+        confirm(
+            "Enable maintenance mode?"
+        );
+
+    if(confirmMode) {
+
+        activity(
+            "Maintenance mode selected."
+        );
+
+        alert(
+            "🔧 Maintenance mode is currently demo-only."
+        );
+
+    }
+
+}
+
+</script>
+
 </body>
 </html>
-</script></body>
-</html>
+```
