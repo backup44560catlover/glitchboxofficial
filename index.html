@@ -7,7 +7,6 @@
 
 <title>GlitchBox</title>
 
-<!-- GlitchBox Logo for browser tab -->
 <link rel="icon" type="image/png" href="glitchbox-logo.png">
 
 <style>
@@ -21,20 +20,17 @@
 body {
     background: #070711;
     color: white;
-    min-height: 100vh;
 }
 
-/* =========================
-   SIDEBAR
-========================= */
+/* SIDEBAR */
 
 .sidebar {
     position: fixed;
     left: 0;
     top: 0;
-    width: 245px;
+    width: 240px;
     height: 100vh;
-    background: #0d0d1c;
+    background: #0d0d1b;
     border-right: 1px solid #29203d;
     padding: 22px 16px;
     overflow-y: auto;
@@ -42,15 +38,14 @@ body {
 
 .logo {
     color: #a855ff;
-    font-size: 30px;
+    font-size: 29px;
     font-weight: bold;
-    margin-bottom: 25px;
+    margin-bottom: 5px;
 }
 
 .tagline {
-    color: #888;
-    font-size: 12px;
-    margin-top: -18px;
+    color: #777;
+    font-size: 11px;
     margin-bottom: 25px;
 }
 
@@ -58,10 +53,10 @@ body {
     display: block;
     color: white;
     text-decoration: none;
-    padding: 12px 14px;
-    margin-bottom: 7px;
-    border-radius: 10px;
-    transition: 0.2s;
+    padding: 12px;
+    margin-bottom: 6px;
+    border-radius: 9px;
+    transition: .2s;
 }
 
 .sidebar a:hover,
@@ -69,33 +64,29 @@ body {
     background: #6d28d9;
 }
 
-/* =========================
-   MAIN
-========================= */
+/* MAIN */
 
 .main {
-    margin-left: 245px;
-    padding: 28px;
+    margin-left: 240px;
+    padding: 25px;
 }
 
-/* =========================
-   TOP BAR
-========================= */
+/* TOP BAR */
 
 .topbar {
     display: flex;
-    justify-content: space-between;
+    gap: 15px;
     align-items: center;
     margin-bottom: 22px;
 }
 
 .search {
-    width: 50%;
-    padding: 12px 15px;
-    border-radius: 12px;
-    border: 1px solid #30264a;
-    background: #111120;
+    flex: 1;
+    padding: 13px 16px;
+    background: #11111f;
     color: white;
+    border: 1px solid #30264a;
+    border-radius: 12px;
     outline: none;
 }
 
@@ -103,23 +94,20 @@ body {
     border-color: #a855ff;
 }
 
-.top-actions {
-    display: flex;
-    gap: 10px;
-}
-
-.top-button {
-    padding: 11px 14px;
-    border-radius: 10px;
-    border: 1px solid #8b5cf6;
+.icon-button {
+    padding: 12px 15px;
     background: #151126;
     color: white;
+    border: 1px solid #8b5cf6;
+    border-radius: 10px;
     cursor: pointer;
 }
 
-/* =========================
-   HERO
-========================= */
+.icon-button:hover {
+    background: #6d28d9;
+}
+
+/* HERO */
 
 .hero {
     background: linear-gradient(
@@ -130,79 +118,82 @@ body {
     );
 
     border: 1px solid #7135a5;
-    border-radius: 22px;
-    padding: 35px;
-    margin-bottom: 25px;
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 28px;
 }
 
 .hero h1 {
-    font-size: 42px;
-    margin-bottom: 8px;
+    font-size: 40px;
+    margin-bottom: 10px;
 }
 
 .hero p {
     color: #dfc7ff;
-    font-size: 17px;
+    line-height: 1.5;
 }
 
-.hero-buttons {
+.buttons {
     display: flex;
     gap: 12px;
-    margin-top: 22px;
     flex-wrap: wrap;
+    margin-top: 20px;
 }
 
-.primary-button,
-.secondary-button {
-    padding: 13px 18px;
-    border-radius: 11px;
+button {
     cursor: pointer;
-    font-size: 15px;
+    transition: .2s;
 }
 
-.primary-button {
+.primary {
     background: #7c3aed;
     color: white;
     border: none;
+    border-radius: 10px;
+    padding: 13px 18px;
 }
 
-.secondary-button {
+.primary:hover {
+    background: #8b5cf6;
+}
+
+.secondary {
     background: #151126;
     color: white;
     border: 1px solid #8b5cf6;
+    border-radius: 10px;
+    padding: 13px 18px;
 }
 
-/* =========================
-   SECTION
-========================= */
+.secondary:hover {
+    background: #6d28d9;
+}
+
+/* SECTIONS */
 
 .section-title {
     color: #c084fc;
-    font-size: 24px;
+    font-size: 23px;
     margin-bottom: 15px;
 }
 
-/* =========================
-   CARDS
-========================= */
+/* CARDS */
 
 .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
+    gap: 15px;
     margin-bottom: 28px;
 }
 
 .card {
     background: #121222;
     border: 1px solid #292940;
-    border-radius: 16px;
+    border-radius: 15px;
     padding: 20px;
-    transition: 0.2s;
 }
 
 .card:hover {
-    transform: translateY(-3px);
     border-color: #8b5cf6;
 }
 
@@ -214,36 +205,26 @@ body {
 .card p {
     color: #999;
     line-height: 1.5;
+    margin-bottom: 15px;
 }
 
-/* =========================
-   WORLDS
-========================= */
-
-.world-card {
-    min-height: 150px;
+.card button {
+    width: 100%;
 }
 
-.world-icon {
-    font-size: 35px;
-    margin-bottom: 10px;
-}
+/* SOCIAL */
 
-/* =========================
-   FEED
-========================= */
-
-.feed {
+.social {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 18px;
     margin-bottom: 28px;
 }
 
-.feed-box {
+.panel {
     background: #121222;
     border: 1px solid #292940;
-    border-radius: 16px;
+    border-radius: 15px;
     padding: 22px;
 }
 
@@ -261,18 +242,16 @@ body {
 }
 
 .post p {
+    color: #aaa;
     margin-top: 7px;
-    color: #bbb;
 }
 
-/* =========================
-   REWARDS
-========================= */
+/* REWARDS */
 
 .reward {
     display: flex;
     justify-content: space-between;
-    padding: 13px 0;
+    padding: 12px 0;
     border-bottom: 1px solid #292940;
 }
 
@@ -280,13 +259,27 @@ body {
     border-bottom: none;
 }
 
-.locked {
-    color: #777;
+/* FOUNDER */
+
+.founder {
+    background: linear-gradient(
+        135deg,
+        #24103b,
+        #160022
+    );
+
+    border: 1px solid #a855ff;
+    border-radius: 18px;
+    padding: 25px;
+    margin-top: 10px;
 }
 
-/* =========================
-   FOOTER
-========================= */
+.founder h2 {
+    color: #d8b4fe;
+    margin-bottom: 8px;
+}
+
+/* FOOTER */
 
 .footer {
     text-align: center;
@@ -294,9 +287,7 @@ body {
     padding: 30px 0 10px;
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
 @media (max-width: 1000px) {
 
@@ -304,7 +295,7 @@ body {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .feed {
+    .social {
         grid-template-columns: 1fr;
     }
 }
@@ -325,13 +316,7 @@ body {
     }
 
     .topbar {
-        flex-direction: column;
-        gap: 12px;
-        align-items: stretch;
-    }
-
-    .search {
-        width: 100%;
+        flex-wrap: wrap;
     }
 
     .grid {
@@ -339,7 +324,7 @@ body {
     }
 
     .hero h1 {
-        font-size: 32px;
+        font-size: 30px;
     }
 }
 </style>
@@ -371,9 +356,7 @@ body {
     <a href="clans.html">🏰 Clans</a>
     <a href="tournaments.html">🏆 Tournaments</a>
     <a href="leaderboards.html">📊 Leaderboards</a>
-
     <a href="owner.html">👑 Founder Panel</a>
-
     <a href="settings.html">⚙️ Settings</a>
     <a href="support.html">🛟 Support</a>
 
@@ -381,7 +364,7 @@ body {
 
 
 <!-- =========================
-     MAIN CONTENT
+     MAIN
 ========================= -->
 
 <main class="main">
@@ -391,24 +374,23 @@ body {
     <div class="topbar">
 
         <input
+            id="searchBox"
             class="search"
             type="search"
             placeholder="🔎 Search GlitchBox..."
         >
 
-        <div class="top-actions">
+        <button
+            class="icon-button"
+            onclick="openNotifications()">
+            🔔
+        </button>
 
-            <button class="top-button"
-                onclick="alert('Notifications coming soon!')">
-                🔔
-            </button>
-
-            <button class="top-button"
-                onclick="alert('Your GlitchBox messages are coming soon!')">
-                💬
-            </button>
-
-        </div>
+        <button
+            class="icon-button"
+            onclick="openChat()">
+            💬
+        </button>
 
     </div>
 
@@ -420,22 +402,28 @@ body {
         <h1>🎮 Welcome to GlitchBox</h1>
 
         <p>
-            Play games. Create worlds. Make friends.
-            Build your own GlitchBox experience.
+            Play games, create worlds, make friends,
+            join communities and build your own GlitchBox experience.
         </p>
 
-        <div class="hero-buttons">
+        <div class="buttons">
 
             <button
-                class="primary-button"
-                onclick="window.location.href='games.html'">
+                class="primary"
+                onclick="go('games.html')">
                 🎮 Explore Games
             </button>
 
             <button
-                class="secondary-button"
-                onclick="window.location.href='worlds.html'">
+                class="secondary"
+                onclick="go('worlds.html')">
                 🌎 Explore Worlds
+            </button>
+
+            <button
+                class="secondary"
+                onclick="go('communities.html')">
+                📢 Communities
             </button>
 
         </div>
@@ -453,22 +441,38 @@ body {
 
         <div class="card">
             <h3>⚔️ Battle Arena X</h3>
-            <p>Jump back into your adventure.</p>
+            <p>Continue your battle adventure.</p>
+            <button class="secondary"
+                onclick="go('battle-arena.html')">
+                Play
+            </button>
         </div>
 
         <div class="card">
             <h3>🧟 Zombie Outbreak</h3>
-            <p>Survive the outbreak.</p>
+            <p>Survive the zombie outbreak.</p>
+            <button class="secondary"
+                onclick="go('zombie-outbreak.html')">
+                Play
+            </button>
         </div>
 
         <div class="card">
             <h3>🏎️ Nitro Rush</h3>
             <p>Race against other players.</p>
+            <button class="secondary"
+                onclick="go('nitro-rush.html')">
+                Play
+            </button>
         </div>
 
         <div class="card">
             <h3>💥 Cyber Strike</h3>
             <p>Enter the cyber battlefield.</p>
+            <button class="secondary"
+                onclick="go('cyber-strike.html')">
+                Play
+            </button>
         </div>
 
     </div>
@@ -482,62 +486,86 @@ body {
 
     <div class="grid">
 
-        <div class="card world-card">
-            <div class="world-icon">🏗️</div>
-            <h3>Build</h3>
-            <p>Create your own world.</p>
+        <div class="card">
+            <h3>🏗️ Build</h3>
+            <p>Create and customize your own world.</p>
+            <button class="secondary"
+                onclick="openWorlds('build')">
+                Explore
+            </button>
         </div>
 
-        <div class="card world-card">
-            <div class="world-icon">⚔️</div>
-            <h3>Battle</h3>
-            <p>Fight other players.</p>
+        <div class="card">
+            <h3>⚔️ Battle</h3>
+            <p>Fight players in battle worlds.</p>
+            <button class="secondary"
+                onclick="openWorlds('battle')">
+                Explore
+            </button>
         </div>
 
-        <div class="card world-card">
-            <div class="world-icon">🏃</div>
-            <h3>Parkour</h3>
-            <p>Test your movement skills.</p>
+        <div class="card">
+            <h3>🏃 Parkour</h3>
+            <p>Take on challenging obstacle courses.</p>
+            <button class="secondary"
+                onclick="openWorlds('parkour')">
+                Explore
+            </button>
         </div>
 
-        <div class="card world-card">
-            <div class="world-icon">🧟</div>
-            <h3>Survival</h3>
+        <div class="card">
+            <h3>🧟 Survival</h3>
             <p>Survive dangerous worlds.</p>
+            <button class="secondary"
+                onclick="openWorlds('survival')">
+                Explore
+            </button>
         </div>
 
-        <div class="card world-card">
-            <div class="world-icon">🛏️</div>
-            <h3>Bed Battles</h3>
-            <p>Protect your base.</p>
+        <div class="card">
+            <h3>🛏️ Bed Battles</h3>
+            <p>Protect your base and defeat opponents.</p>
+            <button class="secondary"
+                onclick="openWorlds('bedbattles')">
+                Explore
+            </button>
         </div>
 
-        <div class="card world-card">
-            <div class="world-icon">☁️</div>
-            <h3>Sky Islands</h3>
-            <p>Explore the floating islands.</p>
+        <div class="card">
+            <h3>☁️ Sky Islands</h3>
+            <p>Explore worlds above the clouds.</p>
+            <button class="secondary"
+                onclick="openWorlds('sky')">
+                Explore
+            </button>
         </div>
 
-        <div class="card world-card">
-            <div class="world-icon">🏰</div>
-            <h3>Creative</h3>
+        <div class="card">
+            <h3>🏰 Creative</h3>
             <p>Build without limits.</p>
+            <button class="secondary"
+                onclick="openWorlds('creative')">
+                Explore
+            </button>
         </div>
 
-        <div class="card world-card">
-            <div class="world-icon">🎯</div>
-            <h3>Minigames</h3>
-            <p>Play quick challenges.</p>
+        <div class="card">
+            <h3>🎯 Minigames</h3>
+            <p>Play quick competitive games.</p>
+            <button class="secondary"
+                onclick="openWorlds('minigames')">
+                Explore
+            </button>
         </div>
 
     </div>
 
 
-    <!-- SOCIAL + REWARDS -->
+    <!-- SOCIAL -->
 
-    <div class="feed">
+    <div class="social">
 
-        <section class="feed-box">
+        <section class="panel">
 
             <h2 class="section-title">
                 💜 GlitchBox Connect
@@ -548,8 +576,7 @@ body {
                 <strong>📢 GlitchBox Official</strong>
 
                 <p>
-                    Welcome to GlitchBox! 🚀
-                    Development is officially underway.
+                    Welcome to GlitchBox! Development is officially underway. 🚀
                 </p>
 
             </div>
@@ -560,28 +587,41 @@ body {
 
                 <p>
                     Creators will be able to publish games,
-                    worlds, videos and development updates.
+                    worlds, videos and updates.
                 </p>
 
             </div>
 
             <div class="post">
 
-                <strong>🏰 GlitchBox Community</strong>
+                <strong>🏰 Community</strong>
 
                 <p>
-                    Communities, clans, friends and social
-                    features are coming together.
+                    Join communities, make friends and share your creations.
                 </p>
+
+            </div>
+
+            <div class="buttons">
+
+                <button class="primary"
+                    onclick="go('communities.html')">
+                    📢 Open Communities
+                </button>
+
+                <button class="secondary"
+                    onclick="go('chat.html')">
+                    💬 Open Chat
+                </button>
 
             </div>
 
         </section>
 
 
-        <!-- DAILY REWARDS -->
+        <!-- REWARDS -->
 
-        <section class="feed-box">
+        <section class="panel">
 
             <h2 class="section-title">
                 🎁 Daily Rewards
@@ -612,6 +652,15 @@ body {
                 <strong>🪙 500 GC</strong>
             </div>
 
+            <div class="buttons">
+
+                <button class="primary"
+                    onclick="go('rewards.html')">
+                    🎁 Open Rewards
+                </button>
+
+            </div>
+
         </section>
 
     </div>
@@ -626,23 +675,75 @@ body {
     <div class="grid">
 
         <div class="card">
-            <h3>🎁 Daily Challenges</h3>
+            <h3>🎯 Daily Challenges</h3>
             <p>Complete challenges and earn rewards.</p>
+            <button class="secondary"
+                onclick="go('challenges.html')">
+                Open
+            </button>
         </div>
 
         <div class="card">
             <h3>🏆 Tournaments</h3>
             <p>Compete in GlitchBox events.</p>
+            <button class="secondary"
+                onclick="go('tournaments.html')">
+                Open
+            </button>
         </div>
 
         <div class="card">
             <h3>🏰 Clans</h3>
             <p>Create or join a clan.</p>
+            <button class="secondary"
+                onclick="go('clans.html')">
+                Open
+            </button>
         </div>
 
         <div class="card">
             <h3>🤖 AI Assistant</h3>
             <p>Get help with GlitchBox.</p>
+            <button class="secondary"
+                onclick="openAI()">
+                Open AI
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>🛒 Marketplace</h3>
+            <p>Browse items, themes, effects and more.</p>
+            <button class="secondary"
+                onclick="go('shop.html')">
+                Open Shop
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>👥 Friends</h3>
+            <p>See friends and manage requests.</p>
+            <button class="secondary"
+                onclick="go('friends.html')">
+                Friends
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>🎥 Creator Hub</h3>
+            <p>Build your creator profile.</p>
+            <button class="secondary"
+                onclick="go('creator.html')">
+                Creator Hub
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>⚙️ Settings</h3>
+            <p>Customize your GlitchBox account.</p>
+            <button class="secondary"
+                onclick="go('settings.html')">
+                Settings
+            </button>
         </div>
 
     </div>
@@ -650,20 +751,20 @@ body {
 
     <!-- FOUNDER -->
 
-    <section class="hero">
+    <section class="founder">
 
-        <h2>👑 GlitchBox Founder</h2>
+        <h2>👑 Founder Control Center</h2>
 
-        <p style="margin-top:10px;">
-            Founder accounts have access to the
-            GlitchBox Founder Control Center.
+        <p>
+            Founder accounts can access the GlitchBox
+            management tools.
         </p>
 
-        <div class="hero-buttons">
+        <div class="buttons">
 
             <button
-                class="primary-button"
-                onclick="window.location.href='owner.html'">
+                class="primary"
+                onclick="go('owner.html')">
                 👑 Open Founder Panel
             </button>
 
@@ -674,13 +775,102 @@ body {
 
     <footer class="footer">
 
-        © 2026 GlitchBox
-        <br>
+        © 2026 GlitchBox<br>
         Enter The Glitch. Own The Game. 💜
 
     </footer>
 
 </main>
+
+
+<script>
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function go(page) {
+    window.location.href = page;
+}
+
+
+/* =========================
+   WORLDS
+========================= */
+
+function openWorlds(category) {
+
+    window.location.href =
+        "worlds.html?category=" +
+        encodeURIComponent(category);
+
+}
+
+
+/* =========================
+   NOTIFICATIONS
+========================= */
+
+function openNotifications() {
+
+    alert(
+        "🔔 Notifications\n\n" +
+        "Your GlitchBox notifications will appear here."
+    );
+
+}
+
+
+/* =========================
+   CHAT
+========================= */
+
+function openChat() {
+
+    window.location.href = "chat.html";
+
+}
+
+
+/* =========================
+   AI
+========================= */
+
+function openAI() {
+
+    alert(
+        "🤖 GlitchBox AI Assistant\n\n" +
+        "The AI Assistant will be connected here."
+    );
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+document
+.getElementById("searchBox")
+.addEventListener("keydown", function(event) {
+
+    if (event.key === "Enter") {
+
+        const query = this.value.trim();
+
+        if (query === "") {
+            return;
+        }
+
+        window.location.href =
+            "search.html?q=" +
+            encodeURIComponent(query);
+
+    }
+
+});
+
+</script>
 
 </body>
 </html>
