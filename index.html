@@ -7,1248 +7,680 @@
 
 <title>GlitchBox</title>
 
-<!-- Browser tab logo -->
-<link rel="icon" type="image/png" href="images/glitchbox-logo.png">
+<!-- GlitchBox Logo for browser tab -->
+<link rel="icon" type="image/png" href="glitchbox-logo.png">
 
 <style>
-
-/* =========================================
-   GLITCHBOX
-   MAIN STYLES
-========================================= */
-
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
 
 body {
-    background: #070714;
+    background: #070711;
     color: white;
     min-height: 100vh;
 }
 
-/* =========================================
+/* =========================
    SIDEBAR
-========================================= */
+========================= */
 
 .sidebar {
     position: fixed;
     left: 0;
     top: 0;
-
     width: 245px;
     height: 100vh;
-
-    padding: 20px;
-
-    background: #0d0d1f;
-
-    border-right: 1px solid #292940;
-
+    background: #0d0d1c;
+    border-right: 1px solid #29203d;
+    padding: 22px 16px;
     overflow-y: auto;
-
-    z-index: 1000;
-}
-
-.sidebar-logo {
-    width: 70px;
-    height: 70px;
-
-    object-fit: cover;
-
-    border-radius: 16px;
-
-    display: block;
-
-    margin-bottom: 12px;
-
-    box-shadow:
-        0 0 15px #8b5cf6,
-        0 0 30px rgba(139, 92, 246, 0.4);
 }
 
 .logo {
-    color: #a855f7;
-
-    font-size: 28px;
-
+    color: #a855ff;
+    font-size: 30px;
     font-weight: bold;
+    margin-bottom: 25px;
+}
 
-    letter-spacing: 2px;
-
+.tagline {
+    color: #888;
+    font-size: 12px;
+    margin-top: -18px;
     margin-bottom: 25px;
 }
 
 .sidebar a {
     display: block;
-
     color: white;
-
     text-decoration: none;
-
-    padding: 12px;
-
+    padding: 12px 14px;
     margin-bottom: 7px;
-
     border-radius: 10px;
-
-    transition: 0.25s;
+    transition: 0.2s;
 }
 
-.sidebar a:hover {
-    background: #7c3aed;
-
-    transform: translateX(3px);
+.sidebar a:hover,
+.sidebar a.active {
+    background: #6d28d9;
 }
 
-/* =========================================
+/* =========================
    MAIN
-========================================= */
+========================= */
 
 .main {
     margin-left: 245px;
-
-    padding: 25px;
+    padding: 28px;
 }
 
-/* =========================================
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.search {
+    width: 50%;
+    padding: 12px 15px;
+    border-radius: 12px;
+    border: 1px solid #30264a;
+    background: #111120;
+    color: white;
+    outline: none;
+}
+
+.search:focus {
+    border-color: #a855ff;
+}
+
+.top-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.top-button {
+    padding: 11px 14px;
+    border-radius: 10px;
+    border: 1px solid #8b5cf6;
+    background: #151126;
+    color: white;
+    cursor: pointer;
+}
+
+/* =========================
    HERO
-========================================= */
+========================= */
 
 .hero {
-    min-height: 560px;
+    background: linear-gradient(
+        135deg,
+        #18002f,
+        #30005c,
+        #4c0082
+    );
 
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 40px;
-
-    padding: 40px;
-
-    margin-bottom: 25px;
-
-    border-radius: 25px;
-
-    border: 1px solid #7c3aed;
-
-    background:
-        radial-gradient(
-            circle at 75% 45%,
-            rgba(168, 85, 247, 0.25),
-            transparent 45%
-        ),
-        linear-gradient(
-            135deg,
-            #10001f,
-            #22003d,
-            #070714
-        );
-
-    box-shadow:
-        0 0 30px rgba(124, 58, 237, 0.3);
-}
-
-.hero-content {
-    max-width: 520px;
-}
-
-.hero-logo {
-    width: 115px;
-    height: 115px;
-
-    object-fit: cover;
-
+    border: 1px solid #7135a5;
     border-radius: 22px;
-
-    margin-bottom: 20px;
-
-    box-shadow:
-        0 0 20px #a855f7,
-        0 0 45px rgba(168, 85, 247, 0.5);
+    padding: 35px;
+    margin-bottom: 25px;
 }
 
 .hero h1 {
-    font-size: 60px;
-
-    font-weight: 900;
-
-    letter-spacing: 4px;
-
-    margin-bottom: 15px;
-
-    text-shadow:
-        0 0 10px #a855f7,
-        0 0 25px #7c3aed;
-}
-
-.tagline {
-    font-size: 23px;
-
-    color: #d8b4fe;
-
-    margin-bottom: 30px;
-}
-
-/* =========================================
-   BUTTONS
-========================================= */
-
-.buttons {
-    display: flex;
-
-    gap: 12px;
-
-    flex-wrap: wrap;
-}
-
-.button {
-    display: inline-block;
-
-    padding: 14px 22px;
-
-    border-radius: 12px;
-
-    background: #7c3aed;
-
-    border: 1px solid #a855f7;
-
-    color: white;
-
-    text-decoration: none;
-
-    font-weight: bold;
-
-    transition: 0.25s;
-}
-
-.button:hover {
-    background: #8b5cf6;
-
-    transform: translateY(-3px);
-
-    box-shadow:
-        0 0 20px rgba(168, 85, 247, 0.5);
-}
-
-.button.secondary {
-    background: transparent;
-}
-
-/* =========================================
-   HERO IMAGE
-========================================= */
-
-.hero-image {
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    flex: 1;
-}
-
-.hero-image img {
-    width: 100%;
-
-    max-width: 500px;
-
-    border-radius: 20px;
-
-    box-shadow:
-        0 0 30px rgba(168, 85, 247, 0.4);
-}
-
-/* =========================================
-   CARDS
-========================================= */
-
-.grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
-    gap: 15px;
-
-    margin-bottom: 25px;
-}
-
-.card {
-    background: #121225;
-
-    border: 1px solid #292940;
-
-    border-radius: 15px;
-
-    padding: 22px;
-
-    transition: 0.25s;
-}
-
-.card:hover {
-    transform: translateY(-4px);
-
-    border-color: #8b5cf6;
-
-    box-shadow:
-        0 0 20px rgba(124, 58, 237, 0.25);
-}
-
-.card h2 {
-    color: #c084fc;
-
-    margin-bottom: 10px;
-}
-
-.card p {
-    color: #d0d0df;
-}
-
-/* =========================================
-   SECTIONS
-========================================= */
-
-.section {
-    background: #121225;
-
-    border: 1px solid #292940;
-
-    border-radius: 15px;
-
-    padding: 22px;
-
-    margin-bottom: 20px;
-}
-
-.section h2 {
-    color: #c084fc;
-
-    margin-bottom: 12px;
-}
-
-.section p {
-    color: #d0d0df;
-
+    font-size: 42px;
     margin-bottom: 8px;
 }
 
-/* =========================================
-   DAILY REWARDS
-========================================= */
-
-.rewards-description {
-    color: #aaa;
-
-    margin-bottom: 20px;
+.hero p {
+    color: #dfc7ff;
+    font-size: 17px;
 }
 
-.rewards-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(5, 1fr);
-
+.hero-buttons {
+    display: flex;
     gap: 12px;
+    margin-top: 22px;
+    flex-wrap: wrap;
 }
+
+.primary-button,
+.secondary-button {
+    padding: 13px 18px;
+    border-radius: 11px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.primary-button {
+    background: #7c3aed;
+    color: white;
+    border: none;
+}
+
+.secondary-button {
+    background: #151126;
+    color: white;
+    border: 1px solid #8b5cf6;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.section-title {
+    color: #c084fc;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.card {
+    background: #121222;
+    border: 1px solid #292940;
+    border-radius: 16px;
+    padding: 20px;
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    border-color: #8b5cf6;
+}
+
+.card h3 {
+    color: #c084fc;
+    margin-bottom: 8px;
+}
+
+.card p {
+    color: #999;
+    line-height: 1.5;
+}
+
+/* =========================
+   WORLDS
+========================= */
+
+.world-card {
+    min-height: 150px;
+}
+
+.world-icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+/* =========================
+   FEED
+========================= */
+
+.feed {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.feed-box {
+    background: #121222;
+    border: 1px solid #292940;
+    border-radius: 16px;
+    padding: 22px;
+}
+
+.post {
+    padding: 15px 0;
+    border-bottom: 1px solid #292940;
+}
+
+.post:last-child {
+    border-bottom: none;
+}
+
+.post strong {
+    color: #d8b4fe;
+}
+
+.post p {
+    margin-top: 7px;
+    color: #bbb;
+}
+
+/* =========================
+   REWARDS
+========================= */
 
 .reward {
-    min-height: 155px;
-
-    border: 1px solid #3b2463;
-
-    border-radius: 16px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #19132d,
-            #0f0f20
-        );
-
-    color: white;
-
-    cursor: pointer;
-
     display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 8px;
-
-    transition: 0.25s;
+    justify-content: space-between;
+    padding: 13px 0;
+    border-bottom: 1px solid #292940;
 }
 
-.reward:hover {
-    transform: translateY(-4px);
-
-    border-color: #a855f7;
-
-    box-shadow:
-        0 0 20px rgba(168, 85, 247, 0.35);
+.reward:last-child {
+    border-bottom: none;
 }
 
-.reward.locked {
-    opacity: 0.65;
+.locked {
+    color: #777;
 }
 
-.reward.claimed {
-    border-color: #22c55e;
-
-    cursor: default;
-}
-
-.reward-icon {
-    font-size: 45px;
-}
-
-.reward-day {
-    color: #d8b4fe;
-
-    font-weight: bold;
-}
-
-.reward-content {
-    color: #a855f7;
-
-    font-weight: bold;
-}
-
-.reward.claimed .reward-content {
-    color: #86efac;
-}
-
-/* =========================================
-   REWARD MESSAGE
-========================================= */
-
-.reward-message {
-    display: none;
-
-    margin-top: 18px;
-
-    padding: 15px;
-
-    border-radius: 12px;
-
-    background: #1c1430;
-
-    border: 1px solid #8b5cf6;
-
-    color: #e9d5ff;
-
-    font-weight: bold;
-}
-
-.reward-message.show {
-    display: block;
-}
-
-/* =========================================
+/* =========================
    FOOTER
-========================================= */
+========================= */
 
 .footer {
     text-align: center;
-
-    color: #777;
-
-    padding: 30px;
+    color: #666;
+    padding: 30px 0 10px;
 }
 
-/* =========================================
-   TABLET
-========================================= */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 1000px) {
 
     .grid {
-        grid-template-columns:
-            repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .rewards-grid {
-        grid-template-columns:
-            repeat(3, 1fr);
+    .feed {
+        grid-template-columns: 1fr;
     }
-
-    .hero {
-        flex-direction: column;
-
-        text-align: center;
-    }
-
-    .buttons {
-        justify-content: center;
-    }
-
 }
-
-/* =========================================
-   PHONE
-========================================= */
 
 @media (max-width: 700px) {
 
     .sidebar {
-        display: none;
+        position: relative;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #29203d;
     }
 
     .main {
         margin-left: 0;
-
-        padding: 15px;
+        padding: 18px;
     }
 
-    .hero {
-        padding: 25px;
+    .topbar {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
     }
 
-    .hero h1 {
-        font-size: 40px;
-    }
-
-    .tagline {
-        font-size: 19px;
+    .search {
+        width: 100%;
     }
 
     .grid {
         grid-template-columns: 1fr;
     }
 
-    .rewards-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
+    .hero h1 {
+        font-size: 32px;
     }
-
 }
-
 </style>
 </head>
 
-
 <body>
 
-<!-- =========================================
+<!-- =========================
      SIDEBAR
-========================================= -->
+========================= -->
 
-<aside class="sidebar">
+<nav class="sidebar">
 
-    <img
-        class="sidebar-logo"
-        src="images/glitchbox-logo.png"
-        alt="GlitchBox Logo"
-    >
+    <div class="logo">GLITCHBOX</div>
 
-    <div class="logo">
-        GLITCHBOX
+    <div class="tagline">
+        Enter The Glitch. Own The Game.
     </div>
 
-    <a href="index.html">🏠 Home</a>
-
+    <a href="index.html" class="active">🏠 Home</a>
     <a href="games.html">🎮 Games</a>
-
     <a href="worlds.html">🌎 Worlds</a>
-
-    <a href="shop.html">🛒 Shop</a>
-
+    <a href="shop.html">🛒 Marketplace</a>
     <a href="profile.html">👤 Profile</a>
-
-    <a href="inventory.html">🎒 Inventory</a>
-
     <a href="friends.html">👥 Friends</a>
-
-    <a href="clans.html">🏰 Clans</a>
-
+    <a href="chat.html">💬 Chat</a>
     <a href="communities.html">📢 Communities</a>
-
     <a href="creator.html">🎥 Creator Hub</a>
-
+    <a href="clans.html">🏰 Clans</a>
     <a href="tournaments.html">🏆 Tournaments</a>
+    <a href="leaderboards.html">📊 Leaderboards</a>
+
+    <a href="owner.html">👑 Founder Panel</a>
 
     <a href="settings.html">⚙️ Settings</a>
+    <a href="support.html">🛟 Support</a>
 
-</aside>
+</nav>
 
 
-<!-- =========================================
-     MAIN
-========================================= -->
+<!-- =========================
+     MAIN CONTENT
+========================= -->
 
 <main class="main">
 
+    <!-- TOP BAR -->
 
-<!-- =========================================
-     HERO
-========================================= -->
+    <div class="topbar">
 
-<section class="hero">
-
-    <div class="hero-content">
-
-        <img
-            class="hero-logo"
-            src="images/glitchbox-logo.png"
-            alt="GlitchBox"
+        <input
+            class="search"
+            type="search"
+            placeholder="🔎 Search GlitchBox..."
         >
 
-        <h1>
-            GLITCHBOX
-        </h1>
+        <div class="top-actions">
 
-        <p class="tagline">
-            Enter the Glitch. Own the Game.
-        </p>
+            <button class="top-button"
+                onclick="alert('Notifications coming soon!')">
+                🔔
+            </button>
 
-        <div class="buttons">
-
-            <a
-                class="button"
-                href="games.html"
-            >
-                🎮 Play Games
-            </a>
-
-            <a
-                class="button secondary"
-                href="worlds.html"
-            >
-                🌎 Explore Worlds
-            </a>
+            <button class="top-button"
+                onclick="alert('Your GlitchBox messages are coming soon!')">
+                💬
+            </button>
 
         </div>
 
     </div>
 
 
-    <div class="hero-image">
+    <!-- HERO -->
 
-        <img
-            src="images/glitchbox-logo.png"
-            alt="GlitchBox"
-        >
+    <section class="hero">
 
-    </div>
-
-</section>
-
-
-<!-- =========================================
-     FEATURE CARDS
-========================================= -->
-
-<section class="grid">
-
-    <div class="card">
-
-        <h2>
-            🎮 Games
-        </h2>
+        <h1>🎮 Welcome to GlitchBox</h1>
 
         <p>
-            Play games and discover new experiences.
+            Play games. Create worlds. Make friends.
+            Build your own GlitchBox experience.
         </p>
 
-    </div>
+        <div class="hero-buttons">
+
+            <button
+                class="primary-button"
+                onclick="window.location.href='games.html'">
+                🎮 Explore Games
+            </button>
+
+            <button
+                class="secondary-button"
+                onclick="window.location.href='worlds.html'">
+                🌎 Explore Worlds
+            </button>
+
+        </div>
+
+    </section>
 
 
-    <div class="card">
+    <!-- CONTINUE PLAYING -->
 
-        <h2>
-            🌎 Worlds
-        </h2>
-
-        <p>
-            Explore and build GlitchBox Worlds.
-        </p>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>
-            🏰 Clans
-        </h2>
-
-        <p>
-            Create clans and play with friends.
-        </p>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>
-            🎯 Daily Challenge
-        </h2>
-
-        <p>
-            Complete today's challenge.
-        </p>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================
-     NEWS
-========================================= -->
-
-<section class="section">
-
-    <h2>
-        📰 Latest News
+    <h2 class="section-title">
+        🎮 Continue Playing
     </h2>
 
-    <p>
-        🚀 Welcome to GlitchBox!
-    </p>
+    <div class="grid">
 
-    <p>
-        💜 Enter the Glitch. Own the Game.
-    </p>
+        <div class="card">
+            <h3>⚔️ Battle Arena X</h3>
+            <p>Jump back into your adventure.</p>
+        </div>
 
-    <p>
-        🌎 GlitchBox Worlds are coming.
-    </p>
+        <div class="card">
+            <h3>🧟 Zombie Outbreak</h3>
+            <p>Survive the outbreak.</p>
+        </div>
 
-    <p>
-        🎮 New games and experiences are being developed.
-    </p>
+        <div class="card">
+            <h3>🏎️ Nitro Rush</h3>
+            <p>Race against other players.</p>
+        </div>
 
-</section>
-
-
-<!-- =========================================
-     DAILY REWARDS
-========================================= -->
-
-<section class="section">
-
-    <h2>
-        🎁 Daily Rewards
-    </h2>
-
-    <p class="rewards-description">
-        Open one gift each day. Future gifts stay locked until their day.
-    </p>
-
-
-    <div class="rewards-grid">
-
-
-        <button
-            class="reward"
-            data-day="1"
-            data-reward="100 GlitchCoins"
-        >
-
-            <span class="reward-icon">
-                🎁
-            </span>
-
-            <span class="reward-day">
-                Day 1
-            </span>
-
-            <span class="reward-content">
-                ???
-            </span>
-
-        </button>
-
-
-        <button
-            class="reward"
-            data-day="2"
-            data-reward="200 GlitchCoins"
-        >
-
-            <span class="reward-icon">
-                🎁
-            </span>
-
-            <span class="reward-day">
-                Day 2
-            </span>
-
-            <span class="reward-content">
-                🔒
-            </span>
-
-        </button>
-
-
-        <button
-            class="reward"
-            data-day="3"
-            data-reward="300 GlitchCoins"
-        >
-
-            <span class="reward-icon">
-                🎁
-            </span>
-
-            <span class="reward-day">
-                Day 3
-            </span>
-
-            <span class="reward-content">
-                🔒
-            </span>
-
-        </button>
-
-
-        <button
-            class="reward"
-            data-day="4"
-            data-reward="400 GlitchCoins"
-        >
-
-            <span class="reward-icon">
-                🎁
-            </span>
-
-            <span class="reward-day">
-                Day 4
-            </span>
-
-            <span class="reward-content">
-                🔒
-            </span>
-
-        </button>
-
-
-        <button
-            class="reward"
-            data-day="5"
-            data-reward="500 GlitchCoins"
-        >
-
-            <span class="reward-icon">
-                🎁
-            </span>
-
-            <span class="reward-day">
-                Day 5
-            </span>
-
-            <span class="reward-content">
-                🔒
-            </span>
-
-        </button>
+        <div class="card">
+            <h3>💥 Cyber Strike</h3>
+            <p>Enter the cyber battlefield.</p>
+        </div>
 
     </div>
 
 
-    <div
-        id="rewardMessage"
-        class="reward-message"
-    ></div>
+    <!-- WORLDS -->
 
-</section>
-
-
-<!-- =========================================
-     DAILY CHALLENGES
-========================================= -->
-
-<section class="section">
-
-    <h2>
-        🎯 Daily Challenges
+    <h2 class="section-title">
+        🌎 GlitchBox Worlds
     </h2>
 
-    <p>
-        🎮 Play 3 games
-    </p>
+    <div class="grid">
 
-    <p>
-        🌎 Visit 2 worlds
-    </p>
+        <div class="card world-card">
+            <div class="world-icon">🏗️</div>
+            <h3>Build</h3>
+            <p>Create your own world.</p>
+        </div>
 
-    <p>
-        👥 Play with a friend
-    </p>
+        <div class="card world-card">
+            <div class="world-icon">⚔️</div>
+            <h3>Battle</h3>
+            <p>Fight other players.</p>
+        </div>
 
-    <p>
-        🏆 Earn 100 XP
-    </p>
+        <div class="card world-card">
+            <div class="world-icon">🏃</div>
+            <h3>Parkour</h3>
+            <p>Test your movement skills.</p>
+        </div>
 
-</section>
+        <div class="card world-card">
+            <div class="world-icon">🧟</div>
+            <h3>Survival</h3>
+            <p>Survive dangerous worlds.</p>
+        </div>
+
+        <div class="card world-card">
+            <div class="world-icon">🛏️</div>
+            <h3>Bed Battles</h3>
+            <p>Protect your base.</p>
+        </div>
+
+        <div class="card world-card">
+            <div class="world-icon">☁️</div>
+            <h3>Sky Islands</h3>
+            <p>Explore the floating islands.</p>
+        </div>
+
+        <div class="card world-card">
+            <div class="world-icon">🏰</div>
+            <h3>Creative</h3>
+            <p>Build without limits.</p>
+        </div>
+
+        <div class="card world-card">
+            <div class="world-icon">🎯</div>
+            <h3>Minigames</h3>
+            <p>Play quick challenges.</p>
+        </div>
+
+    </div>
 
 
-<!-- =========================================
-     FOOTER
-========================================= -->
+    <!-- SOCIAL + REWARDS -->
 
-<footer class="footer">
+    <div class="feed">
 
-    © 2026 GlitchBox
+        <section class="feed-box">
 
-    <br><br>
+            <h2 class="section-title">
+                💜 GlitchBox Connect
+            </h2>
 
-    Enter the Glitch. Own the Game. 💜
+            <div class="post">
 
-</footer>
+                <strong>📢 GlitchBox Official</strong>
+
+                <p>
+                    Welcome to GlitchBox! 🚀
+                    Development is officially underway.
+                </p>
+
+            </div>
+
+            <div class="post">
+
+                <strong>🎥 Creator Hub</strong>
+
+                <p>
+                    Creators will be able to publish games,
+                    worlds, videos and development updates.
+                </p>
+
+            </div>
+
+            <div class="post">
+
+                <strong>🏰 GlitchBox Community</strong>
+
+                <p>
+                    Communities, clans, friends and social
+                    features are coming together.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- DAILY REWARDS -->
+
+        <section class="feed-box">
+
+            <h2 class="section-title">
+                🎁 Daily Rewards
+            </h2>
+
+            <div class="reward">
+                <span>Day 1</span>
+                <strong>🪙 100 GC</strong>
+            </div>
+
+            <div class="reward">
+                <span>Day 2</span>
+                <strong>🪙 200 GC</strong>
+            </div>
+
+            <div class="reward">
+                <span>Day 3</span>
+                <strong>🪙 300 GC</strong>
+            </div>
+
+            <div class="reward">
+                <span>Day 4</span>
+                <strong>🪙 400 GC</strong>
+            </div>
+
+            <div class="reward">
+                <span>Day 5</span>
+                <strong>🪙 500 GC</strong>
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- QUICK ACCESS -->
+
+    <h2 class="section-title">
+        🚀 Quick Access
+    </h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>🎁 Daily Challenges</h3>
+            <p>Complete challenges and earn rewards.</p>
+        </div>
+
+        <div class="card">
+            <h3>🏆 Tournaments</h3>
+            <p>Compete in GlitchBox events.</p>
+        </div>
+
+        <div class="card">
+            <h3>🏰 Clans</h3>
+            <p>Create or join a clan.</p>
+        </div>
+
+        <div class="card">
+            <h3>🤖 AI Assistant</h3>
+            <p>Get help with GlitchBox.</p>
+        </div>
+
+    </div>
+
+
+    <!-- FOUNDER -->
+
+    <section class="hero">
+
+        <h2>👑 GlitchBox Founder</h2>
+
+        <p style="margin-top:10px;">
+            Founder accounts have access to the
+            GlitchBox Founder Control Center.
+        </p>
+
+        <div class="hero-buttons">
+
+            <button
+                class="primary-button"
+                onclick="window.location.href='owner.html'">
+                👑 Open Founder Panel
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <footer class="footer">
+
+        © 2026 GlitchBox
+        <br>
+        Enter The Glitch. Own The Game. 💜
+
+    </footer>
 
 </main>
-
-
-<!-- =========================================
-     DAILY REWARD SYSTEM
-========================================= -->
-
-<script>
-
-const rewards =
-    document.querySelectorAll(".reward");
-
-const rewardMessage =
-    document.getElementById("rewardMessage");
-
-
-/*
-    Get today's date as YYYY-MM-DD.
-*/
-
-function getToday() {
-
-    const now = new Date();
-
-    return now.getFullYear()
-        + "-"
-        + String(
-            now.getMonth() + 1
-        ).padStart(2, "0")
-        + "-"
-        + String(
-            now.getDate()
-        ).padStart(2, "0");
-
-}
-
-
-/*
-    Find the first day the player
-    started the reward cycle.
-*/
-
-function getStartDate() {
-
-    let start =
-        localStorage.getItem(
-            "gb_reward_start"
-        );
-
-    if (!start) {
-
-        start = getToday();
-
-        localStorage.setItem(
-            "gb_reward_start",
-            start
-        );
-
-    }
-
-    return start;
-
-}
-
-
-/*
-    Calculate today's reward day.
-*/
-
-function getRewardDay() {
-
-    const start =
-        new Date(
-            getStartDate()
-        );
-
-    const today =
-        new Date(
-            getToday()
-        );
-
-    const milliseconds =
-        today.getTime()
-        -
-        start.getTime();
-
-    const days =
-        Math.floor(
-            milliseconds
-            /
-            (1000 * 60 * 60 * 24)
-        );
-
-    return Math.min(
-        days + 1,
-        5
-    );
-
-}
-
-
-/*
-    Check whether today's
-    reward was already claimed.
-*/
-
-function alreadyClaimedToday() {
-
-    return (
-        localStorage.getItem(
-            "gb_reward_claimed"
-        )
-        ===
-        getToday()
-    );
-
-}
-
-
-/*
-    Update all gift boxes.
-*/
-
-function updateRewards() {
-
-    const currentDay =
-        getRewardDay();
-
-
-    rewards.forEach(
-        function(reward) {
-
-            const day =
-                Number(
-                    reward.dataset.day
-                );
-
-            const content =
-                reward.querySelector(
-                    ".reward-content"
-                );
-
-
-            reward.classList.remove(
-                "locked",
-                "claimed"
-            );
-
-
-            /*
-                Today's reward.
-            */
-
-            if (
-                day === currentDay
-            ) {
-
-                if (
-                    alreadyClaimedToday()
-                ) {
-
-                    reward.classList.add(
-                        "claimed"
-                    );
-
-                    content.textContent =
-                        "✓ Claimed";
-
-                } else {
-
-                    content.textContent =
-                        "???";
-
-                }
-
-                return;
-
-            }
-
-
-            /*
-                Future reward.
-            */
-
-            if (
-                day > currentDay
-            ) {
-
-                reward.classList.add(
-                    "locked"
-                );
-
-                content.textContent =
-                    "🔒";
-
-                return;
-
-            }
-
-
-            /*
-                Previous rewards.
-            */
-
-            content.textContent =
-                "✓";
-
-        }
-    );
-
-}
-
-
-/*
-    Display a message.
-*/
-
-function showRewardMessage(
-    text
-) {
-
-    rewardMessage.textContent =
-        text;
-
-    rewardMessage.classList.add(
-        "show"
-    );
-
-}
-
-
-/*
-    Clicking a gift.
-*/
-
-rewards.forEach(
-    function(reward) {
-
-        reward.addEventListener(
-            "click",
-            function() {
-
-                const day =
-                    Number(
-                        reward.dataset.day
-                    );
-
-                const prize =
-                    reward.dataset.reward;
-
-                const currentDay =
-                    getRewardDay();
-
-
-                /*
-                    Future gift.
-                */
-
-                if (
-                    day > currentDay
-                ) {
-
-                    showRewardMessage(
-                        "⏰ Wait until tomorrow! Day "
-                        + day
-                        + " isn't available yet."
-                    );
-
-                    return;
-
-                }
-
-
-                /*
-                    Already claimed today.
-                */
-
-                if (
-                    alreadyClaimedToday()
-                ) {
-
-                    showRewardMessage(
-                        "🎁 You already claimed today's reward. Come back tomorrow!"
-                    );
-
-                    return;
-
-                }
-
-
-                /*
-                    Open today's gift.
-                */
-
-                if (
-                    day === currentDay
-                ) {
-
-                    const content =
-                        reward.querySelector(
-                            ".reward-content"
-                        );
-
-                    content.textContent =
-                        prize;
-
-                    reward.classList.add(
-                        "claimed"
-                    );
-
-
-                    localStorage.setItem(
-                        "gb_reward_claimed",
-                        getToday()
-                    );
-
-
-                    showRewardMessage(
-                        "🎉 You opened Day "
-                        + day
-                        + " and received "
-                        + prize
-                        + "!"
-                    );
-
-                }
-
-            }
-        );
-
-    });
-
-
-/*
-    Start the reward system.
-*/
-
-updateRewards();
-
-</script>
 
 </body>
 </html>
