@@ -3,16 +3,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>GlitchBox Founder Control Center</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-
-/* =====================================================
-   GLITCHBOX OWNER PANEL
-===================================================== */
-
 *{
     margin:0;
     padding:0;
@@ -26,16 +23,19 @@ body{
     min-height:100vh;
 }
 
-button,
-input,
-textarea,
-select{
+button,input,textarea,select{
     font:inherit;
 }
 
-/* =====================================================
-   SIDEBAR
-===================================================== */
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* SIDEBAR */
 
 .sidebar{
     position:fixed;
@@ -47,14 +47,12 @@ select{
     border-right:1px solid #292940;
     padding:20px;
     overflow-y:auto;
-    z-index:1000;
 }
 
 .logo{
-    font-size:28px;
+    font-size:30px;
     font-weight:bold;
     color:#a855f7;
-    letter-spacing:2px;
     margin-bottom:5px;
 }
 
@@ -65,60 +63,45 @@ select{
     margin-bottom:25px;
 }
 
-.nav-button{
+.nav{
     width:100%;
-    display:block;
+    padding:12px;
+    margin-bottom:7px;
     border:0;
+    border-radius:10px;
     background:transparent;
     color:white;
     text-align:left;
-    padding:12px;
-    margin-bottom:7px;
-    border-radius:10px;
-    cursor:pointer;
-    transition:.2s;
 }
 
-.nav-button:hover,
-.nav-button.active{
+.nav:hover,
+.nav.active{
     background:#5b21b6;
-    border:1px solid #8b5cf6;
 }
 
-/* =====================================================
-   MAIN
-===================================================== */
+/* MAIN */
 
 .main{
     margin-left:250px;
     padding:25px;
 }
 
-/* =====================================================
-   HEADER
-===================================================== */
-
 .header{
-    background:
-        linear-gradient(
-            135deg,
-            #19002f,
-            #3b0764,
-            #160025
-        );
-
+    background:linear-gradient(
+        135deg,
+        #19002f,
+        #3b0764,
+        #160025
+    );
     border:1px solid #8b5cf6;
     border-radius:20px;
     padding:30px;
     margin-bottom:25px;
-
-    box-shadow:
-        0 0 30px rgba(139,92,246,.25);
 }
 
 .header h1{
     font-size:36px;
-    margin-bottom:10px;
+    margin-bottom:8px;
 }
 
 .header p{
@@ -126,62 +109,25 @@ select{
 }
 
 .badges{
-    display:flex;
-    gap:12px;
     margin:15px 0;
 }
 
 .badge{
     font-size:34px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #fff6b0,
-            #ffd700,
-            #ffbf00,
-            #fff6b0
-        );
-
+    margin-right:10px;
+    background:linear-gradient(
+        135deg,
+        #fff6b0,
+        #ffd700,
+        #ffbf00,
+        #fff6b0
+    );
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
-
-    filter:
-        drop-shadow(0 0 6px #ffd700)
-        drop-shadow(0 0 12px #ffbf00);
+    filter:drop-shadow(0 0 8px #ffd700);
 }
 
-/* =====================================================
-   SEARCH
-===================================================== */
-
-.search-box{
-    display:flex;
-    gap:10px;
-    margin-bottom:25px;
-}
-
-.search-box input{
-    flex:1;
-    padding:14px;
-    background:#111122;
-    color:white;
-    border:1px solid #33334d;
-    border-radius:10px;
-}
-
-.search-box button{
-    padding:14px 20px;
-    border:0;
-    border-radius:10px;
-    background:#7c3aed;
-    color:white;
-    cursor:pointer;
-}
-
-/* =====================================================
-   STATS
-===================================================== */
+/* STATS */
 
 .stats{
     display:grid;
@@ -207,9 +153,7 @@ select{
     font-weight:bold;
 }
 
-/* =====================================================
-   PANELS
-===================================================== */
+/* PANELS */
 
 .panel{
     display:none;
@@ -220,12 +164,12 @@ select{
 }
 
 .panel-title{
-    font-size:28px;
     color:#c084fc;
     margin-bottom:20px;
+    font-size:28px;
 }
 
-.card-grid{
+.grid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:18px;
@@ -253,51 +197,7 @@ select{
     margin-bottom:15px;
 }
 
-/* =====================================================
-   BUTTONS
-===================================================== */
-
-.action{
-    width:100%;
-    padding:12px;
-    margin-top:7px;
-    border:1px solid #7c3aed;
-    border-radius:10px;
-    background:#1b1230;
-    color:white;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.action:hover{
-    background:#7c3aed;
-}
-
-.action.gold{
-    border-color:#d4af37;
-    color:#ffe680;
-}
-
-.action.red{
-    border-color:#ef4444;
-    background:#241014;
-}
-
-.action.red:hover{
-    background:#dc2626;
-}
-
-.action.green{
-    border-color:#22c55e;
-}
-
-.action.blue{
-    border-color:#3b82f6;
-}
-
-/* =====================================================
-   FORMS
-===================================================== */
+/* FORMS */
 
 .form{
     background:#121225;
@@ -307,61 +207,100 @@ select{
     margin-bottom:20px;
 }
 
-.form input,
-.form textarea,
-.form select{
+input,
+textarea,
+select{
     width:100%;
     padding:13px;
     margin-bottom:12px;
-    background:#0d0d1f;
-    color:white;
     border:1px solid #33334d;
     border-radius:10px;
+    background:#0d0d1f;
+    color:white;
 }
 
-.form textarea{
-    min-height:120px;
+textarea{
+    min-height:110px;
     resize:vertical;
 }
 
-/* =====================================================
-   TABLE
-===================================================== */
+/* BUTTONS */
 
-.table-wrap{
-    overflow-x:auto;
-}
-
-table{
+.action{
     width:100%;
-    border-collapse:collapse;
+    padding:12px;
+    margin-top:7px;
+    border:1px solid #7c3aed;
+    border-radius:10px;
+    background:#1b1230;
+    color:white;
+}
+
+.action:hover{
+    background:#7c3aed;
+}
+
+.red{
+    border-color:#ef4444;
+}
+
+.red:hover{
+    background:#dc2626;
+}
+
+.green{
+    border-color:#22c55e;
+}
+
+.green:hover{
+    background:#16a34a;
+}
+
+.gold{
+    border-color:#d4af37;
+    color:#ffe680;
+}
+
+/* ACCESS */
+
+.login-screen{
+    position:fixed;
+    inset:0;
+    background:#070714;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+}
+
+.login-box{
+    width:420px;
+    max-width:92%;
+    padding:30px;
     background:#121225;
-    border-radius:15px;
-    overflow:hidden;
+    border:1px solid #8b5cf6;
+    border-radius:20px;
+    text-align:center;
 }
 
-th,
-td{
-    padding:14px;
-    border-bottom:1px solid #292940;
-    text-align:left;
+.login-box h1{
+    color:#a855f7;
+    margin-bottom:10px;
 }
 
-th{
-    color:#c084fc;
-    background:#17172b;
+.login-box p{
+    color:#aaa;
+    margin-bottom:20px;
 }
 
-/* =====================================================
-   LOG
-===================================================== */
+/* LOG */
 
 .log{
+    margin-top:25px;
     background:#121225;
     border:1px solid #292940;
     border-radius:16px;
     padding:20px;
-    margin-top:25px;
 }
 
 .log h2{
@@ -370,37 +309,32 @@ th{
 }
 
 .log-item{
-    background:#19192e;
     padding:12px;
-    border-radius:9px;
     margin-bottom:8px;
+    background:#19192e;
+    border-radius:9px;
     color:#ccc;
 }
 
-/* =====================================================
-   TOAST
-===================================================== */
+/* TOAST */
 
 .toast{
     position:fixed;
-    right:25px;
-    bottom:25px;
+    right:20px;
+    bottom:20px;
+    padding:15px 20px;
     background:#17172b;
     border:1px solid #8b5cf6;
-    padding:16px 20px;
     border-radius:12px;
     display:none;
-    z-index:5000;
-    box-shadow:0 0 25px rgba(139,92,246,.35);
+    z-index:10000;
 }
 
 .toast.show{
     display:block;
 }
 
-/* =====================================================
-   MOBILE
-===================================================== */
+/* MOBILE */
 
 @media(max-width:1000px){
 
@@ -408,10 +342,9 @@ th{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .card-grid{
+    .grid{
         grid-template-columns:repeat(2,1fr);
     }
-
 }
 
 @media(max-width:700px){
@@ -430,24 +363,49 @@ th{
     }
 
     .stats,
-    .card-grid{
+    .grid{
         grid-template-columns:1fr;
     }
-
-    .search-box{
-        flex-direction:column;
-    }
-
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- =====================================================
-     SIDEBAR
-===================================================== -->
+<!-- ACCESS SCREEN -->
+
+<div id="accessScreen" class="login-screen">
+
+    <div class="login-box">
+
+        <h1>👑 GLITCHBOX</h1>
+
+        <p>
+            Founder Control Center
+        </p>
+
+        <button
+            class="action"
+            onclick="checkFounderAccess()"
+        >
+            🔐 Verify Founder Access
+        </button>
+
+        <br><br>
+
+        <button
+            class="action"
+            onclick="signOut()"
+        >
+            Sign Out
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- SIDEBAR -->
 
 <aside class="sidebar">
 
@@ -459,77 +417,78 @@ th{
         👑 FOUNDER CONTROL CENTER
     </div>
 
-    <button class="nav-button active" data-panel="dashboard">
+    <button class="nav active" data-panel="dashboard">
         📊 Dashboard
     </button>
 
-    <button class="nav-button" data-panel="platform">
+    <button class="nav" data-panel="platform">
         📢 Platform
     </button>
 
-    <button class="nav-button" data-panel="players">
+    <button class="nav" data-panel="players">
         👥 Players
     </button>
 
-    <button class="nav-button" data-panel="games">
+    <button class="nav" data-panel="games">
         🎮 Games
     </button>
 
-    <button class="nav-button" data-panel="worlds">
+    <button class="nav" data-panel="worlds">
         🌎 Worlds
     </button>
 
-    <button class="nav-button" data-panel="communities">
+    <button class="nav" data-panel="social">
+        💜 Social
+    </button>
+
+    <button class="nav" data-panel="communities">
         📢 Communities
     </button>
 
-    <button class="nav-button" data-panel="creators">
-        🎥 Creators
+    <button class="nav" data-panel="clans">
+        🏰 Clans
     </button>
 
-    <button class="nav-button" data-panel="economy">
+    <button class="nav" data-panel="creators">
+        🎥 Creator Hub
+    </button>
+
+    <button class="nav" data-panel="economy">
         🪙 Economy
     </button>
 
-    <button class="nav-button" data-panel="premium">
+    <button class="nav" data-panel="premium">
         💎 Premium
     </button>
 
-    <button class="nav-button" data-panel="tournaments">
+    <button class="nav" data-panel="challenges">
+        🎯 Daily Challenges
+    </button>
+
+    <button class="nav" data-panel="tournaments">
         🏆 Tournaments
     </button>
 
-    <button class="nav-button" data-panel="sponsors">
+    <button class="nav" data-panel="sponsors">
         🤝 Sponsors
     </button>
 
-    <button class="nav-button" data-panel="staff">
+    <button class="nav" data-panel="staff">
         👥 Staff
     </button>
 
-    <button class="nav-button" data-panel="security">
+    <button class="nav" data-panel="security">
         🛡 Security
     </button>
 
-    <button class="nav-button" data-panel="settings">
-        ⚙️ Platform Settings
+    <button class="nav" data-panel="settings">
+        ⚙️ Settings
     </button>
-
-    <hr style="border-color:#292940;margin:20px 0;">
-
-    <a
-        href="index.html"
-        style="color:white;text-decoration:none;"
-    >
-        🏠 Return Home
-    </a>
 
 </aside>
 
 
-<!-- =====================================================
-     MAIN
-===================================================== -->
+<!-- MAIN -->
 
 <main class="main">
 
@@ -540,15 +499,12 @@ th{
     </h1>
 
     <p>
-        GlitchBox platform management.
+        Welcome to the GlitchBox Founder area.
     </p>
 
     <div class="badges">
-
         <span class="badge">✔</span>
-
         <span class="badge">🔨</span>
-
     </div>
 
     <p>
@@ -558,28 +514,7 @@ th{
 </section>
 
 
-<!-- =====================================================
-     SEARCH
-===================================================== -->
-
-<div class="search-box">
-
-    <input
-        id="globalSearch"
-        type="search"
-        placeholder="Search players, games, worlds, communities..."
-    >
-
-    <button onclick="globalSearch()">
-        🔎 Search
-    </button>
-
-</div>
-
-
-<!-- =====================================================
-     STATS
-===================================================== -->
+<!-- STATS -->
 
 <section class="stats">
 
@@ -606,757 +541,944 @@ th{
 </section>
 
 
-<!-- =====================================================
-     DASHBOARD
-===================================================== -->
+<!-- DASHBOARD -->
 
 <section class="panel active" id="dashboard">
 
-    <h2 class="panel-title">
-        📊 Founder Dashboard
-    </h2>
+<h2 class="panel-title">
+    📊 Founder Dashboard
+</h2>
 
-    <div class="card-grid">
+<div class="grid">
 
-        <div class="card">
-            <h2>📢 Platform</h2>
-            <p>Manage the overall GlitchBox platform.</p>
-            <button class="action" onclick="openPanel('platform')">
-                Open Platform
-            </button>
-        </div>
+<div class="card">
+<h2>📢 Platform</h2>
+<p>Announcements, featured content and trending content.</p>
+<button class="action" onclick="openPanel('platform')">
+Open
+</button>
+</div>
 
-        <div class="card">
-            <h2>👥 Players</h2>
-            <p>Manage players, reports, warnings and moderation.</p>
-            <button class="action" onclick="openPanel('players')">
-                Player Management
-            </button>
-        </div>
+<div class="card">
+<h2>👥 Players</h2>
+<p>Manage players and moderation.</p>
+<button class="action" onclick="openPanel('players')">
+Open
+</button>
+</div>
 
-        <div class="card">
-            <h2>🌎 Worlds</h2>
-            <p>Manage worlds and world moderation.</p>
-            <button class="action" onclick="openPanel('worlds')">
-                World Management
-            </button>
-        </div>
+<div class="card">
+<h2>🌎 Worlds</h2>
+<p>Manage the GlitchBox Worlds ecosystem.</p>
+<button class="action" onclick="openPanel('worlds')">
+Open
+</button>
+</div>
 
-        <div class="card">
-            <h2>💰 Economy</h2>
-            <p>Manage GlitchCoins, GlitchGems and promo codes.</p>
-            <button class="action" onclick="openPanel('economy')">
-                Economy Controls
-            </button>
-        </div>
+<div class="card">
+<h2>🪙 Economy</h2>
+<p>GlitchCoins, GlitchGems and promo codes.</p>
+<button class="action" onclick="openPanel('economy')">
+Open
+</button>
+</div>
 
-        <div class="card">
-            <h2>🛡 Security</h2>
-            <p>Review platform security and audit activity.</p>
-            <button class="action" onclick="openPanel('security')">
-                Security Center
-            </button>
-        </div>
+<div class="card">
+<h2>🎯 Daily Challenges</h2>
+<p>Manage daily challenges and rewards.</p>
+<button class="action" onclick="openPanel('challenges')">
+Open
+</button>
+</div>
 
-        <div class="card">
-            <h2>🤝 Sponsors</h2>
-            <p>Manage sponsors and campaigns.</p>
-            <button class="action" onclick="openPanel('sponsors')">
-                Sponsor Management
-            </button>
-        </div>
+<div class="card">
+<h2>🛡 Security</h2>
+<p>Security, reports and audit logs.</p>
+<button class="action" onclick="openPanel('security')">
+Open
+</button>
+</div>
 
-    </div>
+</div>
 
 </section>
 
 
-<!-- =====================================================
-     PLATFORM
-===================================================== -->
+<!-- PLATFORM -->
 
 <section class="panel" id="platform">
 
-    <h2 class="panel-title">
-        📢 Platform Management
-    </h2>
+<h2 class="panel-title">
+📢 Platform Management
+</h2>
 
-    <div class="form">
+<div class="form">
 
-        <h2>📢 Create Announcement</h2>
+<h2>📢 Platform Announcement</h2>
+<br>
 
-        <br>
+<input
+id="announcementTitle"
+placeholder="Announcement title"
+>
 
-        <input
-            id="announcementTitle"
-            placeholder="Announcement title"
-        >
+<textarea
+id="announcementBody"
+placeholder="Announcement message"
+></textarea>
 
-        <textarea
-            id="announcementText"
-            placeholder="Announcement message"
-        ></textarea>
+<button
+class="action"
+onclick="createAnnouncement()"
+>
+📢 Publish Announcement
+</button>
 
-        <button
-            class="action"
-            onclick="createAnnouncement()"
-        >
-            📢 Publish Announcement
-        </button>
+</div>
 
-    </div>
+<div class="grid">
 
-    <div class="card-grid">
+<div class="card">
+<h2>🔥 Trending</h2>
+<p>Manage trending games, worlds and posts.</p>
+<button class="action" onclick="logAction('Opened Trending Management')">
+🔥 Manage
+</button>
+</div>
 
-        <div class="card">
-            <h2>⭐ Feature Posts</h2>
-            <p>Choose posts to feature.</p>
-            <button class="action" onclick="featurePost()">
-                ⭐ Feature
-            </button>
-        </div>
+<div class="card">
+<h2>⭐ Featured</h2>
+<p>Choose featured platform content.</p>
+<button class="action" onclick="logAction('Opened Featured Content')">
+⭐ Manage
+</button>
+</div>
 
-        <div class="card">
-            <h2>🔥 Trending</h2>
-            <p>Manage trending games and worlds.</p>
-            <button class="action" onclick="manageTrending()">
-                🔥 Manage Trending
-            </button>
-        </div>
+<div class="card">
+<h2>📌 News</h2>
+<p>Pin important announcements.</p>
+<button class="action" onclick="logAction('Opened Pinned News')">
+📌 Manage
+</button>
+</div>
 
-        <div class="card">
-            <h2>🎉 Events</h2>
-            <p>Create platform events.</p>
-            <button class="action" onclick="createEvent()">
-                🎉 Create Event
-            </button>
-        </div>
-
-    </div>
+</div>
 
 </section>
 
 
-<!-- =====================================================
-     PLAYERS
-===================================================== -->
+<!-- PLAYERS -->
 
 <section class="panel" id="players">
 
-    <h2 class="panel-title">
-        👥 Player Management
-    </h2>
+<h2 class="panel-title">
+👥 Player Management
+</h2>
 
-    <div class="form">
+<div class="form">
 
-        <input
-            id="playerInput"
-            placeholder="Player username"
-        >
+<input
+id="playerUsername"
+placeholder="Player username"
+>
 
-        <button
-            class="action"
-            onclick="searchPlayer()"
-        >
-            🔎 Search Player
-        </button>
+<button
+class="action"
+onclick="findPlayer()"
+>
+🔎 Find Player
+</button>
 
-    </div>
+</div>
 
-    <div class="card-grid">
+<div class="grid">
 
-        <div class="card">
-            <h2>🚫 Ban / Unban</h2>
-            <p>Manage player moderation.</p>
-            <button class="action red" onclick="banPlayer()">
-                🚫 Ban Player
-            </button>
-            <button class="action green" onclick="unbanPlayer()">
-                ✅ Unban Player
-            </button>
-        </div>
+<div class="card">
+<h2>🚫 Ban</h2>
+<p>Ban a player after reviewing their account.</p>
+<button class="action red" onclick="banPlayer()">
+🚫 Ban Player
+</button>
+</div>
 
-        <div class="card">
-            <h2>⚠️ Warnings</h2>
-            <p>Issue or review warnings.</p>
-            <button class="action" onclick="warningPlayer()">
-                ⚠️ Issue Warning
-            </button>
-        </div>
+<div class="card">
+<h2>✅ Unban</h2>
+<p>Restore a banned account.</p>
+<button class="action green" onclick="unbanPlayer()">
+✅ Unban Player
+</button>
+</div>
 
-        <div class="card">
-            <h2>🚨 Reports</h2>
-            <p>Review player reports.</p>
-            <button class="action" onclick="viewReports()">
-                🚨 View Reports
-            </button>
-        </div>
+<div class="card">
+<h2>⚠️ Warning</h2>
+<p>Issue a moderation warning.</p>
+<button class="action" onclick="warnPlayer()">
+⚠️ Warning
+</button>
+</div>
 
-        <div class="card">
-            <h2>⚖️ Appeals</h2>
-            <p>Review account appeals.</p>
-            <button class="action" onclick="viewAppeals()">
-                ⚖️ Review Appeals
-            </button>
-        </div>
+<div class="card">
+<h2>🚨 Reports</h2>
+<p>Review player reports.</p>
+<button class="action" onclick="logAction('Opened Player Reports')">
+🚨 Reports
+</button>
+</div>
 
-    </div>
+<div class="card">
+<h2>⚖️ Appeals</h2>
+<p>Review account appeals.</p>
+<button class="action" onclick="logAction('Opened Appeals')">
+⚖️ Appeals
+</button>
+</div>
+
+</div>
 
 </section>
 
 
-<!-- =====================================================
-     GAMES
-===================================================== -->
+<!-- GAMES -->
 
 <section class="panel" id="games">
 
-    <h2 class="panel-title">
-        🎮 Game Management
-    </h2>
+<h2 class="panel-title">
+🎮 Game Management
+</h2>
 
-    <div class="card-grid">
+<div class="grid">
 
-        <div class="card">
-            <h2>🎮 Manage Games</h2>
-            <p>Edit and manage published games.</p>
-            <button class="action" onclick="manageGames()">
-                🎮 Open
-            </button>
-        </div>
+<div class="card">
+<h2>🎮 Games</h2>
+<p>Manage GlitchBox games.</p>
+<button class="action" onclick="logAction('Opened Game Management')">
+Manage Games
+</button>
+</div>
 
-        <div class="card">
-            <h2>⭐ Featured Games</h2>
-            <p>Choose featured games.</p>
-            <button class="action" onclick="featuredGames()">
-                ⭐ Manage
-            </button>
-        </div>
+<div class="card">
+<h2>⭐ Featured</h2>
+<p>Feature games on the Home page.</p>
+<button class="action" onclick="logAction('Opened Featured Games')">
+Feature Games
+</button>
+</div>
 
-        <div class="card">
-            <h2>🚨 Game Reports</h2>
-            <p>Review reported games.</p>
-            <button class="action" onclick="gameReports()">
-                🚨 Review
-            </button>
-        </div>
+<div class="card">
+<h2>🚨 Reports</h2>
+<p>Review game reports.</p>
+<button class="action" onclick="logAction('Opened Game Reports')">
+Game Reports
+</button>
+</div>
 
-    </div>
+</div>
 
 </section>
 
 
-<!-- =====================================================
-     WORLDS
-===================================================== -->
+<!-- WORLDS -->
 
 <section class="panel" id="worlds">
 
-    <h2 class="panel-title">
-        🌎 GlitchBox Worlds
-    </h2>
+<h2 class="panel-title">
+🌎 GlitchBox Worlds
+</h2>
 
-    <div class="card-grid">
+<div class="grid">
 
-        <div class="card">
-            <h2>🌎 World Management</h2>
-            <p>Manage published worlds.</p>
-            <button class="action" onclick="manageWorlds()">
-                🌎 Manage Worlds
-            </button>
-        </div>
+<div class="card">
+<h2>🌎 Explore</h2>
+<p>Manage published worlds.</p>
+<button class="action" onclick="logAction('Opened World Management')">
+Manage Worlds
+</button>
+</div>
 
-        <div class="card">
-            <h2>⭐ Featured Worlds</h2>
-            <p>Choose worlds for the front page.</p>
-            <button class="action" onclick="featuredWorlds()">
-                ⭐ Feature World
-            </button>
-        </div>
+<div class="card">
+<h2>🏗 Build</h2>
+<p>World creation and publishing.</p>
+<button class="action" onclick="logAction('Opened World Builder')">
+World Builder
+</button>
+</div>
 
-        <div class="card">
-            <h2>🚨 World Reports</h2>
-            <p>Review reported worlds.</p>
-            <button class="action" onclick="worldReports()">
-                🚨 Review
-            </button>
-        </div>
+<div class="card">
+<h2>⚔ Battle</h2>
+<p>Manage battle worlds.</p>
+<button class="action" onclick="logAction('Opened Battle Worlds')">
+Battle Worlds
+</button>
+</div>
 
-    </div>
+<div class="card">
+<h2>🏃 Parkour</h2>
+<p>Manage parkour worlds.</p>
+<button class="action" onclick="logAction('Opened Parkour Worlds')">
+Parkour
+</button>
+</div>
+
+<div class="card">
+<h2>🧟 Survival</h2>
+<p>Manage survival worlds.</p>
+<button class="action" onclick="logAction('Opened Survival Worlds')">
+Survival
+</button>
+</div>
+
+<div class="card">
+<h2>🏰 Creative</h2>
+<p>Manage creative worlds.</p>
+<button class="action" onclick="logAction('Opened Creative Worlds')">
+Creative
+</button>
+</div>
+
+<div class="card">
+<h2>🛏 Bed Battles</h2>
+<p>Manage Bed Battle worlds.</p>
+<button class="action" onclick="logAction('Opened Bed Battles')">
+Bed Battles
+</button>
+</div>
+
+<div class="card">
+<h2>☁ Sky Islands</h2>
+<p>Manage Sky Island worlds.</p>
+<button class="action" onclick="logAction('Opened Sky Islands')">
+Sky Islands
+</button>
+</div>
+
+<div class="card">
+<h2>🎯 Minigames</h2>
+<p>Manage minigame worlds.</p>
+<button class="action" onclick="logAction('Opened Minigames')">
+Minigames
+</button>
+</div>
+
+</div>
 
 </section>
 
 
-<!-- =====================================================
-     COMMUNITIES
-===================================================== -->
+<!-- SOCIAL -->
+
+<section class="panel" id="social">
+
+<h2 class="panel-title">
+💜 GlitchBox Connect
+</h2>
+
+<div class="grid">
+
+<div class="card">
+<h2>💬 Posts</h2>
+<p>Manage posts, comments and reactions.</p>
+<button class="action" onclick="logAction('Opened Posts')">
+Posts
+</button>
+</div>
+
+<div class="card">
+<h2>❤️ Reactions</h2>
+<p>Manage likes and emoji reactions.</p>
+<button class="action" onclick="logAction('Opened Reactions')">
+Reactions
+</button>
+</div>
+
+<div class="card">
+<h2>💬 Messages</h2>
+<p>Moderate direct and group messaging.</p>
+<button class="action" onclick="logAction('Opened Messages')">
+Messages
+</button>
+</div>
+
+<div class="card">
+<h2>👤 Profiles</h2>
+<p>Manage player profiles and verification.</p>
+<button class="action" onclick="logAction('Opened Profiles')">
+Profiles
+</button>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- COMMUNITIES -->
 
 <section class="panel" id="communities">
 
-    <h2 class="panel-title">
-        📢 Community Management
-    </h2>
+<h2 class="panel-title">
+📢 Communities
+</h2>
 
-    <div class="card-grid">
+<div class="grid">
 
-        <div class="card">
-            <h2>📢 Communities</h2>
-            <p>Manage communities and roles.</p>
-            <button class="action" onclick="manageCommunities()">
-                📢 Manage
-            </button>
-        </div>
+<div class="card">
+<h2>📢 Communities</h2>
+<p>Manage communities and members.</p>
+<button class="action" onclick="logAction('Opened Community Management')">
+Manage
+</button>
+</div>
 
-        <div class="card">
-            <h2>🚨 Reports</h2>
-            <p>Review community reports.</p>
-            <button class="action" onclick="communityReports()">
-                🚨 Reports
-            </button>
-        </div>
+<div class="card">
+<h2>🚨 Moderation</h2>
+<p>Review community reports.</p>
+<button class="action" onclick="logAction('Opened Community Moderation')">
+Moderate
+</button>
+</div>
 
-        <div class="card">
-            <h2>📌 Pinned News</h2>
-            <p>Manage pinned community news.</p>
-            <button class="action" onclick="pinNews()">
-                📌 Pin News
-            </button>
-        </div>
+<div class="card">
+<h2>📅 Events</h2>
+<p>Manage community events.</p>
+<button class="action" onclick="logAction('Opened Community Events')">
+Events
+</button>
+</div>
 
-    </div>
+</div>
 
 </section>
 
 
-<!-- =====================================================
-     CREATORS
-===================================================== -->
+<!-- CLANS -->
+
+<section class="panel" id="clans">
+
+<h2 class="panel-title">
+🏰 Clan Management
+</h2>
+
+<div class="grid">
+
+<div class="card">
+<h2>🏰 Clans</h2>
+<p>Manage clans and members.</p>
+<button class="action" onclick="logAction('Opened Clan Management')">
+Manage Clans
+</button>
+</div>
+
+<div class="card">
+<h2>⚔️ Clan Battles</h2>
+<p>Manage clan competitions.</p>
+<button class="action" onclick="logAction('Opened Clan Battles')">
+Clan Battles
+</button>
+</div>
+
+<div class="card">
+<h2>💬 Clan Chat</h2>
+<p>Moderate clan chat.</p>
+<button class="action" onclick="logAction('Opened Clan Chat Moderation')">
+Clan Chat
+</button>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CREATOR HUB -->
 
 <section class="panel" id="creators">
 
-    <h2 class="panel-title">
-        🎥 Creator Hub
-    </h2>
+<h2 class="panel-title">
+🎥 Creator Hub
+</h2>
 
-    <div class="card-grid">
+<div class="grid">
 
-        <div class="card">
-            <h2>🎥 Creators</h2>
-            <p>Manage creator accounts.</p>
-            <button class="action" onclick="manageCreators()">
-                🎥 Manage
-            </button>
-        </div>
+<div class="card">
+<h2>🎥 Creators</h2>
+<p>Manage creator accounts.</p>
+<button class="action" onclick="logAction('Opened Creator Management')">
+Creators
+</button>
+</div>
 
-        <div class="card">
-            <h2>✔ Verified Creators</h2>
-            <p>Review creator verification.</p>
-            <button class="action gold" onclick="verifyCreator()">
-                ✔ Verify
-            </button>
-        </div>
+<div class="card">
+<h2>✔ Verification</h2>
+<p>Verify eligible creators.</p>
+<button class="action gold" onclick="verifyCreator()">
+✔ Verify Creator
+</button>
+</div>
 
-        <div class="card">
-            <h2>📊 Analytics</h2>
-            <p>Review creator statistics.</p>
-            <button class="action" onclick="creatorAnalytics()">
-                📊 Analytics
-            </button>
-        </div>
+<div class="card">
+<h2>📊 Analytics</h2>
+<p>Creator statistics.</p>
+<button class="action" onclick="logAction('Opened Creator Analytics')">
+Analytics
+</button>
+</div>
 
-    </div>
+</div>
 
 </section>
 
 
-<!-- =====================================================
-     ECONOMY
-===================================================== -->
+<!-- ECONOMY -->
 
 <section class="panel" id="economy">
 
-    <h2 class="panel-title">
-        🪙 Economy Controls
-    </h2>
+<h2 class="panel-title">
+🪙 Economy
+</h2>
 
-    <div class="card-grid">
+<div class="grid">
 
-        <div class="card">
-            <h2>🪙 GlitchCoins</h2>
-            <p>Manage the GlitchCoin economy.</p>
-            <button class="action" onclick="glitchCoins()">
-                🪙 Controls
-            </button>
-        </div>
+<div class="card">
+<h2>🪙 GlitchCoins</h2>
+<p>Manage GlitchCoin economy.</p>
+<button class="action" onclick="logAction('Opened GlitchCoin Controls')">
+Controls
+</button>
+</div>
 
-        <div class="card">
-            <h2>💎 GlitchGems</h2>
-            <p>Manage GlitchGems.</p>
-            <button class="action" onclick="glitchGems()">
-                💎 Controls
-            </button>
-        </div>
+<div class="card">
+<h2>💎 GlitchGems</h2>
+<p>Manage GlitchGem economy.</p>
+<button class="action" onclick="logAction('Opened GlitchGem Controls')">
+Controls
+</button>
+</div>
 
-        <div class="card">
-            <h2>🎟 Promo Codes</h2>
-            <p>Create a promo code.</p>
-            <input
-                id="promoInput"
-                placeholder="Promo code"
-                style="width:100%;padding:12px;background:#0d0d1f;color:white;border:1px solid #33334d;border-radius:10px;"
-            >
-            <button class="action" onclick="createPromo()">
-                🎟 Create Promo
-            </button>
-        </div>
+<div class="card">
 
-        <div class="card">
-            <h2>🎁 Rewards</h2>
-            <p>Manage daily rewards.</p>
-            <button class="action" onclick="rewardControls()">
-                🎁 Rewards
-            </button>
-        </div>
+<h2>🎟 Promo Codes</h2>
 
-    </div>
+<input
+id="promoCode"
+placeholder="Example: GLITCH2026"
+>
+
+<button
+class="action"
+onclick="createPromo()"
+>
+🎟 Create Promo
+</button>
+
+</div>
+
+</div>
 
 </section>
 
 
-<!-- =====================================================
-     PREMIUM
-===================================================== -->
+<!-- PREMIUM -->
 
 <section class="panel" id="premium">
 
-    <h2 class="panel-title">
-        💎 Premium Management
-    </h2>
+<h2 class="panel-title">
+💎 Premium
+</h2>
 
-    <div class="card-grid">
+<div class="grid">
 
-        <div class="card">
-            <h2>💎 Premium</h2>
-            <p>Manage the Premium membership.</p>
-            <button class="action" onclick="premiumBasic()">
-                💎 Premium
-            </button>
-        </div>
+<div class="card">
+<h2>💎 Premium</h2>
+<p>Manage Premium.</p>
+<button class="action" onclick="logAction('Opened Premium Controls')">
+Manage
+</button>
+</div>
 
-        <div class="card">
-            <h2>👑 Premium Plus</h2>
-            <p>Manage Premium Plus.</p>
-            <button class="action" onclick="premiumPlus()">
-                👑 Premium Plus
-            </button>
-        </div>
+<div class="card">
+<h2>👑 Premium Plus</h2>
+<p>Manage Premium Plus.</p>
+<button class="action" onclick="logAction('Opened Premium Plus Controls')">
+Manage
+</button>
+</div>
 
-        <div class="card">
-            <h2>🔥 Ultra / VIP</h2>
-            <p>Manage higher membership tiers.</p>
-            <button class="action" onclick="premiumUltra()">
-                🔥 Manage
-            </button>
-        </div>
+<div class="card">
+<h2>🔥 Premium Ultra</h2>
+<p>Manage Premium Ultra.</p>
+<button class="action" onclick="logAction('Opened Premium Ultra Controls')">
+Manage
+</button>
+</div>
 
-    </div>
+<div class="card">
+<h2>⭐ VIP</h2>
+<p>Manage VIP.</p>
+<button class="action" onclick="logAction('Opened VIP Controls')">
+Manage
+</button>
+</div>
+
+</div>
 
 </section>
 
 
-<!-- =====================================================
-     TOURNAMENTS
-===================================================== -->
+<!-- DAILY CHALLENGES -->
+
+<section class="panel" id="challenges">
+
+<h2 class="panel-title">
+🎯 Daily Challenges & Rewards
+</h2>
+
+<div class="form">
+
+<input
+id="challengeName"
+placeholder="Challenge name"
+>
+
+<input
+id="challengeReward"
+type="number"
+placeholder="Reward amount"
+>
+
+<button
+class="action"
+onclick="createChallenge()"
+>
+🎯 Create Daily Challenge
+</button>
+
+</div>
+
+<div class="grid">
+
+<div class="card">
+<h2>🎁 Daily Rewards</h2>
+<p>Manage daily reward schedule.</p>
+<button class="action" onclick="logAction('Opened Daily Rewards')">
+Manage Rewards
+</button>
+</div>
+
+<div class="card">
+<h2>🎯 Challenges</h2>
+<p>Manage active daily challenges.</p>
+<button class="action" onclick="logAction('Opened Daily Challenges')">
+Manage Challenges
+</button>
+</div>
+
+<div class="card">
+<h2>🏆 Challenge History</h2>
+<p>Review completed challenges.</p>
+<button class="action" onclick="logAction('Opened Challenge History')">
+History
+</button>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- TOURNAMENTS -->
 
 <section class="panel" id="tournaments">
 
-    <h2 class="panel-title">
-        🏆 Tournament Management
-    </h2>
+<h2 class="panel-title">
+🏆 Tournaments
+</h2>
 
-    <div class="card-grid">
+<div class="grid">
 
-        <div class="card">
-            <h2>🏆 Tournaments</h2>
-            <p>Create and manage tournaments.</p>
-            <button class="action" onclick="manageTournaments()">
-                🏆 Manage
-            </button>
-        </div>
+<div class="card">
+<h2>🏆 Create Tournament</h2>
+<p>Create tournaments and events.</p>
+<button class="action" onclick="logAction('Opened Tournament Creator')">
+Create
+</button>
+</div>
 
-        <div class="card">
-            <h2>⚔️ Clan Battles</h2>
-            <p>Manage clan competitions.</p>
-            <button class="action" onclick="clanBattles()">
-                ⚔️ Clan Battles
-            </button>
-        </div>
+<div class="card">
+<h2>⚔️ Clan Battles</h2>
+<p>Manage clan competitions.</p>
+<button class="action" onclick="logAction('Opened Tournament Clan Battles')">
+Manage
+</button>
+</div>
 
-        <div class="card">
-            <h2>🎁 Rewards</h2>
-            <p>Manage tournament prizes.</p>
-            <button class="action" onclick="tournamentRewards()">
-                🎁 Rewards
-            </button>
-        </div>
+<div class="card">
+<h2>🎁 Rewards</h2>
+<p>Manage tournament rewards.</p>
+<button class="action" onclick="logAction('Opened Tournament Rewards')">
+Rewards
+</button>
+</div>
 
-    </div>
+</div>
 
 </section>
 
 
-<!-- =====================================================
-     SPONSORS
-===================================================== -->
+<!-- SPONSORS -->
 
 <section class="panel" id="sponsors">
 
-    <h2 class="panel-title">
-        🤝 Sponsor Management
-    </h2>
+<h2 class="panel-title">
+🤝 Sponsors
+</h2>
 
-    <div class="form">
+<div class="form">
 
-        <h2>🤝 Add Sponsor</h2>
+<input
+id="sponsorName"
+placeholder="Sponsor name"
+>
 
-        <br>
+<input
+id="sponsorWebsite"
+placeholder="Sponsor website"
+>
 
-        <input
-            id="sponsorName"
-            placeholder="Sponsor name"
-        >
+<button
+class="action"
+onclick="addSponsor()"
+>
+🤝 Add Sponsor
+</button>
 
-        <input
-            id="sponsorWebsite"
-            placeholder="Sponsor website"
-        >
+</div>
 
-        <button
-            class="action"
-            onclick="addSponsor()"
-        >
-            🤝 Add Sponsor
-        </button>
+<div class="grid">
 
-    </div>
+<div class="card">
+<h2>📢 Campaigns</h2>
+<p>Manage sponsor campaigns.</p>
+<button class="action" onclick="logAction('Opened Sponsor Campaigns')">
+Campaigns
+</button>
+</div>
 
-    <div class="card-grid">
+<div class="card">
+<h2>📊 Analytics</h2>
+<p>Review sponsor statistics.</p>
+<button class="action" onclick="logAction('Opened Sponsor Analytics')">
+Analytics
+</button>
+</div>
 
-        <div class="card">
-            <h2>📢 Campaigns</h2>
-            <p>Manage sponsor campaigns.</p>
-            <button class="action" onclick="sponsorCampaigns()">
-                📢 Campaigns
-            </button>
-        </div>
-
-        <div class="card">
-            <h2>📊 Analytics</h2>
-            <p>Review sponsor performance.</p>
-            <button class="action" onclick="sponsorAnalytics()">
-                📊 Analytics
-            </button>
-        </div>
-
-    </div>
+</div>
 
 </section>
 
 
-<!-- =====================================================
-     STAFF
-===================================================== -->
+<!-- STAFF -->
 
 <section class="panel" id="staff">
 
-    <h2 class="panel-title">
-        👥 Staff Management
-    </h2>
+<h2 class="panel-title">
+👥 Staff Management
+</h2>
 
-    <div class="form">
+<div class="form">
 
-        <input
-            id="staffUsername"
-            placeholder="Username"
-        >
+<input
+id="staffUsername"
+placeholder="Staff username"
+>
 
-        <select id="staffRole">
+<select id="staffRole">
 
-            <option value="Moderator">
-                Moderator
-            </option>
+<option value="moderator">
+Moderator
+</option>
 
-            <option value="Admin">
-                Admin
-            </option>
+<option value="admin">
+Admin
+</option>
 
-            <option value="Developer">
-                Developer
-            </option>
+<option value="developer">
+Developer
+</option>
 
-        </select>
+</select>
 
-        <button
-            class="action"
-            onclick="addStaff()"
-        >
-            👥 Add Staff
-        </button>
+<button
+class="action"
+onclick="addStaff()"
+>
+👥 Add Staff
+</button>
 
-    </div>
+</div>
 
-    <div class="card-grid">
+<div class="grid">
 
-        <div class="card">
-            <h2>🔑 Permissions</h2>
-            <p>Manage staff permissions.</p>
-            <button class="action" onclick="permissions()">
-                🔑 Permissions
-            </button>
-        </div>
+<div class="card">
+<h2>🔑 Permissions</h2>
+<p>Manage staff permissions.</p>
+<button class="action" onclick="logAction('Opened Staff Permissions')">
+Permissions
+</button>
+</div>
 
-        <div class="card">
-            <h2>👑 Roles</h2>
-            <p>Manage platform roles.</p>
-            <button class="action" onclick="staffRoles()">
-                👑 Roles
-            </button>
-        </div>
+<div class="card">
+<h2>👑 Roles</h2>
+<p>Manage staff roles.</p>
+<button class="action" onclick="logAction('Opened Staff Roles')">
+Roles
+</button>
+</div>
 
-    </div>
+</div>
 
 </section>
 
 
-<!-- =====================================================
-     SECURITY
-===================================================== -->
+<!-- SECURITY -->
 
 <section class="panel" id="security">
 
-    <h2 class="panel-title">
-        🛡 Security Center
-    </h2>
+<h2 class="panel-title">
+🛡 Security Center
+</h2>
 
-    <div class="card-grid">
+<div class="grid">
 
-        <div class="card">
-            <h2>🛡 Security</h2>
-            <p>Review security controls.</p>
-            <button class="action" onclick="securityCenter()">
-                🛡 Open
-            </button>
-        </div>
+<div class="card">
+<h2>🛡 Security</h2>
+<p>Platform security controls.</p>
+<button class="action" onclick="logAction('Opened Security Center')">
+Open
+</button>
+</div>
 
-        <div class="card">
-            <h2>🚨 Alerts</h2>
-            <p>Review security alerts.</p>
-            <button class="action red" onclick="securityAlerts()">
-                🚨 Alerts
-            </button>
-        </div>
+<div class="card">
+<h2>📜 Audit Logs</h2>
+<p>Review Founder activity.</p>
+<button class="action" onclick="loadAuditLogs()">
+View Logs
+</button>
+</div>
 
-        <div class="card">
-            <h2>📜 Audit Logs</h2>
-            <p>Review founder activity.</p>
-            <button class="action" onclick="auditLogs()">
-                📜 Audit Logs
-            </button>
-        </div>
+<div class="card">
+<h2>🚨 Alerts</h2>
+<p>Review security alerts.</p>
+<button class="action red" onclick="logAction('Opened Security Alerts')">
+Alerts
+</button>
+</div>
 
-    </div>
+</div>
 
 </section>
 
 
-<!-- =====================================================
-     SETTINGS
-===================================================== -->
+<!-- SETTINGS -->
 
 <section class="panel" id="settings">
 
-    <h2 class="panel-title">
-        ⚙️ Platform Settings
-    </h2>
+<h2 class="panel-title">
+⚙️ Platform Settings
+</h2>
 
-    <div class="card-grid">
+<div class="grid">
 
-        <div class="card">
-            <h2>⚙️ General</h2>
-            <p>Platform-wide settings.</p>
-            <button class="action" onclick="generalSettings()">
-                ⚙️ Open Settings
-            </button>
-        </div>
+<div class="card">
+<h2>⚙️ General</h2>
+<p>Platform-wide settings.</p>
+<button class="action" onclick="logAction('Opened General Settings')">
+Open
+</button>
+</div>
 
-        <div class="card">
-            <h2>🔧 Maintenance</h2>
-            <p>Control maintenance mode.</p>
-            <button class="action red" onclick="maintenanceMode()">
-                🔧 Maintenance
-            </button>
-        </div>
+<div class="card">
+<h2>🔧 Maintenance</h2>
+<p>Manage platform maintenance.</p>
+<button class="action red" onclick="maintenanceMode()">
+Maintenance
+</button>
+</div>
 
-        <div class="card">
-            <h2>🌐 Platform Status</h2>
-            <p>Check platform status.</p>
-            <button class="action green" onclick="platformStatus()">
-                🟢 Check Status
-            </button>
-        </div>
+<div class="card">
+<h2>🟢 Status</h2>
+<p>Check platform status.</p>
+<button class="action green" onclick="toast('🟢 GlitchBox is online.')">
+Check Status
+</button>
+</div>
 
-    </div>
+</div>
 
 </section>
 
 
-<!-- =====================================================
-     ACTIVITY LOG
-===================================================== -->
+<!-- ACTIVITY LOG -->
 
 <section class="log">
 
-    <h2>
-        📜 Founder Activity
-    </h2>
+<h2>
+📜 Founder Activity
+</h2>
 
-    <div id="activityLog"></div>
+<div id="activityLog"></div>
 
 </section>
 
 
 <footer
-    style="text-align:center;color:#666;padding:30px;"
+style="
+text-align:center;
+color:#666;
+padding:30px;
+"
 >
-    👑 GlitchBox Founder Control Center
-    <br><br>
-    © 2026 GlitchBox
+👑 GlitchBox Founder Control Center
+<br><br>
+© 2026 GlitchBox
 </footer>
 
 </main>
 
 
-<!-- =====================================================
-     TOAST
-===================================================== -->
-
-<div
-    id="toast"
-    class="toast"
-></div>
+<div id="toast" class="toast"></div>
 
 
 <script>
 
 /* =====================================================
-   STORAGE
+   SUPABASE
 ===================================================== */
 
-let logs =
-    JSON.parse(
-        localStorage.getItem(
-            "gb_owner_logs"
-        ) || "[]"
+/*
+   PASTE YOUR SUPABASE VALUES HERE.
+
+   Example:
+
+   const SUPABASE_URL =
+       "https://syjnlgxghgwvqrwtthmr.supabase.co";
+
+   const SUPABASE_ANON_KEY =
+       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI";
+
+   DO NOT put a service-role/secret key here.
+*/
+
+const SUPABASE_URL =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI";
+
+const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI";
+
+
+const gbSupabase =
+    window.supabase.createClient(
+        https://syjnlgxghgwvqrwtthmr.supabase.co,
+        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI
     );
 
 
@@ -1367,16 +1489,14 @@ let logs =
 function toast(message){
 
     const box =
-        document.getElementById(
-            "toast"
-        );
+        document.getElementById("toast");
 
     box.textContent = message;
 
     box.classList.add("show");
 
     setTimeout(
-        function(){
+        () => {
             box.classList.remove("show");
         },
         3000
@@ -1385,70 +1505,7 @@ function toast(message){
 
 
 /* =====================================================
-   LOGGING
-===================================================== */
-
-function logAction(message){
-
-    const time =
-        new Date().toLocaleString();
-
-    logs.unshift(
-        time + " — " + message
-    );
-
-    logs =
-        logs.slice(0,20);
-
-    localStorage.setItem(
-        "gb_owner_logs",
-        JSON.stringify(logs)
-    );
-
-    renderLogs();
-}
-
-
-function renderLogs(){
-
-    const box =
-        document.getElementById(
-            "activityLog"
-        );
-
-    box.innerHTML = "";
-
-    if(logs.length === 0){
-
-        box.innerHTML =
-            '<div class="log-item">👑 No activity yet.</div>';
-
-        return;
-    }
-
-    logs.forEach(
-        function(item){
-
-            const div =
-                document.createElement(
-                    "div"
-                );
-
-            div.className =
-                "log-item";
-
-            div.textContent =
-                "👑 " + item;
-
-            box.appendChild(div);
-
-        }
-    );
-}
-
-
-/* =====================================================
-   PANEL NAVIGATION
+   NAVIGATION
 ===================================================== */
 
 function openPanel(id){
@@ -1456,43 +1513,29 @@ function openPanel(id){
     document
         .querySelectorAll(".panel")
         .forEach(
-            function(panel){
-                panel.classList.remove(
-                    "active"
-                );
+            panel => {
+                panel.classList.remove("active");
             }
         );
 
-    const target =
+    const selected =
         document.getElementById(id);
 
-    if(target){
-
-        target.classList.add(
-            "active"
-        );
-
+    if(selected){
+        selected.classList.add("active");
     }
 
     document
-        .querySelectorAll(".nav-button")
+        .querySelectorAll(".nav")
         .forEach(
-            function(button){
+            button => {
 
-                button.classList.remove(
-                    "active"
-                );
+                button.classList.remove("active");
 
                 if(
-                    button.dataset.panel
-                    ===
-                    id
+                    button.dataset.panel === id
                 ){
-
-                    button.classList.add(
-                        "active"
-                    );
-
+                    button.classList.add("active");
                 }
 
             }
@@ -1502,21 +1545,20 @@ function openPanel(id){
         top:0,
         behavior:"smooth"
     });
-
 }
 
 
 document
-    .querySelectorAll(".nav-button")
+    .querySelectorAll(".nav")
     .forEach(
-        function(button){
+        button => {
 
             button.addEventListener(
                 "click",
                 function(){
 
                     openPanel(
-                        button.dataset.panel
+                        this.dataset.panel
                     );
 
                 }
@@ -1527,44 +1569,186 @@ document
 
 
 /* =====================================================
-   SEARCH
+   GET USER
 ===================================================== */
 
-function globalSearch(){
+async function getCurrentUser(){
 
-    const value =
-        document
-            .getElementById(
-                "globalSearch"
-            )
-            .value
-            .trim();
+    const {
+        data,
+        error
+    } =
+        await gbSupabase.auth.getUser();
 
-    if(!value){
+    if(error){
+
+        console.error(error);
+
+        return null;
+    }
+
+    return data.user;
+}
+
+
+/* =====================================================
+   FOUNDER ACCESS
+===================================================== */
+
+async function checkFounderAccess(){
+
+    const user =
+        await getCurrentUser();
+
+    if(!user){
 
         toast(
-            "🔎 Enter something to search."
+            "🔐 Please log into GlitchBox first."
         );
 
         return;
     }
 
-    logAction(
-        "Global search: " + value
-    );
+    const {
+        data:profile,
+        error
+    } =
+        await gbSupabase
+            .from("profiles")
+            .select(
+                "id,username,role"
+            )
+            .eq(
+                "id",
+                user.id
+            )
+            .maybeSingle();
+
+    if(error){
+
+        console.error(error);
+
+        toast(
+            "⚠️ Could not load your profile."
+        );
+
+        return;
+    }
+
+    if(!profile){
+
+        toast(
+            "⚠️ Your GlitchBox profile was not found."
+        );
+
+        return;
+    }
+
+    if(
+        profile.role !== "founder" &&
+        profile.role !== "owner"
+    ){
+
+        toast(
+            "🚫 Founder access denied."
+        );
+
+        return;
+    }
+
+    document
+        .getElementById("accessScreen")
+        .classList.add("hidden");
 
     toast(
-        "🔎 Searching for " + value
+        "👑 Founder access verified."
+    );
+
+    await logAction(
+        "Founder Control Center opened."
     );
 
 }
 
 
 /* =====================================================
-   PLATFORM
+   SIGN OUT
 ===================================================== */
 
-function createAnnouncement(){
+async function signOut(){
+
+    await gbSupabase.auth.signOut();
+
+    location.reload();
+}
+
+
+/* =====================================================
+   ACTIVITY LOG
+===================================================== */
+
+async function logAction(message){
+
+    const activity =
+        document.getElementById(
+            "activityLog"
+        );
+
+    if(activity){
+
+        const item =
+            document.createElement("div");
+
+        item.className = "log-item";
+
+        item.textContent =
+            "• " + message;
+
+        activity.prepend(item);
+
+    }
+
+    const user =
+        await getCurrentUser();
+
+    if(!user){
+        return;
+    }
+
+    /*
+       This requires an audit_logs table.
+    */
+
+    const {
+        error
+    } =
+        await gbSupabase
+            .from("audit_logs")
+            .insert({
+
+                user_id:user.id,
+
+                action:message
+
+            });
+
+    if(error){
+
+        console.warn(
+            "Audit log not saved:",
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   ANNOUNCEMENTS
+===================================================== */
+
+async function createAnnouncement(){
 
     const title =
         document
@@ -1574,15 +1758,15 @@ function createAnnouncement(){
             .value
             .trim();
 
-    const text =
+    const body =
         document
             .getElementById(
-                "announcementText"
+                "announcementBody"
             )
             .value
             .trim();
 
-    if(!title || !text){
+    if(!title || !body){
 
         toast(
             "⚠️ Enter a title and message."
@@ -1591,71 +1775,71 @@ function createAnnouncement(){
         return;
     }
 
-    logAction(
+    const user =
+        await getCurrentUser();
+
+    if(!user){
+
+        toast(
+            "🔐 Please log in."
+        );
+
+        return;
+    }
+
+    const {
+        error
+    } =
+        await gbSupabase
+            .from(
+                "platform_announcements"
+            )
+            .insert({
+
+                title:title,
+
+                body:body,
+
+                created_by:user.id
+
+            });
+
+    if(error){
+
+        console.error(error);
+
+        toast(
+            "⚠️ Announcement could not be published."
+        );
+
+        return;
+    }
+
+    await logAction(
         "Published announcement: " + title
     );
 
     toast(
         "📢 Announcement published!"
     );
-
-}
-
-
-function featurePost(){
-
-    logAction(
-        "Opened Feature Posts."
-    );
-
-    toast(
-        "⭐ Feature Post controls opened."
-    );
-
-}
-
-
-function manageTrending(){
-
-    logAction(
-        "Opened Trending Content."
-    );
-
-    toast(
-        "🔥 Trending Content opened."
-    );
-
-}
-
-
-function createEvent(){
-
-    logAction(
-        "Opened Event Creator."
-    );
-
-    toast(
-        "🎉 Event Creator opened."
-    );
-
 }
 
 
 /* =====================================================
-   PLAYERS
+   PLAYER SEARCH
 ===================================================== */
 
-function searchPlayer(){
+async function findPlayer(){
 
-    const name =
+    const username =
         document
             .getElementById(
-                "playerInput"
+                "playerUsername"
             )
             .value
             .trim();
 
-    if(!name){
+    if(!username){
 
         toast(
             "⚠️ Enter a username."
@@ -1664,359 +1848,264 @@ function searchPlayer(){
         return;
     }
 
-    logAction(
-        "Searched player: " + name
-    );
+    const {
+        data,
+        error
+    } =
+        await gbSupabase
+            .from("profiles")
+            .select(
+                "id,username,role,is_banned"
+            )
+            .eq(
+                "username",
+                username
+            )
+            .maybeSingle();
+
+    if(error){
+
+        console.error(error);
+
+        toast(
+            "⚠️ Player search failed."
+        );
+
+        return;
+    }
+
+    if(!data){
+
+        toast(
+            "❌ Player not found."
+        );
+
+        return;
+    }
 
     toast(
-        "🔎 Searching for " + name
+        "👤 Found " +
+        data.username +
+        " • " +
+        (data.role || "player")
     );
-
 }
 
 
-function banPlayer(){
+/* =====================================================
+   BAN
+===================================================== */
 
-    const name =
+async function banPlayer(){
+
+    const username =
         document
             .getElementById(
-                "playerInput"
+                "playerUsername"
             )
             .value
             .trim();
 
-    if(!name){
+    if(!username){
 
         toast(
-            "⚠️ Enter a username first."
+            "⚠️ Enter a username."
         );
 
         return;
     }
 
     if(
-        confirm(
-            "Ban " + name + "?"
+        !confirm(
+            "Ban " + username + "?"
         )
     ){
-
-        logAction(
-            "Ban action selected for " + name
-        );
-
-        toast(
-            "🚫 Ban action recorded."
-        );
-
+        return;
     }
 
-}
+    const {
+        error
+    } =
+        await gbSupabase
+            .from("profiles")
+            .update({
+                is_banned:true
+            })
+            .eq(
+                "username",
+                username
+            );
 
+    if(error){
 
-function unbanPlayer(){
-
-    const name =
-        document
-            .getElementById(
-                "playerInput"
-            )
-            .value
-            .trim();
-
-    if(!name){
+        console.error(error);
 
         toast(
-            "⚠️ Enter a username first."
+            "⚠️ Ban failed."
         );
 
         return;
     }
 
-    logAction(
-        "Unban action selected for " + name
+    await logAction(
+        "Banned player: " + username
     );
 
     toast(
-        "✅ Unban action recorded."
+        "🚫 Player banned."
     );
-
 }
 
 
-function warningPlayer(){
+/* =====================================================
+   UNBAN
+===================================================== */
 
-    const name =
+async function unbanPlayer(){
+
+    const username =
         document
             .getElementById(
-                "playerInput"
+                "playerUsername"
             )
             .value
             .trim();
 
-    if(!name){
+    if(!username){
 
         toast(
-            "⚠️ Enter a username first."
+            "⚠️ Enter a username."
         );
 
         return;
     }
 
-    logAction(
-        "Warning issued to " + name
+    const {
+        error
+    } =
+        await gbSupabase
+            .from("profiles")
+            .update({
+                is_banned:false
+            })
+            .eq(
+                "username",
+                username
+            );
+
+    if(error){
+
+        console.error(error);
+
+        toast(
+            "⚠️ Unban failed."
+        );
+
+        return;
+    }
+
+    await logAction(
+        "Unbanned player: " + username
+    );
+
+    toast(
+        "✅ Player unbanned."
+    );
+}
+
+
+/* =====================================================
+   WARNING
+===================================================== */
+
+async function warnPlayer(){
+
+    const username =
+        document
+            .getElementById(
+                "playerUsername"
+            )
+            .value
+            .trim();
+
+    if(!username){
+
+        toast(
+            "⚠️ Enter a username."
+        );
+
+        return;
+    }
+
+    await logAction(
+        "Warning issued to " + username
     );
 
     toast(
         "⚠️ Warning recorded."
     );
-
-}
-
-
-function viewReports(){
-
-    logAction(
-        "Opened Player Reports."
-    );
-
-    toast(
-        "🚨 Player Reports opened."
-    );
-
-}
-
-
-function viewAppeals(){
-
-    logAction(
-        "Opened Appeals."
-    );
-
-    toast(
-        "⚖️ Appeals opened."
-    );
-
 }
 
 
 /* =====================================================
-   GAMES
+   VERIFY CREATOR
 ===================================================== */
 
-function manageGames(){
+async function verifyCreator(){
 
-    logAction(
-        "Opened Game Management."
-    );
-
-    toast(
-        "🎮 Game Management opened."
-    );
-
-}
-
-
-function featuredGames(){
-
-    logAction(
-        "Opened Featured Games."
-    );
-
-    toast(
-        "⭐ Featured Games opened."
-    );
-
-}
-
-
-function gameReports(){
-
-    logAction(
-        "Opened Game Reports."
-    );
-
-    toast(
-        "🚨 Game Reports opened."
-    );
-
-}
-
-
-/* =====================================================
-   WORLDS
-===================================================== */
-
-function manageWorlds(){
-
-    logAction(
-        "Opened World Management."
-    );
-
-    toast(
-        "🌎 World Management opened."
-    );
-
-}
-
-
-function featuredWorlds(){
-
-    logAction(
-        "Opened Featured Worlds."
-    );
-
-    toast(
-        "⭐ Featured Worlds opened."
-    );
-
-}
-
-
-function worldReports(){
-
-    logAction(
-        "Opened World Reports."
-    );
-
-    toast(
-        "🚨 World Reports opened."
-    );
-
-}
-
-
-/* =====================================================
-   COMMUNITIES
-===================================================== */
-
-function manageCommunities(){
-
-    logAction(
-        "Opened Community Management."
-    );
-
-    toast(
-        "📢 Community Management opened."
-    );
-
-}
-
-
-function communityReports(){
-
-    logAction(
-        "Opened Community Reports."
-    );
-
-    toast(
-        "🚨 Community Reports opened."
-    );
-
-}
-
-
-function pinNews(){
-
-    logAction(
-        "Opened Pinned News Management."
-    );
-
-    toast(
-        "📌 Pinned News controls opened."
-    );
-
-}
-
-
-/* =====================================================
-   CREATORS
-===================================================== */
-
-function manageCreators(){
-
-    logAction(
-        "Opened Creator Management."
-    );
-
-    toast(
-        "🎥 Creator Management opened."
-    );
-
-}
-
-
-function verifyCreator(){
-
-    const name =
+    const username =
         prompt(
             "Creator username:"
         );
 
-    if(name){
-
-        logAction(
-            "Creator verification review: "
-            + name
-        );
-
-        toast(
-            "✔ Verification review recorded."
-        );
-
+    if(!username){
+        return;
     }
 
-}
+    const {
+        error
+    } =
+        await gbSupabase
+            .from("profiles")
+            .update({
+                is_verified:true
+            })
+            .eq(
+                "username",
+                username
+            );
 
+    if(error){
 
-function creatorAnalytics(){
+        console.error(error);
 
-    logAction(
-        "Opened Creator Analytics."
+        toast(
+            "⚠️ Verification failed."
+        );
+
+        return;
+    }
+
+    await logAction(
+        "Verified creator: " + username
     );
 
     toast(
-        "📊 Creator Analytics opened."
+        "✔ Creator verified."
     );
-
 }
 
 
 /* =====================================================
-   ECONOMY
+   PROMO CODE
 ===================================================== */
 
-function glitchCoins(){
-
-    logAction(
-        "Opened GlitchCoin controls."
-    );
-
-    toast(
-        "🪙 GlitchCoin controls opened."
-    );
-
-}
-
-
-function glitchGems(){
-
-    logAction(
-        "Opened GlitchGem controls."
-    );
-
-    toast(
-        "💎 GlitchGem controls opened."
-    );
-
-}
-
-
-function createPromo(){
+async function createPromo(){
 
     const code =
         document
             .getElementById(
-                "promoInput"
+                "promoCode"
             )
             .value
             .trim()
@@ -2031,126 +2120,131 @@ function createPromo(){
         return;
     }
 
-    localStorage.setItem(
-        "gb_promo_" + code,
-        "active"
-    );
+    const user =
+        await getCurrentUser();
 
-    logAction(
+    if(!user){
+        return;
+    }
+
+    const {
+        error
+    } =
+        await gbSupabase
+            .from("promo_codes")
+            .insert({
+
+                code:code,
+
+                created_by:user.id,
+
+                active:true
+
+            });
+
+    if(error){
+
+        console.error(error);
+
+        toast(
+            "⚠️ Promo code could not be created."
+        );
+
+        return;
+    }
+
+    await logAction(
         "Created promo code: " + code
     );
 
     toast(
-        "🎟 Promo code " + code + " created!"
+        "🎟 Promo code created!"
     );
-
-}
-
-
-function rewardControls(){
-
-    logAction(
-        "Opened Daily Reward Controls."
-    );
-
-    toast(
-        "🎁 Reward Controls opened."
-    );
-
 }
 
 
 /* =====================================================
-   PREMIUM
+   DAILY CHALLENGE
 ===================================================== */
 
-function premiumBasic(){
+async function createChallenge(){
 
-    logAction(
-        "Opened Premium controls."
+    const name =
+        document
+            .getElementById(
+                "challengeName"
+            )
+            .value
+            .trim();
+
+    const reward =
+        Number(
+            document
+                .getElementById(
+                    "challengeReward"
+                )
+                .value
+        );
+
+    if(!name || !reward){
+
+        toast(
+            "⚠️ Enter a challenge and reward."
+        );
+
+        return;
+    }
+
+    const user =
+        await getCurrentUser();
+
+    if(!user){
+        return;
+    }
+
+    const {
+        error
+    } =
+        await gbSupabase
+            .from("daily_challenges")
+            .insert({
+
+                name:name,
+
+                reward:reward,
+
+                created_by:user.id,
+
+                active:true
+
+            });
+
+    if(error){
+
+        console.error(error);
+
+        toast(
+            "⚠️ Challenge could not be created."
+        );
+
+        return;
+    }
+
+    await logAction(
+        "Created daily challenge: " + name
     );
 
     toast(
-        "💎 Premium controls opened."
+        "🎯 Daily challenge created!"
     );
-
-}
-
-
-function premiumPlus(){
-
-    logAction(
-        "Opened Premium Plus controls."
-    );
-
-    toast(
-        "👑 Premium Plus controls opened."
-    );
-
-}
-
-
-function premiumUltra(){
-
-    logAction(
-        "Opened Ultra/VIP controls."
-    );
-
-    toast(
-        "🔥 Ultra/VIP controls opened."
-    );
-
 }
 
 
 /* =====================================================
-   TOURNAMENTS
+   SPONSOR
 ===================================================== */
 
-function manageTournaments(){
-
-    logAction(
-        "Opened Tournament Management."
-    );
-
-    toast(
-        "🏆 Tournament Management opened."
-    );
-
-}
-
-
-function clanBattles(){
-
-    logAction(
-        "Opened Clan Battle controls."
-    );
-
-    toast(
-        "⚔️ Clan Battle controls opened."
-    );
-
-}
-
-
-function tournamentRewards(){
-
-    logAction(
-        "Opened Tournament Rewards."
-    );
-
-    toast(
-        "🎁 Tournament Rewards opened."
-    );
-
-}
-
-
-/* =====================================================
-   SPONSORS
-===================================================== */
-
-function addSponsor(){
+async function addSponsor(){
 
     const name =
         document
@@ -2171,51 +2265,52 @@ function addSponsor(){
     if(!name){
 
         toast(
-            "⚠️ Enter a sponsor name."
+            "⚠️ Enter sponsor name."
         );
 
         return;
     }
 
-    localStorage.setItem(
-        "gb_sponsor_" + name,
-        website
-    );
+    const user =
+        await getCurrentUser();
 
-    logAction(
+    if(!user){
+        return;
+    }
+
+    const {
+        error
+    } =
+        await gbSupabase
+            .from("sponsors")
+            .insert({
+
+                name:name,
+
+                website:website,
+
+                created_by:user.id
+
+            });
+
+    if(error){
+
+        console.error(error);
+
+        toast(
+            "⚠️ Sponsor could not be added."
+        );
+
+        return;
+    }
+
+    await logAction(
         "Added sponsor: " + name
     );
 
     toast(
         "🤝 Sponsor added!"
     );
-
-}
-
-
-function sponsorCampaigns(){
-
-    logAction(
-        "Opened Sponsor Campaigns."
-    );
-
-    toast(
-        "📢 Sponsor Campaigns opened."
-    );
-
-}
-
-
-function sponsorAnalytics(){
-
-    logAction(
-        "Opened Sponsor Analytics."
-    );
-
-    toast(
-        "📊 Sponsor Analytics opened."
-    );
-
 }
 
 
@@ -2223,7 +2318,7 @@ function sponsorAnalytics(){
    STAFF
 ===================================================== */
 
-function addStaff(){
+async function addStaff(){
 
     const username =
         document
@@ -2249,147 +2344,125 @@ function addStaff(){
         return;
     }
 
-    localStorage.setItem(
-        "gb_staff_" + username,
-        role
-    );
+    const {
+        data:userProfile
+    } =
+        await gbSupabase
+            .from("profiles")
+            .select("id")
+            .eq(
+                "username",
+                username
+            )
+            .maybeSingle();
 
-    logAction(
-        "Added staff member "
-        + username
-        + " as "
-        + role
+    if(!userProfile){
+
+        toast(
+            "❌ Player not found."
+        );
+
+        return;
+    }
+
+    const {
+        error
+    } =
+        await gbSupabase
+            .from("staff")
+            .insert({
+
+                user_id:userProfile.id,
+
+                role:role
+
+            });
+
+    if(error){
+
+        console.error(error);
+
+        toast(
+            "⚠️ Staff member could not be added."
+        );
+
+        return;
+    }
+
+    await logAction(
+        "Added " +
+        role +
+        ": " +
+        username
     );
 
     toast(
         "👥 Staff member added."
     );
-
-}
-
-
-function permissions(){
-
-    logAction(
-        "Opened Permission Management."
-    );
-
-    toast(
-        "🔑 Permission Management opened."
-    );
-
-}
-
-
-function staffRoles(){
-
-    logAction(
-        "Opened Staff Roles."
-    );
-
-    toast(
-        "👑 Staff Roles opened."
-    );
-
 }
 
 
 /* =====================================================
-   SECURITY
+   AUDIT LOGS
 ===================================================== */
 
-function securityCenter(){
+async function loadAuditLogs(){
 
-    logAction(
-        "Opened Security Center."
-    );
+    const {
+        data,
+        error
+    } =
+        await gbSupabase
+            .from("audit_logs")
+            .select("*")
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            )
+            .limit(20);
 
-    toast(
-        "🛡 Security Center opened."
-    );
+    if(error){
 
-}
+        console.error(error);
 
+        toast(
+            "⚠️ Could not load audit logs."
+        );
 
-function securityAlerts(){
+        return;
+    }
 
-    logAction(
-        "Opened Security Alerts."
-    );
-
-    toast(
-        "🚨 Security Alerts opened."
-    );
-
-}
-
-
-function auditLogs(){
-
-    logAction(
-        "Opened Audit Logs."
-    );
+    console.table(data);
 
     toast(
-        "📜 Audit Logs opened."
+        "📜 Audit logs loaded."
     );
-
 }
 
 
 /* =====================================================
-   SETTINGS
+   MAINTENANCE
 ===================================================== */
-
-function generalSettings(){
-
-    logAction(
-        "Opened General Platform Settings."
-    );
-
-    toast(
-        "⚙️ General Settings opened."
-    );
-
-}
-
 
 function maintenanceMode(){
 
     if(
-        confirm(
-            "Enable maintenance mode?"
+        !confirm(
+            "Enable GlitchBox maintenance mode?"
         )
     ){
-
-        localStorage.setItem(
-            "gb_maintenance",
-            "true"
-        );
-
-        logAction(
-            "Maintenance mode enabled."
-        );
-
-        toast(
-            "🔧 Maintenance mode enabled in demo mode."
-        );
-
+        return;
     }
 
-}
-
-
-function platformStatus(){
-
     logAction(
-        "Checked platform status."
+        "Maintenance mode requested."
     );
 
     toast(
-        "🟢 GlitchBox platform status: Online."
+        "🔧 Maintenance request recorded."
     );
-
 }
 
 
@@ -2397,7 +2470,64 @@ function platformStatus(){
    INITIALIZE
 ===================================================== */
 
-renderLogs();
+async function initialize(){
+
+    const {
+        data
+    } =
+        await gbSupabase
+            .auth
+            .getSession();
+
+    if(
+        data &&
+        data.session
+    ){
+
+        await checkFounderAccess();
+
+    }else{
+
+        toast(
+            "🔐 Please log into GlitchBox first."
+        );
+
+    }
+}
+
+
+/* =====================================================
+   AUTH LISTENER
+===================================================== */
+
+gbSupabase
+    .auth
+    .onAuthStateChange(
+        function(event,session){
+
+            if(
+                event === "SIGNED_IN"
+                &&
+                session
+            ){
+
+                checkFounderAccess();
+
+            }
+
+            if(
+                event === "SIGNED_OUT"
+            ){
+
+                location.reload();
+
+            }
+
+        }
+    );
+
+
+initialize();
 
 </script>
 
