@@ -5,366 +5,194 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GlitchBox Founder Control Center</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>GlitchBox Founder Panel</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
 }
 
-body{
-    background:#070714;
-    color:white;
-    min-height:100vh;
-}
-
-button,input,textarea,select{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-.hidden{
-    display:none!important;
+body {
+    min-height: 100vh;
+    background: #070711;
+    color: white;
 }
 
 /* SIDEBAR */
-
-.sidebar{
-    position:fixed;
-    left:0;
-    top:0;
-    width:250px;
-    height:100vh;
-    background:#0d0d1f;
-    border-right:1px solid #292940;
-    padding:20px;
-    overflow-y:auto;
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    padding: 25px 18px;
+    background: #0e0e1c;
+    border-right: 1px solid #29203d;
+    overflow-y: auto;
 }
 
-.logo{
-    font-size:30px;
-    font-weight:bold;
-    color:#a855f7;
-    margin-bottom:5px;
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #a855ff;
+    margin-bottom: 30px;
 }
 
-.owner-label{
-    color:#ffd700;
-    font-size:12px;
-    font-weight:bold;
-    margin-bottom:25px;
+.sidebar a {
+    display: block;
+    padding: 13px 15px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
 }
 
-.nav{
-    width:100%;
-    padding:12px;
-    margin-bottom:7px;
-    border:0;
-    border-radius:10px;
-    background:transparent;
-    color:white;
-    text-align:left;
-}
-
-.nav:hover,
-.nav.active{
-    background:#5b21b6;
+.sidebar a:hover,
+.sidebar a.active {
+    background: #6d28d9;
 }
 
 /* MAIN */
-
-.main{
-    margin-left:250px;
-    padding:25px;
+.main {
+    margin-left: 250px;
+    padding: 30px;
 }
 
-.header{
-    background:linear-gradient(
+/* HEADER */
+.header {
+    padding: 30px;
+    margin-bottom: 25px;
+    border-radius: 20px;
+    background: linear-gradient(
         135deg,
-        #19002f,
-        #3b0764,
-        #160025
+        #17002f,
+        #30005c,
+        #4c0082
     );
-    border:1px solid #8b5cf6;
-    border-radius:20px;
-    padding:30px;
-    margin-bottom:25px;
+    border: 1px solid #7135a5;
 }
 
-.header h1{
-    font-size:36px;
-    margin-bottom:8px;
+.header h1 {
+    font-size: 38px;
+    margin-bottom: 8px;
 }
 
-.header p{
-    color:#d8b4fe;
+.header p {
+    color: #dfc7ff;
 }
 
-.badges{
-    margin:15px 0;
+.founder-badges {
+    margin-top: 15px;
+    font-size: 32px;
 }
 
-.badge{
-    font-size:34px;
-    margin-right:10px;
-    background:linear-gradient(
-        135deg,
-        #fff6b0,
-        #ffd700,
-        #ffbf00,
-        #fff6b0
-    );
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    filter:drop-shadow(0 0 8px #ffd700);
+/* STATUS */
+.status {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 8px 13px;
+    border-radius: 20px;
+    background: #171127;
+    border: 1px solid #a855ff;
+    color: #d8b4fe;
 }
 
-/* STATS */
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-    margin-bottom:25px;
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
 }
 
-.stat{
-    background:#121225;
-    border:1px solid #292940;
-    border-radius:15px;
-    padding:20px;
+/* CARD */
+.card {
+    padding: 22px;
+    background: #121222;
+    border: 1px solid #292940;
+    border-radius: 16px;
 }
 
-.stat h3{
-    color:#c084fc;
-    margin-bottom:10px;
+.card:hover {
+    border-color: #8b5cf6;
+    transform: translateY(-2px);
+    transition: .2s;
 }
 
-.stat-number{
-    font-size:30px;
-    font-weight:bold;
+.card h2 {
+    color: #c084fc;
+    margin-bottom: 8px;
 }
 
-/* PANELS */
-
-.panel{
-    display:none;
+.card p {
+    color: #aaa;
+    margin-bottom: 18px;
 }
 
-.panel.active{
-    display:block;
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #8b5cf6;
+    border-radius: 10px;
+    background: #181329;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
 }
 
-.panel-title{
-    color:#c084fc;
-    margin-bottom:20px;
-    font-size:28px;
+button:hover {
+    background: #6d28d9;
 }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
+/* DANGER */
+.danger {
+    border-color: #ef4444;
 }
 
-.card{
-    background:#121225;
-    border:1px solid #292940;
-    border-radius:16px;
-    padding:20px;
+.danger:hover {
+    background: #991b1b;
 }
 
-.card:hover{
-    border-color:#8b5cf6;
-}
-
-.card h2{
-    color:#c084fc;
-    margin-bottom:10px;
-}
-
-.card p{
-    color:#aaa;
-    line-height:1.5;
-    margin-bottom:15px;
-}
-
-/* FORMS */
-
-.form{
-    background:#121225;
-    border:1px solid #292940;
-    border-radius:16px;
-    padding:20px;
-    margin-bottom:20px;
-}
-
-input,
-textarea,
-select{
-    width:100%;
-    padding:13px;
-    margin-bottom:12px;
-    border:1px solid #33334d;
-    border-radius:10px;
-    background:#0d0d1f;
-    color:white;
-}
-
-textarea{
-    min-height:110px;
-    resize:vertical;
-}
-
-/* BUTTONS */
-
-.action{
-    width:100%;
-    padding:12px;
-    margin-top:7px;
-    border:1px solid #7c3aed;
-    border-radius:10px;
-    background:#1b1230;
-    color:white;
-}
-
-.action:hover{
-    background:#7c3aed;
-}
-
-.red{
-    border-color:#ef4444;
-}
-
-.red:hover{
-    background:#dc2626;
-}
-
-.green{
-    border-color:#22c55e;
-}
-
-.green:hover{
-    background:#16a34a;
-}
-
-.gold{
-    border-color:#d4af37;
-    color:#ffe680;
-}
-
-/* ACCESS */
-
-.login-screen{
-    position:fixed;
-    inset:0;
-    background:#070714;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:9999;
-}
-
-.login-box{
-    width:420px;
-    max-width:92%;
-    padding:30px;
-    background:#121225;
-    border:1px solid #8b5cf6;
-    border-radius:20px;
-    text-align:center;
-}
-
-.login-box h1{
-    color:#a855f7;
-    margin-bottom:10px;
-}
-
-.login-box p{
-    color:#aaa;
-    margin-bottom:20px;
-}
-
-/* LOG */
-
-.log{
-    margin-top:25px;
-    background:#121225;
-    border:1px solid #292940;
-    border-radius:16px;
-    padding:20px;
-}
-
-.log h2{
-    color:#c084fc;
-    margin-bottom:15px;
-}
-
-.log-item{
-    padding:12px;
-    margin-bottom:8px;
-    background:#19192e;
-    border-radius:9px;
-    color:#ccc;
-}
-
-/* TOAST */
-
-.toast{
-    position:fixed;
-    right:20px;
-    bottom:20px;
-    padding:15px 20px;
-    background:#17172b;
-    border:1px solid #8b5cf6;
-    border-radius:12px;
-    display:none;
-    z-index:10000;
-}
-
-.toast.show{
-    display:block;
+/* FOOTER */
+.footer {
+    margin-top: 35px;
+    text-align: center;
+    color: #666;
 }
 
 /* MOBILE */
+@media (max-width: 900px) {
 
-@media(max-width:1000px){
-
-    .stats{
-        grid-template-columns:repeat(2,1fr);
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #29203d;
     }
 
-    .grid{
-        grid-template-columns:repeat(2,1fr);
+    .main {
+        margin-left: 0;
+        padding: 20px;
     }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
 }
 
-@media(max-width:700px){
+@media (max-width: 600px) {
 
-    .sidebar{
-        position:relative;
-        width:100%;
-        height:auto;
-        border-right:0;
-        border-bottom:1px solid #292940;
+    .grid {
+        grid-template-columns: 1fr;
     }
 
-    .main{
-        margin-left:0;
-        padding:15px;
-    }
-
-    .stats,
-    .grid{
-        grid-template-columns:1fr;
+    .header h1 {
+        font-size: 30px;
     }
 }
 </style>
@@ -372,2165 +200,224 @@ textarea{
 
 <body>
 
-<!-- ACCESS SCREEN -->
-
-<div id="accessScreen" class="login-screen">
-
-    <div class="login-box">
-
-        <h1>👑 GLITCHBOX</h1>
-
-        <p>
-            Founder Control Center
-        </p>
-
-        <button
-            class="action"
-            onclick="checkFounderAccess()"
-        >
-            🔐 Verify Founder Access
-        </button>
-
-        <br><br>
-
-        <button
-            class="action"
-            onclick="signOut()"
-        >
-            Sign Out
-        </button>
-
-    </div>
-
-</div>
-
-
 <!-- SIDEBAR -->
 
-<aside class="sidebar">
+<div class="sidebar">
 
-    <div class="logo">
-        GLITCHBOX
-    </div>
+    <div class="logo">GLITCHBOX</div>
 
-    <div class="owner-label">
-        👑 FOUNDER CONTROL CENTER
-    </div>
+    <a href="index.html">🏠 Home</a>
+    <a href="games.html">🎮 Games</a>
+    <a href="shop.html">🛒 Shop</a>
+    <a href="profile.html">👤 Profile</a>
+    <a href="friends.html">👥 Friends</a>
+    <a href="clans.html">🏰 Clans</a>
+    <a href="leaderboards.html">🏆 Leaderboards</a>
+    <a href="owner.html" class="active">👑 Founder Panel</a>
+    <a href="settings.html">⚙️ Settings</a>
 
-    <button class="nav active" data-panel="dashboard">
-        📊 Dashboard
-    </button>
-
-    <button class="nav" data-panel="platform">
-        📢 Platform
-    </button>
-
-    <button class="nav" data-panel="players">
-        👥 Players
-    </button>
-
-    <button class="nav" data-panel="games">
-        🎮 Games
-    </button>
-
-    <button class="nav" data-panel="worlds">
-        🌎 Worlds
-    </button>
-
-    <button class="nav" data-panel="social">
-        💜 Social
-    </button>
-
-    <button class="nav" data-panel="communities">
-        📢 Communities
-    </button>
-
-    <button class="nav" data-panel="clans">
-        🏰 Clans
-    </button>
-
-    <button class="nav" data-panel="creators">
-        🎥 Creator Hub
-    </button>
-
-    <button class="nav" data-panel="economy">
-        🪙 Economy
-    </button>
-
-    <button class="nav" data-panel="premium">
-        💎 Premium
-    </button>
-
-    <button class="nav" data-panel="challenges">
-        🎯 Daily Challenges
-    </button>
-
-    <button class="nav" data-panel="tournaments">
-        🏆 Tournaments
-    </button>
-
-    <button class="nav" data-panel="sponsors">
-        🤝 Sponsors
-    </button>
-
-    <button class="nav" data-panel="staff">
-        👥 Staff
-    </button>
-
-    <button class="nav" data-panel="security">
-        🛡 Security
-    </button>
-
-    <button class="nav" data-panel="settings">
-        ⚙️ Settings
-    </button>
-
-</aside>
+</div>
 
 
 <!-- MAIN -->
 
-<main class="main">
+<div class="main">
 
-<section class="header">
+    <div class="header">
 
-    <h1>
-        👑 Founder Control Center
-    </h1>
+        <h1>👑 Founder Control Center</h1>
 
-    <p>
-        Welcome to the GlitchBox Founder area.
-    </p>
+        <p>
+            Welcome to the GlitchBox Founder Control Center.
+        </p>
 
-    <div class="badges">
-        <span class="badge">✔</span>
-        <span class="badge">🔨</span>
+        <div class="founder-badges">
+            <span>✔️</span>
+            <span>🔨</span>
+        </div>
+
+        <div class="status">
+            🟢 Founder Access Enabled
+        </div>
+
     </div>
 
-    <p>
-        Founder • Owner • Glitch God
-    </p>
 
-</section>
+    <!-- MANAGEMENT -->
 
+    <div class="grid">
 
-<!-- STATS -->
+        <div class="card">
+            <h2>👥 Players</h2>
+            <p>Manage GlitchBox players.</p>
+            <button onclick="showMessage('Player management coming next.')">
+                Open Players
+            </button>
+        </div>
 
-<section class="stats">
+        <div class="card">
+            <h2>📢 Announcements</h2>
+            <p>Create official platform announcements.</p>
+            <button onclick="showMessage('Announcements coming next.')">
+                Manage Announcements
+            </button>
+        </div>
 
-    <div class="stat">
-        <h3>👥 Players</h3>
-        <div class="stat-number" id="playersCount">0</div>
+        <div class="card">
+            <h2>🎯 Daily Challenges</h2>
+            <p>Create and manage daily challenges.</p>
+            <button onclick="showMessage('Daily Challenges coming next.')">
+                Manage Challenges
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>🎟️ Promo Codes</h2>
+            <p>Create and manage promotional codes.</p>
+            <button onclick="showMessage('Promo Codes coming next.')">
+                Manage Promo Codes
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>🤝 Sponsors</h2>
+            <p>Manage GlitchBox sponsors.</p>
+            <button onclick="showMessage('Sponsor management coming next.')">
+                Manage Sponsors
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>✔️ Creators</h2>
+            <p>Manage creator verification.</p>
+            <button onclick="showMessage('Creator verification coming next.')">
+                Verify Creators
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>🌎 Worlds</h2>
+            <p>Moderate GlitchBox Worlds.</p>
+            <button onclick="showMessage('World management coming next.')">
+                Manage Worlds
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>🏰 Clans</h2>
+            <p>Manage clans and communities.</p>
+            <button onclick="showMessage('Clan management coming next.')">
+                Manage Clans
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>🏆 Tournaments</h2>
+            <p>Manage tournaments and events.</p>
+            <button onclick="showMessage('Tournament management coming next.')">
+                Manage Tournaments
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>🪙 Economy</h2>
+            <p>Manage GlitchCoins and GlitchGems.</p>
+            <button onclick="showMessage('Economy controls coming next.')">
+                Economy Controls
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>💎 Premium</h2>
+            <p>Manage Premium memberships.</p>
+            <button onclick="showMessage('Premium controls coming next.')">
+                Premium Controls
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>👥 Staff</h2>
+            <p>Manage GlitchBox staff permissions.</p>
+            <button onclick="showMessage('Staff management coming next.')">
+                Staff Management
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>📊 Analytics</h2>
+            <p>View platform statistics.</p>
+            <button onclick="showMessage('Analytics coming next.')">
+                Open Analytics
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>📜 Audit Logs</h2>
+            <p>View Founder and staff activity.</p>
+            <button onclick="showMessage('Audit logs coming next.')">
+                View Audit Logs
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>🛡️ Security</h2>
+            <p>Manage platform security.</p>
+            <button onclick="showMessage('Security Center coming next.')">
+                Security Center
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>📈 Trending</h2>
+            <p>Manage trending games, worlds and posts.</p>
+            <button onclick="showMessage('Trending controls coming next.')">
+                Manage Trending
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>📌 News</h2>
+            <p>Pin important GlitchBox news.</p>
+            <button onclick="showMessage('News controls coming next.')">
+                Manage News
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>⚠️ Reports</h2>
+            <p>Review player and community reports.</p>
+            <button onclick="showMessage('Reports coming next.')">
+                Review Reports
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>🚫 Moderation</h2>
+            <p>Manage bans, warnings and moderation.</p>
+            <button class="danger"
+                    onclick="showMessage('Moderation controls coming next.')">
+                Open Moderation
+            </button>
+        </div>
+
     </div>
 
-    <div class="stat">
-        <h3>🎮 Games</h3>
-        <div class="stat-number">4</div>
+
+    <div class="footer">
+        © 2026 GlitchBox • Founder Control Center
     </div>
 
-    <div class="stat">
-        <h3>🌎 Worlds</h3>
-        <div class="stat-number" id="worldsCount">0</div>
-    </div>
-
-    <div class="stat">
-        <h3>🚨 Reports</h3>
-        <div class="stat-number" id="reportsCount">0</div>
-    </div>
-
-</section>
-
-
-<!-- DASHBOARD -->
-
-<section class="panel active" id="dashboard">
-
-<h2 class="panel-title">
-    📊 Founder Dashboard
-</h2>
-
-<div class="grid">
-
-<div class="card">
-<h2>📢 Platform</h2>
-<p>Announcements, featured content and trending content.</p>
-<button class="action" onclick="openPanel('platform')">
-Open
-</button>
 </div>
-
-<div class="card">
-<h2>👥 Players</h2>
-<p>Manage players and moderation.</p>
-<button class="action" onclick="openPanel('players')">
-Open
-</button>
-</div>
-
-<div class="card">
-<h2>🌎 Worlds</h2>
-<p>Manage the GlitchBox Worlds ecosystem.</p>
-<button class="action" onclick="openPanel('worlds')">
-Open
-</button>
-</div>
-
-<div class="card">
-<h2>🪙 Economy</h2>
-<p>GlitchCoins, GlitchGems and promo codes.</p>
-<button class="action" onclick="openPanel('economy')">
-Open
-</button>
-</div>
-
-<div class="card">
-<h2>🎯 Daily Challenges</h2>
-<p>Manage daily challenges and rewards.</p>
-<button class="action" onclick="openPanel('challenges')">
-Open
-</button>
-</div>
-
-<div class="card">
-<h2>🛡 Security</h2>
-<p>Security, reports and audit logs.</p>
-<button class="action" onclick="openPanel('security')">
-Open
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- PLATFORM -->
-
-<section class="panel" id="platform">
-
-<h2 class="panel-title">
-📢 Platform Management
-</h2>
-
-<div class="form">
-
-<h2>📢 Platform Announcement</h2>
-<br>
-
-<input
-id="announcementTitle"
-placeholder="Announcement title"
->
-
-<textarea
-id="announcementBody"
-placeholder="Announcement message"
-></textarea>
-
-<button
-class="action"
-onclick="createAnnouncement()"
->
-📢 Publish Announcement
-</button>
-
-</div>
-
-<div class="grid">
-
-<div class="card">
-<h2>🔥 Trending</h2>
-<p>Manage trending games, worlds and posts.</p>
-<button class="action" onclick="logAction('Opened Trending Management')">
-🔥 Manage
-</button>
-</div>
-
-<div class="card">
-<h2>⭐ Featured</h2>
-<p>Choose featured platform content.</p>
-<button class="action" onclick="logAction('Opened Featured Content')">
-⭐ Manage
-</button>
-</div>
-
-<div class="card">
-<h2>📌 News</h2>
-<p>Pin important announcements.</p>
-<button class="action" onclick="logAction('Opened Pinned News')">
-📌 Manage
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- PLAYERS -->
-
-<section class="panel" id="players">
-
-<h2 class="panel-title">
-👥 Player Management
-</h2>
-
-<div class="form">
-
-<input
-id="playerUsername"
-placeholder="Player username"
->
-
-<button
-class="action"
-onclick="findPlayer()"
->
-🔎 Find Player
-</button>
-
-</div>
-
-<div class="grid">
-
-<div class="card">
-<h2>🚫 Ban</h2>
-<p>Ban a player after reviewing their account.</p>
-<button class="action red" onclick="banPlayer()">
-🚫 Ban Player
-</button>
-</div>
-
-<div class="card">
-<h2>✅ Unban</h2>
-<p>Restore a banned account.</p>
-<button class="action green" onclick="unbanPlayer()">
-✅ Unban Player
-</button>
-</div>
-
-<div class="card">
-<h2>⚠️ Warning</h2>
-<p>Issue a moderation warning.</p>
-<button class="action" onclick="warnPlayer()">
-⚠️ Warning
-</button>
-</div>
-
-<div class="card">
-<h2>🚨 Reports</h2>
-<p>Review player reports.</p>
-<button class="action" onclick="logAction('Opened Player Reports')">
-🚨 Reports
-</button>
-</div>
-
-<div class="card">
-<h2>⚖️ Appeals</h2>
-<p>Review account appeals.</p>
-<button class="action" onclick="logAction('Opened Appeals')">
-⚖️ Appeals
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- GAMES -->
-
-<section class="panel" id="games">
-
-<h2 class="panel-title">
-🎮 Game Management
-</h2>
-
-<div class="grid">
-
-<div class="card">
-<h2>🎮 Games</h2>
-<p>Manage GlitchBox games.</p>
-<button class="action" onclick="logAction('Opened Game Management')">
-Manage Games
-</button>
-</div>
-
-<div class="card">
-<h2>⭐ Featured</h2>
-<p>Feature games on the Home page.</p>
-<button class="action" onclick="logAction('Opened Featured Games')">
-Feature Games
-</button>
-</div>
-
-<div class="card">
-<h2>🚨 Reports</h2>
-<p>Review game reports.</p>
-<button class="action" onclick="logAction('Opened Game Reports')">
-Game Reports
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- WORLDS -->
-
-<section class="panel" id="worlds">
-
-<h2 class="panel-title">
-🌎 GlitchBox Worlds
-</h2>
-
-<div class="grid">
-
-<div class="card">
-<h2>🌎 Explore</h2>
-<p>Manage published worlds.</p>
-<button class="action" onclick="logAction('Opened World Management')">
-Manage Worlds
-</button>
-</div>
-
-<div class="card">
-<h2>🏗 Build</h2>
-<p>World creation and publishing.</p>
-<button class="action" onclick="logAction('Opened World Builder')">
-World Builder
-</button>
-</div>
-
-<div class="card">
-<h2>⚔ Battle</h2>
-<p>Manage battle worlds.</p>
-<button class="action" onclick="logAction('Opened Battle Worlds')">
-Battle Worlds
-</button>
-</div>
-
-<div class="card">
-<h2>🏃 Parkour</h2>
-<p>Manage parkour worlds.</p>
-<button class="action" onclick="logAction('Opened Parkour Worlds')">
-Parkour
-</button>
-</div>
-
-<div class="card">
-<h2>🧟 Survival</h2>
-<p>Manage survival worlds.</p>
-<button class="action" onclick="logAction('Opened Survival Worlds')">
-Survival
-</button>
-</div>
-
-<div class="card">
-<h2>🏰 Creative</h2>
-<p>Manage creative worlds.</p>
-<button class="action" onclick="logAction('Opened Creative Worlds')">
-Creative
-</button>
-</div>
-
-<div class="card">
-<h2>🛏 Bed Battles</h2>
-<p>Manage Bed Battle worlds.</p>
-<button class="action" onclick="logAction('Opened Bed Battles')">
-Bed Battles
-</button>
-</div>
-
-<div class="card">
-<h2>☁ Sky Islands</h2>
-<p>Manage Sky Island worlds.</p>
-<button class="action" onclick="logAction('Opened Sky Islands')">
-Sky Islands
-</button>
-</div>
-
-<div class="card">
-<h2>🎯 Minigames</h2>
-<p>Manage minigame worlds.</p>
-<button class="action" onclick="logAction('Opened Minigames')">
-Minigames
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- SOCIAL -->
-
-<section class="panel" id="social">
-
-<h2 class="panel-title">
-💜 GlitchBox Connect
-</h2>
-
-<div class="grid">
-
-<div class="card">
-<h2>💬 Posts</h2>
-<p>Manage posts, comments and reactions.</p>
-<button class="action" onclick="logAction('Opened Posts')">
-Posts
-</button>
-</div>
-
-<div class="card">
-<h2>❤️ Reactions</h2>
-<p>Manage likes and emoji reactions.</p>
-<button class="action" onclick="logAction('Opened Reactions')">
-Reactions
-</button>
-</div>
-
-<div class="card">
-<h2>💬 Messages</h2>
-<p>Moderate direct and group messaging.</p>
-<button class="action" onclick="logAction('Opened Messages')">
-Messages
-</button>
-</div>
-
-<div class="card">
-<h2>👤 Profiles</h2>
-<p>Manage player profiles and verification.</p>
-<button class="action" onclick="logAction('Opened Profiles')">
-Profiles
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- COMMUNITIES -->
-
-<section class="panel" id="communities">
-
-<h2 class="panel-title">
-📢 Communities
-</h2>
-
-<div class="grid">
-
-<div class="card">
-<h2>📢 Communities</h2>
-<p>Manage communities and members.</p>
-<button class="action" onclick="logAction('Opened Community Management')">
-Manage
-</button>
-</div>
-
-<div class="card">
-<h2>🚨 Moderation</h2>
-<p>Review community reports.</p>
-<button class="action" onclick="logAction('Opened Community Moderation')">
-Moderate
-</button>
-</div>
-
-<div class="card">
-<h2>📅 Events</h2>
-<p>Manage community events.</p>
-<button class="action" onclick="logAction('Opened Community Events')">
-Events
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- CLANS -->
-
-<section class="panel" id="clans">
-
-<h2 class="panel-title">
-🏰 Clan Management
-</h2>
-
-<div class="grid">
-
-<div class="card">
-<h2>🏰 Clans</h2>
-<p>Manage clans and members.</p>
-<button class="action" onclick="logAction('Opened Clan Management')">
-Manage Clans
-</button>
-</div>
-
-<div class="card">
-<h2>⚔️ Clan Battles</h2>
-<p>Manage clan competitions.</p>
-<button class="action" onclick="logAction('Opened Clan Battles')">
-Clan Battles
-</button>
-</div>
-
-<div class="card">
-<h2>💬 Clan Chat</h2>
-<p>Moderate clan chat.</p>
-<button class="action" onclick="logAction('Opened Clan Chat Moderation')">
-Clan Chat
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- CREATOR HUB -->
-
-<section class="panel" id="creators">
-
-<h2 class="panel-title">
-🎥 Creator Hub
-</h2>
-
-<div class="grid">
-
-<div class="card">
-<h2>🎥 Creators</h2>
-<p>Manage creator accounts.</p>
-<button class="action" onclick="logAction('Opened Creator Management')">
-Creators
-</button>
-</div>
-
-<div class="card">
-<h2>✔ Verification</h2>
-<p>Verify eligible creators.</p>
-<button class="action gold" onclick="verifyCreator()">
-✔ Verify Creator
-</button>
-</div>
-
-<div class="card">
-<h2>📊 Analytics</h2>
-<p>Creator statistics.</p>
-<button class="action" onclick="logAction('Opened Creator Analytics')">
-Analytics
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ECONOMY -->
-
-<section class="panel" id="economy">
-
-<h2 class="panel-title">
-🪙 Economy
-</h2>
-
-<div class="grid">
-
-<div class="card">
-<h2>🪙 GlitchCoins</h2>
-<p>Manage GlitchCoin economy.</p>
-<button class="action" onclick="logAction('Opened GlitchCoin Controls')">
-Controls
-</button>
-</div>
-
-<div class="card">
-<h2>💎 GlitchGems</h2>
-<p>Manage GlitchGem economy.</p>
-<button class="action" onclick="logAction('Opened GlitchGem Controls')">
-Controls
-</button>
-</div>
-
-<div class="card">
-
-<h2>🎟 Promo Codes</h2>
-
-<input
-id="promoCode"
-placeholder="Example: GLITCH2026"
->
-
-<button
-class="action"
-onclick="createPromo()"
->
-🎟 Create Promo
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- PREMIUM -->
-
-<section class="panel" id="premium">
-
-<h2 class="panel-title">
-💎 Premium
-</h2>
-
-<div class="grid">
-
-<div class="card">
-<h2>💎 Premium</h2>
-<p>Manage Premium.</p>
-<button class="action" onclick="logAction('Opened Premium Controls')">
-Manage
-</button>
-</div>
-
-<div class="card">
-<h2>👑 Premium Plus</h2>
-<p>Manage Premium Plus.</p>
-<button class="action" onclick="logAction('Opened Premium Plus Controls')">
-Manage
-</button>
-</div>
-
-<div class="card">
-<h2>🔥 Premium Ultra</h2>
-<p>Manage Premium Ultra.</p>
-<button class="action" onclick="logAction('Opened Premium Ultra Controls')">
-Manage
-</button>
-</div>
-
-<div class="card">
-<h2>⭐ VIP</h2>
-<p>Manage VIP.</p>
-<button class="action" onclick="logAction('Opened VIP Controls')">
-Manage
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- DAILY CHALLENGES -->
-
-<section class="panel" id="challenges">
-
-<h2 class="panel-title">
-🎯 Daily Challenges & Rewards
-</h2>
-
-<div class="form">
-
-<input
-id="challengeName"
-placeholder="Challenge name"
->
-
-<input
-id="challengeReward"
-type="number"
-placeholder="Reward amount"
->
-
-<button
-class="action"
-onclick="createChallenge()"
->
-🎯 Create Daily Challenge
-</button>
-
-</div>
-
-<div class="grid">
-
-<div class="card">
-<h2>🎁 Daily Rewards</h2>
-<p>Manage daily reward schedule.</p>
-<button class="action" onclick="logAction('Opened Daily Rewards')">
-Manage Rewards
-</button>
-</div>
-
-<div class="card">
-<h2>🎯 Challenges</h2>
-<p>Manage active daily challenges.</p>
-<button class="action" onclick="logAction('Opened Daily Challenges')">
-Manage Challenges
-</button>
-</div>
-
-<div class="card">
-<h2>🏆 Challenge History</h2>
-<p>Review completed challenges.</p>
-<button class="action" onclick="logAction('Opened Challenge History')">
-History
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- TOURNAMENTS -->
-
-<section class="panel" id="tournaments">
-
-<h2 class="panel-title">
-🏆 Tournaments
-</h2>
-
-<div class="grid">
-
-<div class="card">
-<h2>🏆 Create Tournament</h2>
-<p>Create tournaments and events.</p>
-<button class="action" onclick="logAction('Opened Tournament Creator')">
-Create
-</button>
-</div>
-
-<div class="card">
-<h2>⚔️ Clan Battles</h2>
-<p>Manage clan competitions.</p>
-<button class="action" onclick="logAction('Opened Tournament Clan Battles')">
-Manage
-</button>
-</div>
-
-<div class="card">
-<h2>🎁 Rewards</h2>
-<p>Manage tournament rewards.</p>
-<button class="action" onclick="logAction('Opened Tournament Rewards')">
-Rewards
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- SPONSORS -->
-
-<section class="panel" id="sponsors">
-
-<h2 class="panel-title">
-🤝 Sponsors
-</h2>
-
-<div class="form">
-
-<input
-id="sponsorName"
-placeholder="Sponsor name"
->
-
-<input
-id="sponsorWebsite"
-placeholder="Sponsor website"
->
-
-<button
-class="action"
-onclick="addSponsor()"
->
-🤝 Add Sponsor
-</button>
-
-</div>
-
-<div class="grid">
-
-<div class="card">
-<h2>📢 Campaigns</h2>
-<p>Manage sponsor campaigns.</p>
-<button class="action" onclick="logAction('Opened Sponsor Campaigns')">
-Campaigns
-</button>
-</div>
-
-<div class="card">
-<h2>📊 Analytics</h2>
-<p>Review sponsor statistics.</p>
-<button class="action" onclick="logAction('Opened Sponsor Analytics')">
-Analytics
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- STAFF -->
-
-<section class="panel" id="staff">
-
-<h2 class="panel-title">
-👥 Staff Management
-</h2>
-
-<div class="form">
-
-<input
-id="staffUsername"
-placeholder="Staff username"
->
-
-<select id="staffRole">
-
-<option value="moderator">
-Moderator
-</option>
-
-<option value="admin">
-Admin
-</option>
-
-<option value="developer">
-Developer
-</option>
-
-</select>
-
-<button
-class="action"
-onclick="addStaff()"
->
-👥 Add Staff
-</button>
-
-</div>
-
-<div class="grid">
-
-<div class="card">
-<h2>🔑 Permissions</h2>
-<p>Manage staff permissions.</p>
-<button class="action" onclick="logAction('Opened Staff Permissions')">
-Permissions
-</button>
-</div>
-
-<div class="card">
-<h2>👑 Roles</h2>
-<p>Manage staff roles.</p>
-<button class="action" onclick="logAction('Opened Staff Roles')">
-Roles
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- SECURITY -->
-
-<section class="panel" id="security">
-
-<h2 class="panel-title">
-🛡 Security Center
-</h2>
-
-<div class="grid">
-
-<div class="card">
-<h2>🛡 Security</h2>
-<p>Platform security controls.</p>
-<button class="action" onclick="logAction('Opened Security Center')">
-Open
-</button>
-</div>
-
-<div class="card">
-<h2>📜 Audit Logs</h2>
-<p>Review Founder activity.</p>
-<button class="action" onclick="loadAuditLogs()">
-View Logs
-</button>
-</div>
-
-<div class="card">
-<h2>🚨 Alerts</h2>
-<p>Review security alerts.</p>
-<button class="action red" onclick="logAction('Opened Security Alerts')">
-Alerts
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- SETTINGS -->
-
-<section class="panel" id="settings">
-
-<h2 class="panel-title">
-⚙️ Platform Settings
-</h2>
-
-<div class="grid">
-
-<div class="card">
-<h2>⚙️ General</h2>
-<p>Platform-wide settings.</p>
-<button class="action" onclick="logAction('Opened General Settings')">
-Open
-</button>
-</div>
-
-<div class="card">
-<h2>🔧 Maintenance</h2>
-<p>Manage platform maintenance.</p>
-<button class="action red" onclick="maintenanceMode()">
-Maintenance
-</button>
-</div>
-
-<div class="card">
-<h2>🟢 Status</h2>
-<p>Check platform status.</p>
-<button class="action green" onclick="toast('🟢 GlitchBox is online.')">
-Check Status
-</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ACTIVITY LOG -->
-
-<section class="log">
-
-<h2>
-📜 Founder Activity
-</h2>
-
-<div id="activityLog"></div>
-
-</section>
-
-
-<footer
-style="
-text-align:center;
-color:#666;
-padding:30px;
-"
->
-👑 GlitchBox Founder Control Center
-<br><br>
-© 2026 GlitchBox
-</footer>
-
-</main>
-
-
-<div id="toast" class="toast"></div>
 
 
 <script>
 
-/* =====================================================
-   SUPABASE
-===================================================== */
-
-/*
-   PASTE YOUR SUPABASE VALUES HERE.
-
-   Example:
-
-   const SUPABASE_URL =
-       "https://syjnlgxghgwvqrwtthmr.supabase.co";
-
-   const SUPABASE_ANON_KEY =
-       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI";
-
-   DO NOT put a service-role/secret key here.
-*/
-
-const SUPABASE_URL =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI";
-
-const SUPABASE_ANON_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI";
-
-
-const gbSupabase =
-    window.supabase.createClient(
-        https://syjnlgxghgwvqrwtthmr.supabase.co,
-        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI
-    );
-
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-function toast(message){
-
-    const box =
-        document.getElementById("toast");
-
-    box.textContent = message;
-
-    box.classList.add("show");
-
-    setTimeout(
-        () => {
-            box.classList.remove("show");
-        },
-        3000
-    );
+function showMessage(message) {
+    alert(message);
 }
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
-
-function openPanel(id){
-
-    document
-        .querySelectorAll(".panel")
-        .forEach(
-            panel => {
-                panel.classList.remove("active");
-            }
-        );
-
-    const selected =
-        document.getElementById(id);
-
-    if(selected){
-        selected.classList.add("active");
-    }
-
-    document
-        .querySelectorAll(".nav")
-        .forEach(
-            button => {
-
-                button.classList.remove("active");
-
-                if(
-                    button.dataset.panel === id
-                ){
-                    button.classList.add("active");
-                }
-
-            }
-        );
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-}
-
-
-document
-    .querySelectorAll(".nav")
-    .forEach(
-        button => {
-
-            button.addEventListener(
-                "click",
-                function(){
-
-                    openPanel(
-                        this.dataset.panel
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-/* =====================================================
-   GET USER
-===================================================== */
-
-async function getCurrentUser(){
-
-    const {
-        data,
-        error
-    } =
-        await gbSupabase.auth.getUser();
-
-    if(error){
-
-        console.error(error);
-
-        return null;
-    }
-
-    return data.user;
-}
-
-
-/* =====================================================
-   FOUNDER ACCESS
-===================================================== */
-
-async function checkFounderAccess(){
-
-    const user =
-        await getCurrentUser();
-
-    if(!user){
-
-        toast(
-            "🔐 Please log into GlitchBox first."
-        );
-
-        return;
-    }
-
-    const {
-        data:profile,
-        error
-    } =
-        await gbSupabase
-            .from("profiles")
-            .select(
-                "id,username,role"
-            )
-            .eq(
-                "id",
-                user.id
-            )
-            .maybeSingle();
-
-    if(error){
-
-        console.error(error);
-
-        toast(
-            "⚠️ Could not load your profile."
-        );
-
-        return;
-    }
-
-    if(!profile){
-
-        toast(
-            "⚠️ Your GlitchBox profile was not found."
-        );
-
-        return;
-    }
-
-    if(
-        profile.role !== "founder" &&
-        profile.role !== "owner"
-    ){
-
-        toast(
-            "🚫 Founder access denied."
-        );
-
-        return;
-    }
-
-    document
-        .getElementById("accessScreen")
-        .classList.add("hidden");
-
-    toast(
-        "👑 Founder access verified."
-    );
-
-    await logAction(
-        "Founder Control Center opened."
-    );
-
-}
-
-
-/* =====================================================
-   SIGN OUT
-===================================================== */
-
-async function signOut(){
-
-    await gbSupabase.auth.signOut();
-
-    location.reload();
-}
-
-
-/* =====================================================
-   ACTIVITY LOG
-===================================================== */
-
-async function logAction(message){
-
-    const activity =
-        document.getElementById(
-            "activityLog"
-        );
-
-    if(activity){
-
-        const item =
-            document.createElement("div");
-
-        item.className = "log-item";
-
-        item.textContent =
-            "• " + message;
-
-        activity.prepend(item);
-
-    }
-
-    const user =
-        await getCurrentUser();
-
-    if(!user){
-        return;
-    }
-
-    /*
-       This requires an audit_logs table.
-    */
-
-    const {
-        error
-    } =
-        await gbSupabase
-            .from("audit_logs")
-            .insert({
-
-                user_id:user.id,
-
-                action:message
-
-            });
-
-    if(error){
-
-        console.warn(
-            "Audit log not saved:",
-            error.message
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   ANNOUNCEMENTS
-===================================================== */
-
-async function createAnnouncement(){
-
-    const title =
-        document
-            .getElementById(
-                "announcementTitle"
-            )
-            .value
-            .trim();
-
-    const body =
-        document
-            .getElementById(
-                "announcementBody"
-            )
-            .value
-            .trim();
-
-    if(!title || !body){
-
-        toast(
-            "⚠️ Enter a title and message."
-        );
-
-        return;
-    }
-
-    const user =
-        await getCurrentUser();
-
-    if(!user){
-
-        toast(
-            "🔐 Please log in."
-        );
-
-        return;
-    }
-
-    const {
-        error
-    } =
-        await gbSupabase
-            .from(
-                "platform_announcements"
-            )
-            .insert({
-
-                title:title,
-
-                body:body,
-
-                created_by:user.id
-
-            });
-
-    if(error){
-
-        console.error(error);
-
-        toast(
-            "⚠️ Announcement could not be published."
-        );
-
-        return;
-    }
-
-    await logAction(
-        "Published announcement: " + title
-    );
-
-    toast(
-        "📢 Announcement published!"
-    );
-}
-
-
-/* =====================================================
-   PLAYER SEARCH
-===================================================== */
-
-async function findPlayer(){
-
-    const username =
-        document
-            .getElementById(
-                "playerUsername"
-            )
-            .value
-            .trim();
-
-    if(!username){
-
-        toast(
-            "⚠️ Enter a username."
-        );
-
-        return;
-    }
-
-    const {
-        data,
-        error
-    } =
-        await gbSupabase
-            .from("profiles")
-            .select(
-                "id,username,role,is_banned"
-            )
-            .eq(
-                "username",
-                username
-            )
-            .maybeSingle();
-
-    if(error){
-
-        console.error(error);
-
-        toast(
-            "⚠️ Player search failed."
-        );
-
-        return;
-    }
-
-    if(!data){
-
-        toast(
-            "❌ Player not found."
-        );
-
-        return;
-    }
-
-    toast(
-        "👤 Found " +
-        data.username +
-        " • " +
-        (data.role || "player")
-    );
-}
-
-
-/* =====================================================
-   BAN
-===================================================== */
-
-async function banPlayer(){
-
-    const username =
-        document
-            .getElementById(
-                "playerUsername"
-            )
-            .value
-            .trim();
-
-    if(!username){
-
-        toast(
-            "⚠️ Enter a username."
-        );
-
-        return;
-    }
-
-    if(
-        !confirm(
-            "Ban " + username + "?"
-        )
-    ){
-        return;
-    }
-
-    const {
-        error
-    } =
-        await gbSupabase
-            .from("profiles")
-            .update({
-                is_banned:true
-            })
-            .eq(
-                "username",
-                username
-            );
-
-    if(error){
-
-        console.error(error);
-
-        toast(
-            "⚠️ Ban failed."
-        );
-
-        return;
-    }
-
-    await logAction(
-        "Banned player: " + username
-    );
-
-    toast(
-        "🚫 Player banned."
-    );
-}
-
-
-/* =====================================================
-   UNBAN
-===================================================== */
-
-async function unbanPlayer(){
-
-    const username =
-        document
-            .getElementById(
-                "playerUsername"
-            )
-            .value
-            .trim();
-
-    if(!username){
-
-        toast(
-            "⚠️ Enter a username."
-        );
-
-        return;
-    }
-
-    const {
-        error
-    } =
-        await gbSupabase
-            .from("profiles")
-            .update({
-                is_banned:false
-            })
-            .eq(
-                "username",
-                username
-            );
-
-    if(error){
-
-        console.error(error);
-
-        toast(
-            "⚠️ Unban failed."
-        );
-
-        return;
-    }
-
-    await logAction(
-        "Unbanned player: " + username
-    );
-
-    toast(
-        "✅ Player unbanned."
-    );
-}
-
-
-/* =====================================================
-   WARNING
-===================================================== */
-
-async function warnPlayer(){
-
-    const username =
-        document
-            .getElementById(
-                "playerUsername"
-            )
-            .value
-            .trim();
-
-    if(!username){
-
-        toast(
-            "⚠️ Enter a username."
-        );
-
-        return;
-    }
-
-    await logAction(
-        "Warning issued to " + username
-    );
-
-    toast(
-        "⚠️ Warning recorded."
-    );
-}
-
-
-/* =====================================================
-   VERIFY CREATOR
-===================================================== */
-
-async function verifyCreator(){
-
-    const username =
-        prompt(
-            "Creator username:"
-        );
-
-    if(!username){
-        return;
-    }
-
-    const {
-        error
-    } =
-        await gbSupabase
-            .from("profiles")
-            .update({
-                is_verified:true
-            })
-            .eq(
-                "username",
-                username
-            );
-
-    if(error){
-
-        console.error(error);
-
-        toast(
-            "⚠️ Verification failed."
-        );
-
-        return;
-    }
-
-    await logAction(
-        "Verified creator: " + username
-    );
-
-    toast(
-        "✔ Creator verified."
-    );
-}
-
-
-/* =====================================================
-   PROMO CODE
-===================================================== */
-
-async function createPromo(){
-
-    const code =
-        document
-            .getElementById(
-                "promoCode"
-            )
-            .value
-            .trim()
-            .toUpperCase();
-
-    if(!code){
-
-        toast(
-            "⚠️ Enter a promo code."
-        );
-
-        return;
-    }
-
-    const user =
-        await getCurrentUser();
-
-    if(!user){
-        return;
-    }
-
-    const {
-        error
-    } =
-        await gbSupabase
-            .from("promo_codes")
-            .insert({
-
-                code:code,
-
-                created_by:user.id,
-
-                active:true
-
-            });
-
-    if(error){
-
-        console.error(error);
-
-        toast(
-            "⚠️ Promo code could not be created."
-        );
-
-        return;
-    }
-
-    await logAction(
-        "Created promo code: " + code
-    );
-
-    toast(
-        "🎟 Promo code created!"
-    );
-}
-
-
-/* =====================================================
-   DAILY CHALLENGE
-===================================================== */
-
-async function createChallenge(){
-
-    const name =
-        document
-            .getElementById(
-                "challengeName"
-            )
-            .value
-            .trim();
-
-    const reward =
-        Number(
-            document
-                .getElementById(
-                    "challengeReward"
-                )
-                .value
-        );
-
-    if(!name || !reward){
-
-        toast(
-            "⚠️ Enter a challenge and reward."
-        );
-
-        return;
-    }
-
-    const user =
-        await getCurrentUser();
-
-    if(!user){
-        return;
-    }
-
-    const {
-        error
-    } =
-        await gbSupabase
-            .from("daily_challenges")
-            .insert({
-
-                name:name,
-
-                reward:reward,
-
-                created_by:user.id,
-
-                active:true
-
-            });
-
-    if(error){
-
-        console.error(error);
-
-        toast(
-            "⚠️ Challenge could not be created."
-        );
-
-        return;
-    }
-
-    await logAction(
-        "Created daily challenge: " + name
-    );
-
-    toast(
-        "🎯 Daily challenge created!"
-    );
-}
-
-
-/* =====================================================
-   SPONSOR
-===================================================== */
-
-async function addSponsor(){
-
-    const name =
-        document
-            .getElementById(
-                "sponsorName"
-            )
-            .value
-            .trim();
-
-    const website =
-        document
-            .getElementById(
-                "sponsorWebsite"
-            )
-            .value
-            .trim();
-
-    if(!name){
-
-        toast(
-            "⚠️ Enter sponsor name."
-        );
-
-        return;
-    }
-
-    const user =
-        await getCurrentUser();
-
-    if(!user){
-        return;
-    }
-
-    const {
-        error
-    } =
-        await gbSupabase
-            .from("sponsors")
-            .insert({
-
-                name:name,
-
-                website:website,
-
-                created_by:user.id
-
-            });
-
-    if(error){
-
-        console.error(error);
-
-        toast(
-            "⚠️ Sponsor could not be added."
-        );
-
-        return;
-    }
-
-    await logAction(
-        "Added sponsor: " + name
-    );
-
-    toast(
-        "🤝 Sponsor added!"
-    );
-}
-
-
-/* =====================================================
-   STAFF
-===================================================== */
-
-async function addStaff(){
-
-    const username =
-        document
-            .getElementById(
-                "staffUsername"
-            )
-            .value
-            .trim();
-
-    const role =
-        document
-            .getElementById(
-                "staffRole"
-            )
-            .value;
-
-    if(!username){
-
-        toast(
-            "⚠️ Enter a username."
-        );
-
-        return;
-    }
-
-    const {
-        data:userProfile
-    } =
-        await gbSupabase
-            .from("profiles")
-            .select("id")
-            .eq(
-                "username",
-                username
-            )
-            .maybeSingle();
-
-    if(!userProfile){
-
-        toast(
-            "❌ Player not found."
-        );
-
-        return;
-    }
-
-    const {
-        error
-    } =
-        await gbSupabase
-            .from("staff")
-            .insert({
-
-                user_id:userProfile.id,
-
-                role:role
-
-            });
-
-    if(error){
-
-        console.error(error);
-
-        toast(
-            "⚠️ Staff member could not be added."
-        );
-
-        return;
-    }
-
-    await logAction(
-        "Added " +
-        role +
-        ": " +
-        username
-    );
-
-    toast(
-        "👥 Staff member added."
-    );
-}
-
-
-/* =====================================================
-   AUDIT LOGS
-===================================================== */
-
-async function loadAuditLogs(){
-
-    const {
-        data,
-        error
-    } =
-        await gbSupabase
-            .from("audit_logs")
-            .select("*")
-            .order(
-                "created_at",
-                {
-                    ascending:false
-                }
-            )
-            .limit(20);
-
-    if(error){
-
-        console.error(error);
-
-        toast(
-            "⚠️ Could not load audit logs."
-        );
-
-        return;
-    }
-
-    console.table(data);
-
-    toast(
-        "📜 Audit logs loaded."
-    );
-}
-
-
-/* =====================================================
-   MAINTENANCE
-===================================================== */
-
-function maintenanceMode(){
-
-    if(
-        !confirm(
-            "Enable GlitchBox maintenance mode?"
-        )
-    ){
-        return;
-    }
-
-    logAction(
-        "Maintenance mode requested."
-    );
-
-    toast(
-        "🔧 Maintenance request recorded."
-    );
-}
-
-
-/* =====================================================
-   INITIALIZE
-===================================================== */
-
-async function initialize(){
-
-    const {
-        data
-    } =
-        await gbSupabase
-            .auth
-            .getSession();
-
-    if(
-        data &&
-        data.session
-    ){
-
-        await checkFounderAccess();
-
-    }else{
-
-        toast(
-            "🔐 Please log into GlitchBox first."
-        );
-
-    }
-}
-
-
-/* =====================================================
-   AUTH LISTENER
-===================================================== */
-
-gbSupabase
-    .auth
-    .onAuthStateChange(
-        function(event,session){
-
-            if(
-                event === "SIGNED_IN"
-                &&
-                session
-            ){
-
-                checkFounderAccess();
-
-            }
-
-            if(
-                event === "SIGNED_OUT"
-            ){
-
-                location.reload();
-
-            }
-
-        }
-    );
-
-
-initialize();
 
 </script>
 
 </body>
 </html>
-
+```
