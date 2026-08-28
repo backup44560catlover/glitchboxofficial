@@ -2,724 +2,628 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Cyber Strike | GlitchBox</title>
+<title>Cyber Strike | GlitchBoxOfficial</title>
 
 <link rel="icon" type="image/png" href="glitchbox-logo.png">
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    background: #05050c;
-    color: white;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
-}
-
-.game-header {
-    height: 70px;
-    background: #0d0d1b;
-    border-bottom: 1px solid #7135a5;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-}
-
-.game-title {
-    color: #b45cff;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.stats {
-    display: flex;
-    gap: 15px;
-}
-
-.stat {
-    background: #171326;
-    border: 1px solid #6135a0;
-    padding: 8px 12px;
-    border-radius: 8px;
-}
-
-#game {
-    display: block;
-    width: 100vw;
-    height: calc(100vh - 70px);
-    background:
-        radial-gradient(circle at center, #17102b 0%, #05050c 65%);
-}
-
-.controls {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    color: #aaa;
-    font-size: 13px;
-}
-
-.message {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    background: rgba(10, 5, 20, .95);
-    border: 1px solid #a855ff;
-    border-radius: 18px;
-    padding: 30px;
-    display: none;
-    z-index: 10;
-}
-
-.message h1 {
-    color: #c084fc;
-    margin-bottom: 10px;
-}
-
-.message button {
-    margin-top: 18px;
-    padding: 12px 20px;
-    border-radius: 9px;
-    border: 1px solid #a855ff;
-    background: #6d28d9;
-    color: white;
-    cursor: pointer;
-}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#05050c;color:white;font-family:Arial,sans-serif;overflow:hidden}
+header{height:70px;background:#0d0d1b;border-bottom:1px solid #7135a5;display:flex;align-items:center;justify-content:space-between;padding:0 15px}
+.title{color:#b45cff;font-size:23px;font-weight:bold}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat{background:#171326;border:1px solid #6135a0;border-radius:8px;padding:8px 10px;font-size:13px}
+canvas{display:block;width:100vw;height:calc(100vh - 70px)}
+.status{position:fixed;top:82px;left:12px;background:#0d0d18;padding:8px;border-radius:8px;color:#aaa;font-size:12px}
+.controls{position:fixed;bottom:12px;left:12px;color:#888;font-size:12px}
+.gameover{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#0d0815;border:1px solid #a855ff;border-radius:18px;padding:30px;text-align:center;width:min(90%,400px)}
+.gameover h1{color:#c084fc;margin-bottom:12px}
+.gameover p{margin:8px;color:#bbb}
+button{background:#6d28d9;border:1px solid #a855ff;color:white;border-radius:9px;padding:11px 16px;cursor:pointer;margin:6px}
+button:hover{background:#8b5cf6}
 </style>
 </head>
 
 <body>
 
-<header class="game-header">
+<header>
 
-    <div class="game-title">
-        ⚡ Cyber Strike
-    </div>
+<div class="title">⚡ Cyber Strike</div>
 
-    <div class="stats">
-        <div class="stat">
-            ❤️ <span id="health">100</span>
-        </div>
-
-        <div class="stat">
-            🪙 <span id="gc">0</span>
-        </div>
-
-        <div class="stat">
-            🎯 Level <span id="level">1</span>
-        </div>
-    </div>
+<div class="stats">
+<div class="stat">❤️ <span id="health">100</span></div>
+<div class="stat">🪙 Game GC: <span id="gameGC">0</span></div>
+<div class="stat">💰 Balance: <span id="accountGC">0</span></div>
+<div class="stat">🎯 Level: <span id="level">1</span></div>
+</div>
 
 </header>
 
 <canvas id="game"></canvas>
 
+<div class="status" id="status">Connecting...</div>
+
 <div class="controls">
-    WASD / Arrow Keys = Move &nbsp; | &nbsp;
-    Mouse / Space = Shoot
+WASD / Arrow Keys = Move • Mouse = Aim • Click / Space = Shoot
 </div>
 
-<div class="message" id="gameOver">
+<div class="gameover" id="gameover">
 
-    <h1>💥 CYBER STRIKE OVER</h1>
+<h1>💥 Game Over</h1>
 
-    <p>
-        You survived to level
-        <strong id="finalLevel">1</strong>
-    </p>
+<p>Level: <b id="finalLevel">1</b></p>
+<p>GC Earned: <b id="finalGC">0</b></p>
+<p>Account Balance: <b id="finalBalance">0</b></p>
 
-    <p>
-        🪙 GC earned:
-        <strong id="finalGC">0</strong>
-    </p>
+<button onclick="restart()">🔄 Play Again</button>
 
-    <button onclick="restartGame()">
-        🔄 Play Again
-    </button>
-
-    <br><br>
-
-    <button onclick="location.href='index.html'">
-        🏠 Back to GlitchBox
-    </button>
+<button onclick="location.href='index.html'">
+🏠 Home
+</button>
 
 </div>
 
 <script>
 
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
+/* PUT THE SAME SUPABASE VALUES AS INDEX.HTML */
 
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight - 70;
-}
+const SUPABASE_URL =
+"PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
 
-resizeCanvas();
+const SUPABASE_ANON_KEY =
+"PASTE_YOUR_SUPABASE_ANON_OR_PUBLISHABLE_KEY_HERE";
 
-window.addEventListener("resize", resizeCanvas);
+const supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_ANON_KEY
+);
 
 
-/* =========================
-   GAME STATE
-========================= */
+/* GAME */
 
-let keys = {};
-
-let mouse = {
-    x: canvas.width / 2,
-    y: canvas.height / 2,
-    down: false
-};
+const canvas=document.getElementById("game");
+const ctx=canvas.getContext("2d");
 
 let player;
+let bullets=[];
+let enemies=[];
 
-let bullets = [];
-let enemies = [];
+let health=100;
+let gameGC=0;
+let accountGC=0;
+let level=1;
+let running=true;
+let enemyTimer=0;
+let lastShot=0;
 
-let health = 100;
-let gc = 0;
-let level = 1;
+const keys={};
 
-let enemyTimer = 0;
-let gameRunning = true;
+const mouse={
+x:innerWidth/2,
+y:innerHeight/2,
+down:false
+};
 
+function resize(){
 
-/* =========================
-   PLAYER
-========================= */
-
-function createPlayer() {
-
-    player = {
-        x: canvas.width / 2,
-        y: canvas.height / 2,
-        size: 18,
-        speed: 5
-    };
+canvas.width=innerWidth;
+canvas.height=innerHeight-70;
 
 }
 
+resize();
 
-/* =========================
-   KEYBOARD
-========================= */
+addEventListener("resize",resize);
 
-window.addEventListener("keydown", function(e) {
+function createPlayer(){
 
-    keys[e.key.toLowerCase()] = true;
+player={
+x:canvas.width/2,
+y:canvas.height/2,
+size:18,
+speed:5
+};
 
-    if (e.code === "Space") {
-        shoot();
-    }
+}
+
+addEventListener("keydown",e=>{
+
+keys[e.key.toLowerCase()]=true;
+
+if(e.code==="Space"){
+e.preventDefault();
+shoot();
+}
 
 });
 
-window.addEventListener("keyup", function(e) {
+addEventListener("keyup",e=>{
+keys[e.key.toLowerCase()]=false;
+});
 
-    keys[e.key.toLowerCase()] = false;
+canvas.addEventListener("mousemove",e=>{
+
+const r=canvas.getBoundingClientRect();
+
+mouse.x=e.clientX-r.left;
+mouse.y=e.clientY-r.top;
+
+});
+
+canvas.addEventListener("mousedown",()=>{
+
+mouse.down=true;
+shoot();
+
+});
+
+addEventListener("mouseup",()=>{
+mouse.down=false;
+});
+
+
+/* ACCOUNT */
+
+async function loadAccount(){
+
+try{
+
+const {data:{user},error}=await
+supabaseClient.auth.getUser();
+
+if(error)throw error;
+
+if(!user){
+
+document.getElementById("status").textContent=
+"⚠️ Sign in to save GC.";
+
+return;
+
+}
+
+const {data,error:balanceError}=
+await supabaseClient.rpc(
+"get_glitchbox_balance"
+);
+
+if(balanceError)throw balanceError;
+
+if(data&&data.length){
+
+accountGC=
+Number(data[0].glitch_coins||0);
+
+updateStats();
+
+document.getElementById("status").textContent=
+"✅ Account connected";
+
+}
+
+}catch(error){
+
+console.error(error);
+
+document.getElementById("status").textContent=
+"⚠️ Account connection failed.";
+
+}
+
+}
+
+
+/* DEPOSIT */
+
+async function depositGC(amount){
+
+if(amount<=0)return;
+
+try{
+
+const {data:{user}}=
+await supabaseClient.auth.getUser();
+
+if(!user)return;
+
+const {data,error}=
+await supabaseClient.rpc(
+"add_glitch_coins",
+{amount:amount}
+);
+
+if(error)throw error;
+
+accountGC=Number(data);
+
+updateStats();
+
+document.getElementById("status").textContent=
+"🪙 +" + amount + " GC deposited!";
+
+}catch(error){
+
+console.error(error);
+
+document.getElementById("status").textContent=
+"⚠️ GC deposit failed.";
+
+}
+
+}
+
+
+/* SHOOT */
+
+function shoot(){
+
+if(!running)return;
+
+const now=Date.now();
+
+if(now-lastShot<180)return;
+
+lastShot=now;
+
+const dx=mouse.x-player.x;
+const dy=mouse.y-player.y;
+const d=Math.hypot(dx,dy);
+
+if(!d)return;
+
+bullets.push({
+x:player.x,
+y:player.y,
+vx:dx/d*9,
+vy:dy/d*9,
+size:5
+});
+
+}
+
+
+/* ENEMY */
+
+function spawnEnemy(){
+
+const side=Math.floor(Math.random()*4);
+
+let x,y;
+
+if(side===0){
+x=Math.random()*canvas.width;
+y=-25;
+}
+
+else if(side===1){
+x=canvas.width+25;
+y=Math.random()*canvas.height;
+}
+
+else if(side===2){
+x=Math.random()*canvas.width;
+y=canvas.height+25;
+}
+
+else{
+x=-25;
+y=Math.random()*canvas.height;
+}
+
+enemies.push({
+x,
+y,
+size:17,
+speed:1.1+level*.12,
+health:1
+});
+
+}
+
+
+/* UPDATE */
+
+function update(){
+
+if(!running)return;
+
+if(keys.w||keys.arrowup)
+player.y-=player.speed;
+
+if(keys.s||keys.arrowdown)
+player.y+=player.speed;
+
+if(keys.a||keys.arrowleft)
+player.x-=player.speed;
+
+if(keys.d||keys.arrowright)
+player.x+=player.speed;
+
+player.x=Math.max(
+player.size,
+Math.min(canvas.width-player.size,player.x)
+);
+
+player.y=Math.max(
+player.size,
+Math.min(canvas.height-player.size,player.y)
+);
+
+
+/* BULLETS */
+
+bullets.forEach(b=>{
+b.x+=b.vx;
+b.y+=b.vy;
+});
+
+bullets=bullets.filter(b=>
+b.x>-40&&
+b.x<canvas.width+40&&
+b.y>-40&&
+b.y<canvas.height+40
+);
+
+
+/* SPAWN */
+
+enemyTimer++;
+
+if(enemyTimer>Math.max(25,80-level*5)){
+
+spawnEnemy();
+
+enemyTimer=0;
+
+}
+
+
+/* ENEMIES */
+
+enemies.forEach(e=>{
+
+const dx=player.x-e.x;
+const dy=player.y-e.y;
+const d=Math.hypot(dx,dy);
+
+if(d){
+
+e.x+=dx/d*e.speed;
+e.y+=dy/d*e.speed;
+
+}
+
+if(d<player.size+e.size){
+
+health-=.5;
+
+}
 
 });
 
 
-/* =========================
-   MOUSE
-========================= */
+/* COLLISIONS */
 
-canvas.addEventListener("mousemove", function(e) {
+for(let b=bullets.length-1;b>=0;b--){
 
-    const rect = canvas.getBoundingClientRect();
+for(let e=enemies.length-1;e>=0;e--){
 
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
+const bullet=bullets[b];
+const enemy=enemies[e];
+
+if(Math.hypot(
+bullet.x-enemy.x,
+bullet.y-enemy.y
+)<bullet.size+enemy.size){
+
+bullets.splice(b,1);
+enemies.splice(e,1);
+
+gameGC+=10;
+
+level=Math.floor(gameGC/100)+1;
+
+depositGC(10);
+
+break;
+
+}
+
+}
+
+}
+
+if(health<=0){
+
+health=0;
+running=false;
+showGameOver();
+
+}
+
+updateStats();
+
+}
+
+
+/* DRAW */
+
+function draw(){
+
+ctx.clearRect(
+0,0,canvas.width,canvas.height
+);
+
+
+/* GRID */
+
+ctx.strokeStyle="#171329";
+ctx.lineWidth=1;
+
+for(let x=0;x<canvas.width;x+=45){
+
+ctx.beginPath();
+ctx.moveTo(x,0);
+ctx.lineTo(x,canvas.height);
+ctx.stroke();
+
+}
+
+for(let y=0;y<canvas.height;y+=45){
+
+ctx.beginPath();
+ctx.moveTo(0,y);
+ctx.lineTo(canvas.width,y);
+ctx.stroke();
+
+}
+
+
+/* PLAYER */
+
+ctx.beginPath();
+
+ctx.arc(
+player.x,
+player.y,
+player.size,
+0,
+Math.PI*2
+);
+
+ctx.fillStyle="#a855ff";
+ctx.fill();
+
+ctx.strokeStyle="#e9d5ff";
+ctx.stroke();
+
+
+/* BULLETS */
+
+bullets.forEach(b=>{
+
+ctx.beginPath();
+
+ctx.arc(
+b.x,
+b.y,
+b.size,
+0,
+Math.PI*2
+);
+
+ctx.fillStyle="#fff";
+ctx.fill();
 
 });
 
-canvas.addEventListener("mousedown", function() {
 
-    mouse.down = true;
-    shoot();
+/* ENEMIES */
+
+enemies.forEach(e=>{
+
+ctx.beginPath();
+
+ctx.arc(
+e.x,
+e.y,
+e.size,
+0,
+Math.PI*2
+);
+
+ctx.fillStyle="#ef4444";
+ctx.fill();
+
+ctx.strokeStyle="#ffaaaa";
+ctx.stroke();
 
 });
 
-window.addEventListener("mouseup", function() {
-
-    mouse.down = false;
-
-});
+}
 
 
-/* =========================
-   SHOOT
-========================= */
+/* STATS */
 
-let lastShot = 0;
+function updateStats(){
 
-function shoot() {
+document.getElementById("health").textContent=
+Math.floor(health);
 
-    if (!gameRunning) return;
+document.getElementById("gameGC").textContent=
+gameGC;
 
-    const now = Date.now();
+document.getElementById("accountGC").textContent=
+accountGC;
 
-    if (now - lastShot < 180) return;
-
-    lastShot = now;
-
-    const dx = mouse.x - player.x;
-    const dy = mouse.y - player.y;
-
-    const distance = Math.sqrt(dx * dx + dy * dy);
-
-    if (distance === 0) return;
-
-    bullets.push({
-        x: player.x,
-        y: player.y,
-        vx: dx / distance * 9,
-        vy: dy / distance * 9,
-        size: 5
-    });
+document.getElementById("level").textContent=
+level;
 
 }
 
 
-/* =========================
-   ENEMIES
-========================= */
+/* GAME OVER */
 
-function spawnEnemy() {
+function showGameOver(){
 
-    const side = Math.floor(Math.random() * 4);
+document.getElementById("finalLevel").textContent=
+level;
 
-    let x;
-    let y;
+document.getElementById("finalGC").textContent=
+gameGC;
 
-    if (side === 0) {
-        x = Math.random() * canvas.width;
-        y = -30;
-    }
+document.getElementById("finalBalance").textContent=
+accountGC;
 
-    if (side === 1) {
-        x = canvas.width + 30;
-        y = Math.random() * canvas.height;
-    }
-
-    if (side === 2) {
-        x = Math.random() * canvas.width;
-        y = canvas.height + 30;
-    }
-
-    if (side === 3) {
-        x = -30;
-        y = Math.random() * canvas.height;
-    }
-
-    enemies.push({
-        x: x,
-        y: y,
-        size: 17,
-        speed: 1.2 + level * 0.15,
-        health: 1
-    });
+document.getElementById("gameover").style.display=
+"block";
 
 }
 
 
-/* =========================
-   UPDATE
-========================= */
-
-function update() {
-
-    if (!gameRunning) return;
-
-
-    /* PLAYER MOVEMENT */
-
-    if (keys["w"] || keys["arrowup"]) {
-        player.y -= player.speed;
-    }
-
-    if (keys["s"] || keys["arrowdown"]) {
-        player.y += player.speed;
-    }
-
-    if (keys["a"] || keys["arrowleft"]) {
-        player.x -= player.speed;
-    }
-
-    if (keys["d"] || keys["arrowright"]) {
-        player.x += player.speed;
-    }
-
-
-    /* KEEP PLAYER ON SCREEN */
-
-    player.x = Math.max(
-        player.size,
-        Math.min(canvas.width - player.size, player.x)
-    );
-
-    player.y = Math.max(
-        player.size,
-        Math.min(canvas.height - player.size, player.y)
-    );
-
-
-    /* BULLETS */
-
-    bullets.forEach(bullet => {
-
-        bullet.x += bullet.vx;
-        bullet.y += bullet.vy;
-
-    });
-
-    bullets = bullets.filter(bullet =>
-        bullet.x > -20 &&
-        bullet.x < canvas.width + 20 &&
-        bullet.y > -20 &&
-        bullet.y < canvas.height + 20
-    );
-
-
-    /* SPAWN ENEMIES */
-
-    enemyTimer++;
-
-    const spawnRate =
-        Math.max(25, 80 - level * 5);
-
-    if (enemyTimer > spawnRate) {
-
-        spawnEnemy();
-
-        enemyTimer = 0;
-
-    }
-
-
-    /* ENEMIES */
-
-    enemies.forEach(enemy => {
-
-        const dx = player.x - enemy.x;
-        const dy = player.y - enemy.y;
-
-        const distance =
-            Math.sqrt(dx * dx + dy * dy);
-
-        if (distance > 0) {
-
-            enemy.x +=
-                dx / distance * enemy.speed;
-
-            enemy.y +=
-                dy / distance * enemy.speed;
-
-        }
-
-
-        /* DAMAGE PLAYER */
-
-        if (distance < player.size + enemy.size) {
-
-            health -= 0.5;
-
-            updateStats();
-
-        }
-
-    });
-
-
-    /* BULLET COLLISIONS */
-
-    bullets.forEach((bullet, bulletIndex) => {
-
-        enemies.forEach((enemy, enemyIndex) => {
-
-            const dx = bullet.x - enemy.x;
-            const dy = bullet.y - enemy.y;
-
-            const distance =
-                Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < bullet.size + enemy.size) {
-
-                bullets.splice(bulletIndex, 1);
-
-                enemy.health--;
-
-                if (enemy.health <= 0) {
-
-                    enemies.splice(enemyIndex, 1);
-
-                    gc += 10;
-
-                    if (gc % 100 === 0) {
-                        level++;
-                    }
-
-                    updateStats();
-
-                }
-
-            }
-
-        });
-
-    });
-
-
-    /* GAME OVER */
-
-    if (health <= 0) {
-
-        health = 0;
-
-        gameOver();
-
-    }
-
-}
-
-
-/* =========================
-   DRAW
-========================= */
-
-function draw() {
-
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
-
-    /* GRID */
-
-    ctx.strokeStyle = "#171329";
-    ctx.lineWidth = 1;
-
-    const gridSize = 45;
-
-    for (
-        let x = 0;
-        x < canvas.width;
-        x += gridSize
-    ) {
-
-        ctx.beginPath();
-
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, canvas.height);
-
-        ctx.stroke();
-
-    }
-
-    for (
-        let y = 0;
-        y < canvas.height;
-        y += gridSize
-    ) {
-
-        ctx.beginPath();
-
-        ctx.moveTo(0, y);
-        ctx.lineTo(canvas.width, y);
-
-        ctx.stroke();
-
-    }
-
-
-    /* PLAYER */
-
-    ctx.beginPath();
-
-    ctx.arc(
-        player.x,
-        player.y,
-        player.size,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fillStyle = "#a855ff";
-    ctx.fill();
-
-    ctx.strokeStyle = "#e9d5ff";
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-
-    /* PLAYER AIM */
-
-    const aimAngle =
-        Math.atan2(
-            mouse.y - player.y,
-            mouse.x - player.x
-        );
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        player.x,
-        player.y
-    );
-
-    ctx.lineTo(
-        player.x + Math.cos(aimAngle) * 30,
-        player.y + Math.sin(aimAngle) * 30
-    );
-
-    ctx.strokeStyle = "#d8b4fe";
-    ctx.lineWidth = 4;
-    ctx.stroke();
-
-
-    /* BULLETS */
-
-    bullets.forEach(bullet => {
-
-        ctx.beginPath();
-
-        ctx.arc(
-            bullet.x,
-            bullet.y,
-            bullet.size,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fillStyle = "#ffffff";
-        ctx.fill();
-
-    });
-
-
-    /* ENEMIES */
-
-    enemies.forEach(enemy => {
-
-        ctx.beginPath();
-
-        ctx.arc(
-            enemy.x,
-            enemy.y,
-            enemy.size,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fillStyle = "#ef4444";
-        ctx.fill();
-
-        ctx.strokeStyle = "#ffb4b4";
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-    });
-
-}
-
-
-/* =========================
-   STATS
-========================= */
-
-function updateStats() {
-
-    document.getElementById("health")
-        .textContent = Math.floor(health);
-
-    document.getElementById("gc")
-        .textContent = gc;
-
-    document.getElementById("level")
-        .textContent = level;
-
-}
-
-
-/* =========================
-   GAME OVER
-========================= */
-
-function gameOver() {
-
-    gameRunning = false;
-
-    document.getElementById("finalLevel")
-        .textContent = level;
-
-    document.getElementById("finalGC")
-        .textContent = gc;
-
-    document.getElementById("gameOver")
-        .style.display = "block";
-
-}
-
-
-/* =========================
-   RESTART
-========================= */
-
-function restartGame() {
-
-    health = 100;
-    gc = 0;
-    level = 1;
-
-    bullets = [];
-    enemies = [];
-
-    enemyTimer = 0;
-
-    gameRunning = true;
-
-    document.getElementById("gameOver")
-        .style.display = "none";
-
-    createPlayer();
-    updateStats();
-
-}
-
-
-/* =========================
-   GAME LOOP
-========================= */
-
-function gameLoop() {
-
-    update();
-    draw();
-
-    requestAnimationFrame(gameLoop);
-
-}
-
+/* RESTART */
+
+function restart(){
+
+health=100;
+gameGC=0;
+level=1;
+bullets=[];
+enemies=[];
+enemyTimer=0;
+running=true;
+
+document.getElementById("gameover").style.display=
+"none";
 
 createPlayer();
 updateStats();
-gameLoop();
+
+}
+
+
+/* LOOP */
+
+function loop(){
+
+update();
+draw();
+
+requestAnimationFrame(loop);
+
+}
+
+createPlayer();
+loadAccount();
+updateStats();
+loop();
 
 </script>
 
 </body>
-  </html>
+</html>
