@@ -2,1276 +2,297 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Cyber Strike | GlitchBox</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GlitchBoxOfficial</title>
 <link rel="icon" type="image/png" href="glitchbox-logo.png">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    background: #05050c;
-    color: white;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
-}
-
-.header {
-    height: 70px;
-    background: #0d0d1b;
-    border-bottom: 1px solid #7135a5;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 18px;
-}
-
-.title {
-    color: #b45cff;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.stats {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-}
-
-.stat {
-    background: #171326;
-    border: 1px solid #6135a0;
-    border-radius: 8px;
-    padding: 8px 11px;
-    font-size: 14px;
-}
-
-#game {
-    display: block;
-    width: 100vw;
-    height: calc(100vh - 70px);
-    background:
-        radial-gradient(
-            circle at center,
-            #17102b 0%,
-            #05050c 70%
-        );
-}
-
-.controls {
-    position: fixed;
-    bottom: 15px;
-    left: 15px;
-    color: #aaa;
-    font-size: 12px;
-    background: rgba(5,5,12,.8);
-    padding: 8px 10px;
-    border-radius: 8px;
-}
-
-.message {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: min(90%, 400px);
-    text-align: center;
-    background: rgba(10,5,20,.97);
-    border: 1px solid #a855ff;
-    border-radius: 18px;
-    padding: 30px;
-    display: none;
-    z-index: 20;
-}
-
-.message h1 {
-    color: #c084fc;
-    margin-bottom: 12px;
-}
-
-.message p {
-    color: #bbb;
-    margin: 7px 0;
-}
-
-button {
-    margin-top: 15px;
-    padding: 12px 18px;
-    border-radius: 9px;
-    border: 1px solid #a855ff;
-    background: #6d28d9;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #8b5cf6;
-}
-
-.status {
-    position: fixed;
-    top: 82px;
-    left: 15px;
-    background: rgba(10,5,20,.85);
-    color: #bbb;
-    padding: 8px 10px;
-    border-radius: 8px;
-    font-size: 12px;
-}
-
-@media (max-width: 600px) {
-    .header {
-        height: 85px;
-        align-items: flex-start;
-        padding-top: 10px;
-    }
-
-    .title {
-        font-size: 19px;
-    }
-
-    .stats {
-        font-size: 11px;
-    }
-
-    #game {
-        height: calc(100vh - 85px);
-    }
-
-    .controls {
-        display: none;
-    }
-}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#070711;color:white;min-height:100vh}
+nav{position:fixed;left:0;top:0;width:235px;height:100vh;background:#0d0d1b;border-right:1px solid #302040;padding:20px 14px;overflow:auto}
+.logo{color:#9b59ff;font-size:25px;font-weight:bold;margin-bottom:5px}
+.tagline{color:#777;font-size:11px;margin-bottom:20px}
+nav a{display:block;color:#ddd;text-decoration:none;padding:11px;border-radius:8px;margin:4px 0}
+nav a:hover,nav a.active{background:#6d28d9;color:white}
+main{margin-left:235px;padding:25px}
+.top{display:flex;gap:10px;margin-bottom:20px}
+input{flex:1;background:#11111f;border:1px solid #392b50;color:white;border-radius:10px;padding:13px}
+button{background:#171126;color:white;border:1px solid #9b59ff;border-radius:9px;padding:11px 16px;cursor:pointer}
+button:hover{background:#6d28d9}
+.hero{padding:35px;border-radius:20px;background:linear-gradient(135deg,#170027,#42006d);border:1px solid #793caf;margin-bottom:25px}
+.hero h1{font-size:38px;margin-bottom:10px}
+.hero p{color:#d7c1e8;line-height:1.5}
+.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.primary{background:#7c3aed}
+.title{color:#c084fc;font-size:23px;margin:22px 0 13px}
+.account{background:#11111f;border:1px solid #8b5cf6;border-radius:18px;padding:20px}
+.account h2{color:#d8b4fe;margin-bottom:15px}
+.balances{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.balance{background:#080811;border:1px solid #292940;border-radius:12px;padding:15px}
+.label{color:#888;font-size:12px;margin-bottom:7px}
+.value{font-size:20px;font-weight:bold;color:#d8b4fe}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.card{background:#11111f;border:1px solid #292940;border-radius:15px;padding:18px}
+.card:hover{border-color:#9b59ff}
+.card h3{color:#c084fc;margin-bottom:8px}
+.card p{color:#999;margin-bottom:14px;line-height:1.4}
+.card button{width:100%}
+.founder{margin-top:25px;padding:22px;border:1px solid #9b59ff;border-radius:16px;background:#160b22}
+.status{color:#888;font-size:12px;margin-top:10px}
+footer{text-align:center;color:#555;padding:30px}
+@media(max-width:950px){.grid{grid-template-columns:repeat(2,1fr)}.balances{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){nav{position:relative;width:100%;height:auto}.logo{font-size:22px}main{margin-left:0;padding:15px}.grid,.balances{grid-template-columns:1fr}.hero h1{font-size:29px}}
 </style>
 </head>
 
 <body>
 
-<header class="header">
+<nav>
+<div class="logo">🎮 GlitchBoxOfficial</div>
+<div class="tagline">Enter The Glitch. Own The Game.</div>
 
-    <div class="title">
-        ⚡ Cyber Strike
-    </div>
+<a class="active" href="index.html">🏠 Home</a>
+<a href="games.html">🎮 Games</a>
+<a href="cyber-strike.html">⚡ Cyber Strike</a>
+<a href="battle-arena.html">⚔️ Battle Arena X</a>
+<a href="worlds.html">🌎 Worlds</a>
+<a href="shop.html">🛒 Marketplace</a>
+<a href="profile.html">👤 Profile</a>
+<a href="friends.html">👥 Friends</a>
+<a href="chat.html">💬 Chat</a>
+<a href="communities.html">📢 Communities</a>
+<a href="creator.html">🎥 Creator Hub</a>
+<a href="tournaments.html">🏆 Tournaments</a>
+<a href="leaderboards.html">📊 Leaderboards</a>
+<a href="challenges.html">🎯 Challenges</a>
+<a href="rewards.html">🎁 Rewards</a>
+<a href="owner.html">👑 Founder Panel</a>
+<a href="settings.html">⚙️ Settings</a>
+<a href="support.html">🛟 Support</a>
+</nav>
 
-    <div class="stats">
+<main>
 
-        <div class="stat">
-            ❤️ <span id="health">100</span>
-        </div>
-
-        <div class="stat">
-            🪙 <span id="gameGC">0</span>
-        </div>
-
-        <div class="stat">
-            💰 <span id="accountGC">0</span>
-        </div>
-
-        <div class="stat">
-            🎯 Level <span id="level">1</span>
-        </div>
-
-    </div>
-
-</header>
-
-<canvas id="game"></canvas>
-
-<div class="status" id="status">
-    Connecting to GlitchBox...
+<div class="top">
+<input id="search" placeholder="🔎 Search GlitchBox...">
+<button onclick="location.href='profile.html'">👤</button>
+<button onclick="location.href='chat.html'">💬</button>
 </div>
 
-<div class="controls">
-    WASD / Arrow Keys = Move &nbsp; | &nbsp;
-    Mouse / Space = Shoot
+<section class="hero">
+<h1>Welcome to GlitchBoxOfficial</h1>
+<p>Enter The Glitch. Own The Game.</p>
+
+<div class="buttons">
+<button class="primary" onclick="location.href='games.html'">🎮 Explore Games</button>
+<button onclick="location.href='worlds.html'">🌎 Worlds</button>
+<button onclick="location.href='shop.html'">🛒 Marketplace</button>
+</div>
+</section>
+
+<section class="account">
+
+<h2>💰 My GlitchBox Account</h2>
+
+<div class="balances">
+
+<div class="balance">
+<div class="label">🪙 Glitch Coins</div>
+<div class="value" id="coins">Loading...</div>
 </div>
 
-<div class="message" id="gameOver">
+<div class="balance">
+<div class="label">💎 Glitch Gems</div>
+<div class="value" id="gems">Loading...</div>
+</div>
 
-    <h1>💥 CYBER STRIKE OVER</h1>
+<div class="balance">
+<div class="label">⭐ Membership</div>
+<div class="value" id="membership">Loading...</div>
+</div>
 
-    <p>
-        Level reached:
-        <strong id="finalLevel">1</strong>
-    </p>
-
-    <p>
-        🪙 GC earned:
-        <strong id="finalGC">0</strong>
-    </p>
-
-    <p>
-        💰 Account balance:
-        <strong id="finalBalance">0</strong>
-    </p>
-
-    <button onclick="restartGame()">
-        🔄 Play Again
-    </button>
-
-    <br>
-
-    <button onclick="location.href='index.html'">
-        🏠 Back to GlitchBox
-    </button>
+<div class="balance">
+<div class="label">🛡️ Role</div>
+<div class="value" id="role">Loading...</div>
+</div>
 
 </div>
+
+<div class="status" id="status">Connecting...</div>
+</section>
+
+<h2 class="title">🎮 Games</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>⚡ Cyber Strike</h3>
+<p>Fight enemies and earn Glitch Coins.</p>
+<button onclick="location.href='cyber-strike.html'">Play</button>
+</div>
+
+<div class="card">
+<h3>⚔️ Battle Arena X</h3>
+<p>Battle enemies, bosses and collect rewards.</p>
+<button onclick="location.href='battle-arena.html'">Play</button>
+</div>
+
+<div class="card">
+<h3>🧟 Zombie Outbreak</h3>
+<p>Survive the zombie outbreak.</p>
+<button onclick="location.href='zombie-outbreak.html'">Play</button>
+</div>
+
+<div class="card">
+<h3>🏎️ Nitro Rush</h3>
+<p>Race through the GlitchBox world.</p>
+<button onclick="location.href='nitro-rush.html'">Play</button>
+</div>
+
+</div>
+
+<h2 class="title">⭐ Membership</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>🟣 Premium</h3>
+<p>Unlock Premium benefits.</p>
+<button onclick="location.href='premium.html'">View</button>
+</div>
+
+<div class="card">
+<h3>💜 Premium Plus</h3>
+<p>More benefits and rewards.</p>
+<button onclick="location.href='premium-plus.html'">View</button>
+</div>
+
+<div class="card">
+<h3>⚡ Premium Ultra</h3>
+<p>Our advanced premium tier.</p>
+<button onclick="location.href='premium-ultra.html'">View</button>
+</div>
+
+<div class="card">
+<h3>👑 VIP</h3>
+<p>The ultimate GlitchBox membership.</p>
+<button onclick="location.href='vip.html'">View</button>
+</div>
+
+</div>
+
+<section class="founder">
+<h2>👑 Founder / Owner</h2>
+<p>Authorized Founder and Owner accounts can access management tools.</p>
+<div class="buttons">
+<button onclick="location.href='owner.html'">Open Founder Panel</button>
+</div>
+</section>
+
+<footer>
+© 2026 GlitchBoxOfficial<br>
+Enter The Glitch. Own The Game. 💜
+</footer>
+
+</main>
 
 <script>
 
-/* ==================================================
-   SUPABASE
-   ================================================== */
+/* PUT YOUR SUPABASE VALUES HERE */
 
 const SUPABASE_URL =
-    "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
+"PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
 
 const SUPABASE_ANON_KEY =
-    "PASTE_YOUR_SUPABASE_ANON_OR_PUBLISHABLE_KEY_HERE";
+"PASTE_YOUR_SUPABASE_ANON_OR_PUBLISHABLE_KEY_HERE";
 
 const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-    );
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_ANON_KEY
+);
 
+async function loadAccount(){
 
-/* ==================================================
-   GAME VARIABLES
-   ================================================== */
+const status=document.getElementById("status");
 
-const canvas =
-    document.getElementById("game");
+try{
 
-const ctx =
-    canvas.getContext("2d");
+const {data:{user},error:authError}=
+await supabaseClient.auth.getUser();
 
-let player;
+if(authError) throw authError;
 
-let bullets = [];
-let enemies = [];
+if(!user){
 
-let health = 100;
-let gameGC = 0;
-let accountGC = 0;
-let level = 1;
+document.getElementById("coins").textContent="—";
+document.getElementById("gems").textContent="—";
+document.getElementById("membership").textContent="Not signed in";
+document.getElementById("role").textContent="Guest";
+status.textContent="Sign in to see your account.";
+return;
+}
 
-let enemyTimer = 0;
-let gameRunning = true;
+const {data,error}=
+await supabaseClient.rpc(
+"get_glitchbox_balance"
+);
 
-let lastShot = 0;
+if(error) throw error;
 
-const keys = {};
+if(!data||data.length===0)
+throw new Error("Profile not found");
 
-const mouse = {
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
-    down: false
+const account=data[0];
+
+document.getElementById("coins").textContent=
+Number(account.glitch_coins||0).toLocaleString();
+
+document.getElementById("gems").textContent=
+Number(account.glitch_gems||0).toLocaleString();
+
+const names={
+free:"Free",
+premium:"Premium",
+premium_plus:"Premium Plus",
+premium_ultra:"Premium Ultra",
+vip:"VIP"
 };
 
+const roles={
+user:"Player",
+admin:"Admin",
+owner:"Owner",
+founder:"Founder"
+};
 
-/* ==================================================
-   CANVAS
-   ================================================== */
+document.getElementById("membership").textContent=
+names[account.membership]||account.membership;
 
-function resizeCanvas() {
+document.getElementById("role").textContent=
+roles[account.role]||account.role;
 
-    canvas.width =
-        window.innerWidth;
+status.textContent="✅ Account connected";
 
-    canvas.height =
-        window.innerHeight - 70;
+}catch(error){
 
+console.error(error);
+
+status.textContent="⚠️ Could not load account.";
+
+document.getElementById("coins").textContent="—";
+document.getElementById("gems").textContent="—";
+document.getElementById("membership").textContent="—";
+document.getElementById("role").textContent="—";
 }
 
-resizeCanvas();
-
-window.addEventListener(
-    "resize",
-    resizeCanvas
-);
-
-
-/* ==================================================
-   SUPABASE ACCOUNT
-   ================================================== */
-
-async function loadAccount() {
-
-    const status =
-        document.getElementById("status");
-
-    try {
-
-        const {
-            data: {
-                user
-            },
-            error
-        } =
-        await supabaseClient.auth.getUser();
-
-        if (error) {
-            throw error;
-        }
-
-        if (!user) {
-
-            status.textContent =
-                "⚠️ Not signed in — game rewards cannot be deposited.";
-
-            accountGC = 0;
-
-            updateStats();
-
-            return;
-
-        }
-
-        const {
-            data,
-            error: balanceError
-        } =
-        await supabaseClient.rpc(
-            "get_glitchbox_balance"
-        );
-
-        if (balanceError) {
-            throw balanceError;
-        }
-
-        if (!data || data.length === 0) {
-
-            throw new Error(
-                "GlitchBox profile not found."
-            );
-
-        }
-
-        accountGC =
-            Number(data[0].glitch_coins || 0);
-
-        updateStats();
-
-        status.textContent =
-            "✅ Account connected";
-
-    } catch (error) {
-
-        console.error(error);
-
-        status.textContent =
-            "⚠️ Could not connect to account.";
-
-    }
-
 }
-
-
-/* ==================================================
-   DEPOSIT GC
-   ================================================== */
-
-async function depositGC(amount) {
-
-    if (!amount || amount <= 0) {
-        return;
-    }
-
-    try {
-
-        const {
-            data: {
-                user
-            }
-        } =
-        await supabaseClient.auth.getUser();
-
-        if (!user) {
-
-            console.log(
-                "Player is not signed in."
-            );
-
-            return;
-
-        }
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient.rpc(
-            "add_glitch_coins",
-            {
-                amount: amount
-            }
-        );
-
-        if (error) {
-            throw error;
-        }
-
-        accountGC =
-            Number(data);
-
-        updateStats();
-
-        document.getElementById("status")
-            .textContent =
-            "🪙 +" + amount +
-            " GC deposited!";
-
-    } catch (error) {
-
-        console.error(
-            "GC deposit failed:",
-            error
-        );
-
-        document.getElementById("status")
-            .textContent =
-            "⚠️ GC could not be deposited.";
-
-    }
-
-}
-
-
-/* ==================================================
-   PLAYER
-   ================================================== */
-
-function createPlayer() {
-
-    player = {
-
-        x: canvas.width / 2,
-
-        y: canvas.height / 2,
-
-        size: 18,
-
-        speed: 5
-
-    };
-
-}
-
-
-/* ==================================================
-   KEYBOARD
-   ================================================== */
-
-window.addEventListener(
-    "keydown",
-    function(event) {
-
-        keys[event.key.toLowerCase()] =
-            true;
-
-        if (event.code === "Space") {
-
-            event.preventDefault();
-
-            shoot();
-
-        }
-
-    }
-);
-
-
-window.addEventListener(
-    "keyup",
-    function(event) {
-
-        keys[event.key.toLowerCase()] =
-            false;
-
-    }
-);
-
-
-/* ==================================================
-   MOUSE
-   ================================================== */
-
-canvas.addEventListener(
-    "mousemove",
-    function(event) {
-
-        const rect =
-            canvas.getBoundingClientRect();
-
-        mouse.x =
-            event.clientX - rect.left;
-
-        mouse.y =
-            event.clientY - rect.top;
-
-    }
-);
-
-
-canvas.addEventListener(
-    "mousedown",
-    function() {
-
-        mouse.down = true;
-
-        shoot();
-
-    }
-);
-
-
-window.addEventListener(
-    "mouseup",
-    function() {
-
-        mouse.down = false;
-
-    }
-);
-
-
-/* ==================================================
-   SHOOT
-   ================================================== */
-
-function shoot() {
-
-    if (!gameRunning) {
-        return;
-    }
-
-    const now =
-        Date.now();
-
-    if (
-        now - lastShot < 180
-    ) {
-        return;
-    }
-
-    lastShot = now;
-
-    const dx =
-        mouse.x - player.x;
-
-    const dy =
-        mouse.y - player.y;
-
-    const distance =
-        Math.sqrt(
-            dx * dx +
-            dy * dy
-        );
-
-    if (distance === 0) {
-        return;
-    }
-
-    bullets.push({
-
-        x: player.x,
-
-        y: player.y,
-
-        vx:
-            dx / distance * 9,
-
-        vy:
-            dy / distance * 9,
-
-        size: 5
-
-    });
-
-}
-
-
-/* ==================================================
-   SPAWN ENEMY
-   ================================================== */
-
-function spawnEnemy() {
-
-    const side =
-        Math.floor(
-            Math.random() * 4
-        );
-
-    let x;
-    let y;
-
-    if (side === 0) {
-
-        x =
-            Math.random() *
-            canvas.width;
-
-        y = -30;
-
-    }
-
-    else if (side === 1) {
-
-        x =
-            canvas.width + 30;
-
-        y =
-            Math.random() *
-            canvas.height;
-
-    }
-
-    else if (side === 2) {
-
-        x =
-            Math.random() *
-            canvas.width;
-
-        y =
-            canvas.height + 30;
-
-    }
-
-    else {
-
-        x = -30;
-
-        y =
-            Math.random() *
-            canvas.height;
-
-    }
-
-    enemies.push({
-
-        x: x,
-
-        y: y,
-
-        size: 17,
-
-        speed:
-            1.2 +
-            level * 0.15,
-
-        health: 1
-
-    });
-
-}
-
-
-/* ==================================================
-   UPDATE
-   ================================================== */
-
-function update() {
-
-    if (!gameRunning) {
-        return;
-    }
-
-
-    /* PLAYER */
-
-    if (
-        keys["w"] ||
-        keys["arrowup"]
-    ) {
-
-        player.y -=
-            player.speed;
-
-    }
-
-    if (
-        keys["s"] ||
-        keys["arrowdown"]
-    ) {
-
-        player.y +=
-            player.speed;
-
-    }
-
-    if (
-        keys["a"] ||
-        keys["arrowleft"]
-    ) {
-
-        player.x -=
-            player.speed;
-
-    }
-
-    if (
-        keys["d"] ||
-        keys["arrowright"]
-    ) {
-
-        player.x +=
-            player.speed;
-
-    }
-
-
-    /* SCREEN BOUNDS */
-
-    player.x =
-        Math.max(
-            player.size,
-            Math.min(
-                canvas.width -
-                player.size,
-                player.x
-            )
-        );
-
-    player.y =
-        Math.max(
-            player.size,
-            Math.min(
-                canvas.height -
-                player.size,
-                player.y
-            )
-        );
-
-
-    /* BULLETS */
-
-    bullets.forEach(
-        bullet => {
-
-            bullet.x +=
-                bullet.vx;
-
-            bullet.y +=
-                bullet.vy;
-
-        }
-    );
-
-
-    bullets =
-        bullets.filter(
-            bullet =>
-                bullet.x > -30 &&
-                bullet.x <
-                    canvas.width + 30 &&
-                bullet.y > -30 &&
-                bullet.y <
-                    canvas.height + 30
-        );
-
-
-    /* SPAWN */
-
-    enemyTimer++;
-
-    const spawnRate =
-        Math.max(
-            25,
-            80 - level * 5
-        );
-
-    if (
-        enemyTimer >
-        spawnRate
-    ) {
-
-        spawnEnemy();
-
-        enemyTimer = 0;
-
-    }
-
-
-    /* ENEMIES */
-
-    enemies.forEach(
-        enemy => {
-
-            const dx =
-                player.x -
-                enemy.x;
-
-            const dy =
-                player.y -
-                enemy.y;
-
-            const distance =
-                Math.sqrt(
-                    dx * dx +
-                    dy * dy
-                );
-
-
-            if (distance > 0) {
-
-                enemy.x +=
-                    dx / distance *
-                    enemy.speed;
-
-                enemy.y +=
-                    dy / distance *
-                    enemy.speed;
-
-            }
-
-
-            if (
-                distance <
-                player.size +
-                enemy.size
-            ) {
-
-                health -= 0.5;
-
-                updateStats();
-
-            }
-
-        }
-    );
-
-
-    /* BULLET COLLISIONS */
-
-    for (
-        let b =
-            bullets.length - 1;
-        b >= 0;
-        b--
-    ) {
-
-        const bullet =
-            bullets[b];
-
-        for (
-            let e =
-                enemies.length - 1;
-            e >= 0;
-            e--
-        ) {
-
-            const enemy =
-                enemies[e];
-
-            const dx =
-                bullet.x -
-                enemy.x;
-
-            const dy =
-                bullet.y -
-                enemy.y;
-
-            const distance =
-                Math.sqrt(
-                    dx * dx +
-                    dy * dy
-                );
-
-
-            if (
-                distance <
-                bullet.size +
-                enemy.size
-            ) {
-
-                bullets.splice(
-                    b,
-                    1
-                );
-
-                enemy.health--;
-
-                if (
-                    enemy.health <= 0
-                ) {
-
-                    enemies.splice(
-                        e,
-                        1
-                    );
-
-                    /*
-                     * Every enemy gives
-                     * 10 GC.
-                     */
-
-                    gameGC += 10;
-
-                    /*
-                     * Deposit immediately.
-                     */
-
-                    depositGC(10);
-
-
-                    /*
-                     * Level every 100
-                     * game GC.
-                     */
-
-                    level =
-                        Math.floor(
-                            gameGC / 100
-                        ) + 1;
-
-                    updateStats();
-
-                }
-
-                break;
-
-            }
-
-        }
-
-    }
-
-
-    /* GAME OVER */
-
-    if (health <= 0) {
-
-        health = 0;
-
-        updateStats();
-
-        gameOver();
-
-    }
-
-
-    /* HOLD MOUSE TO SHOOT */
-
-    if (mouse.down) {
-
-        shoot();
-
-    }
-
-}
-
-
-/* ==================================================
-   DRAW
-   ================================================== */
-
-function draw() {
-
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
-
-    /* GRID */
-
-    ctx.strokeStyle =
-        "#171329";
-
-    ctx.lineWidth = 1;
-
-    const gridSize = 45;
-
-
-    for (
-        let x = 0;
-        x < canvas.width;
-        x += gridSize
-    ) {
-
-        ctx.beginPath();
-
-        ctx.moveTo(x, 0);
-
-        ctx.lineTo(
-            x,
-            canvas.height
-        );
-
-        ctx.stroke();
-
-    }
-
-
-    for (
-        let y = 0;
-        y < canvas.height;
-        y += gridSize
-    ) {
-
-        ctx.beginPath();
-
-        ctx.moveTo(0, y);
-
-        ctx.lineTo(
-            canvas.width,
-            y
-        );
-
-        ctx.stroke();
-
-    }
-
-
-    /* PLAYER */
-
-    ctx.beginPath();
-
-    ctx.arc(
-        player.x,
-        player.y,
-        player.size,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fillStyle =
-        "#a855ff";
-
-    ctx.fill();
-
-    ctx.strokeStyle =
-        "#e9d5ff";
-
-    ctx.lineWidth = 2;
-
-    ctx.stroke();
-
-
-    /* AIM */
-
-    const aimAngle =
-        Math.atan2(
-            mouse.y - player.y,
-            mouse.x - player.x
-        );
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        player.x,
-        player.y
-    );
-
-    ctx.lineTo(
-        player.x +
-            Math.cos(aimAngle) *
-            30,
-
-        player.y +
-            Math.sin(aimAngle) *
-            30
-    );
-
-    ctx.strokeStyle =
-        "#d8b4fe";
-
-    ctx.lineWidth = 4;
-
-    ctx.stroke();
-
-
-    /* BULLETS */
-
-    bullets.forEach(
-        bullet => {
-
-            ctx.beginPath();
-
-            ctx.arc(
-                bullet.x,
-                bullet.y,
-                bullet.size,
-                0,
-                Math.PI * 2
-            );
-
-            ctx.fillStyle =
-                "#ffffff";
-
-            ctx.fill();
-
-        }
-    );
-
-
-    /* ENEMIES */
-
-    enemies.forEach(
-        enemy => {
-
-            ctx.beginPath();
-
-            ctx.arc(
-                enemy.x,
-                enemy.y,
-                enemy.size,
-                0,
-                Math.PI * 2
-            );
-
-            ctx.fillStyle =
-                "#ef4444";
-
-            ctx.fill();
-
-            ctx.strokeStyle =
-                "#ffb4b4";
-
-            ctx.lineWidth = 2;
-
-            ctx.stroke();
-
-        }
-    );
-
-}
-
-
-/* ==================================================
-   UPDATE DISPLAY
-   ================================================== */
-
-function updateStats() {
-
-    document.getElementById(
-        "health"
-    ).textContent =
-        Math.floor(health);
-
-    document.getElementById(
-        "gameGC"
-    ).textContent =
-        gameGC;
-
-    document.getElementById(
-        "accountGC"
-    ).textContent =
-        accountGC;
-
-    document.getElementById(
-        "level"
-    ).textContent =
-        level;
-
-}
-
-
-/* ==================================================
-   GAME OVER
-   ================================================== */
-
-function gameOver() {
-
-    gameRunning = false;
-
-    document.getElementById(
-        "finalLevel"
-    ).textContent =
-        level;
-
-    document.getElementById(
-        "finalGC"
-    ).textContent =
-        gameGC;
-
-    document.getElementById(
-        "finalBalance"
-    ).textContent =
-        accountGC;
-
-    document.getElementById(
-        "gameOver"
-    ).style.display =
-        "block";
-
-}
-
-
-/* ==================================================
-   RESTART
-   ================================================== */
-
-function restartGame() {
-
-    health = 100;
-
-    gameGC = 0;
-
-    level = 1;
-
-    bullets = [];
-
-    enemies = [];
-
-    enemyTimer = 0;
-
-    gameRunning = true;
-
-    document.getElementById(
-        "gameOver"
-    ).style.display =
-        "none";
-
-    createPlayer();
-
-    updateStats();
-
-}
-
-
-/* ==================================================
-   GAME LOOP
-   ================================================== */
-
-function gameLoop() {
-
-    update();
-
-    draw();
-
-    requestAnimationFrame(
-        gameLoop
-    );
-
-}
-
-
-/* ==================================================
-   START
-   ================================================== */
-
-createPlayer();
-
-updateStats();
 
 loadAccount();
-
-gameLoop();
 
 </script>
 
 </body>
-    </html>
+</html>
