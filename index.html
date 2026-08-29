@@ -2,56 +2,280 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>GlitchBoxOfficial</title>
+
 <link rel="icon" type="image/png" href="glitchbox-logo.png">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#070711;color:white;min-height:100vh}
-nav{position:fixed;left:0;top:0;width:235px;height:100vh;background:#0d0d1b;border-right:1px solid #302040;padding:20px 14px;overflow:auto}
-.logo{color:#9b59ff;font-size:25px;font-weight:bold;margin-bottom:5px}
-.tagline{color:#777;font-size:11px;margin-bottom:20px}
-nav a{display:block;color:#ddd;text-decoration:none;padding:11px;border-radius:8px;margin:4px 0}
-nav a:hover,nav a.active{background:#6d28d9;color:white}
-main{margin-left:235px;padding:25px}
-.top{display:flex;gap:10px;margin-bottom:20px}
-input{flex:1;background:#11111f;border:1px solid #392b50;color:white;border-radius:10px;padding:13px}
-button{background:#171126;color:white;border:1px solid #9b59ff;border-radius:9px;padding:11px 16px;cursor:pointer}
-button:hover{background:#6d28d9}
-.hero{padding:35px;border-radius:20px;background:linear-gradient(135deg,#170027,#42006d);border:1px solid #793caf;margin-bottom:25px}
-.hero h1{font-size:38px;margin-bottom:10px}
-.hero p{color:#d7c1e8;line-height:1.5}
-.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.primary{background:#7c3aed}
-.title{color:#c084fc;font-size:23px;margin:22px 0 13px}
-.account{background:#11111f;border:1px solid #8b5cf6;border-radius:18px;padding:20px}
-.account h2{color:#d8b4fe;margin-bottom:15px}
-.balances{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.balance{background:#080811;border:1px solid #292940;border-radius:12px;padding:15px}
-.label{color:#888;font-size:12px;margin-bottom:7px}
-.value{font-size:20px;font-weight:bold;color:#d8b4fe}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
-.card{background:#11111f;border:1px solid #292940;border-radius:15px;padding:18px}
-.card:hover{border-color:#9b59ff}
-.card h3{color:#c084fc;margin-bottom:8px}
-.card p{color:#999;margin-bottom:14px;line-height:1.4}
-.card button{width:100%}
-.founder{margin-top:25px;padding:22px;border:1px solid #9b59ff;border-radius:16px;background:#160b22}
-.status{color:#888;font-size:12px;margin-top:10px}
-footer{text-align:center;color:#555;padding:30px}
-@media(max-width:950px){.grid{grid-template-columns:repeat(2,1fr)}.balances{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:650px){nav{position:relative;width:100%;height:auto}.logo{font-size:22px}main{margin-left:0;padding:15px}.grid,.balances{grid-template-columns:1fr}.hero h1{font-size:29px}}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #070711;
+    color: white;
+    min-height: 100vh;
+}
+
+nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 235px;
+    height: 100vh;
+    background: #0d0d1b;
+    border-right: 1px solid #302040;
+    padding: 20px 14px;
+    overflow-y: auto;
+}
+
+.logo {
+    color: #9b59ff;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.tagline {
+    color: #777;
+    font-size: 11px;
+    margin-bottom: 20px;
+}
+
+nav a {
+    display: block;
+    color: #ddd;
+    text-decoration: none;
+    padding: 11px;
+    border-radius: 8px;
+    margin: 4px 0;
+}
+
+nav a:hover,
+nav a.active {
+    background: #6d28d9;
+    color: white;
+}
+
+main {
+    margin-left: 235px;
+    padding: 25px;
+}
+
+.top {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search {
+    flex: 1;
+    background: #11111f;
+    border: 1px solid #392b50;
+    color: white;
+    border-radius: 10px;
+    padding: 13px;
+    outline: none;
+}
+
+button {
+    background: #171126;
+    color: white;
+    border: 1px solid #9b59ff;
+    border-radius: 9px;
+    padding: 11px 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #6d28d9;
+}
+
+.hero {
+    padding: 35px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #170027, #42006d);
+    border: 1px solid #793caf;
+    margin-bottom: 25px;
+}
+
+.hero h1 {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    color: #d7c1e8;
+    line-height: 1.5;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.primary {
+    background: #7c3aed;
+}
+
+.section-title {
+    color: #c084fc;
+    font-size: 23px;
+    margin: 25px 0 13px;
+}
+
+.account {
+    background: #11111f;
+    border: 1px solid #8b5cf6;
+    border-radius: 18px;
+    padding: 20px;
+}
+
+.account h2 {
+    color: #d8b4fe;
+    margin-bottom: 15px;
+}
+
+.balances {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.balance {
+    background: #080811;
+    border: 1px solid #292940;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.label {
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #d8b4fe;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.card {
+    background: #11111f;
+    border: 1px solid #292940;
+    border-radius: 15px;
+    padding: 18px;
+}
+
+.card:hover {
+    border-color: #9b59ff;
+}
+
+.card h3 {
+    color: #c084fc;
+    margin-bottom: 8px;
+}
+
+.card p {
+    color: #999;
+    margin-bottom: 14px;
+    line-height: 1.4;
+}
+
+.card button {
+    width: 100%;
+}
+
+.founder {
+    margin-top: 25px;
+    padding: 22px;
+    border: 1px solid #9b59ff;
+    border-radius: 16px;
+    background: #160b22;
+}
+
+.founder h2 {
+    color: #d8b4fe;
+    margin-bottom: 8px;
+}
+
+.founder p {
+    color: #aaa;
+}
+
+.status {
+    color: #888;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+footer {
+    text-align: center;
+    color: #555;
+    padding: 30px;
+}
+
+@media(max-width:950px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .balances {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width:650px) {
+    nav {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    main {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .grid,
+    .balances {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 29px;
+    }
+}
 </style>
 </head>
 
 <body>
 
 <nav>
-<div class="logo">🎮 GlitchBoxOfficial</div>
-<div class="tagline">Enter The Glitch. Own The Game.</div>
+
+<div class="logo">
+🎮 GlitchBoxOfficial
+</div>
+
+<div class="tagline">
+Enter The Glitch. Own The Game.
+</div>
 
 <a class="active" href="index.html">🏠 Home</a>
 <a href="games.html">🎮 Games</a>
@@ -71,136 +295,332 @@ footer{text-align:center;color:#555;padding:30px}
 <a href="owner.html">👑 Founder Panel</a>
 <a href="settings.html">⚙️ Settings</a>
 <a href="support.html">🛟 Support</a>
+
 </nav>
 
 <main>
 
 <div class="top">
-<input id="search" placeholder="🔎 Search GlitchBox...">
-<button onclick="location.href='profile.html'">👤</button>
-<button onclick="location.href='chat.html'">💬</button>
+
+<input
+    id="search"
+    class="search"
+    placeholder="🔎 Search GlitchBox..."
+>
+
+<button onclick="location.href='profile.html'">
+👤
+</button>
+
+<button onclick="location.href='chat.html'">
+💬
+</button>
+
 </div>
+
 
 <section class="hero">
-<h1>Welcome to GlitchBoxOfficial</h1>
-<p>Enter The Glitch. Own The Game.</p>
+
+<h1>
+Welcome to GlitchBoxOfficial
+</h1>
+
+<p>
+Enter The Glitch. Own The Game.
+</p>
 
 <div class="buttons">
-<button class="primary" onclick="location.href='games.html'">🎮 Explore Games</button>
-<button onclick="location.href='worlds.html'">🌎 Worlds</button>
-<button onclick="location.href='shop.html'">🛒 Marketplace</button>
+
+<button
+class="primary"
+onclick="location.href='games.html'">
+🎮 Explore Games
+</button>
+
+<button
+onclick="location.href='worlds.html'">
+🌎 Worlds
+</button>
+
+<button
+onclick="location.href='shop.html'">
+🛒 Marketplace
+</button>
+
 </div>
+
 </section>
+
 
 <section class="account">
 
-<h2>💰 My GlitchBox Account</h2>
+<h2>
+💰 My GlitchBox Account
+</h2>
 
 <div class="balances">
 
 <div class="balance">
-<div class="label">🪙 Glitch Coins</div>
-<div class="value" id="coins">Loading...</div>
+
+<div class="label">
+🪙 Glitch Coins
 </div>
+
+<div
+class="value"
+id="coins">
+Loading...
+</div>
+
+</div>
+
 
 <div class="balance">
-<div class="label">💎 Glitch Gems</div>
-<div class="value" id="gems">Loading...</div>
+
+<div class="label">
+💎 Glitch Gems
 </div>
+
+<div
+class="value"
+id="gems">
+Loading...
+</div>
+
+</div>
+
 
 <div class="balance">
-<div class="label">⭐ Membership</div>
-<div class="value" id="membership">Loading...</div>
+
+<div class="label">
+⭐ Membership
 </div>
+
+<div
+class="value"
+id="membership">
+Loading...
+</div>
+
+</div>
+
 
 <div class="balance">
-<div class="label">🛡️ Role</div>
-<div class="value" id="role">Loading...</div>
+
+<div class="label">
+🛡️ Role
+</div>
+
+<div
+class="value"
+id="role">
+Loading...
 </div>
 
 </div>
 
-<div class="status" id="status">Connecting...</div>
+</div>
+
+<div
+class="status"
+id="status">
+Connecting to GlitchBox...
+</div>
+
 </section>
 
-<h2 class="title">🎮 Games</h2>
+
+<h2 class="section-title">
+🎮 Games
+</h2>
 
 <div class="grid">
 
-<div class="card">
-<h3>⚡ Cyber Strike</h3>
-<p>Fight enemies and earn Glitch Coins.</p>
-<button onclick="location.href='cyber-strike.html'">Play</button>
-</div>
 
 <div class="card">
-<h3>⚔️ Battle Arena X</h3>
-<p>Battle enemies, bosses and collect rewards.</p>
-<button onclick="location.href='battle-arena.html'">Play</button>
+
+<h3>
+⚡ Cyber Strike
+</h3>
+
+<p>
+Fight enemies and earn Glitch Coins.
+</p>
+
+<button onclick="location.href='cyber-strike.html'">
+Play
+</button>
+
 </div>
+
 
 <div class="card">
-<h3>🧟 Zombie Outbreak</h3>
-<p>Survive the zombie outbreak.</p>
-<button onclick="location.href='zombie-outbreak.html'">Play</button>
+
+<h3>
+⚔️ Battle Arena X
+</h3>
+
+<p>
+Battle enemies, bosses and collect rewards.
+</p>
+
+<button onclick="location.href='battle-arena.html'">
+Play
+</button>
+
 </div>
+
 
 <div class="card">
-<h3>🏎️ Nitro Rush</h3>
-<p>Race through the GlitchBox world.</p>
-<button onclick="location.href='nitro-rush.html'">Play</button>
-</div>
+
+<h3>
+🧟 Zombie Outbreak
+</h3>
+
+<p>
+Survive the zombie outbreak.
+</p>
+
+<button onclick="location.href='zombie-outbreak.html'">
+Play
+</button>
 
 </div>
 
-<h2 class="title">⭐ Membership</h2>
+
+<div class="card">
+
+<h3>
+🏎️ Nitro Rush
+</h3>
+
+<p>
+Race through the GlitchBox world.
+</p>
+
+<button onclick="location.href='nitro-rush.html'">
+Play
+</button>
+
+</div>
+
+</div>
+
+
+<h2 class="section-title">
+⭐ Membership
+</h2>
 
 <div class="grid">
 
-<div class="card">
-<h3>🟣 Premium</h3>
-<p>Unlock Premium benefits.</p>
-<button onclick="location.href='premium.html'">View</button>
-</div>
 
 <div class="card">
-<h3>💜 Premium Plus</h3>
-<p>More benefits and rewards.</p>
-<button onclick="location.href='premium-plus.html'">View</button>
+
+<h3>
+🟣 Premium
+</h3>
+
+<p>
+Unlock Premium benefits.
+</p>
+
+<button onclick="location.href='premium.html'">
+View
+</button>
+
 </div>
+
 
 <div class="card">
-<h3>⚡ Premium Ultra</h3>
-<p>Our advanced premium tier.</p>
-<button onclick="location.href='premium-ultra.html'">View</button>
+
+<h3>
+💜 Premium Plus
+</h3>
+
+<p>
+More benefits and rewards.
+</p>
+
+<button onclick="location.href='premium-plus.html'">
+View
+</button>
+
 </div>
+
 
 <div class="card">
-<h3>👑 VIP</h3>
-<p>The ultimate GlitchBox membership.</p>
-<button onclick="location.href='vip.html'">View</button>
+
+<h3>
+⚡ Premium Ultra
+</h3>
+
+<p>
+Our advanced premium tier.
+</p>
+
+<button onclick="location.href='premium-ultra.html'">
+View
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+👑 VIP
+</h3>
+
+<p>
+The ultimate GlitchBox membership.
+</p>
+
+<button onclick="location.href='vip.html'">
+View
+</button>
+
 </div>
 
 </div>
+
 
 <section class="founder">
-<h2>👑 Founder / Owner</h2>
-<p>Authorized Founder and Owner accounts can access management tools.</p>
+
+<h2>
+👑 Founder / Owner
+</h2>
+
+<p>
+Authorized Founder and Owner accounts can access management tools.
+</p>
+
 <div class="buttons">
-<button onclick="location.href='owner.html'">Open Founder Panel</button>
+
+<button onclick="location.href='owner.html'">
+👑 Open Founder Panel
+</button>
+
 </div>
+
 </section>
 
+
 <footer>
-© 2026 GlitchBoxOfficial<br>
+
+© 2026 GlitchBoxOfficial
+<br>
 Enter The Glitch. Own The Game. 💜
+
 </footer>
 
 </main>
 
+
 <script>
 
-/* PUT YOUR SUPABASE VALUES HERE */
+/* =========================================
+   YOUR SUPABASE CONNECTION
+   ========================================= */
 
 const SUPABASE_URL =
 "https://syjnlgxghgwvqrwtthmr.supabase.co";
@@ -208,89 +628,260 @@ const SUPABASE_URL =
 const SUPABASE_ANON_KEY =
 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI";
 
+
 const supabaseClient =
 window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_ANON_KEY
 );
 
-async function loadAccount(){
 
-const status=document.getElementById("status");
+/* =========================================
+   LOAD ACCOUNT
+   ========================================= */
 
-try{
+async function loadAccount() {
 
-const {data:{user},error:authError}=
+const status =
+document.getElementById("status");
+
+try {
+
+const {
+data: {
+user
+},
+error: authError
+} =
 await supabaseClient.auth.getUser();
 
-if(authError) throw authError;
 
-if(!user){
+if (authError) {
 
-document.getElementById("coins").textContent="—";
-document.getElementById("gems").textContent="—";
-document.getElementById("membership").textContent="Not signed in";
-document.getElementById("role").textContent="Guest";
-status.textContent="Sign in to see your account.";
-return;
-}
-
-const {data,error}=
-await supabaseClient.rpc(
-"get_glitchbox_balance"
+throw new Error(
+"Login error: " +
+authError.message
 );
 
-if(error) throw error;
+}
 
-if(!data||data.length===0)
-throw new Error("Profile not found");
 
-const account=data[0];
+if (!user) {
 
-document.getElementById("coins").textContent=
-Number(account.glitch_coins||0).toLocaleString();
+document.getElementById("coins")
+.textContent = "—";
 
-document.getElementById("gems").textContent=
-Number(account.glitch_gems||0).toLocaleString();
+document.getElementById("gems")
+.textContent = "—";
 
-const names={
-free:"Free",
-premium:"Premium",
-premium_plus:"Premium Plus",
-premium_ultra:"Premium Ultra",
-vip:"VIP"
+document.getElementById("membership")
+.textContent = "Not signed in";
+
+document.getElementById("role")
+.textContent = "Guest";
+
+status.textContent =
+"⚠️ Please sign in to see your balance.";
+
+return;
+
+}
+
+
+/* =========================================
+   GET PROFILE
+   ========================================= */
+
+const {
+data: profile,
+error: profileError
+} =
+await supabaseClient
+.from("profiles")
+.select("*")
+.eq("id", user.id)
+.maybeSingle();
+
+
+if (profileError) {
+
+throw new Error(
+"Profile error: " +
+profileError.message
+);
+
+}
+
+
+if (!profile) {
+
+document.getElementById("coins")
+.textContent = "0";
+
+document.getElementById("gems")
+.textContent = "0";
+
+document.getElementById("membership")
+.textContent = "Free";
+
+document.getElementById("role")
+.textContent = "Player";
+
+status.textContent =
+"⚠️ Your profile has not been created yet.";
+
+return;
+
+}
+
+
+/* =========================================
+   BALANCE
+   ========================================= */
+
+const coins =
+profile.glitch_coins ?? 0;
+
+const gems =
+profile.glitch_gems ?? 0;
+
+
+document.getElementById("coins")
+.textContent =
+Number(coins).toLocaleString();
+
+
+document.getElementById("gems")
+.textContent =
+Number(gems).toLocaleString();
+
+
+/* =========================================
+   MEMBERSHIP
+   ========================================= */
+
+const memberships = {
+
+free: "Free",
+
+premium: "Premium",
+
+premium_plus: "Premium Plus",
+
+premium_ultra: "Premium Ultra",
+
+vip: "VIP"
+
 };
 
-const roles={
-user:"Player",
-admin:"Admin",
-owner:"Owner",
-founder:"Founder"
+
+document.getElementById("membership")
+.textContent =
+memberships[profile.membership]
+|| profile.membership
+|| "Free";
+
+
+/* =========================================
+   ROLE
+   ========================================= */
+
+const roles = {
+
+user: "Player",
+
+player: "Player",
+
+admin: "Admin",
+
+owner: "Owner",
+
+founder: "Founder"
+
 };
 
-document.getElementById("membership").textContent=
-names[account.membership]||account.membership;
 
-document.getElementById("role").textContent=
-roles[account.role]||account.role;
+document.getElementById("role")
+.textContent =
+roles[profile.role]
+|| profile.role
+|| "Player";
 
-status.textContent="✅ Account connected";
 
-}catch(error){
+status.textContent =
+"✅ Account connected";
 
-console.error(error);
 
-status.textContent="⚠️ Could not load account.";
+}
 
-document.getElementById("coins").textContent="—";
-document.getElementById("gems").textContent="—";
-document.getElementById("membership").textContent="—";
-document.getElementById("role").textContent="—";
+catch (error) {
+
+console.error(
+"GLITCHBOX ACCOUNT ERROR:",
+error
+);
+
+status.textContent =
+"❌ " + error.message;
+
+document.getElementById("coins")
+.textContent = "—";
+
+document.getElementById("gems")
+.textContent = "—";
+
+document.getElementById("membership")
+.textContent = "—";
+
+document.getElementById("role")
+.textContent = "—";
+
 }
 
 }
+
+
+/* =========================================
+   SEARCH
+   ========================================= */
+
+document
+.getElementById("search")
+.addEventListener(
+"keydown",
+function(event) {
+
+if (event.key === "Enter") {
+
+const query =
+this.value.trim();
+
+if (!query) return;
+
+location.href =
+"search.html?q=" +
+encodeURIComponent(query);
+
+}
+
+}
+);
+
+
+/* =========================================
+   START
+   ========================================= */
 
 loadAccount();
+
+
+/* Refresh account when returning
+   to the page */
+
+window.addEventListener(
+"focus",
+loadAccount
+);
 
 </script>
 
