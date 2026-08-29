@@ -1,1 +1,802 @@
-i
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Settings | GlitchBoxOfficial</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #070711;
+    color: white;
+    min-height: 100vh;
+}
+
+nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 235px;
+    height: 100vh;
+    background: #0d0d1b;
+    border-right: 1px solid #302040;
+    padding: 20px 14px;
+    overflow-y: auto;
+}
+
+.logo {
+    color: #9b59ff;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.tagline {
+    color: #777;
+    font-size: 11px;
+    margin-bottom: 20px;
+}
+
+nav a {
+    display: block;
+    color: #ddd;
+    text-decoration: none;
+    padding: 11px;
+    border-radius: 8px;
+    margin: 4px 0;
+}
+
+nav a:hover,
+nav a.active {
+    background: #6d28d9;
+    color: white;
+}
+
+main {
+    margin-left: 235px;
+    padding: 30px;
+    max-width: 1100px;
+}
+
+h1 {
+    color: #c084fc;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #888;
+    margin-bottom: 25px;
+}
+
+.section {
+    background: #11111f;
+    border: 1px solid #292940;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.section-title {
+    color: #d8b4fe;
+    font-size: 19px;
+    padding: 18px;
+    border-bottom: 1px solid #292940;
+}
+
+.setting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 18px;
+    border-bottom: 1px solid #20202f;
+}
+
+.setting:last-child {
+    border-bottom: none;
+}
+
+.setting-info h3 {
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.setting-info p {
+    color: #888;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+button,
+select,
+input {
+    background: #171126;
+    color: white;
+    border: 1px solid #9b59ff;
+    border-radius: 9px;
+    padding: 10px 14px;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    background: #6d28d9;
+}
+
+select {
+    min-width: 150px;
+}
+
+input {
+    width: 220px;
+}
+
+.danger {
+    border-color: #ef4444;
+}
+
+.danger:hover {
+    background: #991b1b;
+}
+
+.toggle {
+    position: relative;
+    width: 52px;
+    height: 28px;
+}
+
+.toggle input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    inset: 0;
+    background: #292940;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.slider:before {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    left: 3px;
+    top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: .2s;
+}
+
+.toggle input:checked + .slider {
+    background: #7c3aed;
+}
+
+.toggle input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+.status {
+    background: #0d0d1b;
+    border: 1px solid #292940;
+    color: #aaa;
+    padding: 13px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.membership {
+    color: #c084fc;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    color: #555;
+    padding: 30px;
+}
+
+@media(max-width:700px) {
+
+    nav {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    main {
+        margin-left: 0;
+        padding: 18px;
+    }
+
+    .setting {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    input,
+    select {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">
+🎮 GlitchBoxOfficial
+</div>
+
+<div class="tagline">
+Enter The Glitch. Own The Game.
+</div>
+
+<a href="index.html">🏠 Home</a>
+<a href="games.html">🎮 Games</a>
+<a href="cyber-strike.html">⚡ Cyber Strike</a>
+<a href="battle-arena.html">⚔️ Battle Arena X</a>
+<a href="worlds.html">🌎 Worlds</a>
+<a href="shop.html">🛒 Marketplace</a>
+<a href="profile.html">👤 Profile</a>
+<a href="friends.html">👥 Friends</a>
+<a href="chat.html">💬 Chat</a>
+<a href="communities.html">📢 Communities</a>
+<a href="creator.html">🎥 Creator Hub</a>
+<a href="tournaments.html">🏆 Tournaments</a>
+<a href="leaderboards.html">📊 Leaderboards</a>
+<a href="challenges.html">🎯 Challenges</a>
+<a href="rewards.html">🎁 Rewards</a>
+<a href="owner.html">👑 Founder Panel</a>
+<a class="active" href="settings.html">⚙️ Settings</a>
+<a href="support.html">🛟 Support</a>
+
+</nav>
+
+<main>
+
+<h1>⚙️ Settings</h1>
+
+<p class="subtitle">
+Manage your GlitchBoxOfficial account and preferences.
+</p>
+
+<div class="status" id="status">
+Connecting to your account...
+</div>
+
+
+<!-- ACCOUNT -->
+
+<section class="section">
+
+<div class="section-title">
+👤 Account
+</div>
+
+<div class="setting">
+
+<div class="setting-info">
+<h3>Email</h3>
+<p>Your GlitchBox account email.</p>
+</div>
+
+<strong id="email">Loading...</strong>
+
+</div>
+
+
+<div class="setting">
+
+<div class="setting-info">
+<h3>Membership</h3>
+<p>Your current GlitchBox membership.</p>
+</div>
+
+<strong class="membership" id="membership">
+Loading...
+</strong>
+
+</div>
+
+
+<div class="setting">
+
+<div class="setting-info">
+<h3>Role</h3>
+<p>Your GlitchBox account role.</p>
+</div>
+
+<strong id="role">
+Loading...
+</strong>
+
+</div>
+
+</section>
+
+
+<!-- APPEARANCE -->
+
+<section class="section">
+
+<div class="section-title">
+🎨 Appearance
+</div>
+
+<div class="setting">
+
+<div class="setting-info">
+<h3>Theme</h3>
+<p>Choose how GlitchBox looks.</p>
+</div>
+
+<select id="theme">
+
+<option value="dark">
+Dark
+</option>
+
+<option value="system">
+System
+</option>
+
+<option value="light">
+Light
+</option>
+
+</select>
+
+</div>
+
+</section>
+
+
+<!-- NOTIFICATIONS -->
+
+<section class="section">
+
+<div class="section-title">
+🔔 Notifications
+</div>
+
+
+<div class="setting">
+
+<div class="setting-info">
+
+<h3>Game Notifications</h3>
+
+<p>
+Receive notifications about games and events.
+</p>
+
+</div>
+
+<label class="toggle">
+
+<input
+type="checkbox"
+id="gameNotifications"
+checked
+>
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+
+<div class="setting">
+
+<div class="setting-info">
+
+<h3>Friend Notifications</h3>
+
+<p>
+Receive notifications when friends interact with you.
+</p>
+
+</div>
+
+<label class="toggle">
+
+<input
+type="checkbox"
+id="friendNotifications"
+checked
+>
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+
+<div class="setting">
+
+<div class="setting-info">
+
+<h3>Community Notifications</h3>
+
+<p>
+Receive updates from communities you follow.
+</p>
+
+</div>
+
+<label class="toggle">
+
+<input
+type="checkbox"
+id="communityNotifications"
+checked
+>
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+</section>
+
+
+<!-- PRIVACY -->
+
+<section class="section">
+
+<div class="section-title">
+🔒 Privacy
+</div>
+
+
+<div class="setting">
+
+<div class="setting-info">
+
+<h3>Online Status</h3>
+
+<p>
+Allow other players to see when you are online.
+</p>
+
+</div>
+
+<label class="toggle">
+
+<input
+type="checkbox"
+id="onlineStatus"
+checked
+>
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+
+<div class="setting">
+
+<div class="setting-info">
+
+<h3>Profile Visibility</h3>
+
+<p>
+Choose who can view your profile.
+</p>
+
+</div>
+
+<select id="profileVisibility">
+
+<option value="everyone">
+Everyone
+</option>
+
+<option value="friends">
+Friends Only
+</option>
+
+<option value="private">
+Private
+</option>
+
+</select>
+
+</div>
+
+</section>
+
+
+<!-- SECURITY -->
+
+<section class="section">
+
+<div class="section-title">
+🛡️ Security
+</div>
+
+
+<div class="setting">
+
+<div class="setting-info">
+
+<h3>Password</h3>
+
+<p>
+Send a password reset email to your account.
+</p>
+
+</div>
+
+<button onclick="resetPassword()">
+Reset Password
+</button>
+
+</div>
+
+
+<div class="setting">
+
+<div class="setting-info">
+
+<h3>Two-Step Verification</h3>
+
+<p>
+Extra protection for your GlitchBox account.
+</p>
+
+</div>
+
+<button onclick="twoStep()">
+Manage
+</button>
+
+</div>
+
+</section>
+
+
+<!-- DATA -->
+
+<section class="section">
+
+<div class="section-title">
+💾 Account Data
+</div>
+
+
+<div class="setting">
+
+<div class="setting-info">
+
+<h3>Save Settings</h3>
+
+<p>
+Save your current preferences on this device.
+</p>
+
+</div>
+
+<button onclick="saveSettings()">
+Save Settings
+</button>
+
+</div>
+
+
+<div class="setting">
+
+<div class="setting-info">
+
+<h3>Reset Preferences</h3>
+
+<p>
+Return settings to their default values.
+</p>
+
+</div>
+
+<button onclick="resetSettings()">
+Reset
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SIGN OUT -->
+
+<section class="section">
+
+<div class="section-title">
+🚪 Account Actions
+</div>
+
+<div class="setting">
+
+<div class="setting-info">
+
+<h3>Sign Out</h3>
+
+<p>
+Sign out of your GlitchBox account on this device.
+</p>
+
+</div>
+
+<button
+class="danger"
+onclick="signOut()">
+
+Sign Out
+
+</button>
+
+</div>
+
+</section>
+
+
+<footer>
+
+© 2026 GlitchBoxOfficial
+<br>
+Enter The Glitch. Own The Game. 💜
+
+</footer>
+
+</main>
+
+
+<script>
+
+/* =====================================
+   SUPABASE
+   ===================================== */
+
+const SUPABASE_URL =
+"https://syjnlgxghgwvqrwtthmr.supabase.co";
+
+const SUPABASE_ANON_KEY =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI";
+
+const supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_ANON_KEY
+);
+
+
+/* =====================================
+   LOAD ACCOUNT
+   ===================================== */
+
+async function loadAccount() {
+
+const status =
+document.getElementById("status");
+
+try {
+
+const {
+data: { session },
+error
+} =
+await supabaseClient.auth.getSession();
+
+if (error) {
+throw error;
+}
+
+if (!session) {
+
+status.textContent =
+"⚠️ You are not signed in.";
+
+document.getElementById("email")
+.textContent = "Guest";
+
+document.getElementById("membership")
+.textContent = "Free";
+
+document.getElementById("role")
+.textContent = "Guest";
+
+return;
+}
+
+
+const user =
+session.user;
+
+
+document.getElementById("email")
+.textContent =
+user.email || "Unknown";
+
+
+/* PROFILE */
+
+const {
+data: profile,
+error: profileError
+} =
+await supabaseClient
+.from("profiles")
+.select("*")
+.eq("id", user.id)
+.maybeSingle();
+
+
+if (profileError) {
+throw profileError;
+}
+
+
+if (profile) {
+
+const memberships = {
+
+free: "Free",
+premium: "Premium",
+premium_plus: "Premium Plus",
+premium_ultra: "Premium Ultra",
+vip: "VIP"
+
+};
+
+const roles = {
+
+user: "Player",
+player: "Player",
+admin: "Admin",
+owner: "Owner",
+founder: "Founder"
+
+};
+
+
+document.getElementById("membership")
+.textContent =
+memberships[profile.membership]
+|| profile.membership
+|| "Free";
+
+
+document.getElementById("role")
+.textContent =
+roles[profile.role]
+|| profile.role
+|| "Player";
+
+}
+
+else {
+
+document.getElementById("membership")
+.textContent = "Free";
+
+document.geti
