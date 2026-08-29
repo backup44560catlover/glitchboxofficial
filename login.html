@@ -1,92 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GlitchBox Login</title>
+<title>GlitchBoxOfficial Login</title>
 
-<link rel="stylesheet" href="css/styles.css">
-
-<!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- GlitchBox Scripts -->
-<script src="js/config.js"></script>
-<script src="js/supabase.js"></script>
-<script src="js/app.js" defer></script>
 
 <style>
 
+*{
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
 body{
-background:#070714;
+    margin:0;
+    min-height:100vh;
+    background:#070711;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 .login-box{
-width:420px;
-max-width:95%;
-margin:80px auto;
-background:#131325;
-padding:35px;
-border-radius:20px;
-text-align:center;
-box-shadow:0 0 25px rgba(124,58,237,.35);
+    width:420px;
+    max-width:94%;
+    background:#11111f;
+    border:1px solid #392050;
+    border-radius:20px;
+    padding:32px;
+    box-shadow:0 0 35px rgba(155,89,255,.18);
 }
 
 .logo{
-font-size:42px;
-font-weight:bold;
-color:#c084fc;
-margin-bottom:15px;
+    text-align:center;
+    color:#c084fc;
+    font-size:36px;
+    font-weight:bold;
+    margin-bottom:8px;
 }
 
 .subtitle{
-color:#d8b4fe;
-margin-bottom:30px;
+    text-align:center;
+    color:#999;
+    margin-bottom:28px;
+}
+
+label{
+    display:block;
+    color:#ddd;
+    font-size:14px;
+    margin-bottom:7px;
 }
 
 input{
-width:100%;
-padding:15px;
-margin-bottom:18px;
-border:none;
-border-radius:12px;
-background:#1b1b30;
-color:white;
-font-size:16px;
+    width:100%;
+    padding:14px;
+    margin-bottom:18px;
+    border-radius:10px;
+    border:1px solid #302040;
+    background:#191927;
+    color:white;
+    font-size:16px;
+    outline:none;
 }
 
 input:focus{
-outline:2px solid #7c3aed;
+    border-color:#9b59ff;
 }
 
 button{
-width:100%;
-padding:15px;
-background:#7c3aed;
-color:white;
-border:none;
-border-radius:12px;
-font-size:18px;
-font-weight:bold;
-cursor:pointer;
-transition:.25s;
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:10px;
+    background:#7c3aed;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 button:hover{
-background:#8b5cf6;
-transform:translateY(-2px);
+    background:#9b59ff;
+}
+
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.secondary{
+    margin-top:10px;
+    background:#171126;
+    border:1px solid #9b59ff;
+}
+
+.message{
+    margin-top:18px;
+    padding:12px;
+    border-radius:9px;
+    background:#191927;
+    color:#bbb;
+    text-align:center;
+    display:none;
 }
 
 .links{
-margin-top:20px;
+    text-align:center;
+    margin-top:20px;
 }
 
 .links a{
-color:#c084fc;
-text-decoration:none;
+    color:#c084fc;
+    text-decoration:none;
+}
+
+.links a:hover{
+    text-decoration:underline;
+}
+
+.forgot{
+    display:block;
+    text-align:right;
+    color:#c084fc;
+    font-size:13px;
+    margin-top:-8px;
+    margin-bottom:18px;
+    cursor:pointer;
 }
 
 </style>
@@ -105,62 +150,420 @@ text-decoration:none;
 Enter the Glitch. Own the Game.
 </div>
 
+
 <form id="loginForm">
 
-<input
-type="text"
-id="username"
-placeholder="Username"
-required>
+<label for="email">
+Email
+</label>
 
 <input
-type="password"
-id="password"
-placeholder="Password"
-required>
+    type="email"
+    id="email"
+    placeholder="Enter your email"
+    autocomplete="email"
+    required
+>
 
-<button type="submit">
-Login
+
+<label for="password">
+Password
+</label>
+
+<input
+    type="password"
+    id="password"
+    placeholder="Enter your password"
+    autocomplete="current-password"
+    required
+>
+
+
+<div
+    class="forgot"
+    onclick="forgotPassword()"
+>
+Forgot password?
+</div>
+
+
+<button
+    id="loginButton"
+    type="submit"
+>
+🔐 Login
 </button>
 
 </form>
 
+
+<button
+    class="secondary"
+    onclick="googleLogin()"
+>
+🌐 Continue with Google
+</button>
+
+
+<div
+    class="message"
+    id="message"
+></div>
+
+
 <div class="links">
 
-<br>
+<p>
+Don't have an account?
+</p>
 
 <a href="signup.html">
 Create Account
+</a>
+
+<br><br>
+
+<a href="index.html">
+← Back to GlitchBox
 </a>
 
 </div>
 
 </div>
 
+
 <script>
 
-document.getElementById("loginForm").addEventListener("submit", async function(e){
+/* =====================================
+   SUPABASE
+===================================== */
 
-e.preventDefault();
+const SUPABASE_URL =
+"https://syjnlgxghgwvqrwtthmr.supabase.co";
 
-const username=document.getElementById("username").value;
+/*
+   IMPORTANT:
+   Paste your COMPLETE anon/public key
+   between the quotes below.
+*/
 
-localStorage.setItem("gb_username",username);
+const SUPABASE_ANON_KEY =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI";
 
-if(localStorage.getItem("gb_device")==null){
 
-window.location.href="device-setup.html";
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
 
-}else{
 
-window.location.href="index.html";
+/* =====================================
+   MESSAGE
+===================================== */
+
+function showMessage(text){
+
+    const box =
+        document.getElementById("message");
+
+    box.textContent = text;
+    box.style.display = "block";
 
 }
 
+
+/* =====================================
+   LOGIN
+===================================== */
+
+document
+.getElementById("loginForm")
+.addEventListener("submit", async function(event){
+
+    event.preventDefault();
+
+    const email =
+        document.getElementById("email")
+        .value
+        .trim();
+
+    const password =
+        document.getElementById("password")
+        .value;
+
+    const button =
+        document.getElementById("loginButton");
+
+
+    if(!email || !password){
+
+        showMessage(
+            "Please enter your email and password."
+        );
+
+        return;
+
+    }
+
+
+    button.disabled = true;
+    button.textContent = "Signing in...";
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient.auth.signInWithPassword({
+
+            email: email,
+
+            password: password
+
+        });
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        if(!data.session){
+
+            throw new Error(
+                "Login succeeded but no session was created."
+            );
+
+        }
+
+
+        /*
+           Save the email locally so other
+           GlitchBox pages can display it.
+        */
+
+        localStorage.setItem(
+            "gb_email",
+            email
+        );
+
+
+        showMessage(
+            "✅ Login successful! Loading GlitchBox..."
+        );
+
+
+        /*
+           Give Supabase a moment to store
+           the session before redirecting.
+        */
+
+        setTimeout(function(){
+
+            if(
+                localStorage.getItem("gb_device")
+                === null
+            ){
+
+                window.location.href =
+                    "device-setup.html";
+
+            }else{
+
+                window.location.href =
+                    "index.html";
+
+            }
+
+        },700);
+
+
+    }catch(error){
+
+        console.error(
+            "GLITCHBOX LOGIN ERROR:",
+            error
+        );
+
+
+        let text =
+            error.message ||
+            "Login failed.";
+
+
+        if(
+            text.toLowerCase()
+            .includes("invalid login credentials")
+        ){
+
+            text =
+                "❌ Incorrect email or password.";
+
+        }
+
+
+        showMessage(text);
+
+
+        button.disabled = false;
+        button.textContent = "🔐 Login";
+
+    }
+
 });
+
+
+/* =====================================
+   FORGOT PASSWORD
+===================================== */
+
+async function forgotPassword(){
+
+    const email =
+        prompt(
+            "Enter the email on your GlitchBox account:"
+        );
+
+
+    if(!email){
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient.auth
+        .resetPasswordForEmail(
+            email.trim(),
+            {
+                redirectTo:
+                    window.location.origin +
+                    "/settings.html"
+            }
+        );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        alert(
+            "✅ Password reset email sent to:\n\n" +
+            email
+        );
+
+    }catch(error){
+
+        alert(
+            "❌ Could not send reset email:\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =====================================
+   GOOGLE LOGIN
+===================================== */
+
+async function googleLogin(){
+
+    try{
+
+        const {
+            error
+        } =
+        await supabaseClient.auth
+        .signInWithOAuth({
+
+            provider:"google",
+
+            options:{
+                redirectTo:
+                    window.location.origin +
+                    "/index.html"
+            }
+
+        });
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+    }catch(error){
+
+        showMessage(
+            "Google login failed: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =====================================
+   CHECK EXISTING SESSION
+===================================== */
+
+async function checkSession(){
+
+    try{
+
+        const {
+            data
+        } =
+        await supabaseClient.auth
+        .getSession();
+
+
+        if(data.session){
+
+            /*
+               Already logged in.
+               Don't make the user log in again.
+            */
+
+            showMessage(
+                "You are already signed in."
+            );
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =====================================
+   START
+===================================== */
+
+checkSession();
 
 </script>
 
 </body>
-
 </html>
