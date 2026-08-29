@@ -3,198 +3,1192 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Settings | GlitchBoxOfficial</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>Settings - GlitchBoxOfficial</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:Arial,sans-serif;
+* {
+    box-sizing: border-box;
 }
 
-body{
-    background:#070711;
-    color:white;
-    min-height:100vh;
-    transition:.25s;
+body {
+    margin: 0;
+    background: #070711;
+    color: white;
+    font-family: Arial, sans-serif;
 }
 
-body.light{
-    background:#f2f2f7;
-    color:#111;
+nav {
+    background: #0d0d1b;
+    border-bottom: 1px solid #9b59ff;
+    padding: 15px;
 }
 
-nav{
-    position:fixed;
-    left:0;
-    top:0;
-    width:235px;
-    height:100vh;
-    background:#0d0d1b;
-    border-right:1px solid #302040;
-    padding:20px 14px;
-    overflow-y:auto;
+.logo {
+    color: #9b59ff;
+    font-size: 23px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-.logo{
-    color:#9b59ff;
-    font-size:24px;
-    font-weight:bold;
+.tagline {
+    color: #777;
+    font-size: 12px;
+    margin-bottom: 12px;
 }
 
-.tagline{
-    color:#777;
-    font-size:11px;
-    margin:5px 0 20px;
+.navlinks {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
-nav a{
-    display:block;
-    color:#ddd;
-    text-decoration:none;
-    padding:10px;
-    border-radius:8px;
-    margin:3px 0;
+.navlinks a {
+    color: #ddd;
+    text-decoration: none;
+    background: #171126;
+    border: 1px solid #302040;
+    padding: 9px 12px;
+    border-radius: 8px;
 }
 
-nav a:hover,
-nav a.active{
-    background:#6d28d9;
-    color:white;
+.navlinks a:hover {
+    background: #6d28d9;
 }
 
-main{
-    margin-left:235px;
-    padding:30px;
-    max-width:1100px;
+main {
+    width: 100%;
+    max-width: 950px;
+    margin: auto;
+    padding: 25px 15px;
 }
 
-h1{
-    color:#c084fc;
-    margin-bottom:7px;
+h1 {
+    color: #c084fc;
+    margin-bottom: 5px;
 }
 
-.subtitle{
-    color:#888;
-    margin-bottom:25px;
+.subtitle {
+    color: #888;
+    margin-bottom: 20px;
 }
 
-.status{
-    padding:13px;
-    border-radius:10px;
-    background:#11111f;
-    border:1px solid #392b50;
-    margin-bottom:20px;
-    color:#aaa;
+.message {
+    background: #11111f;
+    border: 1px solid #392b50;
+    border-radius: 10px;
+    padding: 13px;
+    margin-bottom: 18px;
+    color: #aaa;
 }
 
-.section{
-    background:#11111f;
-    border:1px solid #292940;
-    border-radius:16px;
-    margin-bottom:20px;
-    overflow:hidden;
+.section {
+    background: #11111f;
+    border: 1px solid #292940;
+    border-radius: 15px;
+    margin-bottom: 18px;
+    overflow: hidden;
 }
 
-.section-title{
-    padding:17px;
-    color:#d8b4fe;
-    font-size:19px;
-    font-weight:bold;
-    border-bottom:1px solid #292940;
+.section h2 {
+    margin: 0;
+    padding: 16px;
+    color: #d8b4fe;
+    border-bottom: 1px solid #292940;
+    font-size: 19px;
 }
 
-.setting{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:20px;
-    padding:18px;
-    border-bottom:1px solid #20202f;
+.row {
+    padding: 17px;
+    border-bottom: 1px solid #222231;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
 }
 
-.setting:last-child{
-    border-bottom:none;
+.row:last-child {
+    border-bottom: 0;
 }
 
-.setting h3{
-    font-size:15px;
-    margin-bottom:5px;
+.row h3 {
+    margin: 0 0 5px;
+    font-size: 15px;
 }
 
-.setting p{
-    color:#888;
-    font-size:13px;
-    line-height:1.4;
+.row p {
+    margin: 0;
+    color: #888;
+    font-size: 13px;
 }
 
 button,
-select,
-input{
-    background:#171126;
-    color:white;
-    border:1px solid #9b59ff;
-    border-radius:9px;
-    padding:10px 14px;
+select {
+    background: #171126;
+    color: white;
+    border: 1px solid #9b59ff;
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
 }
 
-button{
-    cursor:pointer;
+button:hover {
+    background: #6d28d9;
 }
 
-button:hover{
-    background:#6d28d9;
+select {
+    min-width: 150px;
 }
 
-select{
-    min-width:160px;
+.danger {
+    border-color: #ef4444;
 }
 
-input{
-    width:230px;
-    outline:none;
+.danger:hover {
+    background: #991b1b;
 }
 
-.danger{
-    border-color:#ef4444;
+.value {
+    color: #c084fc;
+    font-weight: bold;
 }
 
-.danger:hover{
-    background:#991b1b;
+body.light {
+    background: #f3f3f7;
+    color: #111;
 }
 
-.value{
-    color:#c084fc;
-    font-weight:bold;
+body.light .section,
+body.light .message {
+    background: white;
 }
 
-.toggle{
-    position:relative;
-    width:52px;
-    height:28px;
-    flex-shrink:0;
+body.light .row p {
+    color: #666;
 }
 
-.toggle input{
-    display:none;
+body.light nav {
+    background: #222;
 }
 
-.slider{
-    position:absolute;
-    inset:0;
-    background:#292940;
-    border-radius:30px;
-    cursor:pointer;
+@media (max-width: 650px) {
+
+    .row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    button,
+    select {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">
+🎮 GlitchBoxOfficial
+</div>
+
+<div class="tagline">
+Enter The Glitch. Own The Game.
+</div>
+
+<div class="navlinks">
+
+<a href="index.html">🏠 Home</a>
+<a href="games.html">🎮 Games</a>
+<a href="profile.html">👤 Profile</a>
+<a href="shop.html">🛒 Shop</a>
+<a href="owner.html">👑 Founder</a>
+<a href="settings.html">⚙️ Settings</a>
+
+</div>
+
+</nav>
+
+
+<main>
+
+<h1>⚙️ Settings</h1>
+
+<p class="subtitle">
+Manage your GlitchBoxOfficial account.
+</p>
+
+<div class="message" id="message">
+Settings loaded.
+</div>
+
+
+<!-- ACCOUNT -->
+
+<div class="section">
+
+<h2>👤 Account</h2>
+
+<div class="row">
+
+<div>
+<h3>Email</h3>
+<p>Your current account email.</p>
+</div>
+
+<div class="value" id="email">
+Loading...
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div>
+<h3>🪙 Glitch Coins</h3>
+<p>Your current Glitch Coin balance.</p>
+</div>
+
+<div class="value" id="coins">
+0
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div>
+<h3>💎 Glitch Gems</h3>
+<p>Your current Glitch Gem balance.</p>
+</div>
+
+<div class="value" id="gems">
+0
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div>
+<h3>⭐ Membership</h3>
+<p>Your current membership level.</p>
+</div>
+
+<div class="value" id="membership">
+Free
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div>
+<h3>🛡️ Role</h3>
+<p>Your GlitchBox role.</p>
+</div>
+
+<div class="value" id="role">
+Player
+</div>
+
+</div>
+
+</div>
+
+
+<!-- APPEARANCE -->
+
+<div class="section">
+
+<h2>🎨 Appearance</h2>
+
+<div class="row">
+
+<div>
+<h3>Theme</h3>
+<p>Change the appearance of GlitchBox.</p>
+</div>
+
+<select id="theme">
+
+<option value="dark">🌙 Dark</option>
+<option value="light">☀️ Light</option>
+<option value="system">📱 System</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<!-- NOTIFICATIONS -->
+
+<div class="section">
+
+<h2>🔔 Notifications</h2>
+
+<div class="row">
+
+<div>
+<h3>Game Notifications</h3>
+<p>Game and event notifications.</p>
+</div>
+
+<input type="checkbox" id="gameNotifications">
+
+</div>
+
+
+<div class="row">
+
+<div>
+<h3>Friend Notifications</h3>
+<p>Notifications about your friends.</p>
+</div>
+
+<input type="checkbox" id="friendNotifications">
+
+</div>
+
+
+<div class="row">
+
+<div>
+<h3>Community Notifications</h3>
+<p>Updates from communities.</p>
+</div>
+
+<input type="checkbox" id="communityNotifications">
+
+</div>
+
+</div>
+
+
+<!-- PRIVACY -->
+
+<div class="section">
+
+<h2>🔒 Privacy</h2>
+
+<div class="row">
+
+<div>
+<h3>Online Status</h3>
+<p>Allow players to see when you are online.</p>
+</div>
+
+<input type="checkbox" id="onlineStatus">
+
+</div>
+
+
+<div class="row">
+
+<div>
+<h3>Profile Visibility</h3>
+<p>Choose who can see your profile.</p>
+</div>
+
+<select id="profileVisibility">
+
+<option value="everyone">Everyone</option>
+<option value="friends">Friends Only</option>
+<option value="private">Private</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<!-- SECURITY -->
+
+<div class="section">
+
+<h2>🛡️ Security</h2>
+
+<div class="row">
+
+<div>
+<h3>🔑 Reset Password</h3>
+<p>Send a password reset email.</p>
+</div>
+
+<button onclick="resetPassword()">
+Reset Password
+</button>
+
+</div>
+
+
+<div class="row">
+
+<div>
+<h3>📧 Change Email</h3>
+<p>Change your account email.</p>
+</div>
+
+<button onclick="changeEmail()">
+Change Email
+</button>
+
+</div>
+
+
+<div class="row">
+
+<div>
+<h3>🔐 Two-Step Verification</h3>
+<p>Protect your account with an authenticator.</p>
+</div>
+
+<button onclick="twoStep()">
+Set Up
+</button>
+
+</div>
+
+</div>
+
+
+<!-- SAVE -->
+
+<div class="section">
+
+<h2>💾 Preferences</h2>
+
+<div class="row">
+
+<div>
+<h3>Save Settings</h3>
+<p>Save your settings on this device.</p>
+</div>
+
+<button onclick="saveSettings()">
+💾 Save
+</button>
+
+</div>
+
+
+<div class="row">
+
+<div>
+<h3>Reset Settings</h3>
+<p>Restore default settings.</p>
+</div>
+
+<button onclick="resetSettings()">
+🔄 Reset
+</button>
+
+</div>
+
+</div>
+
+
+<!-- SIGN OUT -->
+
+<div class="section">
+
+<h2>🚪 Account</h2>
+
+<div class="row">
+
+<div>
+<h3>Sign Out</h3>
+<p>Sign out of this GlitchBox account.</p>
+</div>
+
+<button class="danger" onclick="signOut()">
+🚪 Sign Out
+</button>
+
+</div>
+
+</div>
+
+
+<p style="text-align:center;color:#555;padding:20px;">
+© 2026 GlitchBoxOfficial
+<br>
+Enter The Glitch. Own The Game. 💜
+</p>
+
+</main>
+
+
+<script>
+
+/* =========================================
+   SUPABASE
+   ========================================= */
+
+const SUPABASE_URL =
+"https://syjnlgxghgwvqrwtthmr.supabase.co";
+
+const SUPABASE_ANON_KEY =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI";
+
+let supabaseClient = null;
+
+
+/* =========================================
+   MESSAGE
+   ========================================= */
+
+function message(text) {
+
+    document.getElementById("message").textContent = text;
+
 }
 
-.slider:before{
-    content:"";
-    position:absolute;
-    width:22px;
-    height:22px;
-    left:3px;
-    top:3px;
-   
+
+/* =========================================
+   SETTINGS
+   ========================================= */
+
+const defaults = {
+
+    theme: "dark",
+
+    gameNotifications: true,
+
+    friendNotifications: true,
+
+    communityNotifications: true,
+
+    onlineStatus: true,
+
+    profileVisibility: "everyone"
+
+};
+
+
+function getSettings() {
+
+    try {
+
+        const saved =
+            localStorage.getItem("glitchboxSettings");
+
+        if (!saved) {
+
+            return {...defaults};
+
+        }
+
+        return {
+            ...defaults,
+            ...JSON.parse(saved)
+        };
+
+    } catch {
+
+        return {...defaults};
+
+    }
+
+}
+
+
+function loadSettings() {
+
+    const s = getSettings();
+
+    document.getElementById("theme").value =
+        s.theme;
+
+    document.getElementById("gameNotifications").checked =
+        s.gameNotifications;
+
+    document.getElementById("friendNotifications").checked =
+        s.friendNotifications;
+
+    document.getElementById("communityNotifications").checked =
+        s.communityNotifications;
+
+    document.getElementById("onlineStatus").checked =
+        s.onlineStatus;
+
+    document.getElementById("profileVisibility").value =
+        s.profileVisibility;
+
+    applyTheme();
+
+}
+
+
+function saveSettings() {
+
+    const settings = {
+
+        theme:
+            document.getElementById("theme").value,
+
+        gameNotifications:
+            document.getElementById("gameNotifications").checked,
+
+        friendNotifications:
+            document.getElementById("friendNotifications").checked,
+
+        communityNotifications:
+            document.getElementById("communityNotifications").checked,
+
+        onlineStatus:
+            document.getElementById("onlineStatus").checked,
+
+        profileVisibility:
+            document.getElementById("profileVisibility").value
+
+    };
+
+    localStorage.setItem(
+        "glitchboxSettings",
+        JSON.stringify(settings)
+    );
+
+    applyTheme();
+
+    message("✅ Settings saved!");
+
+}
+
+
+function resetSettings() {
+
+    localStorage.removeItem(
+        "glitchboxSettings"
+    );
+
+    loadSettings();
+
+    message("✅ Settings reset!");
+
+}
+
+
+function applyTheme() {
+
+    const theme =
+        document.getElementById("theme").value;
+
+    document.body.classList.remove("light");
+
+    if (theme === "light") {
+
+        document.body.classList.add("light");
+
+    }
+
+    if (
+        theme === "system" &&
+        window.matchMedia(
+            "(prefers-color-scheme: light)"
+        ).matches
+    ) {
+
+        document.body.classList.add("light");
+
+    }
+
+}
+
+
+document.getElementById("theme")
+    .addEventListener("change", applyTheme);
+
+
+/* =========================================
+   SUPABASE ACCOUNT
+   ========================================= */
+
+async function loadAccount() {
+
+    try {
+
+        if (!window.supabase) {
+
+            message(
+                "Settings work, but Supabase could not load."
+            );
+
+            return;
+
+        }
+
+        supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_ANON_KEY
+            );
+
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth.getSession();
+
+
+        if (error) {
+
+            console.error(error);
+
+            message(
+                "⚠️ No active login session."
+            );
+
+            return;
+
+        }
+
+
+        if (!data.session) {
+
+            document.getElementById("email")
+                .textContent = "Guest";
+
+            document.getElementById("coins")
+                .textContent = "—";
+
+            document.getElementById("gems")
+                .textContent = "—";
+
+            document.getElementById("membership")
+                .textContent = "Guest";
+
+            document.getElementById("role")
+                .textContent = "Guest";
+
+            message(
+                "👤 You are browsing as a guest."
+            );
+
+            return;
+
+        }
+
+
+        const user =
+            data.session.user;
+
+
+        document.getElementById("email")
+            .textContent =
+            user.email || "Unknown";
+
+
+        /*
+        Try to load the profile.
+        If the database isn't ready,
+        the SETTINGS PAGE STILL WORKS.
+        */
+
+        const result =
+            await supabaseClient
+                .from("profiles")
+                .select("*")
+                .eq("id", user.id)
+                .maybeSingle();
+
+
+        if (result.error) {
+
+            console.error(
+                "Profile error:",
+                result.error
+            );
+
+            message(
+                "✅ Signed in. Profile database is not available yet."
+            );
+
+            return;
+
+        }
+
+
+        if (result.data) {
+
+            const profile =
+                result.data;
+
+
+            document.getElementById("coins")
+                .textContent =
+                Number(
+                    profile.glitch_coins || 0
+                ).toLocaleString();
+
+
+            document.getElementById("gems")
+                .textContent =
+                Number(
+                    profile.glitch_gems || 0
+                ).toLocaleString();
+
+
+            document.getElementById("membership")
+                .textContent =
+                formatMembership(
+                    profile.membership
+                );
+
+
+            document.getElementById("role")
+                .textContent =
+                formatRole(
+                    profile.role
+                );
+
+        }
+
+
+        message(
+            "✅ Account connected!"
+        );
+
+    }
+    catch(error) {
+
+        console.error(error);
+
+        message(
+            "⚠️ Account connection unavailable. Settings still work."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   MEMBERSHIP
+   ========================================= */
+
+function formatMembership(value) {
+
+    const names = {
+
+        free: "Free",
+
+        premium: "Premium",
+
+        premium_plus: "Premium Plus",
+
+        premium_ultra: "Premium Ultra",
+
+        vip: "VIP"
+
+    };
+
+    return names[value] ||
+           value ||
+           "Free";
+
+}
+
+
+/* =========================================
+   ROLE
+   ========================================= */
+
+function formatRole(value) {
+
+    const names = {
+
+        user: "Player",
+
+        player: "Player",
+
+        admin: "Admin",
+
+        owner: "Owner",
+
+        founder: "Founder"
+
+    };
+
+    return names[value] ||
+           value ||
+           "Player";
+
+}
+
+
+/* =========================================
+   PASSWORD
+   ========================================= */
+
+async function resetPassword() {
+
+    if (!supabaseClient) {
+
+        alert(
+            "Supabase is not connected."
+        );
+
+        return;
+
+    }
+
+    try {
+
+        const {
+            data: { session }
+        } =
+            await supabaseClient.auth.getSession();
+
+
+        if (!session) {
+
+            alert(
+                "Please sign in first."
+            );
+
+            return;
+
+        }
+
+
+        const email =
+            session.user.email;
+
+
+        const {error} =
+            await supabaseClient.auth
+                .resetPasswordForEmail(
+                    email,
+                    {
+                        redirectTo:
+                            window.location.href
+                    }
+                );
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        alert(
+            "✅ Password reset email sent to:\n\n" +
+            email
+        );
+
+    }
+    catch(error) {
+
+        alert(
+            "Password reset failed:\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   CHANGE EMAIL
+   ========================================= */
+
+async function changeEmail() {
+
+    if (!supabaseClient) {
+
+        alert(
+            "Supabase is not connected."
+        );
+
+        return;
+
+    }
+
+    const email =
+        prompt(
+            "Enter your new email address:"
+        );
+
+
+    if (!email) return;
+
+
+    try {
+
+        const {error} =
+            await supabaseClient.auth
+                .updateUser({
+                    email: email.trim()
+                });
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        alert(
+            "📧 Check your email to confirm the change."
+        );
+
+    }
+    catch(error) {
+
+        alert(
+            "Could not change email:\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   TWO STEP
+   ========================================= */
+
+async function twoStep() {
+
+    if (!supabaseClient) {
+
+        alert(
+            "Supabase is not connected."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const {
+            data: { session }
+        } =
+            await supabaseClient.auth.getSession();
+
+
+        if (!session) {
+
+            alert(
+                "Please sign in first."
+            );
+
+            return;
+
+        }
+
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth.mfa.enroll({
+                factorType: "totp",
+                friendlyName: "GlitchBox Authenticator"
+            });
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        alert(
+            "🔐 Two-Step Verification setup started."
+        );
+
+        console.log(
+            "Authenticator setup:",
+            data
+        );
+
+    }
+    catch(error) {
+
+        alert(
+            "Two-Step Verification could not start:\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   SIGN OUT
+   ========================================= */
+
+async function signOut() {
+
+    if (!supabaseClient) {
+
+        location.href =
+            "index.html";
+
+        return;
+
+    }
+
+
+    const yes =
+        confirm(
+            "Are you sure you want to sign out?"
+        );
+
+
+    if (!yes) return;
+
+
+    try {
+
+        await supabaseClient.auth.signOut();
+
+        location.href =
+            "index.html";
+
+    }
+    catch(error) {
+
+        alert(
+            "Sign out failed:\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   START
+   ========================================= */
+
+loadSettings();
+
+loadAccount();
+
+</script>
+
+</body>
+</html>
