@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
@@ -12,116 +11,146 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 *{
-box-sizing:border-box;
-margin:0;
-padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 body{
-background:#05050c;
-color:white;
-font-family:Arial,sans-serif;
-overflow:hidden;
+    background:#05050c;
+    color:white;
+    font-family:Arial,sans-serif;
+    overflow:hidden;
 }
 
 header{
-height:70px;
-background:#0d0d1b;
-border-bottom:1px solid #7135a5;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 15px;
+    height:70px;
+    background:#0d0d1b;
+    border-bottom:1px solid #7135a5;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 15px;
 }
 
 .title{
-color:#b45cff;
-font-size:23px;
-font-weight:bold;
+    color:#b45cff;
+    font-size:23px;
+    font-weight:bold;
 }
 
 .stats{
-display:flex;
-gap:8px;
-flex-wrap:wrap;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
 }
 
 .stat{
-background:#171326;
-border:1px solid #6135a0;
-border-radius:8px;
-padding:8px 10px;
-font-size:13px;
+    background:#171326;
+    border:1px solid #6135a0;
+    border-radius:8px;
+    padding:8px 10px;
+    font-size:13px;
 }
 
 canvas{
-display:block;
-width:100vw;
-height:calc(100vh - 70px);
+    display:block;
+    width:100vw;
+    height:calc(100vh - 70px);
 }
 
 .status{
-position:fixed;
-top:82px;
-left:12px;
-background:#0d0d18;
-padding:8px;
-border-radius:8px;
-color:#aaa;
-font-size:12px;
+    position:fixed;
+    top:82px;
+    left:12px;
+    background:#0d0d18;
+    padding:8px;
+    border-radius:8px;
+    color:#aaa;
+    font-size:12px;
 }
 
 .controls{
-position:fixed;
-bottom:12px;
-left:12px;
-color:#888;
-font-size:12px;
+    position:fixed;
+    bottom:12px;
+    left:12px;
+    color:#888;
+    font-size:12px;
 }
 
 .gameover{
-display:none;
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:#0d0815;
-border:1px solid #a855ff;
-border-radius:18px;
-padding:30px;
-text-align:center;
-width:min(90%,400px);
-box-shadow:0 0 35px rgba(168,85,255,.35);
+    display:none;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:#0d0815;
+    border:1px solid #a855ff;
+    border-radius:18px;
+    padding:30px;
+    text-align:center;
+    width:min(90%,400px);
+    box-shadow:0 0 30px #7c3aed55;
 }
 
 .gameover h1{
-color:#c084fc;
-margin-bottom:12px;
+    color:#c084fc;
+    margin-bottom:12px;
 }
 
 .gameover p{
-margin:8px;
-color:#bbb;
+    margin:8px;
+    color:#bbb;
 }
 
 button{
-background:#6d28d9;
-border:1px solid #a855ff;
-color:white;
-border-radius:9px;
-padding:11px 16px;
-cursor:pointer;
-margin:6px;
+    background:#6d28d9;
+    border:1px solid #a855ff;
+    color:white;
+    border-radius:9px;
+    padding:11px 16px;
+    cursor:pointer;
+    margin:6px;
 }
 
 button:hover{
-background:#8b5cf6;
+    background:#8b5cf6;
 }
 
-</style>
+@media(max-width:700px){
 
+header{
+    height:auto;
+    min-height:70px;
+    flex-direction:column;
+    gap:8px;
+    padding:10px;
+}
+
+.title{
+    font-size:20px;
+}
+
+.stats{
+    justify-content:center;
+}
+
+.stat{
+    font-size:11px;
+    padding:6px 8px;
+}
+
+canvas{
+    height:calc(100vh - 110px);
+}
+
+.controls{
+    font-size:10px;
+}
+
+}
+</style>
 </head>
 
 <body>
@@ -144,13 +173,8 @@ background:#8b5cf6;
 </div>
 
 <div class="stat">
-💰 Balance:
-<span id="accountGC">0</span>
-</div>
-
-<div class="stat">
 💎 Gems:
-<span id="accountGems">0</span>
+<span id="gameGems">0</span>
 </div>
 
 <div class="stat">
@@ -165,7 +189,7 @@ background:#8b5cf6;
 <canvas id="game"></canvas>
 
 <div class="status" id="status">
-Connecting...
+🎮 Cyber Strike Ready
 </div>
 
 <div class="controls">
@@ -174,9 +198,7 @@ WASD / Arrow Keys = Move • Mouse = Aim • Click / Space = Shoot
 
 <div class="gameover" id="gameover">
 
-<h1>
-💥 Game Over
-</h1>
+<h1>💥 Game Over</h1>
 
 <p>
 Level:
@@ -184,23 +206,13 @@ Level:
 </p>
 
 <p>
-GC Earned:
+🪙 GC Earned:
 <b id="finalGC">0</b>
 </p>
 
 <p>
 💎 Gems Earned:
 <b id="finalGems">0</b>
-</p>
-
-<p>
-Account GC:
-<b id="finalBalance">0</b>
-</p>
-
-<p>
-Account Gems:
-<b id="finalGemBalance">0</b>
 </p>
 
 <button onclick="restart()">
@@ -215,26 +227,26 @@ Account Gems:
 
 <script>
 
-/* =========================================================
-   SUPABASE
-========================================================= */
+/* =========================
+   SUPABASE CONNECTION
+========================= */
 
 const SUPABASE_URL =
 "https://syjnlgxghgwvqrwtthmr.supabase.co";
 
 const SUPABASE_ANON_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI";
+"[PUT YOUR SUPABASE ANON KEY HERE]";
 
 const supabaseClient =
 window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_ANON_KEY
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
 );
 
 
-/* =========================================================
-   GAME VARIABLES
-========================================================= */
+/* =========================
+   GAME SETUP
+========================= */
 
 const canvas =
 document.getElementById("game");
@@ -244,1067 +256,780 @@ canvas.getContext("2d");
 
 let player;
 
-let bullets=[];
+let bullets = [];
 
-let enemies=[];
+let enemies = [];
 
-let health=100;
+let health = 100;
 
-let gameGC=0;
+let gameGC = 0;
 
-let gameGems=0;
+let gameGems = 0;
 
-let accountGC=0;
+let level = 1;
 
-let accountGems=0;
+let running = true;
 
-let level=1;
+let enemyTimer = 0;
 
-let running=true;
+let lastShot = 0;
 
-let enemyTimer=0;
+const keys = {};
 
-let lastShot=0;
-
-
-/* =========================================================
-   CONTROLS
-========================================================= */
-
-const keys={};
-
-const mouse={
-x:innerWidth/2,
-y:innerHeight/2,
-down:false
+const mouse = {
+    x: innerWidth / 2,
+    y: innerHeight / 2,
+    down: false
 };
 
 
-/* =========================================================
-   RESIZE
-========================================================= */
+/* =========================
+   CANVAS
+========================= */
 
 function resize(){
 
-canvas.width=innerWidth;
+    canvas.width = innerWidth;
 
-canvas.height=
-innerHeight-70;
-
+    canvas.height =
+        innerHeight -
+        document.querySelector("header").offsetHeight;
 }
 
 resize();
 
 addEventListener(
-"resize",
-resize
+    "resize",
+    resize
 );
 
 
-/* =========================================================
-   CREATE PLAYER
-========================================================= */
+/* =========================
+   PLAYER
+========================= */
 
 function createPlayer(){
 
-player={
+    player = {
 
-x:canvas.width/2,
+        x:canvas.width / 2,
 
-y:canvas.height/2,
+        y:canvas.height / 2,
 
-size:18,
+        size:18,
 
-speed:5
-
-};
-
+        speed:5
+    };
 }
 
 
-/* =========================================================
+/* =========================
    KEYBOARD
-========================================================= */
+========================= */
 
 addEventListener(
-"keydown",
-e=>{
+    "keydown",
+    e => {
 
-keys[
-e.key.toLowerCase()
-]=true;
+        keys[
+            e.key.toLowerCase()
+        ] = true;
 
-if(e.code==="Space"){
+        if(e.code === "Space"){
 
-e.preventDefault();
+            e.preventDefault();
 
-shoot();
-
-}
-
-});
+            shoot();
+        }
+    }
+);
 
 
 addEventListener(
-"keyup",
-e=>{
+    "keyup",
+    e => {
 
-keys[
-e.key.toLowerCase()
-]=false;
+        keys[
+            e.key.toLowerCase()
+        ] = false;
+    }
+);
 
-});
 
-
-/* =========================================================
+/* =========================
    MOUSE
-========================================================= */
+========================= */
 
 canvas.addEventListener(
-"mousemove",
-e=>{
+    "mousemove",
+    e => {
 
-const r=
-canvas.getBoundingClientRect();
+        const r =
+            canvas.getBoundingClientRect();
 
-mouse.x=
-e.clientX-r.left;
+        mouse.x =
+            e.clientX - r.left;
 
-mouse.y=
-e.clientY-r.top;
-
-});
+        mouse.y =
+            e.clientY - r.top;
+    }
+);
 
 
 canvas.addEventListener(
-"mousedown",
-()=>{
+    "mousedown",
+    () => {
 
-mouse.down=true;
+        mouse.down = true;
 
-shoot();
-
-});
+        shoot();
+    }
+);
 
 
 addEventListener(
-"mouseup",
-()=>{
+    "mouseup",
+    () => {
 
-mouse.down=false;
-
-});
-
-
-/* =========================================================
-   ACCOUNT
-========================================================= */
-
-async function loadAccount(){
-
-try{
-
-const {
-data:{user},
-error
-}=
-await supabaseClient.auth.getUser();
-
-if(error)
-throw error;
-
-if(!user){
-
-document.getElementById(
-"status"
-).textContent=
-"⚠️ Sign in to save rewards.";
-
-return;
-
-}
-
-
-/* GET GC */
-
-const {
-data,
-error:balanceError
-}=
-await supabaseClient.rpc(
-"get_glitchbox_balance"
+        mouse.down = false;
+    }
 );
 
-if(balanceError)
-throw balanceError;
 
-if(data && data.length){
-
-accountGC=
-Number(
-data[0].glitch_coins || 0
-);
-
-}
-
-
-/*
-   Try to get gems from the same balance
-   response if your RPC returns them.
-*/
-
-if(data && data.length){
-
-accountGems=
-Number(
-data[0].glitch_gems || 0
-);
-
-}
-
-updateStats();
-
-document.getElementById(
-"status"
-).textContent=
-"✅ Account connected";
-
-}catch(error){
-
-console.error(
-"Account error:",
-error
-);
-
-document.getElementById(
-"status"
-).textContent=
-"⚠️ Account connection failed.";
-
-}
-
-}
-
-
-/* =========================================================
-   DEPOSIT GC
-========================================================= */
-
-async function depositGC(amount){
-
-if(amount<=0)
-return;
-
-try{
-
-const {
-data:{user},
-error:userError
-}=
-await supabaseClient.auth.getUser();
-
-if(userError)
-throw userError;
-
-if(!user){
-
-document.getElementById(
-"status"
-).textContent=
-"⚠️ Sign in to receive GC.";
-
-return;
-
-}
-
-
-const {
-data,
-error
-}=
-await supabaseClient.rpc(
-"add_glitch_coins",
-{
-amount:amount
-}
-);
-
-if(error)
-throw error;
-
-accountGC=
-Number(data);
-
-updateStats();
-
-document.getElementById(
-"status"
-).textContent=
-"🪙 +" + amount + " GC deposited!";
-
-}catch(error){
-
-console.error(
-"GC deposit error:",
-error
-);
-
-document.getElementById(
-"status"
-).textContent=
-"⚠️ GC deposit failed.";
-
-}
-
-}
-
-
-/* =========================================================
-   DEPOSIT GEMS
-========================================================= */
-
-async function depositGems(amount){
-
-if(amount<=0)
-return;
-
-try{
-
-const {
-data:{user},
-error:userError
-}=
-await supabaseClient.auth.getUser();
-
-if(userError)
-throw userError;
-
-if(!user){
-
-document.getElementById(
-"status"
-).textContent=
-"⚠️ Sign in to receive Gems.";
-
-return;
-
-}
-
-
-/*
-   This uses the matching Supabase RPC:
-
-   add_glitch_gems
-
-   It should accept:
-
-   { amount: number }
-*/
-
-const {
-data,
-error
-}=
-await supabaseClient.rpc(
-"add_glitch_gems",
-{
-amount:amount
-}
-);
-
-if(error)
-throw error;
-
-accountGems=
-Number(data);
-
-updateStats();
-
-document.getElementById(
-"status"
-).textContent=
-"💎 +" + amount + " Gem deposited!";
-
-}catch(error){
-
-console.error(
-"Gem deposit error:",
-error
-);
-
-document.getElementById(
-"status"
-).textContent=
-"⚠️ Gem deposit failed.";
-
-}
-
-}
-
-
-/* =========================================================
-   REWARD PLAYER
-========================================================= */
-
-async function rewardPlayer(){
-
-/*
-   Every enemy defeated:
-
-   🪙 +10 GC
-   💎 +1 Gem
-*/
-
-gameGC+=10;
-
-gameGems+=1;
-
-level=
-Math.floor(
-gameGC/100
-)+1;
-
-updateStats();
-
-
-/*
-   Deposit both rewards.
-*/
-
-await Promise.all([
-depositGC(10),
-depositGems(1)
-]);
-
-}
-
-
-/* =========================================================
+/* =========================
    SHOOT
-========================================================= */
+========================= */
 
 function shoot(){
 
-if(!running)
-return;
+    if(!running)return;
 
-const now=
-Date.now();
+    const now =
+        Date.now();
 
-if(
-now-lastShot<180
-)
-return;
+    if(now - lastShot < 180)
+        return;
 
-lastShot=
-now;
+    lastShot = now;
 
-const dx=
-mouse.x-player.x;
+    const dx =
+        mouse.x - player.x;
 
-const dy=
-mouse.y-player.y;
+    const dy =
+        mouse.y - player.y;
 
-const d=
-Math.hypot(dx,dy);
+    const d =
+        Math.hypot(dx,dy);
 
-if(!d)
-return;
+    if(!d)return;
 
-bullets.push({
+    bullets.push({
 
-x:player.x,
+        x:player.x,
 
-y:player.y,
+        y:player.y,
 
-vx:dx/d*9,
+        vx:dx / d * 9,
 
-vy:dy/d*9,
+        vy:dy / d * 9,
 
-size:5
-
-});
-
+        size:5
+    });
 }
 
 
-/* =========================================================
-   SPAWN ENEMY
-========================================================= */
+/* =========================
+   ENEMY
+========================= */
 
 function spawnEnemy(){
 
-const side=
-Math.floor(
-Math.random()*4
-);
+    const side =
+        Math.floor(
+            Math.random() * 4
+        );
 
-let x,y;
+    let x;
+    let y;
 
+    if(side === 0){
 
-if(side===0){
+        x =
+            Math.random() *
+            canvas.width;
 
-x=
-Math.random()*
-canvas.width;
+        y = -25;
+    }
 
-y=-25;
+    else if(side === 1){
 
-}
+        x =
+            canvas.width + 25;
 
-else if(side===1){
+        y =
+            Math.random() *
+            canvas.height;
+    }
 
-x=
-canvas.width+25;
+    else if(side === 2){
 
-y=
-Math.random()*
-canvas.height;
+        x =
+            Math.random() *
+            canvas.width;
 
-}
+        y =
+            canvas.height + 25;
+    }
 
-else if(side===2){
+    else{
 
-x=
-Math.random()*
-canvas.width;
+        x = -25;
 
-y=
-canvas.height+25;
+        y =
+            Math.random() *
+            canvas.height;
+    }
 
-}
+    enemies.push({
 
-else{
+        x:x,
 
-x=-25;
+        y:y,
 
-y=
-Math.random()*
-canvas.height;
+        size:17,
 
-}
+        speed:
+            1.1 + level * 0.12,
 
-
-enemies.push({
-
-x,
-
-y,
-
-size:17,
-
-speed:
-1.1+level*.12,
-
-health:1
-
-});
-
+        health:1
+    });
 }
 
 
-/* =========================================================
+/* =========================
+   REWARD
+========================= */
+
+function rewardPlayer(){
+
+    /*
+       LOCAL GAME REWARDS ONLY.
+
+       No Supabase RPC.
+       No add_glitch_coins.
+       No add_glitch_gems.
+    */
+
+    gameGC += 10;
+
+    gameGems += 1;
+
+    level =
+        Math.floor(
+            gameGC / 100
+        ) + 1;
+
+    document.getElementById(
+        "status"
+    ).textContent =
+        "🪙 +10 GC   💎 +1 Gem";
+}
+
+
+/* =========================
    UPDATE
-========================================================= */
+========================= */
 
 function update(){
 
-if(!running)
-return;
+    if(!running)return;
 
 
-/* PLAYER MOVEMENT */
+    /* MOVEMENT */
 
-if(
-keys.w ||
-keys.arrowup
-)
-player.y-=player.speed;
+    if(
+        keys.w ||
+        keys.arrowup
+    ){
 
+        player.y -=
+            player.speed;
+    }
 
-if(
-keys.s ||
-keys.arrowdown
-)
-player.y+=player.speed;
+    if(
+        keys.s ||
+        keys.arrowdown
+    ){
 
+        player.y +=
+            player.speed;
+    }
 
-if(
-keys.a ||
-keys.arrowleft
-)
-player.x-=player.speed;
+    if(
+        keys.a ||
+        keys.arrowleft
+    ){
 
+        player.x -=
+            player.speed;
+    }
 
-if(
-keys.d ||
-keys.arrowright
-)
-player.x+=player.speed;
+    if(
+        keys.d ||
+        keys.arrowright
+    ){
 
-
-/* PLAYER BOUNDS */
-
-player.x=
-Math.max(
-player.size,
-Math.min(
-canvas.width-player.size,
-player.x
-)
-);
+        player.x +=
+            player.speed;
+    }
 
 
-player.y=
-Math.max(
-player.size,
-Math.min(
-canvas.height-player.size,
-player.y
-)
-);
+    /* KEEP PLAYER INSIDE */
+
+    player.x =
+        Math.max(
+            player.size,
+            Math.min(
+                canvas.width -
+                player.size,
+                player.x
+            )
+        );
+
+    player.y =
+        Math.max(
+            player.size,
+            Math.min(
+                canvas.height -
+                player.size,
+                player.y
+            )
+        );
 
 
-/* BULLETS */
+    /* BULLETS */
 
-bullets.forEach(
-b=>{
+    bullets.forEach(
+        b => {
 
-b.x+=b.vx;
+            b.x += b.vx;
 
-b.y+=b.vy;
-
-});
-
-
-bullets=
-bullets.filter(
-b=>
-
-b.x>-40 &&
-b.x<canvas.width+40 &&
-b.y>-40 &&
-b.y<canvas.height+40
-
-);
+            b.y += b.vy;
+        }
+    );
 
 
-/* ENEMY SPAWN */
+    bullets =
+        bullets.filter(
+            b =>
 
-enemyTimer++;
+            b.x > -40 &&
+            b.x <
+                canvas.width + 40 &&
+            b.y > -40 &&
+            b.y <
+                canvas.height + 40
+        );
 
 
-if(
-enemyTimer>
-Math.max(
-25,
-80-level*5
-)
-){
+    /* ENEMY SPAWN */
 
-spawnEnemy();
+    enemyTimer++;
 
-enemyTimer=0;
+    if(
+        enemyTimer >
+        Math.max(
+            25,
+            80 - level * 5
+        )
+    ){
 
+        spawnEnemy();
+
+        enemyTimer = 0;
+    }
+
+
+    /* ENEMY MOVEMENT */
+
+    enemies.forEach(
+        e => {
+
+            const dx =
+                player.x - e.x;
+
+            const dy =
+                player.y - e.y;
+
+            const d =
+                Math.hypot(dx,dy);
+
+            if(d){
+
+                e.x +=
+                    dx / d *
+                    e.speed;
+
+                e.y +=
+                    dy / d *
+                    e.speed;
+            }
+
+
+            /* DAMAGE */
+
+            if(
+                d <
+                player.size +
+                e.size
+            ){
+
+                health -= .5;
+            }
+        }
+    );
+
+
+    /* BULLET COLLISIONS */
+
+    for(
+        let b =
+            bullets.length - 1;
+        b >= 0;
+        b--
+    ){
+
+        for(
+            let e =
+                enemies.length - 1;
+            e >= 0;
+            e--
+        ){
+
+            const bullet =
+                bullets[b];
+
+            const enemy =
+                enemies[e];
+
+            if(
+                Math.hypot(
+                    bullet.x -
+                    enemy.x,
+
+                    bullet.y -
+                    enemy.y
+                )
+                <
+                bullet.size +
+                enemy.size
+            ){
+
+                bullets.splice(
+                    b,
+                    1
+                );
+
+                enemies.splice(
+                    e,
+                    1
+                );
+
+                rewardPlayer();
+
+                break;
+            }
+        }
+    }
+
+
+    /* GAME OVER */
+
+    if(health <= 0){
+
+        health = 0;
+
+        running = false;
+
+        showGameOver();
+    }
+
+    updateStats();
 }
 
 
-/* ENEMIES */
-
-enemies.forEach(
-e=>{
-
-const dx=
-player.x-e.x;
-
-const dy=
-player.y-e.y;
-
-const d=
-Math.hypot(
-dx,
-dy
-);
-
-
-if(d){
-
-e.x+=
-dx/d*e.speed;
-
-e.y+=
-dy/d*e.speed;
-
-}
-
-
-if(
-d<
-player.size+e.size
-){
-
-health-=.5;
-
-}
-
-});
-
-
-/* COLLISIONS */
-
-for(
-let b=bullets.length-1;
-b>=0;
-b--
-){
-
-for(
-let e=enemies.length-1;
-e>=0;
-e--
-){
-
-const bullet=
-bullets[b];
-
-const enemy=
-enemies[e];
-
-
-if(
-Math.hypot(
-bullet.x-enemy.x,
-bullet.y-enemy.y
-)<
-bullet.size+enemy.size
-){
-
-bullets.splice(
-b,
-1
-);
-
-enemies.splice(
-e,
-1
-);
-
-
-/*
-   PLAYER REWARD
-*/
-
-rewardPlayer();
-
-break;
-
-}
-
-}
-
-}
-
-
-/* GAME OVER */
-
-if(
-health<=0
-){
-
-health=0;
-
-running=false;
-
-showGameOver();
-
-}
-
-
-updateStats();
-
-}
-
-
-/* =========================================================
+/* =========================
    DRAW
-========================================================= */
+========================= */
 
 function draw(){
 
-ctx.clearRect(
-0,
-0,
-canvas.width,
-canvas.height
-);
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
 
 
-/* GRID */
+    /* GRID */
 
-ctx.strokeStyle=
-"#171329";
+    ctx.strokeStyle =
+        "#171329";
 
-ctx.lineWidth=1;
+    ctx.lineWidth = 1;
 
 
-for(
-let x=0;
-x<canvas.width;
-x+=45
-){
+    for(
+        let x = 0;
+        x < canvas.width;
+        x += 45
+    ){
 
-ctx.beginPath();
+        ctx.beginPath();
 
-ctx.moveTo(
-x,
-0
-);
+        ctx.moveTo(
+            x,
+            0
+        );
 
-ctx.lineTo(
-x,
-canvas.height
-);
+        ctx.lineTo(
+            x,
+            canvas.height
+        );
 
-ctx.stroke();
+        ctx.stroke();
+    }
 
+
+    for(
+        let y = 0;
+        y < canvas.height;
+        y += 45
+    ){
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            0,
+            y
+        );
+
+        ctx.lineTo(
+            canvas.width,
+            y
+        );
+
+        ctx.stroke();
+    }
+
+
+    /* PLAYER */
+
+    ctx.beginPath();
+
+    ctx.arc(
+        player.x,
+        player.y,
+        player.size,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fillStyle =
+        "#a855ff";
+
+    ctx.fill();
+
+    ctx.strokeStyle =
+        "#e9d5ff";
+
+    ctx.stroke();
+
+
+    /* PLAYER AIM LINE */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        player.x,
+        player.y
+    );
+
+    ctx.lineTo(
+        mouse.x,
+        mouse.y
+    );
+
+    ctx.strokeStyle =
+        "#a855ff55";
+
+    ctx.stroke();
+
+
+    /* BULLETS */
+
+    bullets.forEach(
+        b => {
+
+            ctx.beginPath();
+
+            ctx.arc(
+                b.x,
+                b.y,
+                b.size,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                "#ffffff";
+
+            ctx.fill();
+        }
+    );
+
+
+    /* ENEMIES */
+
+    enemies.forEach(
+        e => {
+
+            ctx.beginPath();
+
+            ctx.arc(
+                e.x,
+                e.y,
+                e.size,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                "#ef4444";
+
+            ctx.fill();
+
+            ctx.strokeStyle =
+                "#ffaaaa";
+
+            ctx.stroke();
+        }
+    );
 }
 
 
-for(
-let y=0;
-y<canvas.height;
-y+=45
-){
-
-ctx.beginPath();
-
-ctx.moveTo(
-0,
-y
-);
-
-ctx.lineTo(
-canvas.width,
-y
-);
-
-ctx.stroke();
-
-}
-
-
-/* PLAYER */
-
-ctx.beginPath();
-
-ctx.arc(
-player.x,
-player.y,
-player.size,
-0,
-Math.PI*2
-);
-
-ctx.fillStyle=
-"#a855ff";
-
-ctx.fill();
-
-ctx.strokeStyle=
-"#e9d5ff";
-
-ctx.stroke();
-
-
-/* BULLETS */
-
-bullets.forEach(
-b=>{
-
-ctx.beginPath();
-
-ctx.arc(
-b.x,
-b.y,
-b.size,
-0,
-Math.PI*2
-);
-
-ctx.fillStyle=
-"#fff";
-
-ctx.fill();
-
-});
-
-
-/* ENEMIES */
-
-enemies.forEach(
-e=>{
-
-ctx.beginPath();
-
-ctx.arc(
-e.x,
-e.y,
-e.size,
-0,
-Math.PI*2
-);
-
-ctx.fillStyle=
-"#ef4444";
-
-ctx.fill();
-
-ctx.strokeStyle=
-"#ffaaaa";
-
-ctx.stroke();
-
-});
-
-}
-
-
-/* =========================================================
+/* =========================
    STATS
-========================================================= */
+========================= */
 
 function updateStats(){
 
-document.getElementById(
-"health"
-).textContent=
-Math.floor(health);
+    document.getElementById(
+        "health"
+    ).textContent =
+        Math.floor(health);
 
+    document.getElementById(
+        "gameGC"
+    ).textContent =
+        gameGC;
 
-document.getElementById(
-"gameGC"
-).textContent=
-gameGC;
+    document.getElementById(
+        "gameGems"
+    ).textContent =
+        gameGems;
 
-
-document.getElementById(
-"accountGC"
-).textContent=
-accountGC;
-
-
-document.getElementById(
-"accountGems"
-).textContent=
-accountGems;
-
-
-document.getElementById(
-"level"
-).textContent=
-level;
-
+    document.getElementById(
+        "level"
+    ).textContent =
+        level;
 }
 
 
-/* =========================================================
+/* =========================
    GAME OVER
-========================================================= */
+========================= */
 
 function showGameOver(){
 
-document.getElementById(
-"finalLevel"
-).textContent=
-level;
+    document.getElementById(
+        "finalLevel"
+    ).textContent =
+        level;
 
+    document.getElementById(
+        "finalGC"
+    ).textContent =
+        gameGC;
 
-document.getElementById(
-"finalGC"
-).textContent=
-gameGC;
+    document.getElementById(
+        "finalGems"
+    ).textContent =
+        gameGems;
 
-
-document.getElementById(
-"finalGems"
-).textContent=
-gameGems;
-
-
-document.getElementById(
-"finalBalance"
-).textContent=
-accountGC;
-
-
-document.getElementById(
-"finalGemBalance"
-).textContent=
-accountGems;
-
-
-document.getElementById(
-"gameover"
-).style.display=
-"block";
-
+    document.getElementById(
+        "gameover"
+    ).style.display =
+        "block";
 }
 
 
-/* =========================================================
+/* =========================
    RESTART
-========================================================= */
+========================= */
 
 function restart(){
 
-health=100;
+    health = 100;
 
-gameGC=0;
+    gameGC = 0;
 
-gameGems=0;
+    gameGems = 0;
 
-level=1;
+    level = 1;
 
-bullets=[];
+    bullets = [];
 
-enemies=[];
+    enemies = [];
 
-enemyTimer=0;
+    enemyTimer = 0;
 
-running=true;
+    running = true;
 
-document.getElementById(
-"gameover"
-).style.display=
-"none";
+    document.getElementById(
+        "gameover"
+    ).style.display =
+        "none";
 
-createPlayer();
+    document.getElementById(
+        "status"
+    ).textContent =
+        "🎮 Cyber Strike Ready";
 
-updateStats();
+    createPlayer();
 
+    updateStats();
 }
 
 
-/* =========================================================
+/* =========================
    GAME LOOP
-========================================================= */
+========================= */
 
 function loop(){
 
-update();
+    update();
 
-draw();
+    draw();
 
-requestAnimationFrame(
-loop
-);
-
+    requestAnimationFrame(
+        loop
+    );
 }
 
 
 createPlayer();
-
-loadAccount();
 
 updateStats();
 
