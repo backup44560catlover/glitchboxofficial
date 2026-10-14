@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Military Tycoon 3D</title>
+<style>
+body{margin:0;overflow:hidden;background:#101820;color:white;font-family:Arial}
+#ui{position:fixed;inset:0;pointer-events:none}
+header,.panel{background:#101820eF;border:1px solid #a970ff;
+padding:12px;border-radius:10px}
+header{margin:10px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+h2{margin:0;color:#b68aff}
+#buttons{position:absolute;bottom:12px;left:10px;right:10px;
+display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+button,input{padding:10px;border-radius:8px;border:1px solid #a970ff;
+background:#171b29;color:white;font-weight:bold}
+button{pointer-events:auto;cursor:pointer}
+button:hover{background:#53317d}
+#message{position:absolute;top:90px;left:10px;background:#101820eF;
+padding:10px;border-radius:8px}
+#admin{display:none;position:fixed;inset:0;background:#000c;
+place-items:center;pointer-events:auto}
+.panel{width:min(380px,85vw)}
+.panel button{margin:3px}
+</style>
+</head>
+<body>
+<div id="ui">
+<header>
+  <div><h2>⚔ MILITARY TYCOON 3D</h2>Build. Command. Conquer.</div>
+  <div>💵 <span id="cash">1000</span>
+  | 🪖 <span id="troops">4</span>
+  | ⭐ Level <span id="level">1</span></div>
+</header>
+<div id="message">Drag to rotate • Scroll to zoom</div>
+<div id="buttons">
+<button onclick="build()">🏗 Build ($250)</button>
+<button onclick="recruit()">🪖 Recruit ($100)</button>
+<button onclick="tank()">🛡 Buy Tank ($500)</button>
+<button onclick="mission()">🎯 Mission</button>
+<button onclick="upgrade()">⬆ Upgrade ($300)</button>
+<button onclick="openAdmin()">🔐 OP Admin</button>
+</div>
+</div>
+<div id="admin">
+<div class="panel">
+<h2>⚡ OP COMMAND CENTER</h2>
+<div id="login">
+<p>Password:</p>
+<input id="password" type="password" placeholder="Admin password">
+<button onclick="unlock()">Unlock</button>
+</div>
+<div id="commands" style="display:none">
+<p>ADMIN CONTROLS</p>
+<button onclick="cash+=10000;refresh()">+$10,000</button>
+<button onclick="addTroops(25)">+25 Troops</button>
+<button onclick="level+=5;refresh()">+5 Levels</button>
+<button onclick="tank()">Spawn Tank</button>
+<button onclick="mission(true)">Complete Mission</button>
+</div>
+<p id="error"></p>
+<button onclick="document.getElementById('admin').style.display='none'">Close</button>
+</div>
+</div>
+
+<script type="module">
+import * as THREE from
+'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import {OrbitControls} from
+'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x9aafbd);
+scene.fog=new THREE.Fog(0x9aafbd,50,130);
+
+const camera=new THREE.PerspectiveCamera(55,innerWidth/innerHeight,.1,300);
+camera.position.set(22,25,28);
+
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(innerWidth,innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+document.body.prepend(renderer.domElement);
+
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.target.set(0,0,0);
+controls.enableDamping=true;
+controls.maxPolarAngle=Math.PI/2.05;
+controls.minDistance=8;
+controls.maxDistance=65;
+
+scene.add(new THREE.HemisphereLight(0xeaf4ff,0x46513b,2));
+const sun=new THREE.DirectionalLight(0xffedcf,3);
+sun.position.set(-20,35,20);
+sun.castShadow=true;
+sun.shadow.mapSize.set(2048,2048);
+scene.add(sun);
+
+function material(color){
+ return new THREE.MeshStandardMaterial({color,roughness:.85});
+}
+const green=material(0x526744);
+const dark=material(0x303941);
+const sand=material(0x9a8968);
+const metal=material(0x737c7c);
+const purple=material(0x9b59ff);
+
+function block(x,y,z,w,h,d,mat,parent=scene){
+ const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);
+ m.position.set(x,y,z);
+ m.castShadow=true;
+ m.receiveShadow=true;
+ parent.add(m);
+ return m;
+}
+function cylinder(x,y,z,r,h,mat,parent=scene){
+ const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,12),mat);
+ m.position.set(x,y,z);
+ m.castShadow=true;
+ parent.add(m);
+ return m;
+}
+
+// Ground and concrete base
+const ground=new THREE.Mesh(
+ new THREE.PlaneGeometry(160,160),material(0x526c4b));
+ground.rotation.x=-Math.PI/2;
+ground.position.y=-.15;
+ground.receiveShadow=true;
+scene.add(ground);
+
+block(0,0,0,34,.2,34,material(0x999c95));
+block(0,.12,0,3,.05,34,dark);
+block(0,.12,0,34,.05,3,dark);
+
+// Base walls
+for(let i=-16;i<=16;i+=4){
+ block(i,.65,-16,3.8,1.3,.35,sand);
+ block(i,.65,16,3.8,1.3,.35,sand);
+ block(-16,.65,i,.35,1.3,3.8,sand);
+ block(16,.65,i,.35,1.3,3.8,sand);
+}
+
+// Headquarters
+block(-5,1.4,-5,7,2.8,5,green);
+block(-5,3,-5,7.2,.25,5.2,dark);
+block(-5,1.8,-2.4,1,1.5, .2,dark);
+block(-6.5,1.8,-2.4,.7,.7,.15,metal);
+block(-3.5,1.8,-2.4,.7,.7,.15,metal);
+block(-5,4,-5,.15,2, .15,dark);
+block(-4,4.5,-5,1.5,.7,.1,purple);
+
+// Barracks and tower
+function barracks(x,z){
+ block(x,.8,z,5,1.6,4,green);
+ block(x,1.65,z,5.2,.2,4.2,dark);
+ block(x,.7,z+2,1,1.2,.2,dark);
+}
+function tower(x,z){
+ cylinder(x,1.4,z,.7,2.8,green);
+ block(x,3,z,2,.7,2,sand);
+ block(x,3.5,z,2.2,.2,2.2,dark);
+}
+barracks(7,-8);
+tower(12,10);
+
+// Troops
+let cash=1000,troops=4,level=1,missions=0;
+const troopModels=[],tanks=[],buildings=[];
+function soldier(x,z){
+ const g=new THREE.Group();
+ g.position.set(x,0,z);
+ scene.add(g);
+ cylinder(0,.85,0,.25,.7,green,g);
+ cylinder(0,1.4,0,.19,.25,sand,g);
+ block(0,.8,.3,.12,.1,.6,dark,g);
+ troopModels.push(g);
+ return g;
+}
+for(let i=0;i<4;i++)soldier(-11+i*1.4,3);
+
+// Tank
+function makeTank(x,z){
+ const g=new THREE.Group();
+ g.position.set(x,0,z);
+ scene.add(g);
+ block(0,.5,0,3.4,.7,1.8,green,g);
+ for(const side of [-1,1]){
+   block(0,.25,side*.95,3.5,.4,.22,dark,g);
+   for(let i=-1;i<=1;i++)
+     cylinder(i,.25,side*1.08,.18,.12,metal,g).rotation.x=Math.PI/2;
+ }
+ block(0,1,-.1,1.5,.5,1.3,green,g);
+ const barrel=block(0,1,1, .2,.2,2,dark,g);
+ tanks.push(g);
+ return g;
+}
+makeTank(5,5);
+
+// Helicopter
+const heli=new THREE.Group();
+heli.position.set(8,2,-7);
+scene.add(heli);
+block(0,0,0,2.4,.7,1,green,heli);
+block(0,0,1,1,.5,.5,metal,heli);
+block(0,.6,0,.15,.7,.15,dark,heli);
+const blades=block(0,1,0,5,.07,.15,dark,heli);
+block(0,0,-1.2,.2,.2,2,green,heli);
+cylinder(8,.08,-7,3.5,.12,dark);
+
+// Decoration crates
+for(let i=0;i<8;i++){
+ block(-12+(i%4)*1.3,.4,8+Math.floor(i/4)*1.3,
+       .8,.8,.8,i%2?green:sand);
+}
+
+function notify(s){
+ document.getElementById('message').textContent=s;
+}
+window.refresh=function(){
+ document.getElementById('cash').textContent=cash.toLocaleString();
+ document.getElementById('troops').textContent=troops;
+ document.getElementById('level').textContent=level;
+}
+window.build=function(){
+ if(cash<250)return notify('Not enough cash!');
+ cash-=250;
+ const i=buildings.length;
+ const x=-10+(i%4)*6,z=8+Math.floor(i/4)*4;
+ barracks(x,z);
+ buildings.push({x,z});
+ refresh();notify('Barracks constructed!');
+}
+window.addTroops=function(n){
+ for(let i=0;i<n;i++){
+  troops++;
+  soldier(-12+(troops%8)*1.1,4+Math.floor(troops/8));
+ }
+ refresh();
+}
+window.recruit=function(){
+ if(cash<100)return notify('Not enough cash!');
+ cash-=100;addTroops(1);notify('Troop recruited!');
+}
+window.tank=function(){
+ if(cash<500)return notify('Not enough cash!');
+ cash-=500;
+ makeTank(-10+(tanks.length%4)*4,6+Math.floor(tanks.length/4)*3);
+ refresh();notify('Tank deployed!');
+}
+window.mission=function(admin=false){
+ if(troops<2&&!admin)return notify('Recruit troops first!');
+ const reward=admin?1000:250+troops*25+level*50;
+ cash+=reward;missions++;
+ if(missions%3===0)level++;
+ refresh();notify('Mission complete! Earned $'+reward);
+}
+window.upgrade=function(){
+ if(cash<300)return notify('Not enough cash!');
+ cash-=300;level++;refresh();notify('Base upgraded!');
+}
+window.openAdmin=function(){
+ document.getElementById('admin').style.display='grid';
+ document.getElementById('login').style.display='block';
+ document.getElementById('commands').style.display='none';
+ document.getElementById('error').textContent='';
+}
+window.unlock=function(){
+ if(document.getElementById('password').value==='9876'){
+  document.getElementById('login').style.display='none';
+  document.getElementById('commands').style.display='block';
+  document.getElementById('error').textContent='Admin unlocked';
+ }else{
+  document.getElementById('error').textContent='Wrong password';
+ }
+}
+
+addEventListener('resize',()=>{
+ camera.aspect=innerWidth/innerHeight;
+ camera.updateProjectionMatrix();
+ renderer.setSize(innerWidth,innerHeight);
+});
+function animate(){
+ requestAnimationFrame(animate);
+ controls.update();
+ blades.rotation.y+=.12;
+ heli.position.y=2+Math.sin(Date.now()*.0015)*.15;
+ renderer.render(scene,camera);
+}
+refresh();animate();
+</script>
+</body>
+</html>
