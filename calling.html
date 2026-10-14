@@ -1,292 +1,472 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GB Calling | GlitchBoxOfficial</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root { --purple:#9b59ff; --bg:#08080c; --panel:#15131c; }
-* { box-sizing:border-box; }
-body {
-  margin:0; background:var(--bg); color:#fff;
-  font-family:Arial,sans-serif; text-align:center;
-}
-header { padding:22px 12px; border-bottom:1px solid var(--purple); }
-h1,h2 { color:var(--purple); }
-main { max-width:650px; margin:auto; padding:16px; }
-.card {
-  background:var(--panel); border:1px solid var(--purple);
-  border-radius:14px; padding:18px; margin:15px 0;
-}
-button,select,input {
-  background:#09090d; color:white; border:1px solid var(--purple);
-  border-radius:9px; padding:12px; margin:5px; font-size:15px;
-}
-button { cursor:pointer; }
-button:hover { background:#302044; }
-button:disabled { opacity:.5; cursor:not-allowed; }
-label { display:block; margin:12px; }
-.status { color:#c9a8ff; overflow-wrap:anywhere; }
-.warning { color:#ff7979; font-weight:bold; }
-.small { color:#c7c1d1; font-size:13px; line-height:1.5; }
-#transcript {
-  background:#09090d; padding:12px; border-radius:8px;
-  min-height:48px; overflow-wrap:anywhere;
-}
+:root{--purple:#9b59ff;--bg:#09070d;--panel:#15101e;--line:#392452}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:white;font-family:Arial,sans-serif}
+header{text-align:center;padding:20px;border-bottom:1px solid var(--line);background:#100b18}
+h1{color:var(--purple);margin:0;font-size:25px}
+header p,.small{color:#c0b5ce;font-size:13px;line-height:1.5}
+main{max-width:850px;margin:auto;padding:15px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+h2{font-size:18px;color:#d8baff}
+label{display:block;color:#c0b5ce;font-size:13px;margin:12px 0 5px}
+input,select{width:100%;padding:11px;border-radius:8px;border:1px solid #604084;background:#09070d;color:white}
+button{padding:11px 13px;border-radius:9px;border:1px solid var(--purple);background:#09070d;color:#d8baff;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.4}
+.primary{background:var(--purple);color:#140922}
+.danger{border-color:#ff5b72;color:#ff9cab}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.status{white-space:pre-wrap;background:#0d0913;padding:11px;border:1px solid var(--line);border-radius:8px;font-size:13px;overflow-wrap:anywhere}
+.check{display:flex;gap:8px;align-items:flex-start;margin:12px 0;color:#c0b5ce;font-size:13px;line-height:1.5}
+.check input{width:auto;margin-top:3px}
+.videos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+video{width:100%;aspect-ratio:4/3;object-fit:cover;background:#050408;border:1px solid var(--line);border-radius:9px}
+#warning{color:#ffb2bd;white-space:pre-wrap}
+#transcript{max-height:150px;overflow:auto;white-space:pre-wrap;font-size:12px;color:#c0b5ce}
+@media(max-width:550px){.videos{grid-template-columns:1fr}h1{font-size:21px}}
 </style>
 </head>
 <body>
 <header>
-  <h1>🎮 GlitchBoxOfficial</h1>
-  <h2>📞 GB Calling & AI Safety</h2>
-  <p>Enter The Glitch. Own The Game.</p>
+<h1>🎮 GlitchBoxOfficial Calling</h1>
+<p>Enter The Glitch. Own The Game.</p>
 </header>
-
 <main>
-  <section class="card">
-    <h2>📞 Calling</h2>
-    <p class="small">
-      Calling interface prototype. Real calls require a connected
-      calling service and authenticated player accounts.
-    </p>
-    <input id="player" placeholder="Player username"
-           maxlength="30" aria-label="Player username">
-    <br>
-    <button id="voiceBtn">📞 Voice Call</button>
-    <button id="videoBtn">🎥 Video Call</button>
-    <br>
-    <button id="acceptBtn">Accept</button>
-    <button id="declineBtn">Decline</button>
-    <button id="hangupBtn">Hang Up</button>
-    <br>
-    <button id="muteBtn">🎙️ Mute Mic</button>
-    <button id="cameraBtn">📷 Camera Off</button>
-    <p id="callStatus" class="status" role="status">
-      Not connected to a call service.
-    </p>
-  </section>
+<section class="card">
+<h2>1. Connect your GB account</h2>
+<p class="small">Use your existing GB Supabase project and its anon/public key. Never enter a service-role or secret key here.</p>
+<label>Supabase project URL</label>
+<input id="project" value="https://syjnlgxghgwvqrwtthmr.supabase.co">
+<label>Supabase eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI</label>
+<input id="key" type="password" placeholder="Paste your public key">
+<div class="actions">
+<button class="primary" id="connect">Connect to GB</button>
+<button id="disconnect">Disconnect</button>
+</div>
+<div id="connection" class="status">Not connected.</div>
+<div id="account" class="status" style="margin-top:8px">Sign in to GB first.</div>
+</section>
 
-  <section class="card">
-    <h2>🛡️ GB AI Voice Safety</h2>
-    <p>
-      Voice monitoring demo: browser speech recognition checks
-      recognized words against a basic list of inappropriate terms.
-    </p>
+<section class="card">
+<h2>2. Call another player</h2>
+<p class="small">For this first version, enter the other player's Supabase user ID. Both players must be signed in to the same GB project and keep this page open. Only call people who agree to talk.</p>
+<label>Other player's user ID</label>
+<input id="target" placeholder="Paste player user ID">
+<div class="check">
+<input id="consent" type="checkbox">
+<span>I understand that calls use my microphone and, for video calls, my camera. I will tell the other player before using speech monitoring.</span>
+</div>
+<div class="actions">
+<button class="primary" id="voice" disabled>Voice call</button>
+<button class="primary" id="video" disabled>Video call</button>
+<button id="accept" disabled>Accept call</button>
+<button class="danger" id="decline" disabled>Decline</button>
+</div>
+<div id="callStatus" class="status" style="margin-top:10px">No active call.</div>
+<div class="actions">
+<button id="mute" disabled>Mute mic</button>
+<button id="camera" disabled>Turn camera off</button>
+<button class="danger" id="hangup" disabled>Hang up</button>
+</div>
+<div class="videos">
+<div><p class="small">YOU</p><video id="local" autoplay playsinline muted></video></div>
+<div><p class="small">OTHER PLAYER</p><video id="remote" autoplay playsinline></video></div>
+</div>
+</section>
 
-    <label>
-      Monitoring
-      <select id="monitoring">
-        <option value="on">On</option>
-        <option value="off">Off</option>
-      </select>
-    </label>
+<section class="card">
+<h2>3. Speech-safety check</h2>
+<p class="small">This optional demo uses your browser's speech recognition to flag a few phrases in your own speech. It is not full AI moderation, may make mistakes, and does not listen to the other player's audio. A production version needs a proper transcription/moderation service and clear consent.</p>
+<label>Monitoring mode</label>
+<select id="safetyMode">
+<option value="off">Off</option>
+<option value="warn">Warnings</option>
+<option value="strict">Warnings with alerts</option>
+</select>
+<div id="warning" class="status">Monitoring is off.</div>
+<div id="transcript" class="status" style="margin-top:8px">No speech detected.</div>
+<div class="actions">
+<button id="startSafety" disabled>Start speech check</button>
+<button id="stopSafety" disabled>Stop speech check</button>
+<button id="report" disabled>Prepare report</button>
+</div>
+</section>
 
-    <label>
-      Detection level
-      <select id="strictness">
-        <option value="mild">Mild</option>
-        <option value="standard" selected>Standard</option>
-        <option value="strict">Strict</option>
-      </select>
-    </label>
-
-    <button id="startMonitor">🎤 Start Voice Monitor</button>
-    <button id="stopMonitor">Stop Monitoring</button>
-
-    <p id="monitorStatus" class="status" role="status">
-      Monitoring is off.
-    </p>
-
-    <h3>Recognized speech</h3>
-    <div id="transcript" aria-live="polite">
-      Nothing recognized yet.
-    </div>
-
-    <p id="alert" role="alert"></p>
-    <button id="reportBtn">🚩 Report a Problem</button>
-    <p id="reportStatus" class="small"></p>
-  </section>
-
-  <section class="card">
-    <h2>🔒 Privacy & Safety</h2>
-    <label>
-      <input type="checkbox" id="consent">
-      I understand speech monitoring is being enabled.
-    </label>
-    <p class="small">
-      Tell every call participant before monitoring. Browser speech
-      recognition may send audio to the browser provider for processing.
-      This demo does not intentionally save audio or transcripts.
-      It does not monitor another caller's audio stream, verify consent,
-      or submit reports to moderators.
-    </p>
-  </section>
+<section class="card">
+<h2>Important</h2>
+<p class="small">Calls use WebRTC and Supabase Realtime signaling. A public STUN server is included, but some networks require a TURN relay. This MVP does not yet include a player directory, server-enforced blocking, automatic moderator reports, or reliable AI moderation. Configure and test Supabase access policies before wider use.</p>
+</section>
 </main>
 
 <script>
+(() => {
 const $ = id => document.getElementById(id);
+let db=null, user=null, inbox=null, pc=null, stream=null;
+let peerId=null, pending=null, callType="voice";
+let muted=false, cameraOff=false, recognition=null, safetyOn=false;
+let queuedIce={};
 
-let recognition = null;
-let listening = false;
-let muted = false;
-let cameraOn = false;
+const enabled = (ids,on) => ids.forEach(id=>$(id).disabled=!on);
+const callButtons = on => enabled(["mute","camera","hangup","report"],on);
+const userChannel = id => "gb-calls-"+id;
+const sessionName = (a,b) => [a,b].sort().join("-");
 
-function setCallStatus(message) {
-  $("callStatus").textContent = message;
+function status(text){$("callStatus").textContent=text}
+
+async function sendUser(to,event,payload){
+  if(!db) throw new Error("Not connected");
+  const ch=db.channel(userChannel(to),{
+    config:{broadcast:{self:false}}
+  });
+  try{
+    await new Promise((resolve,reject)=>{
+      const timer=setTimeout(()=>reject(new Error("Signaling timed out")),10000);
+      ch.subscribe(s=>{
+        if(s==="SUBSCRIBED"){clearTimeout(timer);resolve()}
+        if(s==="CHANNEL_ERROR"||s==="TIMED_OUT"){
+          clearTimeout(timer);reject(new Error("Signaling channel failed"))
+        }
+      });
+    });
+    const result=await ch.send({type:"broadcast",event,payload});
+    if(result!=="ok") throw new Error("Could not send call signal");
+  } finally {
+    await db.removeChannel(ch);
+  }
 }
 
-// These buttons are interface placeholders until a calling service
-// is connected. They do not place or receive real calls.
-$("voiceBtn").onclick = () =>
-  setCallStatus("Voice calling is not connected yet.");
-$("videoBtn").onclick = () =>
-  setCallStatus("Video calling is not connected yet.");
-$("acceptBtn").onclick = () =>
-  setCallStatus("No incoming call service is connected.");
-$("declineBtn").onclick = () =>
-  setCallStatus("No incoming call to decline.");
-$("hangupBtn").onclick = () =>
-  setCallStatus("No active call service to disconnect.");
-
-$("muteBtn").onclick = () => {
-  muted = !muted;
-  $("muteBtn").textContent = muted ? "🔇 Unmute Mic" : "🎙️ Mute Mic";
-  setCallStatus(
-    muted
-      ? "Mute preference set. Real call audio is not connected."
-      : "Unmute preference set. Real call audio is not connected."
-  );
-};
-
-$("cameraBtn").onclick = () => {
-  cameraOn = !cameraOn;
-  $("cameraBtn").textContent =
-    cameraOn ? "📷 Camera On" : "📷 Camera Off";
-  setCallStatus(
-    "Camera preference updated. Real video is not connected."
-  );
-};
-
-// Basic demonstration only, NOT a full AI moderation model.
-// Expand and professionally review the term list before deployment.
-const terms = {
-  mild: ["fuck", "shit", "bitch", "asshole"],
-  standard: [
-    "fuck", "shit", "bitch", "asshole", "bastard",
-    "cunt", "nigger", "faggot"
-  ],
-  strict: [
-    "fuck", "shit", "bitch", "asshole", "bastard",
-    "cunt", "nigger", "faggot", "damn", "hell"
-  ]
-};
-
-function containsFlaggedTerm(text) {
-  const level = $("strictness").value;
-  const words = text.toLowerCase().match(/[a-z0-9']+/g) || [];
-  return words.some(word => terms[level].includes(word));
+async function connect(){
+  const url=$("project").value.trim(),key=$("key").value.trim();
+  if(!url||!key){$("connection").textContent="Enter the project URL and public key.";return}
+  if(!window.supabase){$("connection").textContent="Supabase library did not load. Check your internet connection.";return}
+  try{
+    db=window.supabase.createClient(url,key);
+    const {data,error}=await db.auth.getSession();
+    if(error)throw error;
+    user=data.session?.user;
+    if(!user){
+      $("connection").textContent="Supabase reached, but you are signed out. Sign in to GB on this same domain first.";
+      $("account").textContent="No active GB session.";
+      enabled(["voice","video","startSafety"],false);
+      return;
+    }
+    $("connection").textContent="Connected to Supabase.";
+    $("account").textContent="Signed in: "+(user.email||"(email hidden)")+
+      "\nYour player ID:\n"+user.id;
+    enabled(["voice","video","startSafety"],true);
+    await listenForCalls();
+  }catch(e){
+    $("connection").textContent="Connection error: "+e.message;
+  }
 }
 
-function stopMonitor(message) {
-  listening = false;
-  if (recognition) {
-    recognition.onend = null;
-    recognition.stop();
-    recognition = null;
-  }
-  $("monitorStatus").textContent = message;
+async function listenForCalls(){
+  if(inbox)await db.removeChannel(inbox);
+  inbox=db.channel(userChannel(user.id),{
+    config:{broadcast:{self:false}}
+  });
+  inbox.on("broadcast",{event:"invite"},({payload:p})=>{
+    if(!p||p.to!==user.id||!p.from||p.from===user.id)return;
+    if(peerId||pending){
+      sendUser(p.from,"busy",{from:user.id,to:p.from}).catch(()=>{});
+      return;
+    }
+    pending=p;
+    $("accept").disabled=false;
+    $("decline").disabled=false;
+    status("Incoming "+p.callType+" call from "+p.from+
+      ". Accept only if you recognize or expect this player.");
+  });
+  inbox.on("broadcast",{event:"signal"},async({payload:p})=>{
+    if(!p||p.to!==user.id||!p.from)return;
+    if(p.kind==="ice"){
+      if(!peerId||p.from!==peerId)return;
+      if(pc&&pc.remoteDescription){
+        try{await pc.addIceCandidate(p.candidate)}catch(e){}
+      }else{
+        (queuedIce[p.from] ||= []).push(p.candidate);
+      }
+    }
+    if(p.kind==="answer"&&pc&&p.from===peerId){
+      try{
+        await pc.setRemoteDescription(p.description);
+        await drainIce(p.from);
+        status("Call connected.");
+      }catch(e){status("Answer error: "+e.message)}
+    }
+    if(p.kind==="hangup"&&p.from===peerId){
+      await cleanup();
+      status("The other player ended the call.");
+    }
+    if(p.kind==="decline"&&p.from===peerId){
+      await cleanup();
+      status("The other player declined the call.");
+    }
+    if(p.kind==="busy"&&p.from===peerId){
+      await cleanup();
+      status("That player is already in a call.");
+    }
+  });
+  inbox.subscribe(s=>{
+    if(s==="SUBSCRIBED")$("connection").textContent="Connected. Listening for incoming GB calls.";
+  });
 }
 
-$("startMonitor").onclick = () => {
-  if ($("monitoring").value !== "on") {
-    $("monitorStatus").textContent =
-      "Turn monitoring on in settings first.";
-    return;
+async function drainIce(from){
+  const list=queuedIce[from]||[];
+  delete queuedIce[from];
+  for(const candidate of list){
+    try{await pc.addIceCandidate(candidate)}catch(e){}
   }
+}
 
-  if (!$("consent").checked) {
-    $("monitorStatus").textContent =
-      "Confirm you understand the monitoring and notify other participants first.";
-    return;
+async function getMedia(type){
+  if(!navigator.mediaDevices?.getUserMedia){
+    throw new Error("Microphone/camera access requires HTTPS and a supported browser.");
   }
+  stream=await navigator.mediaDevices.getUserMedia({
+    audio:true,video:type==="video"
+  });
+  $("local").srcObject=stream;
+}
 
-  const SpeechRecognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
-
-  if (!SpeechRecognition) {
-    $("monitorStatus").textContent =
-      "Speech recognition is unsupported in this browser. Try a supported browser.";
-    return;
-  }
-
-  if (listening) return;
-
-  recognition = new SpeechRecognition();
-  recognition.continuous = true;
-  recognition.interimResults = true;
-  recognition.lang = "en-US";
-  listening = true;
-
-  recognition.onstart = () => {
-    $("monitorStatus").textContent =
-      "Listening for recognized speech. Keep the browser open.";
-  };
-
-  recognition.onresult = event => {
-    let text = "";
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-      text += event.results[i][0].transcript + " ";
-    }
-
-    $("transcript").textContent = text.trim() || "Listening...";
-
-    if (containsFlaggedTerm(text)) {
-      $("alert").className = "warning";
-      $("alert").textContent =
-        "⚠️ Possible inappropriate language detected. Please keep conversations respectful.";
-      $("monitorStatus").textContent =
-        "Potential issue flagged. This is an automated keyword match, not a confirmed violation.";
-    } else {
-      $("alert").textContent = "";
-      $("alert").className = "";
+function createPeer(){
+  pc=new RTCPeerConnection({
+    iceServers:[{urls:"stun:stun.l.google.com:19302"}]
+  });
+  stream.getTracks().forEach(track=>pc.addTrack(track,stream));
+  pc.ontrack=e=>{$("remote").srcObject=e.streams[0]};
+  pc.onicecandidate=e=>{
+    if(e.candidate&&peerId){
+      sendUser(peerId,"signal",{
+        from:user.id,to:peerId,kind:"ice",candidate:e.candidate
+      }).catch(()=>{});
     }
   };
-
-  recognition.onerror = event => {
-    $("monitorStatus").textContent =
-      "Speech recognition error: " + event.error;
-  };
-
-  recognition.onend = () => {
-    if (listening && recognition) {
-      try { recognition.start(); }
-      catch (_) { stopMonitor("Monitoring stopped. Start it again if needed."); }
+  pc.onconnectionstatechange=()=>{
+    if(pc&&["failed","disconnected"].includes(pc.connectionState)){
+      status("Connection state: "+pc.connectionState+
+        ". This network may require a TURN relay.");
     }
   };
+}
 
-  try {
+function checkConsent(){
+  if(!$("consent").checked){
+    alert("Please confirm the call notice first.");
+    return false;
+  }
+  return true;
+}
+
+async function startCall(type){
+  if(!db||!user)return alert("Connect to GB first.");
+  if(!checkConsent())return;
+  const target=$("target").value.trim();
+  if(!target||target===user.id)return alert("Enter another player's user ID.");
+  if(peerId||pending)return alert("Finish the current call first.");
+  try{
+    peerId=target;callType=type;
+    await getMedia(type);
+    createPeer();
+    const offer=await pc.createOffer();
+    await pc.setLocalDescription(offer);
+    await sendUser(target,"invite",{
+      from:user.id,to:target,callType:type,offer:pc.localDescription
+    });
+    status("Calling "+target+"… Waiting for acceptance.");
+    callButtons(true);
+  }catch(e){
+    status("Could not start call: "+e.message);
+    await cleanup();
+  }
+}
+
+async function acceptCall(){
+  if(!pending||!user||!db)return;
+  if(!checkConsent())return;
+  const invitation=pending;
+  pending=null;
+  try{
+    peerId=invitation.from;
+    callType=invitation.callType||"voice";
+    await getMedia(callType);
+    createPeer();
+    await pc.setRemoteDescription(invitation.offer);
+    await drainIce(peerId);
+    const answer=await pc.createAnswer();
+    await pc.setLocalDescription(answer);
+    await sendUser(peerId,"signal",{
+      from:user.id,to:peerId,kind:"answer",description:pc.localDescription
+    });
+    $("accept").disabled=true;$("decline").disabled=true;
+    callButtons(true);
+    status("Answer sent. Connecting call…");
+  }catch(e){
+    status("Could not accept: "+e.message);
+    await cleanup();
+  }
+}
+
+async function cleanup(){
+  if(pc){pc.onicecandidate=null;pc.ontrack=null;pc.close();pc=null}
+  if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}
+  $("local").srcObject=null;$("remote").srcObject=null;
+  peerId=null;muted=false;cameraOff=false;queuedIce={};
+  $("mute").textContent="Mute mic";
+  $("camera").textContent="Turn camera off";
+  callButtons(false);
+  $("accept").disabled=!pending;
+  $("decline").disabled=!pending;
+}
+
+async function hangup(){
+  const oldPeer=peerId;
+  if(oldPeer&&user){
+    sendUser(oldPeer,"signal",{from:user.id,to:oldPeer,kind:"hangup"}).catch(()=>{});
+  }
+  await cleanup();
+  status("Call ended.");
+}
+
+async function decline(){
+  if(pending&&user){
+    const old=pending.from;
+    sendUser(old,"signal",{from:user.id,to:old,kind:"decline"}).catch(()=>{});
+  }
+  pending=null;
+  $("accept").disabled=true;$("decline").disabled=true;
+  status("Incoming call declined.");
+}
+
+function toggleMute(){
+  if(!stream)return;
+  muted=!muted;
+  stream.getAudioTracks().forEach(t=>t.enabled=!muted);
+  $("mute").textContent=muted?"Unmute mic":"Mute mic";
+}
+function toggleCamera(){
+  if(!stream)return;
+  cameraOff=!cameraOff;
+  stream.getVideoTracks().forEach(t=>t.enabled=!cameraOff);
+  $("camera").textContent=cameraOff?"Turn camera on":"Turn camera off";
+}
+
+const phrases=[
+  ["kill yourself","possible bullying or self-harm concern"],
+  ["i will kill you","possible threat"],
+  ["fuck you","profanity or insult"],
+  ["shut up","possible harassment"]
+];
+
+function startSafety(){
+  if(!$("consent").checked)return alert("Confirm the consent notice first.");
+  if($("safetyMode").value==="off")return alert("Select a warning mode first.");
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){
+    $("warning").textContent="Speech recognition is not supported in this browser.";
+    return;
+  }
+  if(recognition)return;
+  recognition=new SR();
+  recognition.continuous=true;
+  recognition.interimResults=true;
+  recognition.lang="en-US";
+  safetyOn=true;
+  recognition.onresult=e=>{
+    let text="";
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      text+=e.results[i][0].transcript+" ";
+    }
+    $("transcript").textContent=text;
+    const found=phrases.find(([phrase])=>text.toLowerCase().includes(phrase));
+    if(found){
+      const msg="Potential "+found[1]+" detected. Please keep the conversation respectful. Recognition can be wrong.";
+      $("warning").textContent=msg;
+      if($("safetyMode").value==="strict")alert(msg);
+    }
+  };
+  recognition.onerror=e=>{
+    $("warning").textContent="Speech recognition error: "+e.error;
+  };
+  recognition.onend=()=>{
+    if(safetyOn&&recognition){
+      try{recognition.start()}catch(e){}
+    }
+  };
+  try{
     recognition.start();
-  } catch (error) {
-    stopMonitor("Could not start speech recognition. Please try again.");
+    $("startSafety").disabled=true;
+    $("stopSafety").disabled=false;
+    $("warning").textContent="Local speech check is running. It checks your speech only.";
+  }catch(e){
+    $("warning").textContent="Could not start speech recognition: "+e.message;
   }
-};
+}
 
-$("stopMonitor").onclick = () =>
-  stopMonitor("Monitoring stopped.");
-
-$("monitoring").onchange = () => {
-  if ($("monitoring").value === "off") {
-    stopMonitor("Monitoring is off.");
-    $("alert").textContent = "";
+function stopSafety(){
+  safetyOn=false;
+  if(recognition){
+    recognition.onend=null;
+    try{recognition.stop()}catch(e){}
+    recognition=null;
   }
-};
+  $("startSafety").disabled=!(db&&user);
+  $("stopSafety").disabled=true;
+  $("warning").textContent="Speech monitoring stopped.";
+}
 
-$("reportBtn").onclick = () => {
-  $("reportStatus").textContent =
-    "Report feature needs a secure backend. No report has been sent.";
+function prepareReport(){
+  const report=
+    "GlitchBoxOfficial Calling report\n"+
+    "My player ID: "+(user?.id||"unknown")+"\n"+
+    "Other player ID: "+(peerId||"not available")+"\n"+
+    "Time: "+new Date().toISOString()+"\n"+
+    "This report has NOT been sent to moderators.";
+  if(navigator.clipboard?.writeText){
+    navigator.clipboard.writeText(report)
+      .then(()=>alert("Report details copied. Send them to GB Support."))
+      .catch(()=>prompt("Copy report details:",report));
+  }else prompt("Copy report details:",report);
+}
+
+async function disconnect(){
+  stopSafety();
+  await cleanup();
+  if(inbox&&db)await db.removeChannel(inbox);
+  inbox=null;db=null;user=null;pending=null;
+  enabled(["voice","video","startSafety"],false);
+  $("account").textContent="Disconnected.";
+  $("connection").textContent="Disconnected.";
+}
+
+$("connect").onclick=connect;
+$("disconnect").onclick=disconnect;
+$("voice").onclick=()=>startCall("voice");
+$("video").onclick=()=>startCall("video");
+$("accept").onclick=acceptCall;
+$("decline").onclick=decline;
+$("hangup").onclick=hangup;
+$("mute").onclick=toggleMute;
+$("camera").onclick=toggleCamera;
+$("startSafety").onclick=startSafety;
+$("stopSafety").onclick=stopSafety;
+$("report").onclick=prepareReport;
+$("safetyMode").onchange=()=>{
+  if($("safetyMode").value==="off")stopSafety();
 };
+window.addEventListener("beforeunload",()=>{
+  stopSafety();
+  if(stream)stream.getTracks().forEach(t=>t.stop());
+  if(pc)pc.close();
+});
+})();
 </script>
 </body>
 </html>
