@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GB Calling | GlitchBoxOfficial</title>
+<style>
+:root { --purple:#9b59ff; --bg:#08080c; --panel:#15131c; }
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:#fff;
+  font-family:Arial,sans-serif; text-align:center;
+}
+header { padding:22px 12px; border-bottom:1px solid var(--purple); }
+h1,h2 { color:var(--purple); }
+main { max-width:650px; margin:auto; padding:16px; }
+.card {
+  background:var(--panel); border:1px solid var(--purple);
+  border-radius:14px; padding:18px; margin:15px 0;
+}
+button,select,input {
+  background:#09090d; color:white; border:1px solid var(--purple);
+  border-radius:9px; padding:12px; margin:5px; font-size:15px;
+}
+button { cursor:pointer; }
+button:hover { background:#302044; }
+button:disabled { opacity:.5; cursor:not-allowed; }
+label { display:block; margin:12px; }
+.status { color:#c9a8ff; overflow-wrap:anywhere; }
+.warning { color:#ff7979; font-weight:bold; }
+.small { color:#c7c1d1; font-size:13px; line-height:1.5; }
+#transcript {
+  background:#09090d; padding:12px; border-radius:8px;
+  min-height:48px; overflow-wrap:anywhere;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎮 GlitchBoxOfficial</h1>
+  <h2>📞 GB Calling & AI Safety</h2>
+  <p>Enter The Glitch. Own The Game.</p>
+</header>
+
+<main>
+  <section class="card">
+    <h2>📞 Calling</h2>
+    <p class="small">
+      Calling interface prototype. Real calls require a connected
+      calling service and authenticated player accounts.
+    </p>
+    <input id="player" placeholder="Player username"
+           maxlength="30" aria-label="Player username">
+    <br>
+    <button id="voiceBtn">📞 Voice Call</button>
+    <button id="videoBtn">🎥 Video Call</button>
+    <br>
+    <button id="acceptBtn">Accept</button>
+    <button id="declineBtn">Decline</button>
+    <button id="hangupBtn">Hang Up</button>
+    <br>
+    <button id="muteBtn">🎙️ Mute Mic</button>
+    <button id="cameraBtn">📷 Camera Off</button>
+    <p id="callStatus" class="status" role="status">
+      Not connected to a call service.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>🛡️ GB AI Voice Safety</h2>
+    <p>
+      Voice monitoring demo: browser speech recognition checks
+      recognized words against a basic list of inappropriate terms.
+    </p>
+
+    <label>
+      Monitoring
+      <select id="monitoring">
+        <option value="on">On</option>
+        <option value="off">Off</option>
+      </select>
+    </label>
+
+    <label>
+      Detection level
+      <select id="strictness">
+        <option value="mild">Mild</option>
+        <option value="standard" selected>Standard</option>
+        <option value="strict">Strict</option>
+      </select>
+    </label>
+
+    <button id="startMonitor">🎤 Start Voice Monitor</button>
+    <button id="stopMonitor">Stop Monitoring</button>
+
+    <p id="monitorStatus" class="status" role="status">
+      Monitoring is off.
+    </p>
+
+    <h3>Recognized speech</h3>
+    <div id="transcript" aria-live="polite">
+      Nothing recognized yet.
+    </div>
+
+    <p id="alert" role="alert"></p>
+    <button id="reportBtn">🚩 Report a Problem</button>
+    <p id="reportStatus" class="small"></p>
+  </section>
+
+  <section class="card">
+    <h2>🔒 Privacy & Safety</h2>
+    <label>
+      <input type="checkbox" id="consent">
+      I understand speech monitoring is being enabled.
+    </label>
+    <p class="small">
+      Tell every call participant before monitoring. Browser speech
+      recognition may send audio to the browser provider for processing.
+      This demo does not intentionally save audio or transcripts.
+      It does not monitor another caller's audio stream, verify consent,
+      or submit reports to moderators.
+    </p>
+  </section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+
+let recognition = null;
+let listening = false;
+let muted = false;
+let cameraOn = false;
+
+function setCallStatus(message) {
+  $("callStatus").textContent = message;
+}
+
+// These buttons are interface placeholders until a calling service
+// is connected. They do not place or receive real calls.
+$("voiceBtn").onclick = () =>
+  setCallStatus("Voice calling is not connected yet.");
+$("videoBtn").onclick = () =>
+  setCallStatus("Video calling is not connected yet.");
+$("acceptBtn").onclick = () =>
+  setCallStatus("No incoming call service is connected.");
+$("declineBtn").onclick = () =>
+  setCallStatus("No incoming call to decline.");
+$("hangupBtn").onclick = () =>
+  setCallStatus("No active call service to disconnect.");
+
+$("muteBtn").onclick = () => {
+  muted = !muted;
+  $("muteBtn").textContent = muted ? "🔇 Unmute Mic" : "🎙️ Mute Mic";
+  setCallStatus(
+    muted
+      ? "Mute preference set. Real call audio is not connected."
+      : "Unmute preference set. Real call audio is not connected."
+  );
+};
+
+$("cameraBtn").onclick = () => {
+  cameraOn = !cameraOn;
+  $("cameraBtn").textContent =
+    cameraOn ? "📷 Camera On" : "📷 Camera Off";
+  setCallStatus(
+    "Camera preference updated. Real video is not connected."
+  );
+};
+
+// Basic demonstration only, NOT a full AI moderation model.
+// Expand and professionally review the term list before deployment.
+const terms = {
+  mild: ["fuck", "shit", "bitch", "asshole"],
+  standard: [
+    "fuck", "shit", "bitch", "asshole", "bastard",
+    "cunt", "nigger", "faggot"
+  ],
+  strict: [
+    "fuck", "shit", "bitch", "asshole", "bastard",
+    "cunt", "nigger", "faggot", "damn", "hell"
+  ]
+};
+
+function containsFlaggedTerm(text) {
+  const level = $("strictness").value;
+  const words = text.toLowerCase().match(/[a-z0-9']+/g) || [];
+  return words.some(word => terms[level].includes(word));
+}
+
+function stopMonitor(message) {
+  listening = false;
+  if (recognition) {
+    recognition.onend = null;
+    recognition.stop();
+    recognition = null;
+  }
+  $("monitorStatus").textContent = message;
+}
+
+$("startMonitor").onclick = () => {
+  if ($("monitoring").value !== "on") {
+    $("monitorStatus").textContent =
+      "Turn monitoring on in settings first.";
+    return;
+  }
+
+  if (!$("consent").checked) {
+    $("monitorStatus").textContent =
+      "Confirm you understand the monitoring and notify other participants first.";
+    return;
+  }
+
+  const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    $("monitorStatus").textContent =
+      "Speech recognition is unsupported in this browser. Try a supported browser.";
+    return;
+  }
+
+  if (listening) return;
+
+  recognition = new SpeechRecognition();
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.lang = "en-US";
+  listening = true;
+
+  recognition.onstart = () => {
+    $("monitorStatus").textContent =
+      "Listening for recognized speech. Keep the browser open.";
+  };
+
+  recognition.onresult = event => {
+    let text = "";
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      text += event.results[i][0].transcript + " ";
+    }
+
+    $("transcript").textContent = text.trim() || "Listening...";
+
+    if (containsFlaggedTerm(text)) {
+      $("alert").className = "warning";
+      $("alert").textContent =
+        "⚠️ Possible inappropriate language detected. Please keep conversations respectful.";
+      $("monitorStatus").textContent =
+        "Potential issue flagged. This is an automated keyword match, not a confirmed violation.";
+    } else {
+      $("alert").textContent = "";
+      $("alert").className = "";
+    }
+  };
+
+  recognition.onerror = event => {
+    $("monitorStatus").textContent =
+      "Speech recognition error: " + event.error;
+  };
+
+  recognition.onend = () => {
+    if (listening && recognition) {
+      try { recognition.start(); }
+      catch (_) { stopMonitor("Monitoring stopped. Start it again if needed."); }
+    }
+  };
+
+  try {
+    recognition.start();
+  } catch (error) {
+    stopMonitor("Could not start speech recognition. Please try again.");
+  }
+};
+
+$("stopMonitor").onclick = () =>
+  stopMonitor("Monitoring stopped.");
+
+$("monitoring").onchange = () => {
+  if ($("monitoring").value === "off") {
+    stopMonitor("Monitoring is off.");
+    $("alert").textContent = "";
+  }
+};
+
+$("reportBtn").onclick = () => {
+  $("reportStatus").textContent =
+    "Report feature needs a secure backend. No report has been sent.";
+};
+</script>
+</body>
+</html>
