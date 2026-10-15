@@ -1,472 +1,869 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GB Calling | GlitchBoxOfficial</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-:root{--purple:#9b59ff;--bg:#09070d;--panel:#15101e;--line:#392452}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:white;font-family:Arial,sans-serif}
-header{text-align:center;padding:20px;border-bottom:1px solid var(--line);background:#100b18}
-h1{color:var(--purple);margin:0;font-size:25px}
-header p,.small{color:#c0b5ce;font-size:13px;line-height:1.5}
-main{max-width:850px;margin:auto;padding:15px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
-h2{font-size:18px;color:#d8baff}
-label{display:block;color:#c0b5ce;font-size:13px;margin:12px 0 5px}
-input,select{width:100%;padding:11px;border-radius:8px;border:1px solid #604084;background:#09070d;color:white}
-button{padding:11px 13px;border-radius:9px;border:1px solid var(--purple);background:#09070d;color:#d8baff;font-weight:bold;cursor:pointer}
-button:disabled{opacity:.4}
-.primary{background:var(--purple);color:#140922}
-.danger{border-color:#ff5b72;color:#ff9cab}
-.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.status{white-space:pre-wrap;background:#0d0913;padding:11px;border:1px solid var(--line);border-radius:8px;font-size:13px;overflow-wrap:anywhere}
-.check{display:flex;gap:8px;align-items:flex-start;margin:12px 0;color:#c0b5ce;font-size:13px;line-height:1.5}
-.check input{width:auto;margin-top:3px}
-.videos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-video{width:100%;aspect-ratio:4/3;object-fit:cover;background:#050408;border:1px solid var(--line);border-radius:9px}
-#warning{color:#ffb2bd;white-space:pre-wrap}
-#transcript{max-height:150px;overflow:auto;white-space:pre-wrap;font-size:12px;color:#c0b5ce}
-@media(max-width:550px){.videos{grid-template-columns:1fr}h1{font-size:21px}}
+:root {
+  --purple: #9b59ff;
+  --black: #09090d;
+  --panel: #15131c;
+  --border: #49316b;
+  --text: #f4efff;
+  --muted: #b8aecb;
+  --danger: #ff526b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 20px;
+  background: var(--black);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
+
+main {
+  max-width: 760px;
+  margin: auto;
+}
+
+header {
+  text-align: center;
+  margin: 10px 0 25px;
+}
+
+h1 {
+  color: var(--purple);
+  margin-bottom: 8px;
+}
+
+p { line-height: 1.5; }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  margin: 16px 0;
+}
+
+label {
+  display: block;
+  margin: 12px 0 6px;
+  color: var(--muted);
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #08070b;
+  color: white;
+  font-size: 16px;
+}
+
+button, .link-button {
+  display: inline-block;
+  padding: 12px 16px;
+  margin: 6px 4px 4px 0;
+  border: 1px solid var(--purple);
+  border-radius: 9px;
+  background: #09070e;
+  color: var(--purple);
+  font-size: 15px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button:hover, .link-button:hover {
+  background: var(--purple);
+  color: black;
+}
+
+button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.danger {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+#status {
+  padding: 12px;
+  border-radius: 8px;
+  background: #09070e;
+  color: var(--purple);
+  overflow-wrap: anywhere;
+}
+
+#connection {
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.videos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 15px;
+}
+
+video {
+  display: block;
+  width: 100%;
+  min-height: 160px;
+  background: #000;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.small {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.hidden { display: none !important; }
 </style>
 </head>
+
 <body>
-<header>
-<h1>🎮 GlitchBoxOfficial Calling</h1>
-<p>Enter The Glitch. Own The Game.</p>
-</header>
 <main>
-<section class="card">
-<h2>1. Connect your GB account</h2>
-<p class="small">Use your existing GB Supabase project and its anon/public key. Never enter a service-role or secret key here.</p>
-<label>Supabase project URL</label>
-<input id="project" value="https://syjnlgxghgwvqrwtthmr.supabase.co">
-<label>Supabase anon/public key</label>
-<input id="key" type="password" placeholder="Paste your public key">
-<div class="actions">
-<button class="primary" id="connect">Connect to GB</button>
-<button id="disconnect">Disconnect</button>
-</div>
-<div id="connection" class="status">Not connected.</div>
-<div id="account" class="status" style="margin-top:8px">Sign in to GB first.</div>
-</section>
+  <header>
+    <h1>🎮 GlitchBoxOfficial Calling</h1>
+    <p>Connect with friends using voice or video.</p>
+    <a class="link-button" href="index.html">Home</a>
+  </header>
 
-<section class="card">
-<h2>2. Call another player</h2>
-<p class="small">For this first version, enter the other player's Supabase user ID. Both players must be signed in to the same GB project and keep this page open. Only call people who agree to talk.</p>
-<label>Other player's user ID</label>
-<input id="target" placeholder="Paste player user ID">
-<div class="check">
-<input id="consent" type="checkbox">
-<span>I understand that calls use my microphone and, for video calls, my camera. I will tell the other player before using speech monitoring.</span>
-</div>
-<div class="actions">
-<button class="primary" id="voice" disabled>Voice call</button>
-<button class="primary" id="video" disabled>Video call</button>
-<button id="accept" disabled>Accept call</button>
-<button class="danger" id="decline" disabled>Decline</button>
-</div>
-<div id="callStatus" class="status" style="margin-top:10px">No active call.</div>
-<div class="actions">
-<button id="mute" disabled>Mute mic</button>
-<button id="camera" disabled>Turn camera off</button>
-<button class="danger" id="hangup" disabled>Hang up</button>
-</div>
-<div class="videos">
-<div><p class="small">YOU</p><video id="local" autoplay playsinline muted></video></div>
-<div><p class="small">OTHER PLAYER</p><video id="remote" autoplay playsinline></video></div>
-</div>
-</section>
+  <section class="panel">
+    <h2>1. Connect your account</h2>
+    <p id="connection">Not connected.</p>
 
-<section class="card">
-<h2>3. Speech-safety check</h2>
-<p class="small">This optional demo uses your browser's speech recognition to flag a few phrases in your own speech. It is not full AI moderation, may make mistakes, and does not listen to the other player's audio. A production version needs a proper transcription/moderation service and clear consent.</p>
-<label>Monitoring mode</label>
-<select id="safetyMode">
-<option value="off">Off</option>
-<option value="warn">Warnings</option>
-<option value="strict">Warnings with alerts</option>
-</select>
-<div id="warning" class="status">Monitoring is off.</div>
-<div id="transcript" class="status" style="margin-top:8px">No speech detected.</div>
-<div class="actions">
-<button id="startSafety" disabled>Start speech check</button>
-<button id="stopSafety" disabled>Stop speech check</button>
-<button id="report" disabled>Prepare report</button>
-</div>
-</section>
+    <label for="projectUrl">Supabase project URL</label>
+    <input id="projectUrl"
+      value="https://syjnlgxghgwvqrwtthmr.supabase.co"
+      autocomplete="url">
 
-<section class="card">
-<h2>Important</h2>
-<p class="small">Calls use WebRTC and Supabase Realtime signaling. A public STUN server is included, but some networks require a TURN relay. This MVP does not yet include a player directory, server-enforced blocking, automatic moderator reports, or reliable AI moderation. Configure and test Supabase access policies before wider use.</p>
-</section>
+    <label for="publicKey">Supabase publishable / anon public key</label>
+    <input id="publicKey"
+      type="password"
+      placeholder="Paste your public key here"
+      autocomplete="off">
+
+    <button id="connectBtn" onclick="connect()">Connect</button>
+    <button onclick="disconnect()">Disconnect</button>
+
+    <p class="small">
+      Use your Supabase public key, never your service-role or secret key.
+      Sign in to GlitchBoxOfficial first.
+    </p>
+    <p class="small">Your user ID:</p>
+    <input id="myUserId" readonly placeholder="Connect to see your ID">
+    <button onclick="copyMyId()">Copy my user ID</button>
+  </section>
+
+  <section class="panel">
+    <h2>2. Start a call</h2>
+
+    <label for="targetId">Friend's Supabase user ID</label>
+    <input id="targetId"
+      placeholder="Paste your friend's full user ID"
+      autocomplete="off">
+
+    <button id="voiceBtn" onclick="startCall('voice')" disabled>
+      📞 Voice Call
+    </button>
+    <button id="videoBtn" onclick="startCall('video')" disabled>
+      📹 Video Call
+    </button>
+
+    <p class="small">
+      Both people must be signed in to the same Supabase project.
+      Share user IDs privately.
+    </p>
+  </section>
+
+  <section id="incomingPanel" class="panel hidden">
+    <h2>📲 Incoming call</h2>
+    <p id="incomingText">Someone is calling you.</p>
+    <button id="acceptBtn" onclick="acceptCall()">Accept</button>
+    <button class="danger" onclick="declineCall()">Decline</button>
+  </section>
+
+  <section class="panel">
+    <h2>3. Call controls</h2>
+    <button id="muteBtn" onclick="toggleMute()" disabled>
+      Mute microphone
+    </button>
+    <button id="cameraBtn" onclick="toggleCamera()" disabled>
+      Turn camera off
+    </button>
+    <button id="hangupBtn" class="danger" onclick="hangup()" disabled>
+      End Call
+    </button>
+
+    <div class="videos">
+      <div>
+        <p>My camera</p>
+        <video id="localVideo" autoplay playsinline muted></video>
+      </div>
+      <div>
+        <p>Friend's camera</p>
+        <video id="remoteVideo" autoplay playsinline></video>
+      </div>
+    </div>
+    <p id="status">Connect your account to begin.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Safety</h2>
+    <p>
+      Only accept calls from people you recognize. You can end a call
+      at any time. This page does not provide real AI speech moderation
+      or automatically detect inappropriate speech.
+    </p>
+  </section>
 </main>
 
 <script>
-(() => {
+"use strict";
+
+/* ---------- Configuration and state ---------- */
+
+const PROJECT_DEFAULT = "https://syjnlgxghgwvqrwtthmr.supabase.co";
+
+let db = null;
+let user = null;
+let inbox = null;
+let peerConnection = null;
+let localStream = null;
+let remoteStream = null;
+let peerId = null;
+let pendingInvite = null;
+let queuedIce = Object.create(null);
+let outgoingChannels = new Map();
+let connecting = false;
+let callGeneration = 0;
+
 const $ = id => document.getElementById(id);
-let db=null, user=null, inbox=null, pc=null, stream=null;
-let peerId=null, pending=null, callType="voice";
-let muted=false, cameraOff=false, recognition=null, safetyOn=false;
-let queuedIce={};
 
-const enabled = (ids,on) => ids.forEach(id=>$(id).disabled=!on);
-const callButtons = on => enabled(["mute","camera","hangup","report"],on);
-const userChannel = id => "gb-calls-"+id;
-const sessionName = (a,b) => [a,b].sort().join("-");
+const rtcConfig = {
+  iceServers: [
+    { urls: "stun:stun.l.google.com:19302" }
+  ]
+};
 
-function status(text){$("callStatus").textContent=text}
-
-async function sendUser(to,event,payload){
-  if(!db) throw new Error("Not connected");
-  const ch=db.channel(userChannel(to),{
-    config:{broadcast:{self:false}}
-  });
-  try{
-    await new Promise((resolve,reject)=>{
-      const timer=setTimeout(()=>reject(new Error("Signaling timed out")),10000);
-      ch.subscribe(s=>{
-        if(s==="SUBSCRIBED"){clearTimeout(timer);resolve()}
-        if(s==="CHANNEL_ERROR"||s==="TIMED_OUT"){
-          clearTimeout(timer);reject(new Error("Signaling channel failed"))
-        }
-      });
-    });
-    const result=await ch.send({type:"broadcast",event,payload});
-    if(result!=="ok") throw new Error("Could not send call signal");
-  } finally {
-    await db.removeChannel(ch);
-  }
+function status(message) {
+  $("status").textContent = message;
 }
 
-async function connect(){
-  const url=$("project").value.trim(),key=$("key").value.trim();
-  if(!url||!key){$("connection").textContent="Enter the project URL and public key.";return}
-  if(!window.supabase){$("connection").textContent="Supabase library did not load. Check your internet connection.";return}
-  try{
-    db=window.supabase.createClient(url,key);
-    const {data,error}=await db.auth.getSession();
-    if(error)throw error;
-    user=data.session?.user;
-    if(!user){
-      $("connection").textContent="Supabase reached, but you are signed out. Sign in to GB on this same domain first.";
-      $("account").textContent="No active GB session.";
-      enabled(["voice","video","startSafety"],false);
-      return;
-    }
-    $("connection").textContent="Connected to Supabase.";
-    $("account").textContent="Signed in: "+(user.email||"(email hidden)")+
-      "\nYour player ID:\n"+user.id;
-    enabled(["voice","video","startSafety"],true);
-    await listenForCalls();
-  }catch(e){
-    $("connection").textContent="Connection error: "+e.message;
-  }
+function connectionStatus(message) {
+  $("connection").textContent = message;
 }
 
-async function listenForCalls(){
-  if(inbox)await db.removeChannel(inbox);
-  inbox=db.channel(userChannel(user.id),{
-    config:{broadcast:{self:false}}
-  });
-  inbox.on("broadcast",{event:"invite"},({payload:p})=>{
-    if(!p||p.to!==user.id||!p.from||p.from===user.id)return;
-    if(peerId||pending){
-      sendUser(p.from,"busy",{from:user.id,to:p.from}).catch(()=>{});
-      return;
+function userChannel(id) {
+  return "gb-calls-" + id;
+}
+
+function callActive() {
+  return !!peerConnection || !!pendingInvite;
+}
+
+function updateControls() {
+  const connected = !!db && !!user;
+  const busy = callActive();
+
+  $("voiceBtn").disabled = !connected || busy;
+  $("videoBtn").disabled = !connected || busy;
+  $("hangupBtn").disabled = !peerConnection;
+  $("muteBtn").disabled = !localStream;
+  $("cameraBtn").disabled = !localStream ||
+    !localStream.getVideoTracks().length;
+}
+
+/* ---------- Connect to Supabase ---------- */
+
+async function connect() {
+  if (connecting) return;
+  connecting = true;
+  $("connectBtn").disabled = true;
+
+  try {
+    if (!window.supabase) {
+      throw new Error("Supabase library did not load. Refresh the page.");
     }
-    pending=p;
-    $("accept").disabled=false;
-    $("decline").disabled=false;
-    status("Incoming "+p.callType+" call from "+p.from+
-      ". Accept only if you recognize or expect this player.");
-  });
-  inbox.on("broadcast",{event:"signal"},async({payload:p})=>{
-    if(!p||p.to!==user.id||!p.from)return;
-    if(p.kind==="ice"){
-      if(!peerId||p.from!==peerId)return;
-      if(pc&&pc.remoteDescription){
-        try{await pc.addIceCandidate(p.candidate)}catch(e){}
-      }else{
-        (queuedIce[p.from] ||= []).push(p.candidate);
+
+    const projectUrl = $("projectUrl").value.trim().replace(/\/+$/, "");
+    const publicKey = $("publicKey").value.trim();
+
+    if (!projectUrl.startsWith("https://") || !publicKey) {
+      throw new Error("Enter the project URL and public key.");
+    }
+
+    await disconnect(false);
+
+    db = window.supabase.createClient(projectUrl, publicKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      },
+      realtime: {
+        params: { eventsPerSecond: 10 }
       }
+    });
+
+    const { data, error } = await db.auth.getSession();
+    if (error) throw error;
+
+    if (!data.session) {
+      throw new Error(
+        "No signed-in session found for this site. Sign in first, " +
+        "then return to Calling."
+      );
     }
-    if(p.kind==="answer"&&pc&&p.from===peerId){
-      try{
-        await pc.setRemoteDescription(p.description);
-        await drainIce(p.from);
-        status("Call connected.");
-      }catch(e){status("Answer error: "+e.message)}
+
+    user = data.session.user;
+
+    $("myUserId").value = user.id;
+    connectionStatus("Signed in as " + user.id);
+
+    await listenForCalls();
+
+    status("Connected. You can now call another signed-in player.");
+    updateControls();
+  } catch (error) {
+    console.error("Connect failed:", error);
+    connectionStatus("Connection failed: " + error.message);
+    status("Could not connect. Check your sign-in and Supabase settings.");
+    db = null;
+    user = null;
+    updateControls();
+  } finally {
+    connecting = false;
+    $("connectBtn").disabled = false;
+  }
+}
+
+/* ---------- Reliable per-recipient signaling ---------- */
+
+/*
+  Keep outgoing broadcast channels subscribed instead of creating and
+  immediately removing a channel for every message. This reduces
+  signaling races while WebRTC is being negotiated.
+*/
+
+async function getOutgoingChannel(to) {
+  if (outgoingChannels.has(to)) {
+    return outgoingChannels.get(to);
+  }
+
+  const channel = db.channel(userChannel(to), {
+    config: { broadcast: { self: false } }
+  });
+
+  const ready = new Promise((resolve, reject) => {
+    const timeout = setTimeout(
+      () => reject(new Error("Signaling subscription timed out.")),
+      12000
+    );
+
+    channel.subscribe(state => {
+      if (state === "SUBSCRIBED") {
+        clearTimeout(timeout);
+        resolve();
+      }
+
+      if (state === "CHANNEL_ERROR" || state === "TIMED_OUT") {
+        clearTimeout(timeout);
+        reject(new Error("Supabase Realtime channel failed: " + state));
+      }
+    });
+  });
+
+  try {
+    await ready;
+    outgoingChannels.set(to, channel);
+    return channel;
+  } catch (error) {
+    await db.removeChannel(channel).catch(() => {});
+    throw error;
+  }
+}
+
+async function sendUser(to, event, payload) {
+  if (!db || !user) throw new Error("Connect your account first.");
+
+  const channel = await getOutgoingChannel(to);
+  const result = await channel.send({
+    type: "broadcast",
+    event,
+    payload
+  });
+
+  if (result !== "ok") {
+    throw new Error("Supabase could not send the signal: " + result);
+  }
+}
+
+/* ---------- Incoming calls and WebRTC signals ---------- */
+
+async function listenForCalls() {
+  if (inbox) {
+    await db.removeChannel(inbox);
+    inbox = null;
+  }
+
+  inbox = db.channel(userChannel(user.id), {
+    config: { broadcast: { self: false } }
+  });
+
+  inbox.on("broadcast", { event: "invite" }, async ({ payload }) => {
+    const p = payload;
+
+    if (!p || p.to !== user.id || !p.from || p.from === user.id) return;
+
+    if (callActive()) {
+      sendUser(p.from, "signal", {
+        from: user.id,
+        to: p.from,
+        kind: "busy"
+      }).catch(console.error);
+      return;
     }
-    if(p.kind==="hangup"&&p.from===peerId){
-      await cleanup();
-      status("The other player ended the call.");
-    }
-    if(p.kind==="decline"&&p.from===peerId){
-      await cleanup();
-      status("The other player declined the call.");
-    }
-    if(p.kind==="busy"&&p.from===peerId){
-      await cleanup();
-      status("That player is already in a call.");
+
+    pendingInvite = p;
+    $("incomingPanel").classList.remove("hidden");
+    $("incomingText").textContent =
+      "Incoming " + (p.callType || "voice") + " call from " + p.from;
+
+    status("Incoming call. Accept or decline.");
+    updateControls();
+  });
+
+  inbox.on("broadcast", { event: "signal" }, async ({ payload }) => {
+    const p = payload;
+
+    if (!p || p.to !== user.id || !p.from || p.from === user.id) return;
+
+    try {
+      if (p.kind === "ice") {
+        /*
+          FIX: candidates can arrive before the invitation is accepted.
+          Queue them by sender instead of throwing them away.
+        */
+        if (peerId && p.from !== peerId) return;
+        if (!peerId && pendingInvite && p.from !== pendingInvite.from) return;
+
+        if (
+          peerConnection &&
+          peerId === p.from &&
+          peerConnection.remoteDescription
+        ) {
+          await peerConnection.addIceCandidate(p.candidate);
+        } else {
+          (queuedIce[p.from] ||= []).push(p.candidate);
+        }
+        return;
+      }
+
+      if (p.kind === "answer" && peerConnection && p.from === peerId) {
+        if (!peerConnection.remoteDescription) {
+          await peerConnection.setRemoteDescription(p.description);
+          await drainIce(p.from);
+          status("Answer received. Establishing media connection...");
+        }
+        return;
+      }
+
+      if (p.kind === "hangup" && p.from === peerId) {
+        await cleanupCall(false);
+        status("The other player ended the call.");
+        return;
+      }
+
+      if (p.kind === "decline" && p.from === peerId) {
+        await cleanupCall(false);
+        status("The other player declined the call.");
+        return;
+      }
+
+      if (p.kind === "busy" && p.from === peerId) {
+        await cleanupCall(false);
+        status("That player is already in a call.");
+      }
+    } catch (error) {
+      console.error("Signal handling failed:", error);
+      status("Call signaling error: " + error.message);
     }
   });
-  inbox.subscribe(s=>{
-    if(s==="SUBSCRIBED")$("connection").textContent="Connected. Listening for incoming GB calls.";
+
+  inbox.subscribe(state => {
+    if (state === "SUBSCRIBED") {
+      connectionStatus("Connected. Listening for incoming calls.");
+    } else if (state === "CHANNEL_ERROR" || state === "TIMED_OUT") {
+      connectionStatus("Realtime connection error: " + state);
+    }
   });
 }
 
-async function drainIce(from){
-  const list=queuedIce[from]||[];
+/* ---------- Media and peer connection ---------- */
+
+async function getMedia(type) {
+  if (!navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia) {
+    throw new Error(
+      "Camera and microphone require HTTPS and browser permission."
+    );
+  }
+
+  const stream = await navigator.mediaDevices.getUserMedia({
+    audio: true,
+    video: type === "video"
+      ? { facingMode: "user" }
+      : false
+  });
+
+  localStream = stream;
+  $("localVideo").srcObject = stream;
+  return stream;
+}
+
+function createPeer() {
+  peerConnection = new RTCPeerConnection(rtcConfig);
+  remoteStream = new MediaStream();
+  $("remoteVideo").srcObject = remoteStream;
+
+  if (localStream) {
+    localStream.getTracks().forEach(track => {
+      peerConnection.addTrack(track, localStream);
+    });
+  }
+
+  peerConnection.ontrack = event => {
+    event.streams[0]?.getTracks().forEach(track => {
+      if (!remoteStream.getTracks().some(t => t.id === track.id)) {
+        remoteStream.addTrack(track);
+      }
+    });
+
+    $("remoteVideo").play().catch(() => {});
+  };
+
+  peerConnection.onicecandidate = event => {
+    if (!event.candidate || !peerId || !user) return;
+
+    sendUser(peerId, "signal", {
+      from: user.id,
+      to: peerId,
+      kind: "ice",
+      candidate: event.candidate
+    }).catch(error => {
+      console.error("Could not send ICE candidate:", error);
+      status("Network signaling problem: " + error.message);
+    });
+  };
+
+  peerConnection.onconnectionstatechange = () => {
+    if (!peerConnection) return;
+
+    const state = peerConnection.connectionState;
+    console.log("WebRTC connection state:", state);
+
+    if (state === "connected") {
+      status("Call connected!");
+    } else if (state === "connecting") {
+      status("Connecting audio/video...");
+    } else if (state === "disconnected") {
+      status("Connection interrupted. Waiting for network...");
+    } else if (state === "failed") {
+      status(
+        "Connection failed. A TURN relay may be required for this network."
+      );
+    } else if (state === "closed") {
+      status("Call closed.");
+    }
+  };
+
+  peerConnection.oniceconnectionstatechange = () => {
+    if (peerConnection) {
+      console.log(
+        "ICE connection state:",
+        peerConnection.iceConnectionState
+      );
+    }
+  };
+
+  updateControls();
+}
+
+async function drainIce(from) {
+  const candidates = queuedIce[from] || [];
   delete queuedIce[from];
-  for(const candidate of list){
-    try{await pc.addIceCandidate(candidate)}catch(e){}
-  }
-}
 
-async function getMedia(type){
-  if(!navigator.mediaDevices?.getUserMedia){
-    throw new Error("Microphone/camera access requires HTTPS and a supported browser.");
-  }
-  stream=await navigator.mediaDevices.getUserMedia({
-    audio:true,video:type==="video"
-  });
-  $("local").srcObject=stream;
-}
-
-function createPeer(){
-  pc=new RTCPeerConnection({
-    iceServers:[{urls:"stun:stun.l.google.com:19302"}]
-  });
-  stream.getTracks().forEach(track=>pc.addTrack(track,stream));
-  pc.ontrack=e=>{$("remote").srcObject=e.streams[0]};
-  pc.onicecandidate=e=>{
-    if(e.candidate&&peerId){
-      sendUser(peerId,"signal",{
-        from:user.id,to:peerId,kind:"ice",candidate:e.candidate
-      }).catch(()=>{});
+  for (const candidate of candidates) {
+    try {
+      await peerConnection.addIceCandidate(candidate);
+    } catch (error) {
+      console.warn("An ICE candidate could not be added:", error);
     }
-  };
-  pc.onconnectionstatechange=()=>{
-    if(pc&&["failed","disconnected"].includes(pc.connectionState)){
-      status("Connection state: "+pc.connectionState+
-        ". This network may require a TURN relay.");
-    }
-  };
-}
-
-function checkConsent(){
-  if(!$("consent").checked){
-    alert("Please confirm the call notice first.");
-    return false;
   }
-  return true;
 }
 
-async function startCall(type){
-  if(!db||!user)return alert("Connect to GB first.");
-  if(!checkConsent())return;
-  const target=$("target").value.trim();
-  if(!target||target===user.id)return alert("Enter another player's user ID.");
-  if(peerId||pending)return alert("Finish the current call first.");
-  try{
-    peerId=target;callType=type;
+/* ---------- Start an outgoing call ---------- */
+
+async function startCall(type) {
+  if (!db || !user) {
+    status("Connect your account first.");
+    return;
+  }
+
+  if (callActive()) return;
+
+  const target = $("targetId").value.trim();
+
+  if (!target || target === user.id) {
+    status("Enter another player's valid user ID.");
+    return;
+  }
+
+  peerId = target;
+  const generation = ++callGeneration;
+
+  try {
+    status("Requesting microphone/camera permission...");
     await getMedia(type);
+
+    if (generation !== callGeneration) return;
+
     createPeer();
-    const offer=await pc.createOffer();
-    await pc.setLocalDescription(offer);
-    await sendUser(target,"invite",{
-      from:user.id,to:target,callType:type,offer:pc.localDescription
+
+    status("Preparing call offer...");
+    const offer = await peerConnection.createOffer();
+    await peerConnection.setLocalDescription(offer);
+
+    /*
+      Send the invitation with the offer. ICE messages may arrive
+      before the invitation, so the receiver queues early candidates.
+    */
+    await sendUser(target, "invite", {
+      from: user.id,
+      to: target,
+      callType: type,
+      offer: peerConnection.localDescription
     });
-    status("Calling "+target+"… Waiting for acceptance.");
-    callButtons(true);
-  }catch(e){
-    status("Could not start call: "+e.message);
-    await cleanup();
+
+    status("Calling... Waiting for the other player to accept.");
+    updateControls();
+  } catch (error) {
+    console.error("Start call failed:", error);
+    status("Could not start call: " + error.message);
+    await cleanupCall(false);
   }
 }
 
-async function acceptCall(){
-  if(!pending||!user||!db)return;
-  if(!checkConsent())return;
-  const invitation=pending;
-  pending=null;
-  try{
-    peerId=invitation.from;
-    callType=invitation.callType||"voice";
-    await getMedia(callType);
+/* ---------- Accept or decline an incoming call ---------- */
+
+async function acceptCall() {
+  const invitation = pendingInvite;
+  if (!invitation || !db || !user) return;
+
+  $("acceptBtn").disabled = true;
+
+  try {
+    peerId = invitation.from;
+
+    status("Requesting microphone/camera permission...");
+    await getMedia(invitation.callType === "video" ? "video" : "voice");
+
     createPeer();
-    await pc.setRemoteDescription(invitation.offer);
+
+    if (!invitation.offer) {
+      throw new Error("The invitation did not contain a valid call offer.");
+    }
+
+    await peerConnection.setRemoteDescription(invitation.offer);
     await drainIce(peerId);
-    const answer=await pc.createAnswer();
-    await pc.setLocalDescription(answer);
-    await sendUser(peerId,"signal",{
-      from:user.id,to:peerId,kind:"answer",description:pc.localDescription
+
+    const answer = await peerConnection.createAnswer();
+    await peerConnection.setLocalDescription(answer);
+
+    await sendUser(peerId, "signal", {
+      from: user.id,
+      to: peerId,
+      kind: "answer",
+      description: peerConnection.localDescription
     });
-    $("accept").disabled=true;$("decline").disabled=true;
-    callButtons(true);
-    status("Answer sent. Connecting call…");
-  }catch(e){
-    status("Could not accept: "+e.message);
-    await cleanup();
+
+    pendingInvite = null;
+    $("incomingPanel").classList.add("hidden");
+
+    status("Call accepted. Establishing connection...");
+    updateControls();
+  } catch (error) {
+    console.error("Accept call failed:", error);
+    status("Could not accept call: " + error.message);
+    await cleanupCall(false);
+  } finally {
+    $("acceptBtn").disabled = false;
   }
 }
 
-async function cleanup(){
-  if(pc){pc.onicecandidate=null;pc.ontrack=null;pc.close();pc=null}
-  if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}
-  $("local").srcObject=null;$("remote").srcObject=null;
-  peerId=null;muted=false;cameraOff=false;queuedIce={};
-  $("mute").textContent="Mute mic";
-  $("camera").textContent="Turn camera off";
-  callButtons(false);
-  $("accept").disabled=!pending;
-  $("decline").disabled=!pending;
+async function declineCall() {
+  const invitation = pendingInvite;
+  pendingInvite = null;
+  $("incomingPanel").classList.add("hidden");
+
+  if (invitation && db && user) {
+    sendUser(invitation.from, "signal", {
+      from: user.id,
+      to: invitation.from,
+      kind: "decline"
+    }).catch(console.error);
+  }
+
+  status("Incoming call declined.");
+  updateControls();
 }
 
-async function hangup(){
-  const oldPeer=peerId;
-  if(oldPeer&&user){
-    sendUser(oldPeer,"signal",{from:user.id,to:oldPeer,kind:"hangup"}).catch(()=>{});
+/* ---------- Controls and cleanup ---------- */
+
+function toggleMute() {
+  if (!localStream) return;
+
+  const tracks = localStream.getAudioTracks();
+  if (!tracks.length) return;
+
+  const turnOn = !tracks[0].enabled;
+  tracks.forEach(track => track.enabled = turnOn);
+
+  $("muteBtn").textContent = turnOn
+    ? "Mute microphone"
+    : "Unmute microphone";
+}
+
+function toggleCamera() {
+  if (!localStream) return;
+
+  const tracks = localStream.getVideoTracks();
+  if (!tracks.length) return;
+
+  const turnOn = !tracks[0].enabled;
+  tracks.forEach(track => track.enabled = turnOn);
+
+  $("cameraBtn").textContent = turnOn
+    ? "Turn camera off"
+    : "Turn camera on";
+}
+
+async function hangup() {
+  const otherPlayer = peerId;
+
+  if (otherPlayer && db && user) {
+    sendUser(otherPlayer, "signal", {
+      from: user.id,
+      to: otherPlayer,
+      kind: "hangup"
+    }).catch(console.error);
   }
-  await cleanup();
+
+  await cleanupCall(false);
   status("Call ended.");
 }
 
-async function decline(){
-  if(pending&&user){
-    const old=pending.from;
-    sendUser(old,"signal",{from:user.id,to:old,kind:"decline"}).catch(()=>{});
+async function cleanupCall(clearPending = true) {
+  callGeneration++;
+
+  if (peerConnection) {
+    peerConnection.onicecandidate = null;
+    peerConnection.ontrack = null;
+    peerConnection.onconnectionstatechange = null;
+    peerConnection.close();
   }
-  pending=null;
-  $("accept").disabled=true;$("decline").disabled=true;
-  status("Incoming call declined.");
+
+  peerConnection = null;
+
+  if (localStream) {
+    localStream.getTracks().forEach(track => track.stop());
+  }
+
+  localStream = null;
+  remoteStream = null;
+  peerId = null;
+  queuedIce = Object.create(null);
+
+  $("localVideo").srcObject = null;
+  $("remoteVideo").srcObject = null;
+  $("muteBtn").textContent = "Mute microphone";
+  $("cameraBtn").textContent = "Turn camera off";
+
+  if (clearPending) pendingInvite = null;
+
+  if (!pendingInvite) {
+    $("incomingPanel").classList.add("hidden");
+  }
+
+  updateControls();
 }
 
-function toggleMute(){
-  if(!stream)return;
-  muted=!muted;
-  stream.getAudioTracks().forEach(t=>t.enabled=!muted);
-  $("mute").textContent=muted?"Unmute mic":"Mute mic";
-}
-function toggleCamera(){
-  if(!stream)return;
-  cameraOff=!cameraOff;
-  stream.getVideoTracks().forEach(t=>t.enabled=!cameraOff);
-  $("camera").textContent=cameraOff?"Turn camera on":"Turn camera off";
+async function disconnect(showMessage = true) {
+  await cleanupCall(true);
+
+  if (inbox && db) {
+    await db.removeChannel(inbox).catch(() => {});
+  }
+
+  inbox = null;
+
+  if (db) {
+    for (const channel of outgoingChannels.values()) {
+      await db.removeChannel(channel).catch(() => {});
+    }
+  }
+
+  outgoingChannels.clear();
+  db = null;
+  user = null;
+
+  $("myUserId").value = "";
+  connectionStatus("Not connected.");
+  updateControls();
+
+  if (showMessage) status("Disconnected.");
 }
 
-const phrases=[
-  ["kill yourself","possible bullying or self-harm concern"],
-  ["i will kill you","possible threat"],
-  ["fuck you","profanity or insult"],
-  ["shut up","possible harassment"]
-];
-
-function startSafety(){
-  if(!$("consent").checked)return alert("Confirm the consent notice first.");
-  if($("safetyMode").value==="off")return alert("Select a warning mode first.");
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){
-    $("warning").textContent="Speech recognition is not supported in this browser.";
+async function copyMyId() {
+  const id = $("myUserId").value;
+  if (!id) {
+    status("Connect first to see your user ID.");
     return;
   }
-  if(recognition)return;
-  recognition=new SR();
-  recognition.continuous=true;
-  recognition.interimResults=true;
-  recognition.lang="en-US";
-  safetyOn=true;
-  recognition.onresult=e=>{
-    let text="";
-    for(let i=e.resultIndex;i<e.results.length;i++){
-      text+=e.results[i][0].transcript+" ";
-    }
-    $("transcript").textContent=text;
-    const found=phrases.find(([phrase])=>text.toLowerCase().includes(phrase));
-    if(found){
-      const msg="Potential "+found[1]+" detected. Please keep the conversation respectful. Recognition can be wrong.";
-      $("warning").textContent=msg;
-      if($("safetyMode").value==="strict")alert(msg);
-    }
-  };
-  recognition.onerror=e=>{
-    $("warning").textContent="Speech recognition error: "+e.error;
-  };
-  recognition.onend=()=>{
-    if(safetyOn&&recognition){
-      try{recognition.start()}catch(e){}
-    }
-  };
-  try{
-    recognition.start();
-    $("startSafety").disabled=true;
-    $("stopSafety").disabled=false;
-    $("warning").textContent="Local speech check is running. It checks your speech only.";
-  }catch(e){
-    $("warning").textContent="Could not start speech recognition: "+e.message;
+
+  try {
+    await navigator.clipboard.writeText(id);
+    status("Your user ID was copied.");
+  } catch {
+    $("myUserId").focus();
+    $("myUserId").select();
+    status("Select and copy your user ID manually.");
   }
 }
 
-function stopSafety(){
-  safetyOn=false;
-  if(recognition){
-    recognition.onend=null;
-    try{recognition.stop()}catch(e){}
-    recognition=null;
-  }
-  $("startSafety").disabled=!(db&&user);
-  $("stopSafety").disabled=true;
-  $("warning").textContent="Speech monitoring stopped.";
-}
-
-function prepareReport(){
-  const report=
-    "GlitchBoxOfficial Calling report\n"+
-    "My player ID: "+(user?.id||"unknown")+"\n"+
-    "Other player ID: "+(peerId||"not available")+"\n"+
-    "Time: "+new Date().toISOString()+"\n"+
-    "This report has NOT been sent to moderators.";
-  if(navigator.clipboard?.writeText){
-    navigator.clipboard.writeText(report)
-      .then(()=>alert("Report details copied. Send them to GB Support."))
-      .catch(()=>prompt("Copy report details:",report));
-  }else prompt("Copy report details:",report);
-}
-
-async function disconnect(){
-  stopSafety();
-  await cleanup();
-  if(inbox&&db)await db.removeChannel(inbox);
-  inbox=null;db=null;user=null;pending=null;
-  enabled(["voice","video","startSafety"],false);
-  $("account").textContent="Disconnected.";
-  $("connection").textContent="Disconnected.";
-}
-
-$("connect").onclick=connect;
-$("disconnect").onclick=disconnect;
-$("voice").onclick=()=>startCall("voice");
-$("video").onclick=()=>startCall("video");
-$("accept").onclick=acceptCall;
-$("decline").onclick=decline;
-$("hangup").onclick=hangup;
-$("mute").onclick=toggleMute;
-$("camera").onclick=toggleCamera;
-$("startSafety").onclick=startSafety;
-$("stopSafety").onclick=stopSafety;
-$("report").onclick=prepareReport;
-$("safetyMode").onchange=()=>{
-  if($("safetyMode").value==="off")stopSafety();
-};
-window.addEventListener("beforeunload",()=>{
-  stopSafety();
-  if(stream)stream.getTracks().forEach(t=>t.stop());
-  if(pc)pc.close();
-});
-})();
+/* Start with controls disabled until authentication succeeds. */
+$("projectUrl").value = PROJECT_DEFAULT;
+updateControls();
 </script>
 </body>
 </html>
