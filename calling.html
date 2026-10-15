@@ -11,400 +11,269 @@
 <style>
 :root {
   --purple: #9b59ff;
-  --black: #09090d;
-  --panel: #15131c;
+  --bg: #09090d;
+  --panel: #17131f;
   --border: #49316b;
   --text: #f4efff;
-  --muted: #b8aecb;
-  --danger: #ff526b;
+  --muted: #bcb0ce;
+  --red: #ff526b;
 }
-
 * { box-sizing: border-box; }
-
 body {
   margin: 0;
-  min-height: 100vh;
-  padding: 20px;
-  background: var(--black);
+  padding: 18px;
+  background: var(--bg);
   color: var(--text);
   font-family: Arial, sans-serif;
 }
-
-main {
-  max-width: 760px;
-  margin: auto;
-}
-
-header {
-  text-align: center;
-  margin: 10px 0 25px;
-}
-
-h1 {
-  color: var(--purple);
-  margin-bottom: 8px;
-}
-
-p { line-height: 1.5; }
-
+main { max-width: 760px; margin: auto; }
+header { text-align: center; padding: 10px 0 20px; }
+h1, h2 { color: var(--purple); }
 .panel {
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 18px;
-  margin: 16px 0;
+  margin: 15px 0;
 }
-
-label {
-  display: block;
-  margin: 12px 0 6px;
-  color: var(--muted);
+button, .link {
+  display: inline-block;
+  margin: 5px 4px 5px 0;
+  padding: 12px 15px;
+  background: #09070e;
+  color: var(--purple);
+  border: 1px solid var(--purple);
+  border-radius: 9px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  text-decoration: none;
 }
-
-input {
-  display: block;
+button:hover, .link:hover {
+  background: var(--purple);
+  color: #000;
+}
+button:disabled { opacity: .45; cursor: not-allowed; }
+.danger { color: var(--red); border-color: var(--red); }
+#status {
+  padding: 12px;
+  background: #09070e;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+  color: var(--purple);
+}
+.muted { color: var(--muted); font-size: 13px; line-height: 1.5; }
+#myUserId, #friendId {
   width: 100%;
   padding: 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: #08070b;
   color: white;
-  font-size: 16px;
+  font-size: 14px;
 }
-
-button, .link-button {
-  display: inline-block;
-  padding: 12px 16px;
-  margin: 6px 4px 4px 0;
-  border: 1px solid var(--purple);
-  border-radius: 9px;
-  background: #09070e;
-  color: var(--purple);
-  font-size: 15px;
-  font-weight: bold;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-button:hover, .link-button:hover {
-  background: var(--purple);
-  color: black;
-}
-
-button:disabled {
-  opacity: .45;
-  cursor: not-allowed;
-}
-
-.danger {
-  border-color: var(--danger);
-  color: var(--danger);
-}
-
-#status {
-  padding: 12px;
-  border-radius: 8px;
-  background: #09070e;
-  color: var(--purple);
-  overflow-wrap: anywhere;
-}
-
-#connection {
-  color: var(--muted);
-  overflow-wrap: anywhere;
-}
-
 .videos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 12px;
-  margin-top: 15px;
 }
-
 video {
-  display: block;
   width: 100%;
-  min-height: 160px;
-  background: #000;
+  min-height: 150px;
+  background: black;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 9px;
 }
-
-.small {
-  color: var(--muted);
-  font-size: 13px;
-}
-
 .hidden { display: none !important; }
 </style>
 </head>
 
 <body>
 <main>
-  <header>
-    <h1>🎮 GlitchBoxOfficial Calling</h1>
-    <p>Connect with friends using voice or video.</p>
-    <a class="link-button" href="index.html">Home</a>
-  </header>
+<header>
+  <h1>🎮 GlitchBoxOfficial Calling</h1>
+  <p>Voice and video calls with your friends.</p>
+  <a class="link" href="index.html">Home</a>
+</header>
 
-  <section class="panel">
-    <h2>1. Connect your account</h2>
-    <p id="connection">Not connected.</p>
+<section class="panel">
+  <h2>Account</h2>
+  <p id="connection">Connecting to GlitchBoxOfficial...</p>
+  <p class="muted">Your player ID — share it privately with your friend.</p>
+  <input id="myUserId" readonly placeholder="Waiting for sign-in">
+  <button id="copyIdBtn" onclick="copyMyId()">Copy My ID</button>
+  <button onclick="connect()">Reconnect</button>
+</section>
 
-    <label for="projectUrl">Supabase project URL</label>
-    <input id="projectUrl"
-      value="https://syjnlgxghgwvqrwtthmr.supabase.co"
-      autocomplete="url">
-
-    <label for="publicKey">Supabase publishable / anon public key</label>
-    <input id="publicKey"
-      type="password"
-      placeholder="Paste your public key here"
-      autocomplete="off">
-
-    <button id="connectBtn" onclick="connect()">Connect</button>
-    <button onclick="disconnect()">Disconnect</button>
-
-    <p class="small">
-      Use your Supabase public key, never your service-role or secret key.
-      Sign in to GlitchBoxOfficial first.
-    </p>
-    <p class="small">Your user ID:</p>
-    <input id="myUserId" readonly placeholder="Connect to see your ID">
-    <button onclick="copyMyId()">Copy my user ID</button>
-  </section>
-
-  <section class="panel">
-    <h2>2. Start a call</h2>
-
-    <label for="targetId">Friend's Supabase user ID</label>
-    <input id="targetId"
-      placeholder="Paste your friend's full user ID"
-      autocomplete="off">
-
+<section class="panel">
+  <h2>Call a Friend</h2>
+  <label for="friendId">Friend's player ID</label>
+  <input id="friendId" placeholder="Paste your friend's Supabase user ID">
+  <p>
     <button id="voiceBtn" onclick="startCall('voice')" disabled>
       📞 Voice Call
     </button>
     <button id="videoBtn" onclick="startCall('video')" disabled>
       📹 Video Call
     </button>
+  </p>
+  <p class="muted">
+    Both players must be signed in to the same GlitchBoxOfficial
+    Supabase project and have this page open.
+  </p>
+</section>
 
-    <p class="small">
-      Both people must be signed in to the same Supabase project.
-      Share user IDs privately.
-    </p>
-  </section>
+<section id="incomingPanel" class="panel hidden">
+  <h2>📲 Incoming Call</h2>
+  <p id="incomingText">Incoming call...</p>
+  <button id="acceptBtn" onclick="acceptCall()">Accept</button>
+  <button class="danger" onclick="declineCall()">Decline</button>
+</section>
 
-  <section id="incomingPanel" class="panel hidden">
-    <h2>📲 Incoming call</h2>
-    <p id="incomingText">Someone is calling you.</p>
-    <button id="acceptBtn" onclick="acceptCall()">Accept</button>
-    <button class="danger" onclick="declineCall()">Decline</button>
-  </section>
+<section class="panel">
+  <h2>Call Controls</h2>
+  <button id="muteBtn" onclick="toggleMute()" disabled>
+    Mute Microphone
+  </button>
+  <button id="cameraBtn" onclick="toggleCamera()" disabled>
+    Turn Camera Off
+  </button>
+  <button id="hangupBtn" class="danger" onclick="hangup()" disabled>
+    End Call
+  </button>
 
-  <section class="panel">
-    <h2>3. Call controls</h2>
-    <button id="muteBtn" onclick="toggleMute()" disabled>
-      Mute microphone
-    </button>
-    <button id="cameraBtn" onclick="toggleCamera()" disabled>
-      Turn camera off
-    </button>
-    <button id="hangupBtn" class="danger" onclick="hangup()" disabled>
-      End Call
-    </button>
-
-    <div class="videos">
-      <div>
-        <p>My camera</p>
-        <video id="localVideo" autoplay playsinline muted></video>
-      </div>
-      <div>
-        <p>Friend's camera</p>
-        <video id="remoteVideo" autoplay playsinline></video>
-      </div>
+  <div class="videos">
+    <div>
+      <p>My Camera</p>
+      <video id="localVideo" autoplay playsinline muted></video>
     </div>
-    <p id="status">Connect your account to begin.</p>
-  </section>
+    <div>
+      <p>Friend's Camera</p>
+      <video id="remoteVideo" autoplay playsinline></video>
+    </div>
+  </div>
 
-  <section class="panel">
-    <h2>Safety</h2>
-    <p>
-      Only accept calls from people you recognize. You can end a call
-      at any time. This page does not provide real AI speech moderation
-      or automatically detect inappropriate speech.
-    </p>
-  </section>
+  <p id="status">Starting...</p>
+</section>
+
+<section class="panel">
+  <h2>Privacy & Safety</h2>
+  <p class="muted">
+    Allow camera and microphone access only when you want to call.
+    Accept calls from people you recognize. This version does not
+    provide AI speech monitoring or automatic content moderation.
+  </p>
+</section>
 </main>
 
 <script>
 "use strict";
 
-/* ---------- Configuration and state ---------- */
+/* ---------- GlitchBoxOfficial Supabase configuration ---------- */
 
-const PROJECT_DEFAULT = "https://syjnlgxghgwvqrwtthmr.supabase.co";
+const SUPABASE_URL =
+  "https://syjnlgxghgwvqrwtthmr.supabase.co";
 
-let db = null;
-let user = null;
-let inbox = null;
-let peerConnection = null;
-let localStream = null;
-let remoteStream = null;
-let peerId = null;
-let pendingInvite = null;
-let queuedIce = Object.create(null);
-let outgoingChannels = new Map();
-let connecting = false;
-let callGeneration = 0;
+const SUPABASE_PUBLIC_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI";
 
-const $ = id => document.getElementById(id);
-
-const rtcConfig = {
+/*
+  STUN can establish many direct connections. Some networks also
+  require a TURN relay; add your TURN provider here when configured.
+*/
+const RTC_CONFIG = {
   iceServers: [
     { urls: "stun:stun.l.google.com:19302" }
   ]
 };
 
-function status(message) {
+/* ---------- App state ---------- */
+
+const $ = id => document.getElementById(id);
+
+let db = null;
+let user = null;
+let inbox = null;
+let peer = null;
+let localStream = null;
+let remoteStream = null;
+let peerId = null;
+let pendingInvite = null;
+let outgoing = new Map();
+let queuedMessages = [];
+let busy = false;
+let generation = 0;
+
+const topic = id => "gb-calls-" + id;
+
+function showStatus(message) {
   $("status").textContent = message;
 }
 
-function connectionStatus(message) {
+function showConnection(message) {
   $("connection").textContent = message;
 }
 
-function userChannel(id) {
-  return "gb-calls-" + id;
+function activeCall() {
+  return !!peer || !!pendingInvite;
 }
 
-function callActive() {
-  return !!peerConnection || !!pendingInvite;
-}
-
-function updateControls() {
+function refreshButtons() {
   const connected = !!db && !!user;
-  const busy = callActive();
+  const active = activeCall();
 
-  $("voiceBtn").disabled = !connected || busy;
-  $("videoBtn").disabled = !connected || busy;
-  $("hangupBtn").disabled = !peerConnection;
-  $("muteBtn").disabled = !localStream;
+  $("voiceBtn").disabled = !connected || active;
+  $("videoBtn").disabled = !connected || active;
+  $("hangupBtn").disabled = !peer;
+  $("muteBtn").disabled = !localStream ||
+    !localStream.getAudioTracks().length;
   $("cameraBtn").disabled = !localStream ||
     !localStream.getVideoTracks().length;
 }
 
-/* ---------- Connect to Supabase ---------- */
-
-async function connect() {
-  if (connecting) return;
-  connecting = true;
-  $("connectBtn").disabled = true;
-
-  try {
-    if (!window.supabase) {
-      throw new Error("Supabase library did not load. Refresh the page.");
-    }
-
-    const projectUrl = $("projectUrl").value.trim().replace(/\/+$/, "");
-    const publicKey = $("publicKey").value.trim();
-
-    if (!projectUrl.startsWith("https://") || !publicKey) {
-      throw new Error("Enter the project URL and public key.");
-    }
-
-    await disconnect(false);
-
-    db = window.supabase.createClient(projectUrl, publicKey, {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true
-      },
-      realtime: {
-        params: { eventsPerSecond: 10 }
-      }
-    });
-
-    const { data, error } = await db.auth.getSession();
-    if (error) throw error;
-
-    if (!data.session) {
-      throw new Error(
-        "No signed-in session found for this site. Sign in first, " +
-        "then return to Calling."
-      );
-    }
-
-    user = data.session.user;
-
-    $("myUserId").value = user.id;
-    connectionStatus("Signed in as " + user.id);
-
-    await listenForCalls();
-
-    status("Connected. You can now call another signed-in player.");
-    updateControls();
-  } catch (error) {
-    console.error("Connect failed:", error);
-    connectionStatus("Connection failed: " + error.message);
-    status("Could not connect. Check your sign-in and Supabase settings.");
-    db = null;
-    user = null;
-    updateControls();
-  } finally {
-    connecting = false;
-    $("connectBtn").disabled = false;
-  }
-}
-
-/* ---------- Reliable per-recipient signaling ---------- */
-
-/*
-  Keep outgoing broadcast channels subscribed instead of creating and
-  immediately removing a channel for every message. This reduces
-  signaling races while WebRTC is being negotiated.
-*/
+/* ---------- Signaling channels ---------- */
 
 async function getOutgoingChannel(to) {
-  if (outgoingChannels.has(to)) {
-    return outgoingChannels.get(to);
-  }
+  if (outgoing.has(to)) return outgoing.get(to);
 
-  const channel = db.channel(userChannel(to), {
+  const channel = db.channel(topic(to), {
     config: { broadcast: { self: false } }
   });
 
-  const ready = new Promise((resolve, reject) => {
-    const timeout = setTimeout(
-      () => reject(new Error("Signaling subscription timed out.")),
-      12000
-    );
+  await new Promise((resolve, reject) => {
+    let finished = false;
+    const timer = setTimeout(() => {
+      if (!finished) {
+        finished = true;
+        reject(new Error("Timed out connecting to the signaling channel."));
+      }
+    }, 12000);
 
     channel.subscribe(state => {
-      if (state === "SUBSCRIBED") {
-        clearTimeout(timeout);
+      if (state === "SUBSCRIBED" && !finished) {
+        finished = true;
+        clearTimeout(timer);
         resolve();
-      }
-
-      if (state === "CHANNEL_ERROR" || state === "TIMED_OUT") {
-        clearTimeout(timeout);
-        reject(new Error("Supabase Realtime channel failed: " + state));
+      } else if (
+        (state === "CHANNEL_ERROR" || state === "TIMED_OUT") &&
+        !finished
+      ) {
+        finished = true;
+        clearTimeout(timer);
+        reject(new Error("Realtime channel failed: " + state));
       }
     });
-  });
-
-  try {
-    await ready;
-    outgoingChannels.set(to, channel);
-    return channel;
-  } catch (error) {
+  }).catch(async error => {
     await db.removeChannel(channel).catch(() => {});
     throw error;
-  }
+  });
+
+  outgoing.set(to, channel);
+  return channel;
 }
 
 async function sendUser(to, event, payload) {
-  if (!db || !user) throw new Error("Connect your account first.");
+  if (!db || !user) throw new Error("You are not connected.");
 
   const channel = await getOutgoingChannel(to);
   const result = await channel.send({
@@ -414,331 +283,365 @@ async function sendUser(to, event, payload) {
   });
 
   if (result !== "ok") {
-    throw new Error("Supabase could not send the signal: " + result);
+    throw new Error("Could not send call signal: " + result);
   }
 }
 
-/* ---------- Incoming calls and WebRTC signals ---------- */
+/* ---------- Automatic sign-in and connection ---------- */
+
+async function connect() {
+  if (busy) return;
+  busy = true;
+
+  try {
+    if (!window.supabase) {
+      throw new Error("Supabase did not load. Refresh this page.");
+    }
+
+    await disconnect(false);
+
+    db = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLIC_KEY,
+      {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true
+        }
+      }
+    );
+
+    const { data, error } = await db.auth.getSession();
+    if (error) throw error;
+
+    if (!data.session) {
+      throw new Error(
+        "Please sign in to GlitchBoxOfficial first, then reopen Calling."
+      );
+    }
+
+    user = data.session.user;
+    $("myUserId").value = user.id;
+
+    await listenForCalls();
+
+    showConnection("Connected and listening for incoming calls.");
+    showStatus("Ready! Enter a friend's ID to start a call.");
+    refreshButtons();
+
+    /*
+      If the receiver accepted a call before their incoming channel
+      became ready, the invitation may not arrive. Both players should
+      keep this page open and connected before starting a call.
+    */
+  } catch (error) {
+    console.error("Connection error:", error);
+    showConnection("Not connected: " + error.message);
+    showStatus(error.message);
+    db = null;
+    user = null;
+    refreshButtons();
+  } finally {
+    busy = false;
+  }
+}
+
+/* ---------- Incoming invitations and answers ---------- */
 
 async function listenForCalls() {
-  if (inbox) {
-    await db.removeChannel(inbox);
-    inbox = null;
-  }
-
-  inbox = db.channel(userChannel(user.id), {
+  inbox = db.channel(topic(user.id), {
     config: { broadcast: { self: false } }
   });
 
-  inbox.on("broadcast", { event: "invite" }, async ({ payload }) => {
-    const p = payload;
+  inbox.on("broadcast", { event: "invite" }, ({ payload }) => {
+    const invite = payload;
 
-    if (!p || p.to !== user.id || !p.from || p.from === user.id) return;
+    if (
+      !invite ||
+      invite.to !== user.id ||
+      !invite.from ||
+      invite.from === user.id
+    ) return;
 
-    if (callActive()) {
-      sendUser(p.from, "signal", {
+    if (activeCall()) {
+      sendUser(invite.from, "signal", {
         from: user.id,
-        to: p.from,
+        to: invite.from,
         kind: "busy"
       }).catch(console.error);
       return;
     }
 
-    pendingInvite = p;
+    pendingInvite = invite;
     $("incomingPanel").classList.remove("hidden");
     $("incomingText").textContent =
-      "Incoming " + (p.callType || "voice") + " call from " + p.from;
-
-    status("Incoming call. Accept or decline.");
-    updateControls();
+      "Incoming " + invite.callType + " call from " + invite.from;
+    showStatus("Incoming call. Accept or decline.");
+    refreshButtons();
   });
 
   inbox.on("broadcast", { event: "signal" }, async ({ payload }) => {
-    const p = payload;
+    const message = payload;
 
-    if (!p || p.to !== user.id || !p.from || p.from === user.id) return;
+    if (!message || message.to !== user.id || !message.from) return;
 
     try {
-      if (p.kind === "ice") {
-        /*
-          FIX: candidates can arrive before the invitation is accepted.
-          Queue them by sender instead of throwing them away.
-        */
-        if (peerId && p.from !== peerId) return;
-        if (!peerId && pendingInvite && p.from !== pendingInvite.from) return;
-
-        if (
-          peerConnection &&
-          peerId === p.from &&
-          peerConnection.remoteDescription
-        ) {
-          await peerConnection.addIceCandidate(p.candidate);
-        } else {
-          (queuedIce[p.from] ||= []).push(p.candidate);
-        }
-        return;
+      if (message.kind === "answer" &&
+          peer && message.from === peerId) {
+        await peer.setRemoteDescription(message.description);
+        await flushQueuedMessages();
+        showStatus("Answer received. Connecting audio/video...");
       }
 
-      if (p.kind === "answer" && peerConnection && p.from === peerId) {
-        if (!peerConnection.remoteDescription) {
-          await peerConnection.setRemoteDescription(p.description);
-          await drainIce(p.from);
-          status("Answer received. Establishing media connection...");
-        }
-        return;
+      if (message.kind === "hangup" && message.from === peerId) {
+        await endCall(false);
+        showStatus("The other player ended the call.");
       }
 
-      if (p.kind === "hangup" && p.from === peerId) {
-        await cleanupCall(false);
-        status("The other player ended the call.");
-        return;
+      if (message.kind === "decline" && message.from === peerId) {
+        await endCall(false);
+        showStatus("The other player declined the call.");
       }
 
-      if (p.kind === "decline" && p.from === peerId) {
-        await cleanupCall(false);
-        status("The other player declined the call.");
-        return;
-      }
-
-      if (p.kind === "busy" && p.from === peerId) {
-        await cleanupCall(false);
-        status("That player is already in a call.");
+      if (message.kind === "busy" && message.from === peerId) {
+        await endCall(false);
+        showStatus("That player is already in a call.");
       }
     } catch (error) {
-      console.error("Signal handling failed:", error);
-      status("Call signaling error: " + error.message);
+      console.error("Signal error:", error);
+      showStatus("Call setup error: " + error.message);
     }
   });
 
-  inbox.subscribe(state => {
-    if (state === "SUBSCRIBED") {
-      connectionStatus("Connected. Listening for incoming calls.");
-    } else if (state === "CHANNEL_ERROR" || state === "TIMED_OUT") {
-      connectionStatus("Realtime connection error: " + state);
-    }
+  await new Promise((resolve, reject) => {
+    const timeout = setTimeout(
+      () => reject(new Error("Timed out subscribing to incoming calls.")),
+      12000
+    );
+
+    inbox.subscribe(state => {
+      if (state === "SUBSCRIBED") {
+        clearTimeout(timeout);
+        resolve();
+      } else if (state === "CHANNEL_ERROR" || state === "TIMED_OUT") {
+        clearTimeout(timeout);
+        reject(new Error("Incoming-call channel failed: " + state));
+      }
+    });
   });
 }
 
-/* ---------- Media and peer connection ---------- */
+/* ---------- WebRTC setup ---------- */
+
+/*
+  This version waits for ICE gathering to finish before sending the
+  offer/answer. This avoids losing early ICE candidates when the other
+  player's invitation handler has not started yet.
+*/
+
+function waitForIceGathering(pc) {
+  if (pc.iceGatheringState === "complete") {
+    return Promise.resolve();
+  }
+
+  return new Promise(resolve => {
+    const timeout = setTimeout(resolve, 12000);
+
+    function checkState() {
+      if (pc.iceGatheringState === "complete") {
+        clearTimeout(timeout);
+        pc.removeEventListener(
+          "icegatheringstatechange", checkState
+        );
+        resolve();
+      }
+    }
+
+    pc.addEventListener("icegatheringstatechange", checkState);
+  });
+}
 
 async function getMedia(type) {
-  if (!navigator.mediaDevices ||
-      !navigator.mediaDevices.getUserMedia) {
+  if (!navigator.mediaDevices?.getUserMedia) {
     throw new Error(
-      "Camera and microphone require HTTPS and browser permission."
+      "Camera/microphone access requires HTTPS and browser support."
     );
   }
 
-  const stream = await navigator.mediaDevices.getUserMedia({
+  localStream = await navigator.mediaDevices.getUserMedia({
     audio: true,
-    video: type === "video"
-      ? { facingMode: "user" }
-      : false
+    video: type === "video" ? { facingMode: "user" } : false
   });
 
-  localStream = stream;
-  $("localVideo").srcObject = stream;
-  return stream;
+  $("localVideo").srcObject = localStream;
 }
 
 function createPeer() {
-  peerConnection = new RTCPeerConnection(rtcConfig);
+  peer = new RTCPeerConnection(RTC_CONFIG);
   remoteStream = new MediaStream();
   $("remoteVideo").srcObject = remoteStream;
 
-  if (localStream) {
-    localStream.getTracks().forEach(track => {
-      peerConnection.addTrack(track, localStream);
-    });
-  }
+  localStream.getTracks().forEach(track => {
+    peer.addTrack(track, localStream);
+  });
 
-  peerConnection.ontrack = event => {
-    event.streams[0]?.getTracks().forEach(track => {
-      if (!remoteStream.getTracks().some(t => t.id === track.id)) {
-        remoteStream.addTrack(track);
-      }
+  peer.ontrack = event => {
+    const streams = event.streams.length
+      ? event.streams
+      : [new MediaStream([event.track])];
+
+    streams.forEach(stream => {
+      stream.getTracks().forEach(track => {
+        if (!remoteStream.getTracks().some(t => t.id === track.id)) {
+          remoteStream.addTrack(track);
+        }
+      });
     });
 
     $("remoteVideo").play().catch(() => {});
   };
 
-  peerConnection.onicecandidate = event => {
-    if (!event.candidate || !peerId || !user) return;
+  peer.onconnectionstatechange = () => {
+    if (!peer) return;
 
-    sendUser(peerId, "signal", {
-      from: user.id,
-      to: peerId,
-      kind: "ice",
-      candidate: event.candidate
-    }).catch(error => {
-      console.error("Could not send ICE candidate:", error);
-      status("Network signaling problem: " + error.message);
-    });
-  };
-
-  peerConnection.onconnectionstatechange = () => {
-    if (!peerConnection) return;
-
-    const state = peerConnection.connectionState;
-    console.log("WebRTC connection state:", state);
+    const state = peer.connectionState;
+    console.log("WebRTC state:", state);
 
     if (state === "connected") {
-      status("Call connected!");
+      showStatus("Call connected!");
     } else if (state === "connecting") {
-      status("Connecting audio/video...");
+      showStatus("Connecting audio/video...");
     } else if (state === "disconnected") {
-      status("Connection interrupted. Waiting for network...");
+      showStatus("Network interrupted. Waiting for connection...");
     } else if (state === "failed") {
-      status(
-        "Connection failed. A TURN relay may be required for this network."
-      );
-    } else if (state === "closed") {
-      status("Call closed.");
-    }
-  };
-
-  peerConnection.oniceconnectionstatechange = () => {
-    if (peerConnection) {
-      console.log(
-        "ICE connection state:",
-        peerConnection.iceConnectionState
+      showStatus(
+        "Connection failed. Your network may require a TURN relay."
       );
     }
   };
 
-  updateControls();
+  refreshButtons();
 }
 
-async function drainIce(from) {
-  const candidates = queuedIce[from] || [];
-  delete queuedIce[from];
-
-  for (const candidate of candidates) {
-    try {
-      await peerConnection.addIceCandidate(candidate);
-    } catch (error) {
-      console.warn("An ICE candidate could not be added:", error);
-    }
-  }
-}
-
-/* ---------- Start an outgoing call ---------- */
+/* ---------- Outgoing calls ---------- */
 
 async function startCall(type) {
   if (!db || !user) {
-    status("Connect your account first.");
+    showStatus("Connect your signed-in account first.");
     return;
   }
 
-  if (callActive()) return;
+  if (activeCall()) return;
 
-  const target = $("targetId").value.trim();
+  const target = $("friendId").value.trim();
 
   if (!target || target === user.id) {
-    status("Enter another player's valid user ID.");
+    showStatus("Enter a different player's valid user ID.");
     return;
   }
 
   peerId = target;
-  const generation = ++callGeneration;
+  const myGeneration = ++generation;
 
   try {
-    status("Requesting microphone/camera permission...");
+    showStatus("Requesting microphone/camera permission...");
     await getMedia(type);
 
-    if (generation !== callGeneration) return;
+    if (myGeneration !== generation) return;
 
     createPeer();
 
-    status("Preparing call offer...");
-    const offer = await peerConnection.createOffer();
-    await peerConnection.setLocalDescription(offer);
+    const offer = await peer.createOffer();
+    await peer.setLocalDescription(offer);
 
-    /*
-      Send the invitation with the offer. ICE messages may arrive
-      before the invitation, so the receiver queues early candidates.
-    */
+    showStatus("Preparing secure connection...");
+    await waitForIceGathering(peer);
+
+    if (myGeneration !== generation) return;
+
     await sendUser(target, "invite", {
       from: user.id,
       to: target,
       callType: type,
-      offer: peerConnection.localDescription
+      offer: peer.localDescription
     });
 
-    status("Calling... Waiting for the other player to accept.");
-    updateControls();
+    showStatus("Calling... Waiting for your friend to accept.");
+    refreshButtons();
   } catch (error) {
-    console.error("Start call failed:", error);
-    status("Could not start call: " + error.message);
-    await cleanupCall(false);
+    console.error("Call start error:", error);
+    showStatus("Could not start call: " + error.message);
+    await endCall(false);
   }
 }
 
-/* ---------- Accept or decline an incoming call ---------- */
+/* ---------- Accept or decline ---------- */
 
 async function acceptCall() {
-  const invitation = pendingInvite;
-  if (!invitation || !db || !user) return;
+  const invite = pendingInvite;
+  if (!invite || !db || !user) return;
 
   $("acceptBtn").disabled = true;
 
   try {
-    peerId = invitation.from;
+    peerId = invite.from;
 
-    status("Requesting microphone/camera permission...");
-    await getMedia(invitation.callType === "video" ? "video" : "voice");
+    showStatus("Requesting microphone/camera permission...");
+    await getMedia(invite.callType === "video" ? "video" : "voice");
 
     createPeer();
 
-    if (!invitation.offer) {
-      throw new Error("The invitation did not contain a valid call offer.");
+    if (!invite.offer) {
+      throw new Error("The invitation did not include a call offer.");
     }
 
-    await peerConnection.setRemoteDescription(invitation.offer);
-    await drainIce(peerId);
+    await peer.setRemoteDescription(invite.offer);
 
-    const answer = await peerConnection.createAnswer();
-    await peerConnection.setLocalDescription(answer);
+    const answer = await peer.createAnswer();
+    await peer.setLocalDescription(answer);
+
+    showStatus("Preparing your answer...");
+    await waitForIceGathering(peer);
 
     await sendUser(peerId, "signal", {
       from: user.id,
       to: peerId,
       kind: "answer",
-      description: peerConnection.localDescription
+      description: peer.localDescription
     });
 
     pendingInvite = null;
     $("incomingPanel").classList.add("hidden");
-
-    status("Call accepted. Establishing connection...");
-    updateControls();
+    showStatus("Call accepted. Connecting audio/video...");
+    refreshButtons();
   } catch (error) {
-    console.error("Accept call failed:", error);
-    status("Could not accept call: " + error.message);
-    await cleanupCall(false);
+    console.error("Accept error:", error);
+    showStatus("Could not accept call: " + error.message);
+    await endCall(false);
   } finally {
     $("acceptBtn").disabled = false;
   }
 }
 
 async function declineCall() {
-  const invitation = pendingInvite;
+  const invite = pendingInvite;
   pendingInvite = null;
   $("incomingPanel").classList.add("hidden");
 
-  if (invitation && db && user) {
-    sendUser(invitation.from, "signal", {
+  if (invite && db && user) {
+    sendUser(invite.from, "signal", {
       from: user.id,
-      to: invitation.from,
+      to: invite.from,
       kind: "decline"
     }).catch(console.error);
   }
 
-  status("Incoming call declined.");
-  updateControls();
+  showStatus("Incoming call declined.");
+  refreshButtons();
 }
 
-/* ---------- Controls and cleanup ---------- */
+/* ---------- Controls ---------- */
 
 function toggleMute() {
   if (!localStream) return;
@@ -746,12 +649,11 @@ function toggleMute() {
   const tracks = localStream.getAudioTracks();
   if (!tracks.length) return;
 
-  const turnOn = !tracks[0].enabled;
-  tracks.forEach(track => track.enabled = turnOn);
+  const enabled = !tracks[0].enabled;
+  tracks.forEach(track => track.enabled = enabled);
 
-  $("muteBtn").textContent = turnOn
-    ? "Mute microphone"
-    : "Unmute microphone";
+  $("muteBtn").textContent =
+    enabled ? "Mute Microphone" : "Unmute Microphone";
 }
 
 function toggleCamera() {
@@ -760,40 +662,38 @@ function toggleCamera() {
   const tracks = localStream.getVideoTracks();
   if (!tracks.length) return;
 
-  const turnOn = !tracks[0].enabled;
-  tracks.forEach(track => track.enabled = turnOn);
+  const enabled = !tracks[0].enabled;
+  tracks.forEach(track => track.enabled = enabled);
 
-  $("cameraBtn").textContent = turnOn
-    ? "Turn camera off"
-    : "Turn camera on";
+  $("cameraBtn").textContent =
+    enabled ? "Turn Camera Off" : "Turn Camera On";
 }
 
 async function hangup() {
-  const otherPlayer = peerId;
+  const other = peerId;
 
-  if (otherPlayer && db && user) {
-    sendUser(otherPlayer, "signal", {
+  if (other && db && user) {
+    sendUser(other, "signal", {
       from: user.id,
-      to: otherPlayer,
+      to: other,
       kind: "hangup"
     }).catch(console.error);
   }
 
-  await cleanupCall(false);
-  status("Call ended.");
+  await endCall(false);
+  showStatus("Call ended.");
 }
 
-async function cleanupCall(clearPending = true) {
-  callGeneration++;
+async function endCall() {
+  generation++;
 
-  if (peerConnection) {
-    peerConnection.onicecandidate = null;
-    peerConnection.ontrack = null;
-    peerConnection.onconnectionstatechange = null;
-    peerConnection.close();
+  if (peer) {
+    peer.ontrack = null;
+    peer.onconnectionstatechange = null;
+    peer.close();
   }
 
-  peerConnection = null;
+  peer = null;
 
   if (localStream) {
     localStream.getTracks().forEach(track => track.stop());
@@ -802,68 +702,74 @@ async function cleanupCall(clearPending = true) {
   localStream = null;
   remoteStream = null;
   peerId = null;
-  queuedIce = Object.create(null);
+  queuedMessages = [];
 
   $("localVideo").srcObject = null;
   $("remoteVideo").srcObject = null;
-  $("muteBtn").textContent = "Mute microphone";
-  $("cameraBtn").textContent = "Turn camera off";
+  $("muteBtn").textContent = "Mute Microphone";
+  $("cameraBtn").textContent = "Turn Camera Off";
 
-  if (clearPending) pendingInvite = null;
+  pendingInvite = null;
+  $("incomingPanel").classList.add("hidden");
+  refreshButtons();
+}
 
-  if (!pendingInvite) {
-    $("incomingPanel").classList.add("hidden");
+async function flushQueuedMessages() {
+  const messages = queuedMessages;
+  queuedMessages = [];
+
+  for (const item of messages) {
+    if (item.from !== peerId) continue;
+
+    // Reserved for future queued signaling messages.
+    console.log("Queued signal:", item.kind);
   }
-
-  updateControls();
 }
 
 async function disconnect(showMessage = true) {
-  await cleanupCall(true);
+  await endCall();
 
   if (inbox && db) {
     await db.removeChannel(inbox).catch(() => {});
   }
-
   inbox = null;
 
   if (db) {
-    for (const channel of outgoingChannels.values()) {
+    for (const channel of outgoing.values()) {
       await db.removeChannel(channel).catch(() => {});
     }
   }
 
-  outgoingChannels.clear();
+  outgoing.clear();
   db = null;
   user = null;
 
   $("myUserId").value = "";
-  connectionStatus("Not connected.");
-  updateControls();
+  showConnection("Not connected.");
+  refreshButtons();
 
-  if (showMessage) status("Disconnected.");
+  if (showMessage) showStatus("Disconnected.");
 }
 
 async function copyMyId() {
   const id = $("myUserId").value;
   if (!id) {
-    status("Connect first to see your user ID.");
+    showStatus("Connect first to get your player ID.");
     return;
   }
 
   try {
     await navigator.clipboard.writeText(id);
-    status("Your user ID was copied.");
+    showStatus("Player ID copied.");
   } catch {
     $("myUserId").focus();
     $("myUserId").select();
-    status("Select and copy your user ID manually.");
+    showStatus("Select and copy your player ID manually.");
   }
 }
 
-/* Start with controls disabled until authentication succeeds. */
-$("projectUrl").value = PROJECT_DEFAULT;
-updateControls();
+/* Connect automatically when the page opens. */
+window.addEventListener("load", connect);
 </script>
 </body>
 </html>
