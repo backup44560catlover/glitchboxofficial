@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlitchBoxOfficial Founder Panel</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 25px;
+  background: #080808;
+  color: #9b59ff;
+  font-family: Arial, sans-serif;
+}
+main {
+  max-width: 850px;
+  margin: 35px auto;
+  padding: 25px;
+  border: 1px solid #9b59ff;
+  border-radius: 14px;
+  background: #111;
+}
+h1, h2 { text-align: center; }
+button, input, textarea {
+  display: block;
+  width: 100%;
+  margin: 12px 0;
+  padding: 13px;
+  border: 1px solid #9b59ff;
+  border-radius: 8px;
+  background: #080808;
+  color: #fff;
+}
+button {
+  color: #c9a4ff;
+  cursor: pointer;
+  font-weight: bold;
+}
+button:hover { background: #28143d; }
+.panel {
+  margin-top: 20px;
+  padding: 18px;
+  border: 1px solid #6335a5;
+  border-radius: 10px;
+}
+.hidden { display: none; }
+.muted { color: #bbb; }
+.error { color: #ff7777; }
+.success { color: #8cffad; }
+a { color: #c9a4ff; }
+</style>
+</head>
+
+<body>
+<main>
+  <h1>🎮 GlitchBoxOfficial</h1>
+  <h2>Founder & Staff Panel</h2>
+
+  <p id="status">Checking account permissions...</p>
+
+  <section id="appealSection" class="panel hidden">
+    <h2>Account Ban Appeal</h2>
+    <p>Your account is banned from GlitchBoxOfficial.</p>
+    <p id="banReason"></p>
+    <p class="muted">
+      Explain why you believe this ban should be reviewed.
+    </p>
+    <textarea id="appealMessage"
+      maxlength="2000"
+      placeholder="Write your appeal here (at least 10 characters)..."></textarea>
+    <button id="appealButton" onclick="submitAppeal()">
+      Submit Appeal
+    </button>
+    <p id="appealStatus"></p>
+  </section>
+
+  <section id="staffPanel" class="panel hidden">
+    <h2 id="accessTitle">Staff Access</h2>
+    <p id="accessDescription"></p>
+    <p class="muted">
+      Your server-verified role determines which staff operations
+      you are allowed to perform.
+    </p>
+  </section>
+
+  <section id="founderPanel" class="panel hidden">
+    <h2>🔨 Founder Dashboard</h2>
+    <p>Founder access verified.</p>
+
+    <button onclick="showTab('overview')">Overview</button>
+    <button onclick="showTab('users')">Users</button>
+    <button onclick="showTab('security')">Security</button>
+    <button onclick="showTab('coins')">Glitch Coins</button>
+    <button onclick="showTab('settings')">Settings</button>
+
+    <div id="tabContent" class="panel">
+      Select a dashboard section.
+    </div>
+  </section>
+
+  <p id="loginLink" class="hidden">
+    Please <a href="index.html">sign in</a> to continue.
+  </p>
+</main>
+
+<script>
+const SUPABASE_URL = "https://syjnlgxghgwvqrwtthmr.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI";
+
+const client = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+let currentToken = null;
+
+function showStatus(message, className = "") {
+  const element = document.getElementById("status");
+  element.textContent = message;
+  element.className = className;
+}
+
+async function callFounderFunction(action, extra = {}) {
+  const response = await fetch(
+    SUPABASE_URL + "/functions/v1/founder-access",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": "Bearer " + currentToken
+      },
+      body: JSON.stringify({ action, ...extra })
+    }
+  );
+
+  const result = await response.json().catch(() => ({}));
+  return { ok: response.ok, result };
+}
+
+async function checkAccess() {
+  try {
+    const { data, error } = await client.auth.getSession();
+
+    if (error || !data.session) {
+      showStatus("You must sign in before accessing this page.", "error");
+      document.getElementById("loginLink").classList.remove("hidden");
+      return;
+    }
+
+    currentToken = data.session.access_token;
+
+    const { ok, result } = await callFounderFunction("check");
+
+    if (result.banned) {
+      showStatus("Your account has been permanently banned.", "error");
+      document.getElementById("banReason").textContent =
+        "Reason: " + (result.reason || "Account banned.");
+
+      document.getElementById("appealSection").classList.remove("hidden");
+      return;
+    }
+
+    if (!ok) {
+      let message = result.message || result.error ||
+        "You are not authorized to access this panel.";
+
+      if (result.attemptsRemaining !== undefined) {
+        message += " Attempts remaining before permanent ban: " +
+          result.attemptsRemaining + ".";
+      }
+
+      showStatus(message, "error");
+      return;
+    }
+
+    if (result.accessLevel === "founder") {
+      showStatus("Founder access granted.", "success");
+      document.getElementById("founderPanel").classList.remove("hidden");
+      return;
+    }
+
+    if (result.accessLevel === "staff") {
+      showStatus("Staff access granted.", "success");
+      document.getElementById("accessTitle").textContent =
+        result.role.toUpperCase() + " ACCESS";
+      document.getElementById("accessDescription").textContent =
+        "Your staff role has been verified.";
+      document.getElementById("staffPanel").classList.remove("hidden");
+      return;
+    }
+
+    showStatus("Access denied.", "error");
+
+  } catch (error) {
+    console.error(error);
+    showStatus("Could not complete the security check.", "error");
+  }
+}
+
+async function submitAppeal() {
+  const message = document.getElementById("appealMessage").value.trim();
+  const output = document.getElementById("appealStatus");
+
+  if (message.length < 10) {
+    output.textContent = "Please write at least 10 characters.";
+    output.className = "error";
+    return;
+  }
+
+  const button = document.getElementById("appealButton");
+  button.disabled = true;
+  output.textContent = "Submitting appeal...";
+
+  try {
+    const { ok, result } =
+      await callFounderFunction("submit_appeal", { message });
+
+    if (!ok) {
+      output.textContent = result.error || "Appeal submission failed.";
+      output.className = "error";
+      button.disabled = false;
+      return;
+    }
+
+    output.textContent = "Your appeal was submitted successfully.";
+    output.className = "success";
+    document.getElementById("appealMessage").disabled = true;
+
+  } catch (error) {
+    output.textContent = "Could not submit appeal. Try again later.";
+    output.className = "error";
+    button.disabled = false;
+  }
+}
+
+function showTab(tab) {
+  const descriptions = {
+    overview: "Founder overview. Dashboard statistics still need to be connected.",
+    users: "User management tools still need to be connected.",
+    security: "Security logs and controls still need to be connected.",
+    coins: "Glitch Coins management still needs to be connected.",
+    settings: "Founder settings still need to be connected."
+  };
+
+  document.getElementById("tabContent").textContent =
+    descriptions[tab] || "Section unavailable.";
+}
+
+checkAccess();
+</script>
+</body>
+</html>
