@@ -1,515 +1,409 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Login | GlitchBoxOfficial</title>
+<title>GlitchBoxOfficial | Login</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
+* { box-sizing: border-box; }
 
 body {
-    min-height: 100vh;
-    background: #070711;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #080808;
+  color: white;
+  font-family: Arial, sans-serif;
 }
 
-.login-box {
-    width: 100%;
-    max-width: 420px;
-    background: #11111f;
-    border: 1px solid #9b59ff;
-    border-radius: 18px;
-    padding: 30px;
-    box-shadow: 0 0 35px rgba(155, 89, 255, .2);
+.login-container {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  background: #141414;
+  border: 1px solid #9b59ff;
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(155,89,255,.15);
 }
 
 .logo {
-    text-align: center;
-    color: #9b59ff;
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 8px;
+  text-align: center;
+  color: #9b59ff;
+  font-size: 27px;
+  font-weight: bold;
 }
 
-.tagline {
-    text-align: center;
-    color: #888;
-    margin-bottom: 28px;
+.subtitle {
+  text-align: center;
+  color: #aaa;
+  margin-bottom: 28px;
+}
+
+h2 {
+  text-align: center;
+  color: #9b59ff;
 }
 
 label {
-    display: block;
-    margin-bottom: 7px;
-    color: #ddd;
-    font-size: 14px;
+  display: block;
+  margin: 15px 0 7px;
+  color: #ddd;
 }
 
 input {
-    width: 100%;
-    padding: 13px;
-    margin-bottom: 18px;
-    border-radius: 9px;
-    border: 1px solid #332344;
-    background: #191927;
-    color: white;
-    font-size: 15px;
-    outline: none;
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #59328a;
+  border-radius: 8px;
+  background: #080808;
+  color: white;
+  outline: none;
 }
 
 input:focus {
-    border-color: #9b59ff;
+  border-color: #9b59ff;
 }
 
 button {
-    width: 100%;
-    padding: 13px;
-    border-radius: 9px;
-    border: 1px solid #9b59ff;
-    background: #7c3aed;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-bottom: 10px;
+  width: 100%;
+  padding: 13px;
+  margin-top: 16px;
+  border: 1px solid #9b59ff;
+  border-radius: 8px;
+  background: #080808;
+  color: #c69cff;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 button:hover {
-    background: #9b59ff;
+  background: #281443;
 }
 
-button:disabled {
-    opacity: .6;
-    cursor: not-allowed;
+.google-button {
+  background: white;
+  color: #222;
+  border: none;
 }
 
-.google {
-    background: #171126;
+.google-button:hover {
+  background: #e9e9e9;
 }
 
-.forgot {
-    display: block;
-    text-align: right;
-    color: #c084fc;
-    font-size: 13px;
-    margin-top: -8px;
-    margin-bottom: 18px;
-    cursor: pointer;
-}
-
-.message {
-    display: none;
-    margin-top: 10px;
-    padding: 12px;
-    border-radius: 8px;
-    background: #191927;
-    border: 1px solid #332344;
-    color: #ddd;
-    text-align: center;
-    font-size: 14px;
+.primary-button {
+  background: #9b59ff;
+  color: #080808;
 }
 
 .links {
-    text-align: center;
-    margin-top: 18px;
-    line-height: 1.8;
+  text-align: center;
+  margin-top: 22px;
+  line-height: 2;
 }
 
-.links a {
-    color: #c084fc;
-    text-decoration: none;
+a {
+  color: #b98aff;
+  text-decoration: none;
 }
 
-.links a:hover {
-    text-decoration: underline;
+a:hover {
+  text-decoration: underline;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: #888;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  height: 1px;
+  background: #444;
+  flex: 1;
+}
+
+#message {
+  margin-top: 15px;
+  text-align: center;
+  color: #ff8888;
+  overflow-wrap: anywhere;
+}
+
+.hidden {
+  display: none;
+}
+
+.small {
+  font-size: 13px;
+  color: #999;
+  text-align: center;
 }
 </style>
 </head>
 
 <body>
 
-<div class="login-box">
+<div class="login-container">
 
-    <div class="logo">
-        🎮 GlitchBoxOfficial
-    </div>
+  <div class="logo">🎮 GlitchBoxOfficial</div>
+  <p class="subtitle">Enter The Glitch. Own The Game.</p>
 
-    <div class="tagline">
-        Enter The Glitch. Own The Game.
-    </div>
+  <section id="loginSection">
+    <h2>Welcome Back</h2>
 
-    <form id="loginForm">
-
-        <label for="email">Email</label>
-
-        <input
-            id="email"
-            type="email"
-            placeholder="Enter your email"
-            autocomplete="email"
-            required
-        >
-
-        <label for="password">Password</label>
-
-        <input
-            id="password"
-            type="password"
-            placeholder="Enter your password"
-            autocomplete="current-password"
-            required
-        >
-
-        <div
-            class="forgot"
-            onclick="forgotPassword()"
-        >
-            Forgot password?
-        </div>
-
-        <button
-            id="loginButton"
-            type="submit"
-        >
-            🔐 Login
-        </button>
-
-    </form>
-
-    <button
-        class="google"
-        onclick="googleLogin()"
-    >
-        🌐 Continue with Google
+    <button class="google-button" onclick="googleLogin()">
+      🌐 Continue with Google
     </button>
 
-    <div
-        id="message"
-        class="message"
-    ></div>
+    <div class="divider">OR</div>
+
+    <form id="loginForm">
+      <label for="email">Email Address</label>
+      <input
+        id="email"
+        type="email"
+        placeholder="Enter your email"
+        autocomplete="email"
+        required
+      >
+
+      <label for="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        placeholder="Enter your password"
+        autocomplete="current-password"
+        required
+      >
+
+      <button class="primary-button" type="submit">
+        Log In
+      </button>
+    </form>
 
     <div class="links">
-
-        <div>
-            Don't have an account?
-            <a href="signup.html">Create Account</a>
-        </div>
-
-        <div>
-            <a href="index.html">← Back to GlitchBox</a>
-        </div>
-
+      <a href="#" onclick="forgotPassword(event)">
+        Forgot Password?
+      </a>
+      <br>
+      Don't have an account?
+      <a href="register.html">Create Account</a>
+      <br>
+      <a href="index.html">Back to Home</a>
     </div>
+  </section>
+
+  <section id="resetSection" class="hidden">
+    <h2>Reset Password</h2>
+    <p class="small">Choose a new password for your account.</p>
+
+    <form id="resetForm">
+      <label for="newPassword">New Password</label>
+      <input
+        id="newPassword"
+        type="password"
+        minlength="8"
+        autocomplete="new-password"
+        required
+      >
+
+      <button class="primary-button" type="submit">
+        Save New Password
+      </button>
+    </form>
+  </section>
+
+  <p id="message"></p>
 
 </div>
 
-
 <script>
-
-/* =====================================
-   GLITCHBOX SUPABASE CONNECTION
-===================================== */
-
 const SUPABASE_URL =
-"https://syjnlgxghgwvqrwtthmr.supabase.co";
+  "https://syjnlgxghgwvqrwtthmr.supabase.co";
 
 const SUPABASE_ANON_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5am5sZ3hnaGd3dnFyd3R0aG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3NzExOTcsImV4cCI6MjA5NjM0NzE5N30._TwjJTxXP3wPm-SXnCrvbsVoC0TWaQLt_Mi5UHaWWFI";
 
-
-const supabaseClient =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY,
+  {
+    auth: {
+      flowType: "pkce",
+      detectSessionInUrl: true,
+      persistSession: true,
+      autoRefreshToken: true
+    }
+  }
 );
 
+const message = document.getElementById("message");
+let recoveryMode = false;
+let checkingAccount = false;
 
-/* =====================================
-   MESSAGE
-===================================== */
-
-function showMessage(text) {
-
-    const box =
-        document.getElementById("message");
-
-    box.textContent = text;
-    box.style.display = "block";
-
+function showMessage(text, success = false) {
+  message.textContent = text;
+  message.style.color = success ? "#8cffad" : "#ff8888";
 }
-
-
-/* =====================================
-   LOGIN
-===================================== */
-
-document
-.getElementById("loginForm")
-.addEventListener("submit", async function(event) {
-
-    event.preventDefault();
-
-    const email =
-        document.getElementById("email")
-        .value
-        .trim();
-
-    const password =
-        document.getElementById("password")
-        .value;
-
-    const button =
-        document.getElementById("loginButton");
-
-
-    if (!email || !password) {
-
-        showMessage(
-            "Please enter your email and password."
-        );
-
-        return;
-    }
-
-
-    button.disabled = true;
-    button.textContent = "Signing in...";
-
-
-    try {
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient.auth.signInWithPassword({
-            email: email,
-            password: password
-        });
-
-
-        if (error) {
-            throw error;
-        }
-
-
-        if (!data || !data.session) {
-
-            throw new Error(
-                "Supabase did not create a login session."
-            );
-
-        }
-
-
-        localStorage.setItem(
-            "gb_email",
-            email
-        );
-
-
-        showMessage(
-            "✅ Login successful!"
-        );
-
-
-        setTimeout(function() {
-
-            window.location.href =
-                "index.html";
-
-        }, 700);
-
-
-    } catch (error) {
-
-        console.error(
-            "GlitchBox login error:",
-            error
-        );
-
-
-        let errorText =
-            error.message ||
-            "Login failed.";
-
-
-        if (
-            errorText
-            .toLowerCase()
-            .includes("invalid login credentials")
-        ) {
-
-            errorText =
-                "❌ Incorrect email or password.";
-
-        }
-
-
-        showMessage(errorText);
-
-
-        button.disabled = false;
-        button.textContent = "🔐 Login";
-
-    }
-
-});
-
-
-/* =====================================
-   FORGOT PASSWORD
-===================================== */
-
-async function forgotPassword() {
-
-    const email =
-        prompt(
-            "Enter the email for your GlitchBox account:"
-        );
-
-
-    if (!email) {
-        return;
-    }
-
-
-    try {
-
-        const {
-            error
-        } =
-        await supabaseClient.auth
-        .resetPasswordForEmail(
-            email.trim(),
-            {
-                redirectTo:
-                    window.location.origin +
-                    "/settings.html"
-            }
-        );
-
-
-        if (error) {
-            throw error;
-        }
-
-
-        alert(
-            "✅ Password reset email sent."
-        );
-
-
-    } catch (error) {
-
-        alert(
-            "❌ Password reset failed:\n\n" +
-            error.message
-        );
-
-    }
-
-}
-
-
-/* =====================================
-   GOOGLE LOGIN
-===================================== */
 
 async function googleLogin() {
+  showMessage("Connecting to Google...", true);
 
-    try {
-
-        const {
-            error
-        } =
-        await supabaseClient.auth
-        .signInWithOAuth({
-
-            provider: "google",
-
-            options: {
-                redirectTo:
-                    window.location.origin +
-                    "/index.html"
-            }
-
-        });
-
-
-        if (error) {
-            throw error;
-        }
-
-
-    } catch (error) {
-
-        showMessage(
-            "Google login failed: " +
-            error.message
-        );
-
+  const { error } = await supabaseClient.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: window.location.origin + "/login.html"
     }
+  });
 
+  if (error) {
+    showMessage(error.message);
+  }
 }
 
+document.getElementById("loginForm").addEventListener(
+  "submit",
+  async function(event) {
+    event.preventDefault();
 
-/* =====================================
-   CHECK EXISTING SESSION
-===================================== */
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
 
-async function checkSession() {
+    showMessage("Signing in...", true);
 
-    try {
+    const { error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
 
-        const {
-            data,
-            error
-        } =
-        await supabaseClient.auth.getSession();
-
-
-        if (error) {
-            console.error(error);
-            return;
-        }
-
-
-        if (data.session) {
-
-            showMessage(
-                "✅ You are already signed in."
-            );
-
-        }
-
-    } catch (error) {
-
-        console.error(error);
-
+    if (error) {
+      showMessage(error.message);
     }
+  }
+);
 
+async function forgotPassword(event) {
+  event.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+
+  if (!email) {
+    showMessage("Enter your email address first.");
+    return;
+  }
+
+  showMessage("Sending password reset email...", true);
+
+  const { error } =
+    await supabaseClient.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + "/login.html"
+    });
+
+  if (error) {
+    showMessage(error.message);
+  } else {
+    showMessage("Password reset email sent. Check your inbox.", true);
+  }
 }
 
+document.getElementById("resetForm").addEventListener(
+  "submit",
+  async function(event) {
+    event.preventDefault();
 
-/* =====================================
-   START
-===================================== */
+    const password = document.getElementById("newPassword").value;
 
-checkSession();
+    showMessage("Updating password...", true);
 
+    const { error } = await supabaseClient.auth.updateUser({
+      password
+    });
+
+    if (error) {
+      showMessage(error.message);
+      return;
+    }
+
+    recoveryMode = false;
+    document.getElementById("resetSection").classList.add("hidden");
+    document.getElementById("loginSection").classList.remove("hidden");
+
+    showMessage("Password updated successfully!", true);
+  }
+);
+
+async function checkAccount(session) {
+  if (!session || checkingAccount) return;
+
+  checkingAccount = true;
+  showMessage("Checking your account...", true);
+
+  try {
+    const { data: profile, error } = await supabaseClient
+      .from("profiles")
+      .select("is_banned, ban_reason")
+      .eq("id", session.user.id)
+      .maybeSingle();
+
+    if (error || !profile) {
+      showMessage("Could not verify your account status. Please contact support.");
+      return;
+    }
+
+    if (profile.is_banned) {
+      showMessage(
+        "Your account is banned. Reason: " +
+        (profile.ban_reason || "No reason provided.") +
+        " Please contact GlitchBoxOfficial support."
+      );
+      return;
+    }
+
+    window.location.replace("games.html");
+
+  } finally {
+    checkingAccount = false;
+  }
+}
+
+supabaseClient.auth.onAuthStateChange((event, session) => {
+  if (event === "PASSWORD_RECOVERY") {
+    recoveryMode = true;
+    document.getElementById("loginSection").classList.add("hidden");
+    document.getElementById("resetSection").classList.remove("hidden");
+    showMessage("Enter your new password.", true);
+    return;
+  }
+
+  if (event === "SIGNED_IN" && !recoveryMode) {
+    checkAccount(session);
+  }
+});
+
+// Handle an existing session when the login page opens.
+(async function initializeLogin() {
+  const { data, error } = await supabaseClient.auth.getSession();
+
+  if (error) {
+    showMessage("Unable to check your login session.");
+    return;
+  }
+
+  if (data.session && !recoveryMode) {
+    await checkAccount(data.session);
+  }
+})();
 </script>
 
 </body>
