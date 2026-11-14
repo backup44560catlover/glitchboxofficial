@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLITCH AI | GlitchBoxOfficial</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:#08060d;
+ color:white;
+ font-family:Arial,sans-serif;
+}
+header{
+ background:#100b19;
+ border-bottom:2px solid #9b59ff;
+ padding:18px;
+ text-align:center;
+ font-size:22px;
+ font-weight:bold;
+ color:#b77aff;
+}
+.container{
+ max-width:850px;
+ margin:auto;
+ padding:15px;
+}
+.heading{
+ text-align:center;
+ padding:20px 5px;
+}
+.heading h1{
+ color:#b77aff;
+ font-size:32px;
+ margin:5px;
+}
+.heading p{color:#aaa}
+.chat{
+ background:#120d1b;
+ border:1px solid #56317d;
+ border-radius:15px;
+ overflow:hidden;
+}
+.chat-header{
+ padding:15px;
+ border-bottom:1px solid #56317d;
+ color:#b77aff;
+ font-weight:bold;
+}
+#messages{
+ height:55vh;
+ min-height:300px;
+ overflow-y:auto;
+ padding:15px;
+ display:flex;
+ flex-direction:column;
+ gap:12px;
+}
+.message{
+ padding:12px;
+ border-radius:12px;
+ max-width:90%;
+ line-height:1.5;
+ white-space:pre-wrap;
+ overflow-wrap:anywhere;
+}
+.user{
+ background:#40205f;
+ align-self:flex-end;
+}
+.ai{
+ background:#21152f;
+ border:1px solid #684096;
+ align-self:flex-start;
+}
+.composer{
+ display:flex;
+ gap:8px;
+ padding:12px;
+ border-top:1px solid #56317d;
+}
+textarea{
+ flex:1;
+ min-width:0;
+ background:#08060d;
+ color:white;
+ border:1px solid #7042a1;
+ border-radius:10px;
+ padding:12px;
+ resize:vertical;
+ font-size:16px;
+}
+button{
+ background:#873de0;
+ color:white;
+ border:1px solid #b77aff;
+ border-radius:10px;
+ padding:12px 17px;
+ font-weight:bold;
+ cursor:pointer;
+}
+button:disabled{opacity:.5}
+.quick{
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+ margin:12px 0;
+}
+.quick button{
+ background:#160e22;
+ font-size:13px;
+}
+.note{
+ color:#999;
+ text-align:center;
+ font-size:11px;
+ padding:12px;
+}
+</style>
+</head>
+<body>
+
+<header>🎮 GLITCHBOXOFFICIAL</header>
+
+<div class="container">
+
+<div class="heading">
+<h1>💜 GLITCH AI</h1>
+<p>Your personal GlitchBox gaming assistant.</p>
+</div>
+
+<div class="quick">
+<button onclick="quick('Help me with gaming strategies.')">🎯 Game Tips</button>
+<button onclick="quick('Explain how GlitchBoxOfficial works.')">🎮 GB Guide</button>
+<button onclick="quick('Help me troubleshoot my account.')">🛠️ Support</button>
+<button onclick="quick('Give me a gaming challenge.')">⚡ Challenge</button>
+</div>
+
+<div class="chat">
+
+<div class="chat-header">
+● GLITCH AI — ONLINE
+</div>
+
+<div id="messages">
+<div class="message ai">
+Hey! I'm GLITCH AI 💜
+
+I'm your GlitchBoxOfficial assistant.
+
+What would you like help with today?
+</div>
+</div>
+
+<div class="composer">
+<textarea id="prompt"
+placeholder="Message GLITCH AI..."
+rows="2"
+maxlength="4000"></textarea>
+<button id="send" onclick="sendMessage()">SEND</button>
+</div>
+
+<div class="note">
+Never share your password or private account information.
+</div>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+// YOUR EXISTING SUPABASE PROJECT
+const SUPABASE_URL =
+"https://YOUR_PROJECT.supabase.co";
+
+const SUPABASE_KEY =
+"YOUR_SUPABASE_ANON_OR_PUBLISHABLE_KEY";
+
+const supabase = window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+let history = [];
+let busy = false;
+
+function addMessage(type,text){
+ const box=document.getElementById("messages");
+ const message=document.createElement("div");
+ message.className="message "+type;
+ message.textContent=text;
+ box.appendChild(message);
+ box.scrollTop=box.scrollHeight;
+ return message;
+}
+
+function quick(text){
+ document.getElementById("prompt").value=text;
+ sendMessage();
+}
+
+async function sendMessage(){
+ if(busy)return;
+
+ const input=document.getElementById("prompt");
+ const text=input.value.trim();
+
+ if(!text)return;
+
+ busy=true;
+ document.getElementById("send").disabled=true;
+ input.value="";
+
+ addMessage("user",text);
+ history.push({role:"user",content:text});
+
+ const loading=addMessage("ai","GLITCH AI is thinking...");
+
+ try{
+  const {data,error}=await supabase.auth.getSession();
+
+  if(error)throw error;
+
+  if(!data.session){
+   loading.textContent="Please sign in to GlitchBoxOfficial first.";
+   history.pop();
+   return;
+  }
+
+  const response=await fetch("/api/chat",{
+   method:"POST",
+   headers:{
+    "Content-Type":"application/json",
+    "Authorization":"Bearer "+data.session.access_token
+   },
+   body:JSON.stringify({
+    messages:history.slice(-12)
+   })
+  });
+
+  const result=await response.json();
+
+  if(!response.ok){
+   throw new Error(result.error||"AI connection failed.");
+  }
+
+  loading.textContent=result.reply;
+  history.push({
+   role:"assistant",
+   content:result.reply
+  });
+
+ }catch(error){
+  loading.textContent="GLITCH AI ERROR: "+error.message;
+  history.pop();
+ }finally{
+  busy=false;
+  document.getElementById("send").disabled=false;
+  input.focus();
+ }
+}
+
+document.getElementById("prompt")
+.addEventListener("keydown",function(event){
+ if(event.key==="Enter"&&!event.shiftKey){
+  event.preventDefault();
+  sendMessage();
+ }
+});
+</script>
+
+</body>
+</html>
