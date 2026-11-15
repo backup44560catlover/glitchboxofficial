@@ -1,276 +1,332 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GLITCH AI | GlitchBoxOfficial</title>
-<style>
-*{box-sizing:border-box}
-body{
- margin:0;
- background:#08060d;
- color:white;
- font-family:Arial,sans-serif;
-}
-header{
- background:#100b19;
- border-bottom:2px solid #9b59ff;
- padding:18px;
- text-align:center;
- font-size:22px;
- font-weight:bold;
- color:#b77aff;
-}
-.container{
- max-width:850px;
- margin:auto;
- padding:15px;
-}
-.heading{
- text-align:center;
- padding:20px 5px;
-}
-.heading h1{
- color:#b77aff;
- font-size:32px;
- margin:5px;
-}
-.heading p{color:#aaa}
-.chat{
- background:#120d1b;
- border:1px solid #56317d;
- border-radius:15px;
- overflow:hidden;
-}
-.chat-header{
- padding:15px;
- border-bottom:1px solid #56317d;
- color:#b77aff;
- font-weight:bold;
-}
-#messages{
- height:55vh;
- min-height:300px;
- overflow-y:auto;
- padding:15px;
- display:flex;
- flex-direction:column;
- gap:12px;
-}
-.message{
- padding:12px;
- border-radius:12px;
- max-width:90%;
- line-height:1.5;
- white-space:pre-wrap;
- overflow-wrap:anywhere;
-}
-.user{
- background:#40205f;
- align-self:flex-end;
-}
-.ai{
- background:#21152f;
- border:1px solid #684096;
- align-self:flex-start;
-}
-.composer{
- display:flex;
- gap:8px;
- padding:12px;
- border-top:1px solid #56317d;
-}
-textarea{
- flex:1;
- min-width:0;
- background:#08060d;
- color:white;
- border:1px solid #7042a1;
- border-radius:10px;
- padding:12px;
- resize:vertical;
- font-size:16px;
-}
-button{
- background:#873de0;
- color:white;
- border:1px solid #b77aff;
- border-radius:10px;
- padding:12px 17px;
- font-weight:bold;
- cursor:pointer;
-}
-button:disabled{opacity:.5}
-.quick{
- display:flex;
- flex-wrap:wrap;
- gap:8px;
- margin:12px 0;
-}
-.quick button{
- background:#160e22;
- font-size:13px;
-}
-.note{
- color:#999;
- text-align:center;
- font-size:11px;
- padding:12px;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Assistant | GlitchBoxOfficial</title>
+  <link rel="stylesheet" href="https://cloudflare.com">
+  <style>
+    :root {
+      --bg-black: #09070d;
+      --card-dark: #140f1d;
+      --purple-main: #8b5cf6;
+      --purple-glow: #a855f7;
+      --neon-pink: #ec4899;
+      --neon-cyan: #06b6d4;
+      --neon-green: #10b981;
+      --neon-yellow: #f59e0b;
+      --text-white: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-black);
+      color: var(--text-white);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* Header */
+    header {
+      background-color: #140f1d;
+      border-bottom: 2px solid var(--purple-main);
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-white);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo i {
+      color: var(--neon-pink);
+    }
+
+    .back-btn {
+      color: var(--text-white);
+      text-decoration: none;
+      background-color: rgba(139, 92, 246, 0.2);
+      border: 1px solid var(--purple-main);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover {
+      background-color: var(--purple-main);
+    }
+
+    /* Main Chat Layout */
+    .ai-wrapper {
+      flex: 1;
+      max-width: 900px;
+      width: 100%;
+      margin: 1.5rem auto;
+      padding: 0 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      overflow: hidden;
+    }
+
+    .ai-header-bar {
+      background-color: var(--card-dark);
+      border: 1px solid #2e1d47;
+      border-radius: 14px;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .ai-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--purple-main), var(--neon-pink));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+    }
+
+    .ai-status {
+      font-size: 0.85rem;
+      color: var(--neon-green);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Quick Prompt Pills */
+    .quick-prompts {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .prompt-pill {
+      background-color: var(--card-dark);
+      border: 1px solid #3b2361;
+      color: var(--text-white);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .prompt-pill:hover {
+      border-color: var(--neon-cyan);
+      background-color: #1f1630;
+    }
+
+    /* Chat Window */
+    .chat-box {
+      flex: 1;
+      background-color: var(--card-dark);
+      border: 1px solid #2e1d47;
+      border-radius: 16px;
+      padding: 1.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 0.9rem 1.2rem;
+      border-radius: 14px;
+      line-height: 1.5;
+      font-size: 0.98rem;
+    }
+
+    .bot-msg {
+      background-color: #1e162b;
+      border: 1px solid #3b2361;
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    .user-msg {
+      background: linear-gradient(135deg, #7c3aed, #db2777);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    /* Input Area */
+    .input-area {
+      display: flex;
+      gap: 10px;
+      background-color: var(--card-dark);
+      border: 1px solid var(--purple-main);
+      border-radius: 14px;
+      padding: 0.6rem;
+    }
+
+    .input-area input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-white);
+      font-size: 1rem;
+      padding: 0.5rem 0.8rem;
+      outline: none;
+    }
+
+    .send-btn {
+      background: linear-gradient(135deg, var(--purple-main), var(--neon-pink));
+      border: none;
+      color: white;
+      padding: 0.7rem 1.4rem;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s;
+    }
+
+    .send-btn:hover {
+      transform: scale(1.04);
+    }
+  </style>
 </head>
 <body>
 
-<header>🎮 GLITCHBOXOFFICIAL</header>
+  <header>
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-cube"></i> GlitchBoxOfficial
+    </a>
+    <a href="index.html" class="back-btn">
+      <i class="fa-solid fa-arrow-left"></i> Back to Hub
+    </a>
+  </header>
 
-<div class="container">
+  <div class="ai-wrapper">
+    <!-- AI Status Header -->
+    <div class="ai-header-bar">
+      <div class="ai-avatar">
+        <i class="fa-solid fa-robot"></i>
+      </div>
+      <div>
+        <h2>GlitchBot AI</h2>
+        <div class="ai-status"><i class="fa-solid fa-circle" style="font-size: 0.6rem;"></i> Online & Ready</div>
+      </div>
+    </div>
 
-<div class="heading">
-<h1>💜 GLITCH AI</h1>
-<p>Your personal GlitchBox gaming assistant.</p>
-</div>
+    <!-- Quick Action Buttons -->
+    <div class="quick-prompts">
+      <button class="prompt-pill" onclick="sendQuickPrompt('Give me a new game idea')">
+        <i class="fa-solid fa-lightbulb" style="color: var(--neon-yellow);"></i> Game Idea
+      </button>
+      <button class="prompt-pill" onclick="sendQuickPrompt('Help me fix a game bug')">
+        <i class="fa-solid fa-bug" style="color: var(--neon-pink);"></i> Debug Code
+      </button>
+      <button class="prompt-pill" onclick="sendQuickPrompt('Tips to level up fast')">
+        <i class="fa-solid fa-bolt" style="color: var(--neon-cyan);"></i> Pro Tips
+      </button>
+      <button class="prompt-pill" onclick="sendQuickPrompt('Create a daily challenge')">
+        <i class="fa-solid fa-trophy" style="color: var(--neon-green);"></i> Daily Quest
+      </button>
+    </div>
 
-<div class="quick">
-<button onclick="quick('Help me with gaming strategies.')">🎯 Game Tips</button>
-<button onclick="quick('Explain how GlitchBoxOfficial works.')">🎮 GB Guide</button>
-<button onclick="quick('Help me troubleshoot my account.')">🛠️ Support</button>
-<button onclick="quick('Give me a gaming challenge.')">⚡ Challenge</button>
-</div>
+    <!-- Chat History -->
+    <div class="chat-box" id="chatBox">
+      <div class="message bot-msg">
+        Welcome to GlitchBot AI. Ask for game creation ideas, coding help, or tips to climb the leaderboards.
+      </div>
+    </div>
 
-<div class="chat">
+    <!-- Message Input -->
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Ask GlitchBot anything..." onkeypress="handleKeyPress(event)">
+      <button class="send-btn" onclick="sendMessage()">
+        Send <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
 
-<div class="chat-header">
-● GLITCH AI — ONLINE
-</div>
+  <script>
+    const chatBox = document.getElementById('chatBox');
+    const userInput = document.getElementById('userInput');
 
-<div id="messages">
-<div class="message ai">
-Hey! I'm GLITCH AI 💜
+    function handleKeyPress(e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    }
 
-I'm your GlitchBoxOfficial assistant.
+    function sendQuickPrompt(text) {
+      userInput.value = text;
+      sendMessage();
+    }
 
-What would you like help with today?
-</div>
-</div>
+    function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
 
-<div class="composer">
-<textarea id="prompt"
-placeholder="Message GLITCH AI..."
-rows="2"
-maxlength="4000"></textarea>
-<button id="send" onclick="sendMessage()">SEND</button>
-</div>
+      // Add User Message
+      appendMessage(text, 'user-msg');
+      userInput.value = '';
 
-<div class="note">
-Never share your password or private account information.
-</div>
+      // Simulated AI Response (Replace with your API call later)
+      setTimeout(() => {
+        const reply = generateLocalReply(text);
+        appendMessage(reply, 'bot-msg');
+      }, 500);
+    }
 
-</div>
-</div>
+    function appendMessage(text, className) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `message ${className}`;
+      msgDiv.textContent = text;
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-// YOUR EXISTING SUPABASE PROJECT
-const SUPABASE_URL =
-"https://YOUR_PROJECT.supabase.co";
-
-const SUPABASE_KEY =
-"YOUR_SUPABASE_ANON_OR_PUBLISHABLE_KEY";
-
-const supabase = window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
-
-let history = [];
-let busy = false;
-
-function addMessage(type,text){
- const box=document.getElementById("messages");
- const message=document.createElement("div");
- message.className="message "+type;
- message.textContent=text;
- box.appendChild(message);
- box.scrollTop=box.scrollHeight;
- return message;
-}
-
-function quick(text){
- document.getElementById("prompt").value=text;
- sendMessage();
-}
-
-async function sendMessage(){
- if(busy)return;
-
- const input=document.getElementById("prompt");
- const text=input.value.trim();
-
- if(!text)return;
-
- busy=true;
- document.getElementById("send").disabled=true;
- input.value="";
-
- addMessage("user",text);
- history.push({role:"user",content:text});
-
- const loading=addMessage("ai","GLITCH AI is thinking...");
-
- try{
-  const {data,error}=await supabase.auth.getSession();
-
-  if(error)throw error;
-
-  if(!data.session){
-   loading.textContent="Please sign in to GlitchBoxOfficial first.";
-   history.pop();
-   return;
-  }
-
-  const response=await fetch("/api/chat",{
-   method:"POST",
-   headers:{
-    "Content-Type":"application/json",
-    "Authorization":"Bearer "+data.session.access_token
-   },
-   body:JSON.stringify({
-    messages:history.slice(-12)
-   })
-  });
-
-  const result=await response.json();
-
-  if(!response.ok){
-   throw new Error(result.error||"AI connection failed.");
-  }
-
-  loading.textContent=result.reply;
-  history.push({
-   role:"assistant",
-   content:result.reply
-  });
-
- }catch(error){
-  loading.textContent="GLITCH AI ERROR: "+error.message;
-  history.pop();
- }finally{
-  busy=false;
-  document.getElementById("send").disabled=false;
-  input.focus();
- }
-}
-
-document.getElementById("prompt")
-.addEventListener("keydown",function(event){
- if(event.key==="Enter"&&!event.shiftKey){
-  event.preventDefault();
-  sendMessage();
- }
-});
-</script>
+    function generateLocalReply(input) {
+      const lower = input.toLowerCase();
+      if (lower.includes('idea')) {
+        return "Game Idea: 'Neon Maze Runner' — Players race through a shifting purple grid before the floor glitches away. Collect glowing cubes for speed boosts.";
+      } else if (lower.includes('bug') || lower.includes('code')) {
+        return "Paste your code snippet here and tell me what error you are seeing so we can fix it.";
+      } else if (lower.includes('tip') || lower.includes('level')) {
+        return "Pro Tip: Complete all three Daily Challenges first to earn double XP multipliers before entering Tournaments.";
+      } else if (lower.includes('challenge') || lower.includes('quest')) {
+        return "Daily Quest: Win 2 matches in a row without losing a life to unlock the Cyber Glitch badge.";
+      }
+      return "Got it. Connect a backend API (like Gemini or OpenAI via Vercel Serverless Functions) to `sendMessage()` so I can answer custom prompts live.";
+    }
+  </script>
 
 </body>
 </html>
