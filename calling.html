@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlitchBoxOfficial // Safe Call</title>
+    <title>GlitchBoxOfficial - Safe Call</title>
     <style>
         :root {
             --bg-black: #07070b;
@@ -197,7 +197,6 @@
             cursor: not-allowed;
         }
 
-        /* Video & Call Stage */
         .video-area {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -268,7 +267,6 @@
             justify-content: center;
         }
 
-        /* Test Filter Bar */
         .test-bar {
             display: flex;
             gap: 10px;
@@ -306,7 +304,6 @@
         .log-danger { color: var(--accent-red); font-weight: bold; }
         .log-success { color: var(--accent-green); }
 
-        /* Modals */
         .overlay {
             display: none;
             position: fixed;
@@ -360,7 +357,6 @@
     </header>
 
     <div class="main-layout">
-        <!-- Left Sidebar: Parent Controls -->
         <aside class="panel">
             <div class="panel-title">🔒 Parent Control Panel</div>
             
@@ -370,3 +366,7 @@
             </label>
 
             <label class="toggle-row">
+                <span>📷 Allow Camera Calling</span>
+                <input type="checkbox" id="chkCamera" checked>
+            </label>
+
