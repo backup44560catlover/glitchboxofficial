@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlitchBoxOfficial - Safe Voice & Video Calling</title>
+    <title>GlitchBoxOfficial // Safe Call</title>
     <style>
         :root {
-            --bg-dark: #0f0f1a;
-            --panel-bg: #1a1a2e;
-            --neon-purple: #9d4edd;
-            --neon-cyan: #00f5d4;
-            --danger-red: #ff2a5f;
-            --warning-yellow: #ffb703;
-            --text-main: #ffffff;
-            --text-muted: #a0a0b8;
+            --bg-black: #07070b;
+            --panel-dark: #11111d;
+            --card-bg: #19192b;
+            --purple-main: #8a2be2;
+            --purple-bright: #b565ff;
+            --purple-glow: rgba(138, 43, 226, 0.4);
+            --accent-green: #00e676;
+            --accent-yellow: #ffea00;
+            --accent-red: #ff1744;
+            --text-white: #ffffff;
+            --text-gray: #b0b0c8;
         }
 
         * {
@@ -24,11 +27,11 @@
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
             padding: 20px;
         }
 
@@ -36,135 +39,183 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 20px;
-            border-bottom: 2px solid var(--neon-purple);
+            background: var(--panel-dark);
+            padding: 15px 25px;
+            border-radius: 14px;
+            border: 2px solid var(--purple-main);
+            box-shadow: 0 0 18px var(--purple-glow);
             margin-bottom: 20px;
         }
 
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            background: var(--purple-main);
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
         header h1 {
-            color: var(--neon-cyan);
+            font-size: 1.4rem;
+            color: var(--purple-bright);
             letter-spacing: 1px;
         }
 
-        .badge {
-            background: var(--neon-purple);
-            padding: 5px 12px;
+        .status-pill {
+            background: var(--card-bg);
+            border: 1px solid var(--purple-bright);
+            padding: 6px 14px;
             border-radius: 20px;
-            font-size: 0.85rem;
             font-weight: bold;
+            font-size: 0.85rem;
+            color: var(--accent-green);
         }
 
-        .container {
+        .main-layout {
             display: grid;
-            grid-template-columns: 320px 1fr;
+            grid-template-columns: 340px 1fr;
             gap: 20px;
             flex: 1;
         }
 
+        @media (max-width: 850px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .panel {
-            background: var(--panel-bg);
-            border-radius: 12px;
+            background: var(--panel-dark);
+            border: 2px solid #26263d;
+            border-radius: 14px;
             padding: 20px;
-            border: 1px solid rgba(157, 78, 221, 0.3);
-        }
-
-        h2 {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            color: var(--neon-cyan);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 8px;
-        }
-
-        /* Parental Controls */
-        .control-group {
-            margin-bottom: 15px;
-        }
-
-        .control-group label {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            cursor: pointer;
-            font-size: 0.95rem;
-        }
-
-        input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--neon-cyan);
-        }
-
-        input[type="password"] {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border-radius: 6px;
-            border: 1px solid var(--neon-purple);
-            background: var(--bg-dark);
-            color: white;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.95rem;
-            margin-top: 8px;
-        }
-
-        .btn-primary {
-            background: var(--neon-cyan);
-            color: #000;
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            box-shadow: 0 0 12px var(--neon-cyan);
-        }
-
-        .btn-danger {
-            background: var(--danger-red);
-            color: white;
-        }
-
-        .btn-secondary {
-            background: #2b2b45;
-            color: white;
-        }
-
-        .btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        /* Video & Call Area */
-        .call-stage {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
 
-        .video-grid {
+        .panel-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.15rem;
+            color: var(--purple-bright);
+            border-bottom: 1px solid #2b2b45;
+            padding-bottom: 10px;
+        }
+
+        .toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 12px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .toggle-row:hover {
+            border-color: var(--purple-main);
+        }
+
+        .toggle-row input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--purple-bright);
+            cursor: pointer;
+        }
+
+        .pin-box {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .pin-box input {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--purple-main);
+            background: var(--bg-black);
+            color: var(--text-white);
+            font-size: 1rem;
+        }
+
+        .btn {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .btn-purple {
+            background: var(--purple-main);
+            color: white;
+        }
+
+        .btn-purple:hover:not(:disabled) {
+            background: var(--purple-bright);
+            box-shadow: 0 0 15px var(--purple-glow);
+        }
+
+        .btn-green {
+            background: var(--accent-green);
+            color: #000;
+        }
+
+        .btn-red {
+            background: var(--accent-red);
+            color: white;
+        }
+
+        .btn-dark {
+            background: #282840;
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        /* Video & Call Stage */
+        .video-area {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            height: 360px;
+            min-height: 300px;
         }
 
-        .video-box {
-            background: #08080f;
+        .feed-card {
+            background: #050508;
+            border: 2px solid var(--purple-main);
             border-radius: 12px;
-            border: 2px solid #2b2b45;
             position: relative;
             overflow: hidden;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            min-height: 260px;
         }
 
         video {
@@ -172,22 +223,37 @@
             height: 100%;
             object-fit: cover;
             transform: scaleX(-1);
+            display: none;
         }
 
-        .video-label {
+        .avatar-placeholder {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--purple-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            box-shadow: 0 0 20px var(--purple-glow);
+        }
+
+        .feed-badge {
             position: absolute;
             bottom: 10px;
             left: 10px;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--purple-bright);
             padding: 4px 10px;
             border-radius: 6px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
-        .parent-listening-banner {
-            background: rgba(0, 245, 212, 0.15);
-            border: 1px solid var(--neon-cyan);
-            color: var(--neon-cyan);
+        .listen-alert {
+            background: rgba(138, 43, 226, 0.2);
+            border: 1px solid var(--purple-bright);
+            color: var(--purple-bright);
             padding: 10px;
             border-radius: 8px;
             text-align: center;
@@ -195,140 +261,112 @@
             display: none;
         }
 
-        .call-controls {
+        .controls-bar {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
         }
 
-        .call-controls .btn {
-            width: auto;
-            padding: 12px 24px;
+        /* Test Filter Bar */
+        .test-bar {
+            display: flex;
+            gap: 10px;
+            background: var(--card-bg);
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px dashed var(--purple-bright);
         }
 
-        /* Logs & Alerts */
-        .log-box {
-            background: #08080f;
+        .test-bar input {
+            flex: 1;
+            padding: 10px;
             border-radius: 8px;
+            border: 1px solid #3a3a5c;
+            background: var(--bg-black);
+            color: white;
+        }
+
+        .log-console {
+            background: #050508;
+            border: 1px solid #2b2b45;
+            border-radius: 10px;
             padding: 12px;
-            height: 150px;
+            height: 160px;
             overflow-y: auto;
             font-family: monospace;
             font-size: 0.85rem;
-            border: 1px solid #2b2b45;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
-        .log-entry { margin-bottom: 6px; }
-        .log-info { color: var(--text-muted); }
-        .log-warn { color: var(--warning-yellow); }
-        .log-danger { color: var(--danger-red); font-weight: bold; }
+        .log-info { color: var(--text-gray); }
+        .log-warn { color: var(--accent-yellow); }
+        .log-danger { color: var(--accent-red); font-weight: bold; }
+        .log-success { color: var(--accent-green); }
 
-        /* Lockout Overlay */
-        #lockoutScreen {
+        /* Modals */
+        .overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(15, 15, 26, 0.96);
-            z-index: 100;
-            flex-direction: column;
+            background: rgba(5, 5, 10, 0.94);
+            z-index: 999;
             align-items: center;
             justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: var(--panel-dark);
+            border: 2px solid var(--purple-bright);
+            border-radius: 16px;
+            padding: 25px;
+            max-width: 480px;
+            width: 100%;
             text-align: center;
-            padding: 20px;
+            box-shadow: 0 0 30px var(--purple-glow);
         }
 
-        #lockoutScreen h1 {
-            color: var(--danger-red);
-            font-size: 2.2rem;
-            margin-bottom: 10px;
+        .modal-box h2 {
+            color: var(--purple-bright);
+            margin-bottom: 12px;
         }
 
-        .report-card {
-            background: var(--panel-bg);
-            border: 1px solid var(--danger-red);
-            padding: 20px;
+        .report-details {
+            background: var(--bg-black);
+            border: 1px solid var(--accent-red);
+            padding: 15px;
             border-radius: 10px;
-            max-width: 500px;
-            margin-top: 20px;
             text-align: left;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>GLITCHBOX // SAFE CALL</h1>
-        <span class="badge">MODERATION ACTIVE</span>
+        <div class="logo-area">
+            <div class="logo-icon">🛡️</div>
+            <div>
+                <h1>GLITCHBOX // SAFE CALL</h1>
+                <small style="color: var(--text-gray);">Parent-Controlled Voice & Video Hub</small>
+            </div>
+        </div>
+        <div class="status-pill" id="topStatus">● SYSTEM READY</div>
     </header>
 
-    <div class="container">
-        <!-- Parental Control Sidebar -->
+    <div class="main-layout">
+        <!-- Left Sidebar: Parent Controls -->
         <aside class="panel">
-            <h2>Parent Controls</h2>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
-                A parent must approve settings and enable live listen-in before calling is unlocked.
-            </p>
+            <div class="panel-title">🔒 Parent Control Panel</div>
+            
+            <label class="toggle-row">
+                <span>🎤 Allow Voice Calling</span>
+                <input type="checkbox" id="chkVoice" checked>
+            </label>
 
-            <div class="control-group">
-                <label>
-                    <span>Allow Voice Calling</span>
-                    <input type="checkbox" id="allowVoice">
-                </label>
-                <label>
-                    <span>Allow Camera Calling</span>
-                    <input type="checkbox" id="allowCamera">
-                </label>
-                <label>
-                    <span>Parent Listen-In Mode</span>
-                    <input type="checkbox" id="allowListenIn">
-                </label>
-            </div>
-
-            <div class="control-group">
-                <label for="parentPin" style="display:block;">Parent Approval PIN:</label>
-                <input type="password" id="parentPin" placeholder="Enter PIN (Default: 1234)">
-                <button class="btn btn-primary" onclick="verifyParentSettings()">Approve & Unlock Call</button>
-            </div>
-
-            <div id="parentStatus" style="margin-top: 15px; font-size: 0.85rem; color: var(--warning-yellow);">
-                Status: Locked. Waiting for parent approval and Listen-In permission.
-            </div>
-        </aside>
-
-        <!-- Main Call Stage -->
-        <main class="panel call-stage">
-            <div id="listenBanner" class="parent-listening-banner">
-                PARENT LISTEN-IN ACTIVE: Audio is being monitored for safety.
-            </div>
-
-            <div class="video-grid">
-                <div class="video-box">
-                    <video id="localVideo" autoplay muted playsinline></video>
-                    <span class="video-label" id="localLabel">You (Camera Off)</span>
-                </div>
-                <div class="video-box">
-                    <div style="color: var(--text-muted); text-align: center;">
-                        <p>Friend / Teammate</p>
-                        <small id="remoteStatus">Waiting to connect...</small>
-                    </div>
-                    <span class="video-label">Remote Player</span>
-                </div>
-            </div>
-
-            <div class="call-controls">
-                <button class="btn btn-primary" id="startCallBtn" onclick="startCall()" disabled>Start Call</button>
-                <button class="btn btn-secondary" id="muteBtn" onclick="toggleMute()" disabled>Mute Mic</button>
-                <button class="btn btn-secondary" id="camBtn" onclick="toggleCamera()" disabled>Toggle Camera</button>
-                <button class="btn btn-danger" id="endCallBtn" onclick="endCall('Call ended by user.')" disabled>End Call</button>
-            </div>
-
-            <h2>Live Safety & Moderator Log</h2>
-            <div class="log-box" id="safetyLog">
-                <div class="log-entry log-info">[SYSTEM] Safe-Call initialized. Speech filter ready.</div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Temporary Block & Parent Report Screen -->
-    <div id="lockoutScreen">
-        <h1>CALL TERMINATED & ACCOUNT TEMPORARILY BLOCKED</h1>
+            <label class="toggle-row">
